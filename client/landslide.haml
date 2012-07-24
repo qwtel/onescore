@@ -1,0 +1,552 @@
+%head
+  %title Onescore
+
+  %meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
+  %meta(name="apple-mobile-web-app-capable" content="yes")
+  %meta(name="apple-mobile-web-app-status-bar-style" content="black-translucent")
+
+  %link(rel="icon" href="img/icon16.png" sizes="16x16" type="image/png")
+  %link(rel="icon" href="img/icon32.png" sizes="32x32" type="image/png")
+  %link(rel="icon" href="img/icon96.png" sizes="96x96" type="image/png")
+  %link(rel="apple-touch-icon" href="img/icon96.png")
+  %link(rel="apple-touch-precomposed" href="img/icon96.png")
+
+%body
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container
+        {{> header }}
+
+  #content.container
+    {{> content }}
+
+%template(name='content')
+  {{#if page "dashboard"}}
+  -#.row
+    .span12
+      .hero-unit
+        %h1 Heading
+        %p Tagline
+        %p 
+          %a.btn.btn-primary.btn-large Learn more
+  .row
+    .span8
+      .well
+        %h3.heading Home
+        {{> filter }}
+        {{> dashboard }}
+
+    .span4
+      .well 
+        {{> userWidget }}
+      .well 
+        %h3 FAQ
+      .well 
+        %h3 Tags
+      .well 
+        %h3 Quest Items
+  {{/if}}
+
+  {{#if page "explore"}}
+  .row
+    .span4
+      .well 
+        %h3 Tags
+      .well 
+        %h3 Quest Items
+    .span8
+      .well 
+        %h3.heading Achievements
+        {{> filter }}
+        .clearfix
+  {{/if}}
+
+  {{#if page "compete"}}
+  .row
+    .span4
+      .well 
+        %h3 League
+      .well 
+        %h3 ???
+      .well 
+        %h3 Quest Items
+    .span8
+      .well 
+        %h3.heading Ladder
+        {{> filter }}
+        .clearfix
+  {{/if}}
+
+  {{#if page "profile"}}
+  .row
+    .span12
+      .well 
+        {{> userWidget }}
+  .row
+    .span4
+      {{> menu }}
+      .well 
+        %h3 Tags
+      .well 
+        %h3 Quest Items
+    .span8
+      .well 
+        %h3.heading Activity
+        {{> filter }}
+        .clearfix
+  {{/if}}
+
+  {{#if page "activities"}}
+  .row
+    .span12
+      .well 
+        {{> activities }}
+  {{/if}}
+
+  {{#if page "slides"}}
+  .row
+    .span12
+      .well 
+        {{> slideshows }}
+  {{/if}}
+
+  {{#if page "feedback"}}
+  .row
+    .span12 
+      .well
+        %h3 Y U NO MAKE BETTER?
+  {{/if}}
+
+%template(name='tags')
+  .tag-list
+    {{#each tags}}
+    %span.tag.label.active(data-tag="{{tag}}")
+      {{tag}}
+      %a.remove(id="{{../_id}}" title="Remove this tag") ×
+    {{/each}}
+
+    {{#if addingTag}}
+    %input.edittag-input.label.input-mini(id="edittag-{{_id}}" type="text")
+    {{else}}
+    %a.add.tag.label(title="Add a tag") + tag
+    {{/if}}
+
+%template(name='tagFilter')
+  #tag-filter.tag-list
+    %h6.tags Tags: 
+    {{#each tags}}
+    <a class="tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
+    {{tag}}
+    %span.count ({{count}})
+    </a>
+    {{/each}}
+
+%template(name='menu')
+  .menu
+    %ul.nav.nav-tabs.nav-stacked
+      %li
+        %a(href="#")
+          %i.icon-book
+          Quests
+      %li
+        %a(href="#")
+          %i.icon-star
+          Favourites
+      %li
+        %a(href="#")
+          %i.icon-pencil
+          Edits
+      %li
+        %a(href="#")
+          %i.icon-arrow-right
+          Votes
+      -#%li
+        %a(href="#")
+          %i.icon-glass
+          Inventory
+
+%template(name='filter')
+  .filter
+    -#.alert.alert-info
+      %span Showing search results for ... 
+
+    %input.input-medium.search-query.pull-right(type="text" placeholder="Search")
+
+    %ul.nav.nav-tabs 
+      %li.active 
+        %a All
+      %li
+        %a City
+      %li
+        %a Friends
+
+    -#.btn-group.pull-right
+      %a.btn.active(href="#" title="Stories") 
+        %i.icon-align-left
+      %a.btn(href="#" title="Achievements")
+        %i.icon-certificate
+      %a.btn(href="#" title="Comments") 
+        %i.icon-comment
+      %a.btn(href="#" title="Items") 
+        %i.icon-glass
+
+    .sort.pull-left
+      %span Sort by:
+      %select.span1
+        %option Hot
+        %option New
+        %option Best
+
+%template(name='header')
+  %a.brand.nav-img.pull-left.nav-item(data-href="dashboard")
+  %ul.nav
+    %li.dropdown
+      %a.dropdown-toggle(data-toggle="dropdown")<
+        %span Onescore
+        %b.caret
+      %ul.dropdown-menu
+        %li
+          %a.nav-item Carrier
+        %li
+          %a.nav-item Education
+        %li
+          %a.nav-item Health
+        %li
+          %a.nav-item Meta
+        %li
+          %a.nav-item Random
+        %li
+          %a.nav-item Sports
+    {{#each items}}
+    %li(class="nav-{{url}} {{active}}")
+      %a.nav-item(data-href="{{url}}") {{name}}
+    {{/each}}
+
+  {{#if currentUser}}
+  %a.profile-pic.nav-item.nav-img.pull-right(data-href="profile")
+  .score.pull-right<
+    %span.value 0
+    %i.onescore-dollar
+  {{else}}
+  .login.pull-right
+    {{> loginButtons}}
+  {{/if}}
+
+%template(name='userWidget')
+  {{#if currentUser}}
+  {{#with user}} 
+  .user
+    %a.profile-pic.pull-left(href="")
+
+    {{#unless editUsername}} 
+    %a.edit.pull-right (edit)
+    %h3.name {{name}}
+    {{else}} 
+    %input#user-name(type="text" value="{{name}}") 
+    {{/unless}} 
+
+    %h3.score<
+      %span 0
+      %i.onescore-dollar.onescore-dollar-green
+
+    -#.rank
+      %h3 
+        Rank
+      .friends.span4
+        %h4 Friends
+        %p.score 0
+      .city.span4
+        %h4 City
+        %p.score 0
+      .group.span4
+        %h4 Group
+        %p.score 0
+    .clearfix
+  {{/with}} 
+  {{/if}}
+  .login
+    {{> loginButtons}}
+
+%template(name='activities')
+  .btn-group.pull-left
+    <a id="my-activities" class='btn btn-filter {{isActive "activity-filter-1" "my"}}' data-filter="my" data-which="1">My Activities</a>
+    <a id="lva-activities" class='btn btn-filter {{isActive "activity-filter-1" "lva"}}' data-filter="lva" data-which="1">LVA-Team Activities</a>
+  .btn-group.pull-right
+    <a id="fav-activities" class='btn btn-filter {{isActive "activity-filter-2" "fav"}}' data-filter="fav" data-which="2"><i class="icon-star"></i> Favourites</a>
+    <a id="saved-activities" class='btn btn-filter {{isActive "activity-filter-2" "saved"}}' data-filter="saved" data-which="2"><i class="icon-edit"></i> Saved</a>
+    <a id="pending-activities" class='btn btn-filter {{isActive "activity-filter-2" "pending"}}' data-filter="pending" data-which="2"><i class="icon-share"></i> Handed-In</a>
+    <a id="done-activities" class='btn btn-filter {{isActive "activity-filter-2" "done"}}' data-filter="done" data-which="2"><i class="icon-check"></i> Evaluated</a>
+  .clearfix
+  {{> tagFilter }}
+
+  .activity.create#create
+    .well
+      .text
+        %h4
+          %a.open Create New Activity
+        %p Create an activity that others can accomplish
+
+  {{#each activities}}
+  {{> activity}}
+  {{else}}
+  {{#if noContent}}
+  .alert.pull-left
+    %strong Warning! 
+    No activities matching the selection
+  {{else}}
+  {{> loading}}
+  {{/if}}
+  {{/each}}
+
+  .modal.activity-modal.hide.create-modal
+    {{> createActivityModal}}
+
+  .modal.activity-modal.hide.accomplish-modal
+    {{> accomplishActivityModal}}
+
+  .clearfix
+
+%template(name='loading')
+  .loading
+    %img(src="/loading.gif")/
+
+%template(name='activity')
+  .activity(id="activity-{{_id}}")
+    .well
+      %span.count {{score}}
+      {{#unless userIn votes}}
+      %a.up.icon-arrow-up(title="Vote Up")
+      %a.down.icon-arrow-down(title="Vote Down")
+      {{/unless}}
+
+      .pull-right
+        {{#if belongsTo user}}
+        %a.remove.icon-remove(title="Delete")
+        %a.edit.icon-pencil(title="Edit")
+        {{/if}}
+        {{#if userIn likes}}
+        %a.unlike.icon-star(title="Remove from Favourites")
+        {{else}}
+        %a.like.icon-star-empty(title="Add to Favourites")
+        {{/if}}
+
+      -#.text(class="{{my}} {{lva}}")
+      <div class="text {{isMe user}} {{isLva user}}">
+      %h4
+        %a.open {{name}}
+      %p {{{wrapTags short}}} 
+      </div>
+
+%template(name='createActivityModal')
+  {{#with activity}}
+  .modal-header
+    %button.close(type="button" data-dismiss="modal") ×
+    %h2 {{#if title}} {{title}} {{else}} {{> loading}} {{/if}}
+    {{> tags}}
+
+  .modal-body
+    %label Activity name
+    %input.activity-name(id="name-{{_id}}" type="text" value="{{name}}") 
+
+    %label Short description
+    %textarea.description-short(id="short-{{_id}}" type="text" rows="4") {{short}}
+    %span.help-block
+      Provide a short description of the contents of this activity.
+      %br/
+      HINT: You can include #tags here.
+
+    %label Full description
+    %textarea.description-full.ta100(id="full-{{_id}}" type="text" rows="6") {{full}}
+    %span.help-block Provide an in-depth description of the contents, requirements and tasks which are needed to complete this activity.
+
+  .modal-footer
+    %a.btn(data-dismiss="modal") Discard
+    %a.create-activity.btn.btn-primary Save
+  {{/with}}
+
+%template(name='accomplishActivityModal')
+  {{#with activity}}
+  .modal-header
+    %button.close(type="button" data-dismiss="modal") ×
+    %h2 {{#if name}} {{name}} {{else}} {{> loading}} {{/if}}
+    {{> tags}}
+
+  .modal-body
+    %h3 Full description
+    %p {{full}}
+
+    %h3 Required work
+    %label Free Text 
+    {{#with draft}}
+    %textarea.accomplish-text.ta100(id="text-{{_id}}" type="text" rows="10" placeholder="") {{text}} 
+    {{/with}}
+    %span.help-block Write a text that fits the needs of this activity.
+
+  .modal-footer.modal-separator
+    %a.save-activity.btn 
+      %i.icon-edit
+      Save
+    %a.hand-in-activity.btn.btn-primary
+      %i.icon-share.icon-white
+      Hand-In
+  {{else}}
+  {{> loading}}
+  {{/with}}
+
+  .modal-body
+    %h3 Comments
+    {{> dashboard}}
+
+%template(name='dashboard')
+  -#.btn-group.pull-left
+    <a id="my-posts" class='btn btn-filter {{isActive "comment-filter" "my"}}' data-filter="my">My Posts</a>
+    <a id="lva-posts" class='btn btn-filter {{isActive "comment-filter" "lva"}}' data-filter="lva">LVA-Team Posts</a>
+    -#%a.btn#my-posts(class="{{myPostsActive}}" data-filter="my") My Own Posts
+    -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
+  .btn-group.pull-right
+    %a.btn.add-comment Add Comment
+  .clearfix
+  #comments
+    .temp
+      {{#if addComment}}
+      .text-wrapper
+        %textarea.comment-text.ta100(rows="3")
+      {{/if}}
+    .comments
+      {{> comments}}
+
+%template(name='achievements')
+  {{#each achievements}}
+  {{> achievement}}
+  {{/each}}
+
+%template(name='comments')
+  {{#each comments}}
+  {{> achievement}}
+  {{#each replies}}
+  {{> achievement}}
+  {{/each}}
+  {{/each}}
+  {{else}}
+  {{#if noContent}}
+  .alert No comments so far.
+  {{else}}
+  {{> loading}}
+  {{/if}}
+
+%template(name='comment')
+  .comment(id="comment-{{_id}}" class="{{nested}}")
+    -#.well(class="{{my}} {{lva}}")
+    <div class="well {{isMe user}} {{isLva user}}">
+    .pull-left
+      %span.name {{getUsername user}}
+      {{#if userIn likes}}
+      %a.unlike.icon-star(title="Unlike")
+      {{else}}
+      %a.like.icon-star-empty(title="Like")
+      {{/if}}
+      %span.count {{likesNum}}
+    .hud.pull-right
+      %span.date {{formatDate date}}
+      {{#if belongsTo user}}
+      %a.remove.icon-remove(title="Delete")
+      %a.edit.icon-pencil(title="Edit")
+      {{/if}}
+      %a.reply.icon-share-alt(title="Reply")
+    .text
+      {{#if editComment}}
+      .text-wrapper
+        %textarea.edit-text.ta100(id="edit-{{_id}}" rows="3") {{text}}
+      {{else}}
+      %p {{mention}} {{{addLineBreaks text}}}
+      {{/if}}
+    </div>
+    {{#if addComment}}
+    .text-wrapper.nested
+      %textarea.comment-text.ta100(id="reply-{{_id}}" rows="3")
+    {{/if}}
+
+%template(name='achievement')
+  .achievement
+    .value.pull-right
+      %span.points {{likesNum}}
+    .vote.pull-right.nice
+      %div
+        %a.up.icon-arrow-up
+      %div
+        %span.count {{likesNum}}
+      %div
+        %a.down.icon-arrow-down
+
+    %a.icon.pull-left
+
+    .content
+      .head
+        %h4.name
+          %a {{text}}
+      .description
+        %span Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma 
+
+      -#%ul.menu.nice
+        %li.expand
+          %a
+            %i.icon-chevron-down
+        %li.accomplish
+          %a
+            %i.icon-certificate
+        %li.quest
+          %a
+            %i.icon-book
+        %li.track
+          %a
+            %i.icon-star
+        %li.edit
+          %a
+            %i.icon-pencil
+    .clearfix
+
+%template(name='microTasks')
+  .test
+
+%template(name='slideshows')
+  .btn-group.pull-left
+    <a id="my-slideshows" class='btn btn-filter {{isActive "slideshow-filter-1" "my"}}' data-filter="my" data-which="1">My Slideshows</a>
+    <a id="lva-slideshows" class='btn btn-filter {{isActive "slideshow-filter-1" "lva"}}' data-filter="lva" data-which="1">LVA-Team Slideshows</a>
+  .btn-group.pull-right
+    <a id="fav-slideshows" class='btn btn-filter {{isActive "slideshow-filter-2" "fav"}}' data-filter="fav" data-which="2"><i class="icon-star"></i> Favourites</a>
+  .clearfix
+
+  {{> tagFilter }}
+
+  .slideshow.create
+    .well
+      %h2
+        %a.open Create New Slideshow
+  {{#each slideshows}}
+  .slideshow
+    .well
+      %h2
+        %a.open each
+  {{else}}
+  .slideshow
+    .well
+      %h2
+        %a.open Slideshow
+  {{/each}}
+
+%template(name='slides')
+  .row
+    .span6
+      .well 
+        %div
+          %button#prev(onclick="goPrevious()") Previous
+          %button#next(onclick="goNext()") Next
+          %span<
+            Page:
+            %span#page_num
+            \/
+            %span#page_count
+        %div
+          %canvas#the-canvas(style="border:1px solid black")
+    .span6
+      .well 

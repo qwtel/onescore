@@ -1,0 +1,591 @@
+<head>
+  <title>Onescore</title>
+  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' name='viewport' />
+  <meta content='yes' name='apple-mobile-web-app-capable' />
+  <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style' />
+  <link href='img/icon16.png' rel='icon' sizes='16x16' type='image/png' />
+  <link href='img/icon32.png' rel='icon' sizes='32x32' type='image/png' />
+  <link href='img/icon96.png' rel='icon' sizes='96x96' type='image/png' />
+  <link href='img/icon96.png' rel='apple-touch-icon' />
+  <link href='img/icon96.png' rel='apple-touch-precomposed' />
+</head>
+<body>
+  <div class='navbar navbar-fixed-top'>
+    <div class='navbar-inner'>
+      <div class='container'>
+        {{> header }}
+      </div>
+    </div>
+  </div>
+  <div class='container' id='content'>
+    {{> content }}
+  </div>
+</body>
+<template name='content'>
+  {{#if page "dashboard"}}
+  <div class='row'>
+    <div class='span8'>
+      <div class='well'>
+        <h3 class='heading'>Home</h3>
+        {{> filter }}
+        {{> dashboard }}
+      </div>
+    </div>
+    <div class='span4'>
+      <div class='well'>
+        {{> userWidget }}
+      </div>
+      <div class='well'>
+        <h3>FAQ</h3>
+      </div>
+      <div class='well'>
+        <h3>Tags</h3>
+      </div>
+      <div class='well'>
+        <h3>Quest Items</h3>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  {{#if page "explore"}}
+  <div class='row'>
+    <div class='span4'>
+      <div class='well'>
+        <h3>Tags</h3>
+      </div>
+      <div class='well'>
+        <h3>Quest Items</h3>
+      </div>
+    </div>
+    <div class='span8'>
+      <div class='well'>
+        <h3 class='heading'>Achievements</h3>
+        {{> filter }}
+        <div class='clearfix'></div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  {{#if page "compete"}}
+  <div class='row'>
+    <div class='span4'>
+      <div class='well'>
+        <h3>League</h3>
+      </div>
+      <div class='well'>
+        <h3>???</h3>
+      </div>
+      <div class='well'>
+        <h3>Quest Items</h3>
+      </div>
+    </div>
+    <div class='span8'>
+      <div class='well'>
+        <h3 class='heading'>Ladder</h3>
+        {{> filter }}
+        <div class='clearfix'></div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  {{#if page "profile"}}
+  <div class='row'>
+    <div class='span12'>
+      <div class='well'>
+        {{> userWidget }}
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='span4'>
+      {{> menu }}
+      <div class='well'>
+        <h3>Tags</h3>
+      </div>
+      <div class='well'>
+        <h3>Quest Items</h3>
+      </div>
+    </div>
+    <div class='span8'>
+      <div class='well'>
+        <h3 class='heading'>Activity</h3>
+        {{> filter }}
+        <div class='clearfix'></div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  {{#if page "activities"}}
+  <div class='row'>
+    <div class='span12'>
+      <div class='well'>
+        {{> activities }}
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  {{#if page "slides"}}
+  <div class='row'>
+    <div class='span12'>
+      <div class='well'>
+        {{> slideshows }}
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  {{#if page "feedback"}}
+  <div class='row'>
+    <div class='span12'>
+      <div class='well'>
+        <h3>Y U NO MAKE BETTER?</h3>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</template>
+<template name='tags'>
+  <div class='tag-list'>
+    {{#each tags}}
+    <span class='tag label active' data-tag='{{tag}}'>
+      {{tag}}
+      <a class='remove' id='{{../_id}}' title='Remove this tag'>×</a>
+    </span>
+    {{/each}}
+    {{#if addingTag}}
+    <input class='edittag-input label input-mini' id='edittag-{{_id}}' type='text' />
+    {{else}}
+    <a class='add tag label' title='Add a tag'>+ tag</a>
+    {{/if}}
+  </div>
+</template>
+<template name='tagFilter'>
+  <div class='tag-list' id='tag-filter'>
+    <h6 class='tags'>Tags:</h6>
+    {{#each tags}}
+    <a class="tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
+    {{tag}}
+    <span class='count'>({{count}})</span>
+    </a>
+    {{/each}}
+  </div>
+</template>
+<template name='menu'>
+  <div class='menu'>
+    <ul class='nav nav-tabs nav-stacked'>
+      <li>
+        <a href='#'>
+          <i class='icon-book'></i>
+          Quests
+        </a>
+      </li>
+      <li>
+        <a href='#'>
+          <i class='icon-star'></i>
+          Favourites
+        </a>
+      </li>
+      <li>
+        <a href='#'>
+          <i class='icon-pencil'></i>
+          Edits
+        </a>
+      </li>
+      <li>
+        <a href='#'>
+          <i class='icon-arrow-right'></i>
+          Votes
+        </a>
+      </li>
+    </ul>
+  </div>
+</template>
+<template name='filter'>
+  <div class='filter'>
+    <input class='input-medium search-query pull-right' placeholder='Search' type='text' />
+    <ul class='nav nav-tabs'>
+      <li class='active'>
+        <a>All</a>
+      </li>
+      <li>
+        <a>City</a>
+      </li>
+      <li>
+        <a>Friends</a>
+      </li>
+    </ul>
+    <div class='sort pull-left'>
+      <span>Sort by:</span>
+      <select class='span1'>
+        <option>Hot</option>
+        <option>New</option>
+        <option>Best</option>
+      </select>
+    </div>
+  </div>
+</template>
+<template name='header'>
+  <a class='brand nav-img pull-left nav-item' data-href='dashboard'></a>
+  <ul class='nav'>
+    <li class='dropdown'>
+      <a class='dropdown-toggle' data-toggle='dropdown'><span>Onescore</span>
+      <b class='caret'></b></a>
+      <ul class='dropdown-menu'>
+        <li>
+          <a class='nav-item'>Carrier</a>
+        </li>
+        <li>
+          <a class='nav-item'>Education</a>
+        </li>
+        <li>
+          <a class='nav-item'>Health</a>
+        </li>
+        <li>
+          <a class='nav-item'>Meta</a>
+        </li>
+        <li>
+          <a class='nav-item'>Random</a>
+        </li>
+        <li>
+          <a class='nav-item'>Sports</a>
+        </li>
+      </ul>
+    </li>
+    {{#each items}}
+    <li class='nav-{{url}} {{active}}'>
+      <a class='nav-item' data-href='{{url}}'>{{name}}</a>
+    </li>
+    {{/each}}
+  </ul>
+  {{#if currentUser}}
+  <a class='profile-pic nav-item nav-img pull-right' data-href='profile'></a>
+  <div class='score pull-right'><span class='value'>0</span>
+  <i class='onescore-dollar'></i></div>
+  {{else}}
+  <div class='login pull-right'>
+    {{> loginButtons}}
+  </div>
+  {{/if}}
+</template>
+<template name='userWidget'>
+  {{#if currentUser}}
+  {{#with user}}
+  <div class='user'>
+    <a class='profile-pic pull-left' href=''></a>
+    {{#unless editUsername}}
+    <a class='edit pull-right'>(edit)</a>
+    <h3 class='name'>{{name}}</h3>
+    {{else}}
+    <input id='user-name' type='text' value='{{name}}' />
+    {{/unless}}
+    <h3 class='score'><span>0</span>
+    <i class='onescore-dollar onescore-dollar-green'></i></h3>
+    <div class='clearfix'></div>
+  </div>
+  {{/with}}
+  {{/if}}
+  <div class='login'>
+    {{> loginButtons}}
+  </div>
+</template>
+<template name='activities'>
+  <div class='btn-group pull-left'>
+    <a id="my-activities" class='btn btn-filter {{isActive "activity-filter-1" "my"}}' data-filter="my" data-which="1">My Activities</a>
+    <a id="lva-activities" class='btn btn-filter {{isActive "activity-filter-1" "lva"}}' data-filter="lva" data-which="1">LVA-Team Activities</a>
+  </div>
+  <div class='btn-group pull-right'>
+    <a id="fav-activities" class='btn btn-filter {{isActive "activity-filter-2" "fav"}}' data-filter="fav" data-which="2"><i class="icon-star"></i> Favourites</a>
+    <a id="saved-activities" class='btn btn-filter {{isActive "activity-filter-2" "saved"}}' data-filter="saved" data-which="2"><i class="icon-edit"></i> Saved</a>
+    <a id="pending-activities" class='btn btn-filter {{isActive "activity-filter-2" "pending"}}' data-filter="pending" data-which="2"><i class="icon-share"></i> Handed-In</a>
+    <a id="done-activities" class='btn btn-filter {{isActive "activity-filter-2" "done"}}' data-filter="done" data-which="2"><i class="icon-check"></i> Evaluated</a>
+  </div>
+  <div class='clearfix'></div>
+  {{> tagFilter }}
+  <div class='activity create' id='create'>
+    <div class='well'>
+      <div class='text'>
+        <h4>
+          <a class='open'>Create New Activity</a>
+        </h4>
+        <p>Create an activity that others can accomplish</p>
+      </div>
+    </div>
+  </div>
+  {{#each activities}}
+  {{> activity}}
+  {{else}}
+  {{#if noContent}}
+  <div class='alert pull-left'>
+    <strong>Warning!</strong>
+    No activities matching the selection
+  </div>
+  {{else}}
+  {{> loading}}
+  {{/if}}
+  {{/each}}
+  <div class='modal activity-modal hide create-modal'>
+    {{> createActivityModal}}
+  </div>
+  <div class='modal activity-modal hide accomplish-modal'>
+    {{> accomplishActivityModal}}
+  </div>
+  <div class='clearfix'></div>
+</template>
+<template name='loading'>
+  <div class='loading'>
+    <img src='/loading.gif' />
+  </div>
+</template>
+<template name='activity'>
+  <div class='activity' id='activity-{{_id}}'>
+    <div class='well'>
+      <span class='count'>{{score}}</span>
+      {{#unless userIn votes}}
+      <a class='up icon-arrow-up' title='Vote Up'></a>
+      <a class='down icon-arrow-down' title='Vote Down'></a>
+      {{/unless}}
+      <div class='pull-right'>
+        {{#if belongsTo user}}
+        <a class='remove icon-remove' title='Delete'></a>
+        <a class='edit icon-pencil' title='Edit'></a>
+        {{/if}}
+        {{#if userIn likes}}
+        <a class='unlike icon-star' title='Remove from Favourites'></a>
+        {{else}}
+        <a class='like icon-star-empty' title='Add to Favourites'></a>
+        {{/if}}
+      </div>
+      <div class="text {{isMe user}} {{isLva user}}">
+      <h4>
+        <a class='open'>{{name}}</a>
+      </h4>
+      <p>{{{wrapTags short}}}</p>
+      </div>
+    </div>
+  </div>
+</template>
+<template name='createActivityModal'>
+  {{#with activity}}
+  <div class='modal-header'>
+    <button class='close' data-dismiss='modal' type='button'>×</button>
+    <h2>{{#if title}} {{title}} {{else}} {{> loading}} {{/if}}</h2>
+    {{> tags}}
+  </div>
+  <div class='modal-body'>
+    <label>Activity name</label>
+    <input class='activity-name' id='name-{{_id}}' type='text' value='{{name}}' />
+    <label>Short description</label>
+    <textarea class='description-short' id='short-{{_id}}' rows='4' type='text'>{{short}}</textarea>
+    <span class='help-block'>
+      Provide a short description of the contents of this activity.
+      <br />
+      HINT: You can include #tags here.
+    </span>
+    <label>Full description</label>
+    <textarea class='description-full ta100' id='full-{{_id}}' rows='6' type='text'>{{full}}</textarea>
+    <span class='help-block'>Provide an in-depth description of the contents, requirements and tasks which are needed to complete this activity.</span>
+  </div>
+  <div class='modal-footer'>
+    <a class='btn' data-dismiss='modal'>Discard</a>
+    <a class='create-activity btn btn-primary'>Save</a>
+  </div>
+  {{/with}}
+</template>
+<template name='accomplishActivityModal'>
+  {{#with activity}}
+  <div class='modal-header'>
+    <button class='close' data-dismiss='modal' type='button'>×</button>
+    <h2>{{#if name}} {{name}} {{else}} {{> loading}} {{/if}}</h2>
+    {{> tags}}
+  </div>
+  <div class='modal-body'>
+    <h3>Full description</h3>
+    <p>{{full}}</p>
+    <h3>Required work</h3>
+    <label>Free Text</label>
+    {{#with draft}}
+    <textarea class='accomplish-text ta100' id='text-{{_id}}' placeholder='' rows='10' type='text'>{{text}}</textarea>
+    {{/with}}
+    <span class='help-block'>Write a text that fits the needs of this activity.</span>
+  </div>
+  <div class='modal-footer modal-separator'>
+    <a class='save-activity btn'>
+      <i class='icon-edit'></i>
+      Save
+    </a>
+    <a class='hand-in-activity btn btn-primary'>
+      <i class='icon-share icon-white'></i>
+      Hand-In
+    </a>
+  </div>
+  {{else}}
+  {{> loading}}
+  {{/with}}
+  <div class='modal-body'>
+    <h3>Comments</h3>
+    {{> dashboard}}
+  </div>
+</template>
+<template name='dashboard'>
+  <div class='btn-group pull-right'>
+    <a class='btn add-comment'>Add Comment</a>
+  </div>
+  <div class='clearfix'></div>
+  <div id='comments'>
+    <div class='temp'>
+      {{#if addComment}}
+      <div class='text-wrapper'>
+        <textarea class='comment-text ta100' rows='3'></textarea>
+      </div>
+      {{/if}}
+    </div>
+    <div class='comments'>
+      {{> comments}}
+    </div>
+  </div>
+</template>
+<template name='achievements'>
+  {{#each achievements}}
+  {{> achievement}}
+  {{/each}}
+</template>
+<template name='comments'>
+  {{#each comments}}
+  {{> achievement}}
+  {{#each replies}}
+  {{> achievement}}
+  {{/each}}
+  {{/each}}
+  {{else}}
+  {{#if noContent}}
+  <div class='alert'>No comments so far.</div>
+  {{else}}
+  {{> loading}}
+  {{/if}}
+</template>
+<template name='comment'>
+  <div class='comment {{nested}}' id='comment-{{_id}}'>
+    <div class="well {{isMe user}} {{isLva user}}">
+    <div class='pull-left'>
+      <span class='name'>{{getUsername user}}</span>
+      {{#if userIn likes}}
+      <a class='unlike icon-star' title='Unlike'></a>
+      {{else}}
+      <a class='like icon-star-empty' title='Like'></a>
+      {{/if}}
+      <span class='count'>{{likesNum}}</span>
+    </div>
+    <div class='hud pull-right'>
+      <span class='date'>{{formatDate date}}</span>
+      {{#if belongsTo user}}
+      <a class='remove icon-remove' title='Delete'></a>
+      <a class='edit icon-pencil' title='Edit'></a>
+      {{/if}}
+      <a class='reply icon-share-alt' title='Reply'></a>
+    </div>
+    <div class='text'>
+      {{#if editComment}}
+      <div class='text-wrapper'>
+        <textarea class='edit-text ta100' id='edit-{{_id}}' rows='3'>{{text}}</textarea>
+      </div>
+      {{else}}
+      <p>{{mention}} {{{addLineBreaks text}}}</p>
+      {{/if}}
+    </div>
+    </div>
+    {{#if addComment}}
+    <div class='text-wrapper nested'>
+      <textarea class='comment-text ta100' id='reply-{{_id}}' rows='3'></textarea>
+    </div>
+    {{/if}}
+  </div>
+</template>
+<template name='achievement'>
+  <div class='achievement'>
+    <div class='value pull-right'>
+      <span class='points'>{{likesNum}}</span>
+    </div>
+    <div class='vote pull-right nice'>
+      <div>
+        <a class='up icon-arrow-up'></a>
+      </div>
+      <div>
+        <span class='count'>{{likesNum}}</span>
+      </div>
+      <div>
+        <a class='down icon-arrow-down'></a>
+      </div>
+    </div>
+    <a class='icon pull-left'></a>
+    <div class='content'>
+      <div class='head'>
+        <h4 class='name'>
+          <a>{{text}}</a>
+        </h4>
+      </div>
+      <div class='description'>
+        <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma</span>
+      </div>
+    </div>
+    <div class='clearfix'></div>
+  </div>
+</template>
+<template name='microTasks'>
+  <div class='test'></div>
+</template>
+<template name='slideshows'>
+  <div class='btn-group pull-left'>
+    <a id="my-slideshows" class='btn btn-filter {{isActive "slideshow-filter-1" "my"}}' data-filter="my" data-which="1">My Slideshows</a>
+    <a id="lva-slideshows" class='btn btn-filter {{isActive "slideshow-filter-1" "lva"}}' data-filter="lva" data-which="1">LVA-Team Slideshows</a>
+  </div>
+  <div class='btn-group pull-right'>
+    <a id="fav-slideshows" class='btn btn-filter {{isActive "slideshow-filter-2" "fav"}}' data-filter="fav" data-which="2"><i class="icon-star"></i> Favourites</a>
+  </div>
+  <div class='clearfix'></div>
+  {{> tagFilter }}
+  <div class='slideshow create'>
+    <div class='well'>
+      <h2>
+        <a class='open'>Create New Slideshow</a>
+      </h2>
+    </div>
+  </div>
+  {{#each slideshows}}
+  <div class='slideshow'>
+    <div class='well'>
+      <h2>
+        <a class='open'>each</a>
+      </h2>
+    </div>
+  </div>
+  {{else}}
+  <div class='slideshow'>
+    <div class='well'>
+      <h2>
+        <a class='open'>Slideshow</a>
+      </h2>
+    </div>
+  </div>
+  {{/each}}
+</template>
+<template name='slides'>
+  <div class='row'>
+    <div class='span6'>
+      <div class='well'>
+        <div>
+          <button id='prev' onclick='goPrevious()'>Previous</button>
+          <button id='next' onclick='goNext()'>Next</button>
+          <span>Page:
+          <span id='page_num'></span>
+          /
+          <span id='page_count'></span></span>
+        </div>
+        <div>
+          <canvas id='the-canvas' style='border:1px solid black'></canvas>
+        </div>
+      </div>
+    </div>
+    <div class='span6'>
+      <div class='well'></div>
+    </div>
+  </div>
+</template>

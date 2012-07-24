@@ -1,0 +1,377 @@
+// Variables 
+$font: 'SubtleSansRegular' 
+
+$red: #f70852
+$green: #4dc206
+
+$bg1: #ebebeb
+$bg2: #f8f8f8
+
+$fg1: #333
+$fg2: #777
+$fg3: #aaa
+
+$margin: 15px
+$padding: 15px
+
+$iconSize: 50px
+
+@mixin column-shadow
+  -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.15)
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.15)
+
+@mixin well-shadow
+  -webkit-box-shadow: inset 1px 1px 3px 2px rgba(0, 0, 0, 0.1)
+  box-shadow: inset 1px 1px 3px 2px rgba(0, 0, 0, 0.1)
+
+@mixin achievement-shadow($bg, $shadow)
+  background: $shadow
+  background: -moz-linear-gradient(top, $shadow 0%, $bg 5%, $bg 100%)
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$shadow), color-stop(5%,$bg), color-stop(100%,$bg))
+  background: -webkit-linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
+  background: -o-linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
+  background: -ms-linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
+  background: linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
+
+@mixin border-radius($x)
+  -webkit-border-radius: $x
+  border-radius: $x
+
+@mixin box-sizing($x) 
+  -webkit-box-sizing: $x
+  -moz-box-sizing: $x
+  box-sizing: $x
+
+@mixin background-size($size) 
+  -webkit-background-size: $size
+  -moz-background-size: $size
+  -o-background-size: $size
+  background-size: $size
+
+::selection
+  background: lighten($green, 30%)
+  text-shadow: none
+
+::-moz-selection
+  background: lighten($green, 30%)
+  text-shadow: none
+
+body
+  overflow-y: scroll
+
+a
+  cursor: pointer
+
+.onescore-dollar
+  display: inline-block
+  width: 35px
+  height: 35px
+  background: url('/img/onescore_dollar.png') no-repeat
+  @include background-size(contain)
+
+.onescore-dollar-green
+  background: url('/img/onescore_dollar_green.png') no-repeat
+
+.onescore-dollar-red
+  background: url('/img/onescore_dollar_red.png') no-repeat
+
+.profile-pic
+  background: url('/img/dummy.png') 
+  @include background-size(contain)
+
+.filter
+  .sort
+    margin: 0 8px 11px 2px
+
+  .search-query
+    padding-left: 10px
+    padding-right: 10px
+    margin-bottom: 6px
+    @include border-radius(14px)
+
+  .nav-tabs
+    width: 100%
+    padding: 0 20px
+    margin-left: -19px
+  
+.navbar
+  z-index: 1060
+  text-shadow: none
+
+  .brand
+    padding: 0
+    margin: 0
+    background: url('/img/logo128.png') no-repeat
+    @include background-size(cover)
+
+  .nav-img
+    width: 30px
+    height: 30px
+    margin-top: 4px
+
+  .score
+    padding: 8px 10px 0px
+    .value
+      font:
+        family: $font
+        size: 28px
+        weight: normal
+    .onescore-dollar
+      height: 21px
+      width: 21px
+
+  .profile-pic
+    display: block
+    border: 1px solid rgba(255,255,255,0.5)
+    @include box-sizing(border-box)
+
+.well
+  box-shadow: none
+  border-color: #ddd
+
+  .heading
+    margin-bottom: 20px
+
+  .well
+    background-color: #fefefe
+    -webkit-box-shadow: silver 0 1px 4px 
+    box-shadow: silver 0 1px 4px  
+
+.menu
+  .nav-tabs > li > a
+    background: whiteSmoke
+
+#content
+  margin-top: 60px
+//  padding-top: 60px
+//  padding: 20px
+//  background: $bg2
+//  @include column-shadow
+
+.comment
+  .name
+    font-weight: bold
+
+  .hud
+    color: $fg2
+
+  .text
+    clear: both
+    width: 100%
+
+  .my
+    background-color: #FBFCCD
+
+  .lva
+    background-color: #E5EBFD
+
+.nested
+  padding-left: 30px
+
+.text-wrapper
+  width: 100%
+  @include box-sizing(border-box)
+
+  .comment-text
+    margin-bottom: 20px
+
+  .edit-text
+    background: none
+
+$activityWidth: 160px
+$activityHeight: 220px
+$activityPadding: 15px
+
+.activity
+  display: block
+  float: left
+  color: #333
+  
+  .well
+    position: relative
+    width: $activityWidth
+    height: $activityHeight
+    margin-right: 20px
+    margin-bottom: 20px
+    overflow: hidden
+    padding: 15px
+    border: none
+    @include background-size(cover)
+    @include box-sizing(border-box)
+    
+    .text
+      position: absolute
+      bottom: 0
+      left: 0
+      width: $activityWidth - (2*$activityPadding)
+      padding: $activityPadding
+      height: $activityHeight/3*2
+      background: rgba(255, 255, 255, 0.75)
+      -webkit-border-radius: 0 0 4px 4px
+      border-radius: 0 0 4px 4px
+
+    .my
+      background-color: rgba(253,252,205,0.75)
+
+    .lva
+      background-color: rgba(229,235,253,0.75)
+
+.btn-group
+  margin-bottom: 20px
+       
+.create
+  .well
+    background-color: transparent
+    border: 2px dashed #ccc
+    -webkit-box-shadow: none
+    box-shadow: none
+    
+    .open
+      color: #999
+    .text
+      color: #999
+      background: transparent
+
+.ta100
+  width: 100%
+  @include box-sizing(border-box)
+
+.activity-modal
+  position: absolute
+  top: 20px
+  margin-top: 0
+  margin-bottom: 20px
+
+  .modal-body
+    height: auto
+    max-height: none
+
+.modal-backdrop
+  background: #000
+  opacity: 0.5
+  filter: alpha(opacity=50)
+
+.modal-separator
+  border-bottom: 1px solid #DDD
+  @include border-radius(0px)
+
+#tag-filter
+  margin-top: -10px
+  margin-bottom: 20px
+
+.tag-list
+  .tag, h6.tags
+    display: inline-block
+    margin-right: 3px
+    
+  .active
+    background-color: #08c
+
+  .remove
+    color: inherit
+    &:hover
+      text-decoration: none
+
+.edittag-input
+  height: 16px
+  padding: 0 3px
+  margin-bottom: 0px!important
+  color: #333
+  text-shadow: inherit
+  background: none
+  @include box-sizing(border-box)
+
+  &:hover
+    color: #333
+
+.user
+  min-height: 50px
+  .name 
+    line-height: 80%
+    a
+      color: inherit
+      &:hover
+        text-decoration: none
+
+  .score
+    color: $green
+    font:
+      family: $font
+      size: 48px
+      weight: normal
+    line-height: 100%
+
+  .profile-pic
+    margin-right: $margin
+    margin-bottom: $margin
+    width: $iconSize 
+    height: $iconSize
+
+  .rank
+    clear: both
+    .span4
+      width: 33%
+      margin: 0
+
+.achievement
+  width: 100%
+  padding: 15px 19px
+  margin-left: -20px
+  border-left: 1px solid #ddd
+  border-right: 1px solid #ddd
+  @include achievement-shadow(whiteSmoke, #d9d9d9)
+
+  .icon
+    @include border-radius(6px)
+    display: block
+    float: left
+    width: $iconSize
+    height: $iconSize
+    background: url('/img/bg.png')
+    background-size: $iconSize $iconSize
+
+  .content
+    margin-left: $iconSize + $padding
+    .name
+      line-height: 80%
+      margin-bottom: 5px
+
+    .description
+      color: #777
+      .tag
+        color: $fg2
+        font-weight: normal
+        text-decoration: none
+
+  .nice
+    opacity: 0.5
+    filter: alpha(opacity=50)
+
+  .menu
+    list-style: none
+    margin: 0
+    .hide
+      display: none
+    li
+      float: left
+      margin-right: 5px
+
+  .value
+    font-size: 200%
+    line-height: 185%
+    color: #fff
+    text-align: center
+    width: $iconSize
+    height: $iconSize
+    margin-left: 10px
+    font-family: $font
+    background: url('/img/tag.png')
+    background-size: $iconSize 2*$iconSize 
+
+  .vote
+    margin-left: 10px
+    text-align: center
+
+  &:hover 
+    .hide
+      display: block
