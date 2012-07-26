@@ -62,6 +62,7 @@
     } else {
       id = Achievements.insert({
         user: Meteor.user()._id,
+        score: 0,
         created: false
       });
     }
@@ -641,7 +642,7 @@
       sel = Template.achievements.select();
       return Achievements.find(sel, {
         sort: {
-          score: 1
+          score: -1
         }
       });
     },
@@ -679,12 +680,13 @@
           entity: this._id
         });
         if (vote) {
-          return Votes.update(vote._id, {
+          Votes.update(vote._id, {
             $set: data
           });
         } else {
-          return Votes.insert(data);
+          Votes.insert(data);
         }
+        return Meteor.call('updateAchievementScore', this._id);
       },
       'click .fav': function(e) {
         var fav;

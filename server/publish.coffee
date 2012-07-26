@@ -32,29 +32,40 @@ Meteor.publish 'favourites', ->
 Meteor.publish 'quests', ->
   return Quests.find user: @userId()
 
-Meteor.methods
-  # TODO: Write a stub on client
-  updateTitleScore: (id) ->
-    upVotes = Votes.find(
-      entity: id
-      up: true
-    ).count()
+countVotes = (id, up) ->
+  return Votes.find(
+    entity: id
+    up: up
+  ).count()
 
-    downVotes = Votes.find(
-      entity: id
-      up: false
-    ).count()
+# TODO: Better score formula...
+calculateScore = (id) ->
+  up = countVotes id, true
+  down = countVotes id, false
+  return up - down
 
-    Titles.update id,
-      $set:
-        score: upVotes - downVotes
+updateScore = (collection, id, score, callback) ->
+  collection.update id,
+    $set:
+      score: score
     ,
-      # Callback
-      ->
-        title = Titles.findOne {},
-          sort:
-            score: -1
+      callback
 
+Meteor.methods
+  # TODO: Write stubs on client
+  updateAchievementScore: (id) ->
+    score = calculateScore id
+    updateScore Achievements, id, score
+
+
+  updateTitleScore: (id) ->
+    score = calculateScore id
+    updateScore Titles, id, score, ->
+      title = Titles.findOne id,
+        sort:
+          score: -1
+
+      if title
         Achievements.update title.entity,
           $set:
             title: title.title

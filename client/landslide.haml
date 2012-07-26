@@ -439,13 +439,13 @@
 %template(name='achievement')
   .achievement.fold
     %a.value.pull-right
-      %span.points {{likesNum}}
+      %span.points {{score}}
     .vote-container.pull-right
       %div
         %a
           <i class="vote icon-arrow-up {{voted "up"}}" title="Vote up" data-up="true"></i>
       %div
-        %span.count {{likesNum}}
+        %span.count {{score}}
       %div
         %a
           <i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i>

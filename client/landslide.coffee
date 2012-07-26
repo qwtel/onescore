@@ -41,6 +41,7 @@ Meteor.subscribe 'achievements', ->
   else
     id = Achievements.insert
       user: Meteor.user()._id
+      score: 0
       created: false
 
   Session.set 'newAchievement', id
@@ -489,7 +490,7 @@ _.extend Template.achievements,
     sel = Template.achievements.select()
     return Achievements.find sel,
       sort:
-        score: 1
+        score: -1
 
   newAchievement: ->
     id = Session.get 'newAchievement'
@@ -524,7 +525,7 @@ _.extend Template.achievement,
       else
         Votes.insert data
 
-      #Meteor.call 'updateTitleScore', @_id
+      Meteor.call 'updateAchievementScore', @_id
 
     'click .fav': (e) ->
       fav = Favourites.findOne
