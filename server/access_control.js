@@ -2,11 +2,36 @@
 (function() {
 
   Meteor.startup(function() {
-    var canModify;
-    canModify = function(userId, tasks) {
-      return _.all(tasks, function(task) {
-        return !task.privateTo || task.privateTo === userId;
+    var creator, self, unique, uniqueFav, uniqueQuest, uniqueVote;
+    creator = function(userId, entities) {
+      return _.all(entities, function(entity) {
+        return !entity.user || entity.user === userId;
       });
+    };
+    self = function(userId, doc) {
+      return userId === doc.user;
+    };
+    unique = function(Collection, userId, doc) {
+      var duplicate;
+      if (self(userId, doc)) {
+        duplicate = Collection.findOne({
+          entity: doc.entity,
+          user: doc.user
+        });
+        if (!duplicate) {
+          return true;
+        }
+      }
+      return false;
+    };
+    uniqueVote = function(userId, doc) {
+      return unique(Votes, userId, doc);
+    };
+    uniqueFav = function(userId, doc) {
+      return unique(Favourites, userId, doc);
+    };
+    uniqueQuest = function(userId, doc) {
+      return unique(Quests, userId, doc);
     };
     /*
       Todos.allow
@@ -16,10 +41,29 @@
         fetch: ['privateTo']
     */
 
-    return Comments.allow({
-      insert: function() {
-        return true;
-      }
+    Comments.allow({
+      insert: self,
+      update: creator
+    });
+    Achievements.allow({
+      insert: self,
+      update: creator
+    });
+    Titles.allow({
+      insert: self,
+      update: creator
+    });
+    Votes.allow({
+      insert: uniqueVote,
+      update: creator
+    });
+    Favourites.allow({
+      insert: uniqueFav,
+      update: creator
+    });
+    return Quests.allow({
+      insert: uniqueQuest,
+      update: creator
     });
   });
 

@@ -26,12 +26,12 @@ $iconSize: 50px
 
 @mixin achievement-shadow($bg, $shadow)
   background: $shadow
-  background: -moz-linear-gradient(top, $shadow 0%, $bg 5%, $bg 100%)
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$shadow), color-stop(5%,$bg), color-stop(100%,$bg))
-  background: -webkit-linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
-  background: -o-linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
-  background: -ms-linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
-  background: linear-gradient(top, $shadow 0%,$bg 5%,$bg 100%)
+  background: -moz-linear-gradient(top, $shadow 0px, $bg 5px, $bg 100px)
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0px,$shadow), color-stop(5px,$bg), color-stop(100px,$bg))
+  background: -webkit-linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
+  background: -o-linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
+  background: -ms-linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
+  background: linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
 
 @mixin border-radius($x)
   -webkit-border-radius: $x
@@ -98,6 +98,9 @@ a
   z-index: 1060
   text-shadow: none
 
+  ul
+    font-weight: bold
+
   .brand
     padding: 0
     margin: 0
@@ -132,11 +135,6 @@ a
   .heading
     margin-bottom: 20px
 
-  .well
-    background-color: #fefefe
-    -webkit-box-shadow: silver 0 1px 4px 
-    box-shadow: silver 0 1px 4px  
-
 .menu
   .nav-tabs > li > a
     background: whiteSmoke
@@ -149,6 +147,11 @@ a
 //  @include column-shadow
 
 .comment
+  margin-bottom: 10px
+
+  .sup
+    border-bottom: 1px solid #e5e5e5
+
   .name
     font-weight: bold
 
@@ -313,7 +316,11 @@ $activityPadding: 15px
       width: 33%
       margin: 0
 
-.achievement
+.line
+  width: 100%
+  border-bottom: 1px solid #e5e5e5
+
+.fold
   width: 100%
   padding: 15px 19px
   margin-left: -20px
@@ -321,6 +328,16 @@ $activityPadding: 15px
   border-right: 1px solid #ddd
   @include achievement-shadow(whiteSmoke, #d9d9d9)
 
+i 
+  opacity: 0.5
+  filter: alpha(opacity=50)
+
+i.active
+  opacity: 1
+  filter: alpha(opacity=100)
+
+
+.achievement
   .icon
     @include border-radius(6px)
     display: block
@@ -332,20 +349,14 @@ $activityPadding: 15px
 
   .content
     margin-left: $iconSize + $padding
-    .name
+    .title
       line-height: 80%
       margin-bottom: 5px
 
     .description
-      color: #777
       .tag
         color: $fg2
         font-weight: normal
-        text-decoration: none
-
-  .nice
-    opacity: 0.5
-    filter: alpha(opacity=50)
 
   .menu
     list-style: none
@@ -357,10 +368,12 @@ $activityPadding: 15px
       margin-right: 5px
 
   .value
+    display: block
     font-size: 200%
     line-height: 185%
     color: #fff
     text-align: center
+    text-decoration: none
     width: $iconSize
     height: $iconSize
     margin-left: 10px
@@ -368,10 +381,22 @@ $activityPadding: 15px
     background: url('/img/tag.png')
     background-size: $iconSize 2*$iconSize 
 
-  .vote
+  .vote-container
     margin-left: 10px
     text-align: center
 
   &:hover 
     .hide
       display: block
+
+.dummy
+  .achievement
+    .icon
+      background: url('/img/bg_new.png')
+    .content
+      .title a
+        color: #808080
+    .value
+      background: url('/img/tag_new.png')
+      background-size: $iconSize $iconSize 
+    

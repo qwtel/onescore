@@ -47,7 +47,7 @@
     </div>
   </div>
   {{/if}}
-  {{#if page "explore"}}
+  {{#if page "achievements"}}
   <div class='row'>
     <div class='span4'>
       <div class='well'>
@@ -59,14 +59,12 @@
     </div>
     <div class='span8'>
       <div class='well'>
-        <h3 class='heading'>Achievements</h3>
-        {{> filter }}
-        <div class='clearfix'></div>
+        {{> achievements }}
       </div>
     </div>
   </div>
   {{/if}}
-  {{#if page "compete"}}
+  {{#if page "ladder"}}
   <div class='row'>
     <div class='span4'>
       <div class='well'>
@@ -224,42 +222,29 @@
   </div>
 </template>
 <template name='header'>
-  <a class='brand nav-img pull-left nav-item' data-href='dashboard'></a>
+  <a class='brand nav-img pull-left nav-item' href='dashboard'></a>
   <ul class='nav'>
     <li class='dropdown'>
       <a class='dropdown-toggle' data-toggle='dropdown'><span>Onescore</span>
       <b class='caret'></b></a>
       <ul class='dropdown-menu'>
+        {{#each categories}}
         <li>
-          <a class='nav-item'>Carrier</a>
+          <a class='nav-item'>{{name}}</a>
         </li>
-        <li>
-          <a class='nav-item'>Education</a>
-        </li>
-        <li>
-          <a class='nav-item'>Health</a>
-        </li>
-        <li>
-          <a class='nav-item'>Meta</a>
-        </li>
-        <li>
-          <a class='nav-item'>Random</a>
-        </li>
-        <li>
-          <a class='nav-item'>Sports</a>
-        </li>
+        {{/each}}
       </ul>
     </li>
     {{#each items}}
-    <li class='nav-{{url}} {{active}}'>
-      <a class='nav-item' data-href='{{url}}'>{{name}}</a>
+    <li class="nav-{{url}} {{isActive "page" url}}">
+    <a class='nav-item' href='{{url}}'>{{name}}</a>
     </li>
     {{/each}}
   </ul>
   {{#if currentUser}}
-  <a class='profile-pic nav-item nav-img pull-right' data-href='profile'></a>
+  <a class='profile-pic nav-item nav-img pull-right' href='profile'></a>
   <div class='score pull-right'><span class='value'>0</span>
-  <i class='onescore-dollar'></i></div>
+  <span class='onescore-dollar'></span></div>
   {{else}}
   <div class='login pull-right'>
     {{> loginButtons}}
@@ -278,7 +263,7 @@
     <input id='user-name' type='text' value='{{name}}' />
     {{/unless}}
     <h3 class='score'><span>0</span>
-    <i class='onescore-dollar onescore-dollar-green'></i></h3>
+    <span class='onescore-dollar onescore-dollar-green'></span></h3>
     <div class='clearfix'></div>
   </div>
   {{/with}}
@@ -444,15 +429,226 @@
   </div>
 </template>
 <template name='achievements'>
+  <h3 class='heading'>Achievements</h3>
+  {{> filter}}
+  {{#with newAchievement}}
+  <a class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></a>
+  <div class='clearfix'></div>
+  <div class='dummy'>
+    {{> achievement}}
+  </div>
+  {{#if equals "expand" _id}}
+  {{> editAchievement}}
+  {{/if}}
+  {{/with}}
   {{#each achievements}}
   {{> achievement}}
+  {{#if equals "expand" _id}}
+  {{> editAchievement}}
+  {{/if}}
+  {{else}}
+  {{#if noContent}}
+  {{> noContent}}
+  {{else}}
+  {{> loading}}
+  {{/if}}
   {{/each}}
+</template>
+<template name='achievement'>
+  <div class='achievement fold'>
+    <a class='value pull-right'>
+      <span class='points'>{{likesNum}}</span>
+    </a>
+    <div class='vote-container pull-right'>
+      <div>
+        <a>
+          <i class="vote icon-arrow-up {{voted "up"}}" title="Vote up" data-up="true"></i>
+        </a>
+      </div>
+      <div>
+        <span class='count'>{{likesNum}}</span>
+      </div>
+      <div>
+        <a>
+          <i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i>
+        </a>
+      </div>
+    </div>
+    <a class='icon pull-left'></a>
+    <div class='content'>
+      <div class='head'>
+        <ul class='menu pull-right'>
+          {{#unless equals "newAchievement" _id}}
+          <li class='accomplish'>
+            <a>
+              <i class='icon-certificate'></i>
+            </a>
+          </li>
+          <li class='fav'>
+            <a><i class="icon-star {{faved}}"></i></a>
+          </li>
+          <li class='quest'>
+            <a><i class="icon-book {{quest}}"></i></a>
+          </li>
+          {{/unless}}
+          <li class='edit'>
+            <a><i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i></a>
+          </li>
+          {{#unless equals "newAchievement" _id}}
+          <li class='talk'>
+            <a><i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i></a>
+          </li>
+          {{/unless}}
+        </ul>
+        <h4 class='title'>
+          {{#if title}}
+          <a>{{title}}</a>
+          {{else}}
+          {{#if equals "newAchievement" _id}}
+          <a class='edit'>Create new achievement</a>
+          {{else}}
+          <a style='font-weight: normal'>&lt;No title suggested&gt;</a>
+          {{/if}}
+          {{/if}}
+        </h4>
+      </div>
+      <div class='description'>
+        {{#if description}}
+        <span>{{{wrapTags description}}}</span>
+        {{else}}
+        <span>This is a preview!</span>
+        {{/if}}
+      </div>
+    </div>
+    <div class='clearfix'></div>
+  </div>
+</template>
+<template name='titleSuggestions'>
+  <table class='table table-condensed'>
+    <thead>
+      <tr>
+        <th>Vote</th>
+        <th>Score</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each titles}}
+      <tr>
+        <td>
+          <a><i class="vote icon-arrow-up {{voted "up"}}" title="Vote up" data-up="true"></i></a>
+          <a><i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i></a>
+        </td>
+        <td>
+          <span>{{score}}</span>
+        </td>
+        <td>{{title}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+<template name='editAchievement'>
+  {{#if equals "newAchievement" _id}}
+  <h3 class='heading line'>Create new achievement</h3>
+  {{else}}
+  <ul class='nav nav-tabs'>
+    <li class="{{isActive "expandTab" "edit"}}">
+    <a class='tab' data-tab='edit'>Edit</a>
+    </li>
+    <li class="{{isActive "expandTab" "talk"}}">
+    <a class='tab' data-tab='talk'>Talk</a>
+    </li>
+  </ul>
+  {{/if}}
+  {{#if equals "expandTab" "edit"}}
+  {{#if equals "newAchievement" _id}}
+  {{#if show "styleGuide"}}
+  <div class='alert alert-block alert-info'>
+    <a class='close' data-dismiss='alert' href='#'>×</a>
+    <h4 class='alert-heading'>Achievement style guide</h4>
+    <p>Achievements should have the following properties:</p>
+    <dl>
+      <dt>
+        <h5 class='alert-heading'>Atomic</h5>
+      </dt>
+      <dd>Achievements should not be composed.</dd>
+      <dt>
+        <h5 class='alert-heading'>Universal</h5>
+      </dt>
+      <dd>Achievements should be easy to agree on.</dd>
+      <dt>
+        <h5 class='alert-heading'>Unique</h5>
+      </dt>
+      <dd>Check if the achievement already exists!</dd>
+    </dl>
+  </div>
+  {{/if}}
+  {{/if}}
+  <div class='form-horizontal' id='form-{{_id}}'>
+    <fieldset>
+      <div class='control-group'>
+        <label class='control-label' for='title-{{_id}}'>Title</label>
+        <div class='controls'>
+          <div class='input-append'><input class='span3 title' data-field='title' id='title-{{_id}}' type='text' /><button class='btn suggest' type='button'>Suggest</button></div>
+          <p class='help-block heading'>
+            <strong>NOTE:</strong>
+            You don't have to suggest a title.
+          </p>
+          {{> titleSuggestions}}
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='description-{{_id}}'>Description</label>
+        <div class='controls'>
+          <textarea class='input-xlarge description' data-field='description' id='description-{{_id}}' rows='4'>{{description}}</textarea>
+          <p class='help-block'>
+            What has to be done to complete this achievement?
+            <br />
+            <strong>HINT:</strong>
+            You can include #tags here.
+          </p>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='category-{{_id}}'>Category</label>
+        <div class='controls'>
+          <select class='category' data-field='category' id='category-{{_id}}'>
+            <option></option>
+            {{#each categories}}
+            <option value="{{name}}" {{selected ../category}}>{{name}}</option>
+            {{/each}}
+          </select>
+          <p class='help-block'>If it doesn't fit in anywhere, choose 'Random'</p>
+        </div>
+      </div>
+      <div class='form-actions'>
+        <a class='btn btn-primary create'>Create</a>
+        <a class='btn discard'>Discard</a>
+      </div>
+    </fieldset>
+  </div>
+  {{/if}}
+  {{#if equals "expandTab" "talk"}}
+  {{> dashboard}}
+  {{/if}}
+  {{#if equals "expandTab" "rev"}}
+  <span>rev...</span>
+  {{/if}}
+</template>
+<template name='noContent'>
+  <div class='fold'>
+    <div class='alert'>
+      <strong>Warning!</strong>
+      No Content.
+    </div>
+  </div>
 </template>
 <template name='comments'>
   {{#each comments}}
-  {{> achievement}}
+  {{> comment}}
   {{#each replies}}
-  {{> achievement}}
+  {{> comment}}
   {{/each}}
   {{/each}}
   {{else}}
@@ -464,128 +660,41 @@
 </template>
 <template name='comment'>
   <div class='comment {{nested}}' id='comment-{{_id}}'>
-    <div class="well {{isMe user}} {{isLva user}}">
-    <div class='pull-left'>
-      <span class='name'>{{getUsername user}}</span>
-      {{#if userIn likes}}
-      <a class='unlike icon-star' title='Unlike'></a>
-      {{else}}
-      <a class='like icon-star-empty' title='Like'></a>
-      {{/if}}
-      <span class='count'>{{likesNum}}</span>
-    </div>
-    <div class='hud pull-right'>
-      <span class='date'>{{formatDate date}}</span>
-      {{#if belongsTo user}}
-      <a class='remove icon-remove' title='Delete'></a>
-      <a class='edit icon-pencil' title='Edit'></a>
-      {{/if}}
-      <a class='reply icon-share-alt' title='Reply'></a>
-    </div>
-    <div class='text'>
-      {{#if editComment}}
-      <div class='text-wrapper'>
-        <textarea class='edit-text ta100' id='edit-{{_id}}' rows='3'>{{text}}</textarea>
-      </div>
-      {{else}}
-      <p>{{mention}} {{{addLineBreaks text}}}</p>
-      {{/if}}
-    </div>
-    </div>
-    {{#if addComment}}
-    <div class='text-wrapper nested'>
-      <textarea class='comment-text ta100' id='reply-{{_id}}' rows='3'></textarea>
-    </div>
-    {{/if}}
-  </div>
-</template>
-<template name='achievement'>
-  <div class='achievement'>
-    <div class='value pull-right'>
-      <span class='points'>{{likesNum}}</span>
-    </div>
-    <div class='vote pull-right nice'>
-      <div>
-        <a class='up icon-arrow-up'></a>
-      </div>
-      <div>
+    <div class='sup'>
+      <div class='pull-left'>
+        <span class='name'>{{getUsername user}}</span>
+        {{#if userIn likes}}
+        <a class='unlike icon-star' title='Unlike'></a>
+        {{else}}
+        <a class='like icon-star-empty' title='Like'></a>
+        {{/if}}
         <span class='count'>{{likesNum}}</span>
       </div>
-      <div>
-        <a class='down icon-arrow-down'></a>
+      <div class='hud pull-right'>
+        <span class='date'>{{formatDate date}}</span>
+        {{#if belongsTo user}}
+        <a class='remove icon-remove' title='Delete'></a>
+        <a class='edit icon-pencil' title='Edit'></a>
+        {{/if}}
+        <a class='reply icon-share-alt' title='Reply'></a>
       </div>
+      <div class='text'>
+        {{#if editComment}}
+        <div class='text-wrapper'>
+          <textarea class='edit-text ta100' id='edit-{{_id}}' rows='3'>{{text}}</textarea>
+        </div>
+        {{else}}
+        <p>{{mention}} {{{addLineBreaks text}}}</p>
+        {{/if}}
+      </div>
+      {{#if addComment}}
+      <div class='text-wrapper nested'>
+        <textarea class='comment-text ta100' id='reply-{{_id}}' rows='3'></textarea>
+      </div>
+      {{/if}}
     </div>
-    <a class='icon pull-left'></a>
-    <div class='content'>
-      <div class='head'>
-        <h4 class='name'>
-          <a>{{text}}</a>
-        </h4>
-      </div>
-      <div class='description'>
-        <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma</span>
-      </div>
-    </div>
-    <div class='clearfix'></div>
   </div>
 </template>
 <template name='microTasks'>
   <div class='test'></div>
-</template>
-<template name='slideshows'>
-  <div class='btn-group pull-left'>
-    <a id="my-slideshows" class='btn btn-filter {{isActive "slideshow-filter-1" "my"}}' data-filter="my" data-which="1">My Slideshows</a>
-    <a id="lva-slideshows" class='btn btn-filter {{isActive "slideshow-filter-1" "lva"}}' data-filter="lva" data-which="1">LVA-Team Slideshows</a>
-  </div>
-  <div class='btn-group pull-right'>
-    <a id="fav-slideshows" class='btn btn-filter {{isActive "slideshow-filter-2" "fav"}}' data-filter="fav" data-which="2"><i class="icon-star"></i> Favourites</a>
-  </div>
-  <div class='clearfix'></div>
-  {{> tagFilter }}
-  <div class='slideshow create'>
-    <div class='well'>
-      <h2>
-        <a class='open'>Create New Slideshow</a>
-      </h2>
-    </div>
-  </div>
-  {{#each slideshows}}
-  <div class='slideshow'>
-    <div class='well'>
-      <h2>
-        <a class='open'>each</a>
-      </h2>
-    </div>
-  </div>
-  {{else}}
-  <div class='slideshow'>
-    <div class='well'>
-      <h2>
-        <a class='open'>Slideshow</a>
-      </h2>
-    </div>
-  </div>
-  {{/each}}
-</template>
-<template name='slides'>
-  <div class='row'>
-    <div class='span6'>
-      <div class='well'>
-        <div>
-          <button id='prev' onclick='goPrevious()'>Previous</button>
-          <button id='next' onclick='goNext()'>Next</button>
-          <span>Page:
-          <span id='page_num'></span>
-          /
-          <span id='page_count'></span></span>
-        </div>
-        <div>
-          <canvas id='the-canvas' style='border:1px solid black'></canvas>
-        </div>
-      </div>
-    </div>
-    <div class='span6'>
-      <div class='well'></div>
-    </div>
-  </div>
 </template>

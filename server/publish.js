@@ -31,8 +31,63 @@
     });
   });
 
-  Meteor.publish('dashboardComments', function() {
-    return DashboardComments.find();
+  Meteor.publish('achievements', function() {
+    return Achievements.find();
+  });
+
+  Meteor.publish('titles', function(entity) {
+    return Titles.find({
+      entity: entity
+    });
+  });
+
+  Meteor.publish('votes', function() {
+    return Votes.find({
+      user: this.userId()
+    });
+  });
+
+  Meteor.publish('favourites', function() {
+    return Favourites.find({
+      user: this.userId()
+    });
+  });
+
+  Meteor.publish('quests', function() {
+    return Quests.find({
+      user: this.userId()
+    });
+  });
+
+  Meteor.methods({
+    updateTitleScore: function(id) {
+      var downVotes, upVotes;
+      upVotes = Votes.find({
+        entity: id,
+        up: true
+      }).count();
+      downVotes = Votes.find({
+        entity: id,
+        up: false
+      }).count();
+      return Titles.update(id, {
+        $set: {
+          score: upVotes - downVotes
+        }
+      }, function() {
+        var title;
+        title = Titles.findOne({}, {
+          sort: {
+            score: -1
+          }
+        });
+        return Achievements.update(title.entity, {
+          $set: {
+            title: title.title
+          }
+        });
+      });
+    }
   });
 
 }).call(this);

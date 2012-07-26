@@ -1,13 +1,14 @@
-var Activities, Comments, Drafts, Slides, Slideshows, Ushers;
+var Slideshows = new Meteor.Collection('slideshows'),
+    Slides = new Meteor.Collection('slides'),
+    Comments = new Meteor.Collection('comments'),
+    Ushers = new Meteor.Collection('ushers'),
+    //Activities = new Meteor.Collection('activities'),
+    Drafts = new Meteor.Collection('drafts'),
 
-Slideshows = new Meteor.Collection('slideshows');
+    Achievements = new Meteor.Collection('achievements');
+    Activities = new Meteor.Collection('activities');
+    Titles = new Meteor.Collection('titles');
 
-Slides = new Meteor.Collection('slides');
-
-Comments = new Meteor.Collection('comments');
-
-Ushers = new Meteor.Collection('ushers');
-
-Activities = new Meteor.Collection('activities');
-
-Drafts = new Meteor.Collection('drafts');
+    Votes = new Meteor.Collection('votes');
+    Favourites = new Meteor.Collection('favourites');
+    Quests = new Meteor.Collection('quests');

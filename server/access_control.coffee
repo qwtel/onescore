@@ -1,7 +1,30 @@
 Meteor.startup ->
-  canModify = (userId, tasks) ->
-    return _.all tasks, (task) ->
-      return not task.privateTo or task.privateTo is userId
+  creator = (userId, entities) ->
+    return _.all entities, (entity) ->
+      return not entity.user or entity.user is userId
+
+  self = (userId, doc) ->
+    return userId is doc.user
+
+  unique = (Collection, userId, doc) ->
+    if self(userId, doc)
+      duplicate = Collection.findOne
+        entity: doc.entity
+        user: doc.user
+
+       if not duplicate
+         return true
+
+    return false
+
+  uniqueVote = (userId, doc) ->
+    return unique Votes, userId, doc
+
+  uniqueFav = (userId, doc) ->
+    return unique Favourites, userId, doc
+
+  uniqueQuest = (userId, doc) ->
+    return unique Quests, userId, doc
 
   ###
   Todos.allow
@@ -12,5 +35,25 @@ Meteor.startup ->
   ###
 
   Comments.allow
-    insert: -> return true
-    #can't update or remove
+    insert: self
+    update: creator
+
+  Achievements.allow
+    insert: self
+    update: creator
+
+  Titles.allow
+    insert: self
+    update: creator
+
+  Votes.allow
+    insert: uniqueVote
+    update: creator
+
+  Favourites.allow
+    insert: uniqueFav
+    update: creator
+
+  Quests.allow
+    insert: uniqueQuest
+    update: creator

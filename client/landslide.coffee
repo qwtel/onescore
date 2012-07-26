@@ -16,29 +16,46 @@ Meteor.subscribe 'drafts', Session.get 'user'
 
 Session.set 'topic', 'dashboard'
 Meteor.autosubscribe ->
-  topic = Session.get 'topic'
+  topic = Session.get 'expand'
   if topic
     Session.set 'commentsLoaded', false
     Meteor.subscribe 'comments', topic, ->
       Session.set 'commentsLoaded', true
 
-###
-Meteor.subscribe 'slideshows', ->
-  unless Session.get 'slideshow_id'
-    slideshow = Slideshows.findOne {},
-      sort:
-        name: 1
+  achievement = Session.get 'expand'
+  if achievement
+    Session.set 'titlesLoaded', false
+    Meteor.subscribe 'titles', achievement, ->
+      Session.set 'titlesLoaded', true
 
-Meteor.autosubscribe ->
-  slideshow_id = Session.get 'slideshow_id'
-  if slideshow_id
-    Meteor.subscribe 'slides', slideshow_id
+Session.set 'achievements', false
+Meteor.subscribe 'achievements', ->
+  Session.set 'achievementsLoaded', true
+  # HACK: This should go somewhere else...
+  newAchievement = Achievements.findOne
+    user: Meteor.user()._id
+    created: false
 
-    slide_id = Session.get 'slide_id'
-    if slide_id
-      Meteor.subscribe 'comments', slide_id
-###
+  if newAchievement
+    id = newAchievement._id
+  else
+    id = Achievements.insert
+      user: Meteor.user()._id
+      created: false
 
+  Session.set 'newAchievement', id
+
+Session.set 'votesLoaded', false
+Meteor.subscribe 'votes', ->
+  Session.set 'votesLoaded', true
+
+Session.set 'favsLoaded', false
+Meteor.subscribe 'favourites', ->
+  Session.set 'favsLoaded', true
+
+Session.set 'questsLoaded', false
+Meteor.subscribe 'quests', ->
+  Session.set 'questsLoaded', true
 
 makeOkCancelHandler = (options) ->
   ok = options.ok || ->
@@ -77,9 +94,11 @@ findTags = (text) ->
   return tags
 
 wrapTags = (text) ->
-  pattern = /// [^&]\B(#(\w\w+)) ///g
-  text = _.escape text
-  return text.replace pattern, ' <a class="tag" data-tag="$2">$1</a>'
+  if text
+    pattern = /// [^&]\B(#(\w\w+)) ///g
+    text = _.escape text
+    return text.replace pattern, ' <a class="tag" data-tag="$2">$1</a>'
+  return ''
 
 $.fn.clear = ->
   $(this).val ''
@@ -123,6 +142,12 @@ hardReset = ->
   Session.set 'activity-filter-2', null
   Session.set 'tagFilter', null
 
+Handlebars.registerHelper 'show', (name) ->
+  return Session.equals(name, true)
+
+Handlebars.registerHelper 'equals', (name, value) ->
+  return Session.equals(name, value)
+
 Handlebars.registerHelper 'isActive', (name, value) ->
   return if Session.equals(name, value) then 'active' else ''
 
@@ -149,6 +174,32 @@ Handlebars.registerHelper 'wrapTags', wrapTags
 
 Handlebars.registerHelper 'getUsername', getUsername
 
+items = [
+    name: 'Achievements'
+  ,
+    name: 'Ladder'
+]
+
+categories = [
+    name: 'Carrier'
+  ,
+    name: 'Education'
+  ,
+    name: 'Health'
+  ,
+    name: 'Meta'
+  ,
+    name: 'Random'
+  ,
+    name: 'Sports'
+]
+
+Handlebars.registerHelper 'categories', ->
+  for cat in categories
+    unless cat.url
+      cat.url = cat.name.toLowerCase()
+  return categories
+
 _.extend Template.content,
   page: (page) ->
     return Session.equals 'page', page
@@ -156,20 +207,14 @@ _.extend Template.content,
 _.extend Template.header,
   events:
     'click .nav-item': (e) ->
-      Router.navigate $(e.target).data('href'), true
+      if e.which is 1
+        e.preventDefault()
+        Router.navigate $(e.target).attr('href'), true
 
   items: ->
-    items = [
-        name: 'Explore'
-      ,
-        name: 'Compete'
-    ]
-
     for item in items
       unless item.url
         item.url = item.name.toLowerCase()
-      item.active = if Session.equals('page', item.url) then 'active' else ''
-
     return items
 
 _.extend Template.dashboard,
@@ -192,10 +237,10 @@ _.extend Template.dashboard,
           Comments.insert
             text: text
             date: new Date
-            topic: Session.get 'topic'
+            topic: Session.get 'expand'
             parent: null
             mention: null
-            user: Session.get 'user'
+            user: Meteor.user()._id
           Session.set 'add-comment', null
           Session.set 'edit-comment', null
           e.target.value = ""
@@ -213,10 +258,10 @@ _.extend Template.comments,
             Comments.insert
               text: text
               date: new Date
-              topic: Session.get 'topic'
+              topic: Session.get 'expand'
               parent: Session.get 'thread'
               mention: @user
-              user: Session.get 'user'
+              user: Meteor.user()._id
 
           else if Session.equals 'edit-comment', @_id
             Comments.update @_id,
@@ -229,7 +274,7 @@ _.extend Template.comments,
 
   select: (id) ->
     sel =
-      topic: Session.get 'topic'
+      topic: Session.get 'expand'
       parent: null
     
     if id
@@ -262,7 +307,7 @@ _.extend Template.comments,
       return Comments.find(sel).count() is 0
     return false
 
-_.extend Template.achievement,
+_.extend Template.comment,
   events:
     'click .reply': (e) ->
       Session.set 'add-comment', @_id
@@ -314,6 +359,234 @@ _.extend Template.achievement,
   mention: ->
     if @mention isnt null
       return "@#{getUsername(@mention)}:"
+
+Session.toggle = (name, value) ->
+  if value?
+    if Session.equals name, value
+      Session.set name, null
+    else
+      Session.set name, value
+  else
+    Session.set name, !Session.get(name)
+
+_.extend Template.titleSuggestions,
+  events:
+    'click .vote': (e) ->
+      $t = $(e.target)
+      data =
+        user: Meteor.user()._id
+        entity: @_id
+        up: $t.data 'up'
+
+      vote = Votes.findOne
+        user: Meteor.user()._id
+        entity: @_id
+
+      if vote
+        Votes.update vote._id,
+          $set: data
+      else
+        Votes.insert data
+
+      Meteor.call 'updateTitleScore', @_id
+
+  titles: ->
+    id = Session.get 'expand'
+    titles = Titles.find
+      entity: id
+      user: Meteor.user()._id
+    ,
+      sort:
+        score: -1
+
+    return titles
+
+  voted: (state) ->
+    state = if state is "up" then true else false
+
+    vote = Votes.findOne
+      user: Meteor.user()._id
+      entity: @_id
+    if vote and vote.up is state
+      return 'active'
+    return ''
+
+Session.set 'styleGuide', true
+
+_.extend Template.editAchievement,
+  events:
+    'click .close': (e) ->
+      Session.set 'styleGuide', false
+
+    'click .discard': (e) ->
+      Session.toggle 'expand', @_id
+
+    'click .suggest': (e) ->
+      title = $("#title-#{@_id}").val()
+
+      Titles.insert
+        entity: @_id
+        title: title
+        user: Meteor.user()._id
+        score: 0
+
+    'change .category': (e) ->
+      Achievements.update @_id,
+        $set:
+          category: $("#category-#{@_id}").val()
+
+    'change .description': (e) ->
+      description = $("#description-#{@_id}").val()
+      tags = findTags description
+
+      #_.each @tags, (x) ->
+      #  unless _.contains tags, x
+      #    tags.push x
+
+      Achievements.update @_id,
+        $set:
+          description: description
+          tags: tags
+
+    'click .create': (e) ->
+      #data = {}
+      #
+      #$('#form-new').find('input, textarea, select').each ->
+      #  $t = $(this)
+      #  field = $t.data('field')
+      #  if field?
+      #    data[field] = $t.val()
+
+      Achievements.update @_id,
+        $set:
+          created: true
+
+      Session.set 'newAchievement', null
+      Session.set 'expand', null
+
+    'click .tab': (e) ->
+      tab = $(e.target).data 'tab'
+      Session.set 'expandTab', tab
+
+  selected: (category) ->
+    if category
+      return if category is @name then 'selected' else ''
+    else
+      return if 'Random' is @name then 'selected' else ''
+
+_.extend Template.achievements,
+  events:
+    'click .new': (e) ->
+      Session.toggle 'expand', @_id
+      Session.set 'expandTab', 'edit'
+
+  select: () ->
+    sel = {}
+    sel.created = true
+    return sel
+
+  achievements: ->
+    sel = Template.achievements.select()
+    return Achievements.find sel,
+      sort:
+        score: 1
+
+  newAchievement: ->
+    id = Session.get 'newAchievement'
+    return Achievements.findOne id
+
+  noContent: ->
+    if Session.equals 'achievementsLoaded', true
+      sel = Template.achievements.select()
+      return Achievements.find(sel).count() is 0
+    return false
+
+_.extend Template.achievement,
+  events:
+    'click .edit': (e) ->
+      Session.set 'expand', @_id
+      Session.set 'expandTab', 'edit'
+
+    'click .vote': (e) ->
+      $t = $(e.target)
+      data =
+        user: Meteor.user()._id
+        entity: @_id
+        up: $t.data 'up'
+
+      vote = Votes.findOne
+        user: Meteor.user()._id
+        entity: @_id
+
+      if vote
+        Votes.update vote._id,
+          $set: data
+      else
+        Votes.insert data
+
+      #Meteor.call 'updateTitleScore', @_id
+
+    'click .fav': (e) ->
+      fav = Favourites.findOne
+        user: Meteor.user()._id
+        entity: @_id
+
+      if fav
+        Favourites.update fav._id,
+          $set:
+            active: !fav.active
+      else
+        Favourites.insert
+          user: Meteor.user()._id
+          entity: @_id
+          active: true
+
+    'click .quest': (e) ->
+      quest = Quests.findOne
+        user: Meteor.user()._id
+        entity: @_id
+
+      if quest
+        Quests.update quest._id,
+          $set:
+            active: !quest.active
+      else
+        Quests.insert
+          user: Meteor.user()._id
+          entity: @_id
+          active: true
+
+    'click .talk': (e) ->
+      Session.set 'expand', @_id
+      Session.set 'expandTab', 'talk'
+
+  faved: ->
+    fav = Favourites.findOne
+      user: Meteor.user()._id
+      entity: @_id
+      active: true
+    return if fav then 'active' else ''
+
+  quest: ->
+    fav = Quests.findOne
+      user: Meteor.user()._id
+      entity: @_id
+      active: true
+    return if fav then 'active' else ''
+
+  voted: (state) ->
+    state = if state is 'up' then true else false
+
+    vote = Votes.findOne
+      user: Meteor.user()._id
+      entity: @_id
+    if vote and vote.up is state
+      return 'active'
+    return ''
+
+
+  likesNum: ->
+    return if @likes? then @likes.length else 0
 
 _.extend Template.activities,
   events:
@@ -657,41 +930,3 @@ class AppRouter extends Backbone.Router
 Router = new AppRouter
 Meteor.startup ->
   Backbone.history.start pushState: true
-
-_.extend Template.slideshows,
-  events:
-    'click .btn-filter': (e) ->
-      Session.set 'tagFilter', null
-      filter = $(e.target).data 'filter'
-      which = $(e.target).data 'which'
-      if Session.get("slideshow-filter-#{which}") is filter
-          Session.set "slideshow-filter-#{which}", null
-      else
-        Session.set "slideshow-filter-#{which}", filter
-
-    'click .open': (e) ->
-      console.log 'navigate'
-      Router.navigate 'slides/'+@_id, true
-
-  select: ->
-    sel = {}
-
-    if Session.equals 'slideshow-filter-1', 'my'
-      sel.user = Session.get 'user'
-
-    else if Session.equals 'slideshow-filter-1', 'lva'
-      sel.user = $lt: 2000000
-
-    if Session.equals 'slideshow-filter-2', 'fav'
-      sel.likes = Session.get 'user'
-
-    return sel
-
-  slideshows: ->
-    return Slideshows.find()
-
-_.extend Template.slides,
-  events:
-    'click #next': (e) ->
-
-    'click #prev': (e) ->
