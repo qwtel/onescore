@@ -14,7 +14,7 @@
 %body
   .navbar.navbar-fixed-top
     .navbar-inner
-      .container
+      %header.container
         {{> header }}
 
   #content.container
@@ -31,45 +31,45 @@
           %a.btn.btn-primary.btn-large Learn more
   .row
     .span8
-      .well
+      %section.well
         %h3.heading Home
         {{> filter }}
         {{> dashboard }}
 
     .span4
-      .well 
+      %aside.well 
         {{> userWidget }}
-      .well 
+      %aside.well 
         %h3 FAQ
-      .well 
+      %aside.well 
         %h3 Tags
-      .well 
+      %aside.well 
         %h3 Quest Items
   {{/if}}
 
   {{#if page "achievements"}}
   .row
     .span4
-      .well 
+      %aside.well.hidden-phone
         %h3 Tags
-      .well 
+      %aside.well.hidden-phone
         %h3 Quest Items
     .span8
-      .well 
+      %section.well 
         {{> achievements }}
   {{/if}}
 
   {{#if page "ladder"}}
   .row
     .span4
-      .well 
+      %aside.well.hidden-phone 
         %h3 League
-      .well 
+      %aside.well.hidden-phone 
         %h3 ???
-      .well 
+      %aside.well.hidden-phone 
         %h3 Quest Items
     .span8
-      .well 
+      %section.well 
         %h3.heading Ladder
         {{> filter }}
         .clearfix
@@ -78,17 +78,17 @@
   {{#if page "profile"}}
   .row
     .span12
-      .well 
+      %section.well 
         {{> userWidget }}
   .row
     .span4
       {{> menu }}
-      .well 
+      %aside.well.hidden-phone 
         %h3 Tags
-      .well 
+      %aside.well.hidden-phone 
         %h3 Quest Items
     .span8
-      .well 
+      %section.well 
         %h3.heading Activity
         {{> filter }}
         .clearfix
@@ -140,7 +140,7 @@
     {{/each}}
 
 %template(name='menu')
-  .menu
+  %nav.menu
     %ul.nav.nav-tabs.nav-stacked
       %li
         %a(href="#")
@@ -170,7 +170,7 @@
 
     %input.input-medium.search-query.pull-right(type="text" placeholder="Search")/
 
-    %ul.nav.nav-tabs 
+    %nav.nav.nav-tabs 
       %li.active 
         %a All
       %li
@@ -197,7 +197,7 @@
 
 %template(name='header')
   %a.brand.nav-img.pull-left.nav-item(href="dashboard")
-  %ul.nav
+  %nav.nav
     %li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
         %span Onescore
@@ -225,13 +225,12 @@
 
 %template(name='userWidget')
   {{#if currentUser}}
-  {{#with user}} 
   .user
     %a.profile-pic.pull-left(href="")
 
     {{#unless editUsername}} 
     %a.edit.pull-right (edit)
-    %h3.name {{name}}
+    %h3.name {{currentUser.name}}
     {{else}} 
     %input#user-name(type="text" value="{{name}}")/
     {{/unless}} 
@@ -253,10 +252,10 @@
         %h4 Group
         %p.score 0
     .clearfix
-  {{/with}} 
-  {{/if}}
+  {{else}}
   .login
     {{> loginButtons}}
+  {{/if}}
 
 %template(name='activities')
   .btn-group.pull-left
@@ -416,18 +415,10 @@
 
   .dummy
     {{> achievement}}
-
-  {{#if equals "expand" _id}}
-  {{> editAchievement}}
-  {{/if}}
   {{/with}}
 
   {{#each achievements}}
   {{> achievement}}
-  {{#if equals "expand" _id}}
-  {{> editAchievement}}
-  {{/if}}
-
   {{else}}
   {{#if noContent}}
   {{> noContent}}
@@ -437,8 +428,8 @@
   {{/each}}
 
 %template(name='achievement')
-  .achievement.fold
-    %a.value.pull-right
+  %article.achievement.fold
+    %a.value.pull-right.accomplish
       %span.points {{score}}
     .vote-container.pull-right
       %div
@@ -450,31 +441,39 @@
         %a
           <i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i>
 
-    %a.icon.pull-left
+    %a.icon.pull-left.expand
 
     .content
-      .head
-        %ul.menu.pull-right
+      %header.head
+        %nav.menu.pull-right
           {{#unless equals "newAchievement" _id}}
-          -#%li.expand
-            %a
-              %i.icon-chevron-down
-          %li.accomplish
-            %a
-              %i.icon-certificate
+          %li.expand
+            %a(title="Expand")<
+              {{#if equals "expand" _id}}
+              <i class="icon-chevron-up active"></i>
+              {{else}}
+              <i class="icon-chevron-down"></i>
+              {{/if}}
+          -#%li.accomplish
+            %a(title="Accomplish this achievement")<
+              <i class="icon-certificate {{#if equals "expandTab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
           %li.fav
-            %a <i class="icon-star {{faved}}"></i>
+            %a(title="Add to favourites")<
+              <i class="icon-star {{faved}}"></i>
           %li.quest
-            %a <i class="icon-book {{quest}}"></i>
+            %a(title="Add to quest log")<
+              <i class="icon-book {{quest}}"></i>
           {{/unless}}
-          %li.edit
-            %a <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
+          -#%li.edit
+            %a(title="Edit")<
+              <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
           {{#unless equals "newAchievement" _id}}
-          %li.talk
-            %a <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
+          -#%li.talk
+            %a(title="Comment")<
+              <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
           {{/unless}}
 
-        %h4.title
+        %h4.title.expand
           {{#if title}}
           %a {{title}}
           {{else}}
@@ -484,6 +483,7 @@
           %a(style="font-weight: normal") &lt;No title suggested&gt;
           {{/if}}
           {{/if}}
+
       .description
         {{#if description}}
         %span {{{wrapTags description}}}
@@ -492,6 +492,9 @@
         {{/if}}
 
     .clearfix
+    {{#if equals "expand" _id}}
+    {{> expandAchievement}}
+    {{/if}}
  
 %template(name='titleSuggestions')
   %table.table.table-condensed
@@ -513,23 +516,60 @@
         %td {{title}}
       {{/each}}
 
-%template(name='editAchievement')
+%template(name="editTabs")
   {{#if equals "newAchievement" _id}}
   %h3.heading.line Create new achievement
   {{else}}
-  %ul.nav.nav-tabs 
+  %nav.nav.nav-tabs 
+    <li class="{{isActive "expandTab" "info"}}">
+    %a.tab(data-tab="info") Info
+    </li>
+    <li class="{{isActive "expandTab" "accomplish"}}">
+    %a.tab(data-tab="accomplish") Accomplish
+    </li>
     <li class="{{isActive "expandTab" "edit"}}">
     %a.tab(data-tab="edit") Edit
     </li>
     <li class="{{isActive "expandTab" "talk"}}">
-    %a.tab(data-tab="talk") Talk
+    %a.tab(data-tab="talk") Comments
     </li>
     -#<li class="{{isActive "expandTab" "rev"}}">
     -#%a.tab(data-tab="rev") Revisions
     -#</li>
   {{/if}}
 
+%template(name="expandAchievement")
+  {{> editTabs}}
+
+  {{#if equals "expandTab" "info"}}
+  -#{{> info}}
+  {{/if}}
+
+  {{#if equals "expandTab" "accomplish"}}
+  {{> accomplish}}
+  {{/if}}
+
   {{#if equals "expandTab" "edit"}}
+  {{> editAchievement}}
+  {{/if}}
+
+  {{#if equals "expandTab" "talk"}}
+  {{> dashboard}}
+  {{/if}}
+
+  {{#if equals "expandTab" "rev"}}
+  %span rev...
+  {{/if}}
+
+%template(name="accomplish")
+  %form
+  %label(for="accomplish-{{_id}}") Story (optional) 
+  %textarea.ta100(id="accomplish-{{_id}}" rows="10") {{text}}
+  %span.help-block
+    %strong HINT:
+    You can style your post using markdown.
+
+%template(name="editAchievement")
   {{#if equals "newAchievement" _id}}
   {{#if show "styleGuide"}}
   %div.alert.alert-block.alert-info
@@ -600,14 +640,6 @@
       %div.form-actions
         %a.btn.btn-primary.create Create
         %a.btn.discard Discard
-  {{/if}}
-  {{#if equals "expandTab" "talk"}}
-  {{> dashboard}}
-  {{/if}}
-
-  {{#if equals "expandTab" "rev"}}
-  %span rev...
-  {{/if}}
 
 %template(name='noContent')
   .fold
@@ -630,7 +662,7 @@
   {{/if}}
 
 %template(name='comment')
-  .comment(id="comment-{{_id}}" class="{{nested}}")
+  %article.comment(id="comment-{{_id}}" class="{{nested}}")
     .sup
       .pull-left
         %span.name {{getUsername user}}

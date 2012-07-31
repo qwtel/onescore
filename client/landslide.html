@@ -12,9 +12,9 @@
 <body>
   <div class='navbar navbar-fixed-top'>
     <div class='navbar-inner'>
-      <div class='container'>
+      <header class='container'>
         {{> header }}
-      </div>
+      </header>
     </div>
   </div>
   <div class='container' id='content'>
@@ -25,91 +25,91 @@
   {{#if page "dashboard"}}
   <div class='row'>
     <div class='span8'>
-      <div class='well'>
+      <section class='well'>
         <h3 class='heading'>Home</h3>
         {{> filter }}
         {{> dashboard }}
-      </div>
+      </section>
     </div>
     <div class='span4'>
-      <div class='well'>
+      <aside class='well'>
         {{> userWidget }}
-      </div>
-      <div class='well'>
+      </aside>
+      <aside class='well'>
         <h3>FAQ</h3>
-      </div>
-      <div class='well'>
+      </aside>
+      <aside class='well'>
         <h3>Tags</h3>
-      </div>
-      <div class='well'>
+      </aside>
+      <aside class='well'>
         <h3>Quest Items</h3>
-      </div>
+      </aside>
     </div>
   </div>
   {{/if}}
   {{#if page "achievements"}}
   <div class='row'>
     <div class='span4'>
-      <div class='well'>
+      <aside class='well hidden-phone'>
         <h3>Tags</h3>
-      </div>
-      <div class='well'>
+      </aside>
+      <aside class='well hidden-phone'>
         <h3>Quest Items</h3>
-      </div>
+      </aside>
     </div>
     <div class='span8'>
-      <div class='well'>
+      <section class='well'>
         {{> achievements }}
-      </div>
+      </section>
     </div>
   </div>
   {{/if}}
   {{#if page "ladder"}}
   <div class='row'>
     <div class='span4'>
-      <div class='well'>
+      <aside class='well hidden-phone'>
         <h3>League</h3>
-      </div>
-      <div class='well'>
+      </aside>
+      <aside class='well hidden-phone'>
         <h3>???</h3>
-      </div>
-      <div class='well'>
+      </aside>
+      <aside class='well hidden-phone'>
         <h3>Quest Items</h3>
-      </div>
+      </aside>
     </div>
     <div class='span8'>
-      <div class='well'>
+      <section class='well'>
         <h3 class='heading'>Ladder</h3>
         {{> filter }}
         <div class='clearfix'></div>
-      </div>
+      </section>
     </div>
   </div>
   {{/if}}
   {{#if page "profile"}}
   <div class='row'>
     <div class='span12'>
-      <div class='well'>
+      <section class='well'>
         {{> userWidget }}
-      </div>
+      </section>
     </div>
   </div>
   <div class='row'>
     <div class='span4'>
       {{> menu }}
-      <div class='well'>
+      <aside class='well hidden-phone'>
         <h3>Tags</h3>
-      </div>
-      <div class='well'>
+      </aside>
+      <aside class='well hidden-phone'>
         <h3>Quest Items</h3>
-      </div>
+      </aside>
     </div>
     <div class='span8'>
-      <div class='well'>
+      <section class='well'>
         <h3 class='heading'>Activity</h3>
         {{> filter }}
         <div class='clearfix'></div>
-      </div>
+      </section>
     </div>
   </div>
   {{/if}}
@@ -168,7 +168,7 @@
   </div>
 </template>
 <template name='menu'>
-  <div class='menu'>
+  <nav class='menu'>
     <ul class='nav nav-tabs nav-stacked'>
       <li>
         <a href='#'>
@@ -195,12 +195,12 @@
         </a>
       </li>
     </ul>
-  </div>
+  </nav>
 </template>
 <template name='filter'>
   <div class='filter'>
     <input class='input-medium search-query pull-right' placeholder='Search' type='text' />
-    <ul class='nav nav-tabs'>
+    <nav class='nav nav-tabs'>
       <li class='active'>
         <a>All</a>
       </li>
@@ -210,7 +210,7 @@
       <li>
         <a>Friends</a>
       </li>
-    </ul>
+    </nav>
     <div class='sort pull-left'>
       <span>Sort by:</span>
       <select class='span1'>
@@ -223,7 +223,7 @@
 </template>
 <template name='header'>
   <a class='brand nav-img pull-left nav-item' href='dashboard'></a>
-  <ul class='nav'>
+  <nav class='nav'>
     <li class='dropdown'>
       <a class='dropdown-toggle' data-toggle='dropdown'><span>Onescore</span>
       <b class='caret'></b></a>
@@ -240,7 +240,7 @@
     <a class='nav-item' href='{{url}}'>{{name}}</a>
     </li>
     {{/each}}
-  </ul>
+  </nav>
   {{#if currentUser}}
   <a class='profile-pic nav-item nav-img pull-right' href='profile'></a>
   <div class='score pull-right'><span class='value'>0</span>
@@ -253,12 +253,11 @@
 </template>
 <template name='userWidget'>
   {{#if currentUser}}
-  {{#with user}}
   <div class='user'>
     <a class='profile-pic pull-left' href=''></a>
     {{#unless editUsername}}
     <a class='edit pull-right'>(edit)</a>
-    <h3 class='name'>{{name}}</h3>
+    <h3 class='name'>{{currentUser.name}}</h3>
     {{else}}
     <input id='user-name' type='text' value='{{name}}' />
     {{/unless}}
@@ -266,11 +265,11 @@
     <span class='onescore-dollar onescore-dollar-green'></span></h3>
     <div class='clearfix'></div>
   </div>
-  {{/with}}
-  {{/if}}
+  {{else}}
   <div class='login'>
     {{> loginButtons}}
   </div>
+  {{/if}}
 </template>
 <template name='activities'>
   <div class='btn-group pull-left'>
@@ -437,15 +436,9 @@
   <div class='dummy'>
     {{> achievement}}
   </div>
-  {{#if equals "expand" _id}}
-  {{> editAchievement}}
-  {{/if}}
   {{/with}}
   {{#each achievements}}
   {{> achievement}}
-  {{#if equals "expand" _id}}
-  {{> editAchievement}}
-  {{/if}}
   {{else}}
   {{#if noContent}}
   {{> noContent}}
@@ -455,8 +448,8 @@
   {{/each}}
 </template>
 <template name='achievement'>
-  <div class='achievement fold'>
-    <a class='value pull-right'>
+  <article class='achievement fold'>
+    <a class='value pull-right accomplish'>
       <span class='points'>{{score}}</span>
     </a>
     <div class='vote-container pull-right'>
@@ -474,33 +467,29 @@
         </a>
       </div>
     </div>
-    <a class='icon pull-left'></a>
+    <a class='icon pull-left expand'></a>
     <div class='content'>
-      <div class='head'>
-        <ul class='menu pull-right'>
+      <header class='head'>
+        <nav class='menu pull-right'>
           {{#unless equals "newAchievement" _id}}
-          <li class='accomplish'>
-            <a>
-              <i class='icon-certificate'></i>
-            </a>
+          <li class='expand'>
+            <a title='Expand'>{{#if equals "expand" _id}}
+            <i class="icon-chevron-up active"></i>
+            {{else}}
+            <i class="icon-chevron-down"></i>
+            {{/if}}</a>
           </li>
           <li class='fav'>
-            <a><i class="icon-star {{faved}}"></i></a>
+            <a title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
           </li>
           <li class='quest'>
-            <a><i class="icon-book {{quest}}"></i></a>
+            <a title='Add to quest log'><i class="icon-book {{quest}}"></i></a>
           </li>
           {{/unless}}
-          <li class='edit'>
-            <a><i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i></a>
-          </li>
           {{#unless equals "newAchievement" _id}}
-          <li class='talk'>
-            <a><i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i></a>
-          </li>
           {{/unless}}
-        </ul>
-        <h4 class='title'>
+        </nav>
+        <h4 class='title expand'>
           {{#if title}}
           <a>{{title}}</a>
           {{else}}
@@ -511,7 +500,7 @@
           {{/if}}
           {{/if}}
         </h4>
-      </div>
+      </header>
       <div class='description'>
         {{#if description}}
         <span>{{{wrapTags description}}}</span>
@@ -521,7 +510,10 @@
       </div>
     </div>
     <div class='clearfix'></div>
-  </div>
+    {{#if equals "expand" _id}}
+    {{> expandAchievement}}
+    {{/if}}
+  </article>
 </template>
 <template name='titleSuggestions'>
   <table class='table table-condensed'>
@@ -548,20 +540,53 @@
     </tbody>
   </table>
 </template>
-<template name='editAchievement'>
+<template name='editTabs'>
   {{#if equals "newAchievement" _id}}
   <h3 class='heading line'>Create new achievement</h3>
   {{else}}
-  <ul class='nav nav-tabs'>
+  <nav class='nav nav-tabs'>
+    <li class="{{isActive "expandTab" "info"}}">
+    <a class='tab' data-tab='info'>Info</a>
+    </li>
+    <li class="{{isActive "expandTab" "accomplish"}}">
+    <a class='tab' data-tab='accomplish'>Accomplish</a>
+    </li>
     <li class="{{isActive "expandTab" "edit"}}">
     <a class='tab' data-tab='edit'>Edit</a>
     </li>
     <li class="{{isActive "expandTab" "talk"}}">
-    <a class='tab' data-tab='talk'>Talk</a>
+    <a class='tab' data-tab='talk'>Comments</a>
     </li>
-  </ul>
+  </nav>
+  {{/if}}
+</template>
+<template name='expandAchievement'>
+  {{> editTabs}}
+  {{#if equals "expandTab" "info"}}
+  {{/if}}
+  {{#if equals "expandTab" "accomplish"}}
+  {{> accomplish}}
   {{/if}}
   {{#if equals "expandTab" "edit"}}
+  {{> editAchievement}}
+  {{/if}}
+  {{#if equals "expandTab" "talk"}}
+  {{> dashboard}}
+  {{/if}}
+  {{#if equals "expandTab" "rev"}}
+  <span>rev...</span>
+  {{/if}}
+</template>
+<template name='accomplish'>
+  <form></form>
+  <label for='accomplish-{{_id}}'>Story (optional)</label>
+  <textarea class='ta100' id='accomplish-{{_id}}' rows='10'>{{text}}</textarea>
+  <span class='help-block'>
+    <strong>HINT:</strong>
+    You can style your post using markdown.
+  </span>
+</template>
+<template name='editAchievement'>
   {{#if equals "newAchievement" _id}}
   {{#if show "styleGuide"}}
   <div class='alert alert-block alert-info'>
@@ -628,13 +653,6 @@
       </div>
     </fieldset>
   </div>
-  {{/if}}
-  {{#if equals "expandTab" "talk"}}
-  {{> dashboard}}
-  {{/if}}
-  {{#if equals "expandTab" "rev"}}
-  <span>rev...</span>
-  {{/if}}
 </template>
 <template name='noContent'>
   <div class='fold'>
@@ -659,7 +677,7 @@
   {{/if}}
 </template>
 <template name='comment'>
-  <div class='comment {{nested}}' id='comment-{{_id}}'>
+  <article class='comment {{nested}}' id='comment-{{_id}}'>
     <div class='sup'>
       <div class='pull-left'>
         <span class='name'>{{getUsername user}}</span>
@@ -693,7 +711,7 @@
       </div>
       {{/if}}
     </div>
-  </div>
+  </article>
 </template>
 <template name='microTasks'>
   <div class='test'></div>
