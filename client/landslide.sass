@@ -58,21 +58,22 @@ $iconSize: 50px
 
 body
   overflow-y: scroll
+  overflow-x: hidden
 
 a
   cursor: pointer
 
-.onescore-dollar
+.dollar
   display: inline-block
   width: 35px
   height: 35px
   background: url('/img/onescore_dollar.png') no-repeat
   @include background-size(contain)
 
-.onescore-dollar-green
+.dollar-green
   background: url('/img/onescore_dollar_green.png') no-repeat
 
-.onescore-dollar-red
+.dollar-red
   background: url('/img/onescore_dollar_red.png') no-repeat
 
 .profile-pic
@@ -98,7 +99,7 @@ a
   z-index: 1060
   text-shadow: none
 
-  ul
+  nav
     font-weight: bold
 
   .brand
@@ -119,7 +120,7 @@ a
         family: $font
         size: 28px
         weight: normal
-    .onescore-dollar
+    .dollar
       height: 21px
       width: 21px
 
@@ -141,10 +142,6 @@ a
 
 #content
   margin-top: 60px
-//  padding-top: 60px
-//  padding: 20px
-//  background: $bg2
-//  @include column-shadow
 
 .comment
   margin-bottom: 10px
@@ -346,6 +343,9 @@ i.active
     height: $iconSize
     background: url('/img/bg.png')
     background-size: $iconSize $iconSize
+
+  .nav
+    margin-top: 20px
 
   .content
     margin-left: $iconSize + $padding

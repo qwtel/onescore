@@ -7,12 +7,13 @@
   text-shadow: none; }
 
 body {
-  overflow-y: scroll; }
+  overflow-y: scroll;
+  overflow-x: hidden; }
 
 a {
   cursor: pointer; }
 
-.onescore-dollar {
+.dollar {
   display: inline-block;
   width: 35px;
   height: 35px;
@@ -22,10 +23,10 @@ a {
   -o-background-size: contain;
   background-size: contain; }
 
-.onescore-dollar-green {
+.dollar-green {
   background: url("/img/onescore_dollar_green.png") no-repeat; }
 
-.onescore-dollar-red {
+.dollar-red {
   background: url("/img/onescore_dollar_red.png") no-repeat; }
 
 .profile-pic {
@@ -51,7 +52,7 @@ a {
 .navbar {
   z-index: 1060;
   text-shadow: none; }
-  .navbar ul {
+  .navbar nav {
     font-weight: bold; }
   .navbar .brand {
     padding: 0;
@@ -71,7 +72,7 @@ a {
       font-family: "SubtleSansRegular";
       font-size: 28px;
       font-weight: normal; }
-    .navbar .score .onescore-dollar {
+    .navbar .score .dollar {
       height: 21px;
       width: 21px; }
   .navbar .profile-pic {
@@ -283,6 +284,8 @@ i.active {
   height: 50px;
   background: url("/img/bg.png");
   background-size: 50px 50px; }
+.achievement .nav {
+  margin-top: 20px; }
 .achievement .content {
   margin-left: 65px; }
   .achievement .content .title {
