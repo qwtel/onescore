@@ -32,6 +32,9 @@ Meteor.publish 'favourites', ->
 Meteor.publish 'quests', ->
   return Quests.find user: @userId()
 
+Meteor.publish 'accomplishments', ->
+  return Accomplishments.find user: @userId()
+
 countVotes = (id, up) ->
   return Votes.find(
     entity: id
@@ -58,14 +61,16 @@ Meteor.methods
     updateScore Achievements, id, score
 
 
-  updateTitleScore: (id) ->
-    score = calculateScore id
-    updateScore Titles, id, score, ->
-      title = Titles.findOne id,
+  updateTitleScore: (titleId, achievementId) ->
+    score = calculateScore titleId
+    updateScore Titles, titleId, score, ->
+      best = Titles.findOne
+        entity: achievementId
+      ,
         sort:
           score: -1
 
-      if title
-        Achievements.update title.entity,
+      if best
+        Achievements.update achievementId,
           $set:
-            title: title.title
+            title: best.title

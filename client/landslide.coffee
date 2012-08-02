@@ -28,22 +28,26 @@ Meteor.autosubscribe ->
     Meteor.subscribe 'titles', achievement, ->
       Session.set 'titlesLoaded', true
 
+createNewAchievement = ->
+  if Meteor.user()
+    newAchievement = Achievements.findOne
+      user: Meteor.user()._id
+      created: false
+
+    if newAchievement
+      id = newAchievement._id
+    else
+      id = Achievements.insert
+        user: Meteor.user()._id
+        score: 0
+        created: false
+
+    return id
+
 Session.set 'achievements', false
 Meteor.subscribe 'achievements', ->
   Session.set 'achievementsLoaded', true
-  # HACK: This should go somewhere else...
-  newAchievement = Achievements.findOne
-    user: Meteor.user()._id
-    created: false
-
-  if newAchievement
-    id = newAchievement._id
-  else
-    id = Achievements.insert
-      user: Meteor.user()._id
-      score: 0
-      created: false
-
+  id = createNewAchievement()
   Session.set 'newAchievement', id
 
 Session.set 'votesLoaded', false
@@ -57,6 +61,10 @@ Meteor.subscribe 'favourites', ->
 Session.set 'questsLoaded', false
 Meteor.subscribe 'quests', ->
   Session.set 'questsLoaded', true
+
+Session.set 'accomplishmentsLoaded', false
+Meteor.subscribe 'accomplishments', ->
+  Session.set 'accomplishmentsLoaded', true
 
 makeOkCancelHandler = (options) ->
   ok = options.ok || ->
@@ -303,6 +311,7 @@ _.extend Template.comments,
         date: 1
 
   noContent: ->
+    console.log 'tasdf<'
     if Session.equals 'commentsLoaded', true
       sel = Template.comments.select()
       return Comments.find(sel).count() is 0
@@ -389,7 +398,8 @@ _.extend Template.titleSuggestions,
       else
         Votes.insert data
 
-      Meteor.call 'updateTitleScore', @_id
+      achievementId = Session.get 'expand'
+      Meteor.call 'updateTitleScore', @_id, achievementId
 
   titles: ->
     id = Session.get 'expand'
@@ -412,8 +422,14 @@ _.extend Template.titleSuggestions,
       return 'active'
     return ''
 
-Session.set 'styleGuide', true
 
+_.extend Template.expandAchievement,
+  events:
+    'click .tab': (e) ->
+      tab = $(e.target).data 'tab'
+      Session.set 'expandTab', tab
+
+Session.set 'styleGuide', true
 _.extend Template.editAchievement,
   events:
     'click .close': (e) ->
@@ -450,6 +466,14 @@ _.extend Template.editAchievement,
           tags: tags
 
     'click .create': (e) ->
+      Achievements.update @_id,
+        $set:
+          created: true
+
+      id = createNewAchievement()
+      Session.set 'newAchievement', id
+      Session.set 'expand', null
+
       #data = {}
       #
       #$('#form-new').find('input, textarea, select').each ->
@@ -457,17 +481,6 @@ _.extend Template.editAchievement,
       #  field = $t.data('field')
       #  if field?
       #    data[field] = $t.val()
-
-      Achievements.update @_id,
-        $set:
-          created: true
-
-      Session.set 'newAchievement', null
-      Session.set 'expand', null
-
-    'click .tab': (e) ->
-      tab = $(e.target).data 'tab'
-      Session.set 'expandTab', tab
 
   selected: (category) ->
     if category
@@ -491,6 +504,7 @@ _.extend Template.achievements,
     return Achievements.find sel,
       sort:
         score: -1
+        _id: -1
 
   newAchievement: ->
     id = Session.get 'newAchievement'
@@ -502,11 +516,52 @@ _.extend Template.achievements,
       return Achievements.find(sel).count() is 0
     return false
 
+_.extend Template.accomplish,
+  events:
+    'click .create': (e) ->
+      stry = $("#accomplish-#{@_id}").val()
+
+      acc = Accomplishments.findOne
+        user: Meteor.user()._id
+        entity: @_id
+
+      if acc
+        Accomplishments.update acc._id,
+          $set:
+            story: stry
+      else
+        Accomplishments.insert
+          user: Meteor.user()._id
+          entity: @_id
+          story: stry
+
+      Session.set 'expand', null
+
+  accomplishment: ->
+    return Accomplishments.findOne
+      user: Meteor.user()._id
+      entity: @_id
+
+_.extend Template.timeline,
+  asdf: ->
+
 _.extend Template.achievement,
   events:
+    'click .expand': (e) ->
+      Session.toggle 'expand', @_id
+      Session.set 'expandTab', 'info'
+
+    'click .accomplish': (e) ->
+      Session.set 'expand', @_id
+      Session.set 'expandTab', 'accomplish'
+
     'click .edit': (e) ->
       Session.set 'expand', @_id
       Session.set 'expandTab', 'edit'
+
+    'click .talk': (e) ->
+      Session.set 'expand', @_id
+      Session.set 'expandTab', 'talk'
 
     'click .vote': (e) ->
       $t = $(e.target)
@@ -557,32 +612,35 @@ _.extend Template.achievement,
           entity: @_id
           active: true
 
-    'click .talk': (e) ->
-      Session.set 'expand', @_id
-      Session.set 'expandTab', 'talk'
-
   faved: ->
-    fav = Favourites.findOne
-      user: Meteor.user()._id
-      entity: @_id
-      active: true
-    return if fav then 'active' else ''
+    if Meteor.user()
+      fav = Favourites.findOne
+        user: Meteor.user()._id
+        entity: @_id
+        active: true
+      if fav
+        return 'active'
+    return ''
 
   quest: ->
-    fav = Quests.findOne
-      user: Meteor.user()._id
-      entity: @_id
-      active: true
-    return if fav then 'active' else ''
+    if Meteor.user()
+      fav = Quests.findOne
+        user: Meteor.user()._id
+        entity: @_id
+        active: true
+      if fav
+        return 'active'
+    return ''
 
   voted: (state) ->
     state = if state is 'up' then true else false
 
-    vote = Votes.findOne
-      user: Meteor.user()._id
-      entity: @_id
-    if vote and vote.up is state
-      return 'active'
+    if Meteor.user()
+      vote = Votes.findOne
+        user: Meteor.user()._id
+        entity: @_id
+      if vote and vote.up is state
+        return 'active'
     return ''
 
 

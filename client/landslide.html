@@ -108,6 +108,7 @@
       <section class='well'>
         <h3 class='heading'>Activity</h3>
         {{> filter }}
+        {{> timeline }}
         <div class='clearfix'></div>
       </section>
     </div>
@@ -243,8 +244,8 @@
   </nav>
   {{#if currentUser}}
   <a class='profile-pic nav-item nav-img pull-right' href='profile'></a>
-  <div class='score pull-right'><span class='value'>0</span>
-  <span class='onescore-dollar'></span></div>
+  <div class='score pull-right hidden-phone'><span class='value'>0</span>
+  <span class='dollar'></span></div>
   {{else}}
   <div class='login pull-right'>
     {{> loginButtons}}
@@ -262,7 +263,7 @@
     <input id='user-name' type='text' value='{{name}}' />
     {{/unless}}
     <h3 class='score'><span>0</span>
-    <span class='onescore-dollar onescore-dollar-green'></span></h3>
+    <span class='dollar dollar-green'></span></h3>
     <div class='clearfix'></div>
   </div>
   {{else}}
@@ -393,8 +394,7 @@
   </div>
   <div class='modal-footer modal-separator'>
     <a class='save-activity btn'>
-      <i class='icon-edit'></i>
-      Save
+      <i class='icon-edit'>Save</i>
     </a>
     <a class='hand-in-activity btn btn-primary'>
       <i class='icon-share icon-white'></i>
@@ -427,11 +427,25 @@
     </div>
   </div>
 </template>
+<template name='timeline'>
+  {{#each accomplishments}}
+  {{> achievement}}
+  {{else}}
+  {{> placeholder}}
+  {{/each}}
+</template>
+<template name='placeholder'>
+  {{#if noContent}}
+  {{> noContent}}
+  {{else}}
+  {{> loading}}
+  {{/if}}
+</template>
 <template name='achievements'>
   <h3 class='heading'>Achievements</h3>
   {{> filter}}
   {{#with newAchievement}}
-  <a class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></a>
+  <button class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></button>
   <div class='clearfix'></div>
   <div class='dummy'>
     {{> achievement}}
@@ -440,11 +454,7 @@
   {{#each achievements}}
   {{> achievement}}
   {{else}}
-  {{#if noContent}}
-  {{> noContent}}
-  {{else}}
-  {{> loading}}
-  {{/if}}
+  {{> placeholder}}
   {{/each}}
 </template>
 <template name='achievement'>
@@ -548,14 +558,14 @@
     <li class="{{isActive "expandTab" "info"}}">
     <a class='tab' data-tab='info'>Info</a>
     </li>
-    <li class="{{isActive "expandTab" "accomplish"}}">
-    <a class='tab' data-tab='accomplish'>Accomplish</a>
-    </li>
     <li class="{{isActive "expandTab" "edit"}}">
     <a class='tab' data-tab='edit'>Edit</a>
     </li>
     <li class="{{isActive "expandTab" "talk"}}">
     <a class='tab' data-tab='talk'>Comments</a>
+    </li>
+    <li class="pull-right {{isActive "expandTab" "accomplish"}}">
+    <a class='tab' data-tab='accomplish'>Accomplish</a>
     </li>
   </nav>
   {{/if}}
@@ -578,13 +588,32 @@
   {{/if}}
 </template>
 <template name='accomplish'>
-  <form></form>
-  <label for='accomplish-{{_id}}'>Story (optional)</label>
-  <textarea class='ta100' id='accomplish-{{_id}}' rows='10'>{{text}}</textarea>
-  <span class='help-block'>
-    <strong>HINT:</strong>
-    You can style your post using markdown.
-  </span>
+  <div class='btn-group'>
+    <button class='btn active' href='#' title='Text'>
+      <i class='icon-align-left'></i>
+    </button>
+    <button class='btn' href='#' title='Picture'>
+      <i class='icon-picture'></i>
+    </button>
+    <button class='btn' href='#' title='Link'>
+      <i class='icon-bookmark'></i>
+    </button>
+  </div>
+  <div class='control-group'></div>
+  <label class='control-label' for='accomplish-{{_id}}'>Story (optional)</label>
+  <div class='controls'>
+    <textarea class='ta100' id='accomplish-{{_id}}' rows='12'>{{text}}</textarea>
+    <span class='help-block'>
+      <strong>HINT:</strong>
+      You can style your post using markdown.
+    </span>
+  </div>
+  <div class='control-group'></div>
+  <label class='control-label'>Preview</label>
+  <div class='preview'></div>
+  <footer class='form-actions'>
+    <button class='btn btn-primary btn-large create'>Accomplish</button>
+  </footer>
 </template>
 <template name='editAchievement'>
   {{#if equals "newAchievement" _id}}
@@ -647,10 +676,9 @@
           <p class='help-block'>If it doesn't fit in anywhere, choose 'Random'</p>
         </div>
       </div>
-      <div class='form-actions'>
-        <a class='btn btn-primary create'>Create</a>
-        <a class='btn discard'>Discard</a>
-      </div>
+      <footer class='form-actions'>
+        <button class='btn btn-primary btn-large create'>Save</button>
+      </footer>
     </fieldset>
   </div>
 </template>
@@ -668,13 +696,9 @@
   {{#each replies}}
   {{> comment}}
   {{/each}}
+  {{else}}
+  {{> placeholder}}
   {{/each}}
-  {{else}}
-  {{#if noContent}}
-  <div class='alert'>No comments so far.</div>
-  {{else}}
-  {{> loading}}
-  {{/if}}
 </template>
 <template name='comment'>
   <article class='comment {{nested}}' id='comment-{{_id}}'>

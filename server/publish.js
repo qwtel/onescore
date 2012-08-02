@@ -60,6 +60,12 @@
     });
   });
 
+  Meteor.publish('accomplishments', function() {
+    return Accomplishments.find({
+      user: this.userId()
+    });
+  });
+
   countVotes = function(id, up) {
     return Votes.find({
       entity: id,
@@ -88,20 +94,22 @@
       score = calculateScore(id);
       return updateScore(Achievements, id, score);
     },
-    updateTitleScore: function(id) {
+    updateTitleScore: function(titleId, achievementId) {
       var score;
-      score = calculateScore(id);
-      return updateScore(Titles, id, score, function() {
-        var title;
-        title = Titles.findOne(id, {
+      score = calculateScore(titleId);
+      return updateScore(Titles, titleId, score, function() {
+        var best;
+        best = Titles.findOne({
+          entity: achievementId
+        }, {
           sort: {
             score: -1
           }
         });
-        if (title) {
-          return Achievements.update(title.entity, {
+        if (best) {
+          return Achievements.update(achievementId, {
             $set: {
-              title: title.title
+              title: best.title
             }
           });
         }

@@ -26,6 +26,9 @@ Meteor.startup ->
   uniqueQuest = (userId, doc) ->
     return unique Quests, userId, doc
 
+  uniqueAcc = (userId, doc) ->
+    return unique Accomplishments, userId, doc
+
   ###
   Todos.allow
     insert: -> return true
@@ -33,10 +36,6 @@ Meteor.startup ->
     remove: canModify
     fetch: ['privateTo']
   ###
-
-  Comments.allow
-    insert: self
-    update: creator
 
   Achievements.allow
     insert: self
@@ -57,3 +56,12 @@ Meteor.startup ->
   Quests.allow
     insert: uniqueQuest
     update: creator
+
+  Accomplishments.allow
+    insert: uniqueAcc
+    update: creator
+
+  Comments.allow
+    insert: self
+    update: creator
+

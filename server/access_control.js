@@ -2,7 +2,7 @@
 (function() {
 
   Meteor.startup(function() {
-    var creator, self, unique, uniqueFav, uniqueQuest, uniqueVote;
+    var creator, self, unique, uniqueAcc, uniqueFav, uniqueQuest, uniqueVote;
     creator = function(userId, entities) {
       return _.all(entities, function(entity) {
         return !entity.user || entity.user === userId;
@@ -33,6 +33,9 @@
     uniqueQuest = function(userId, doc) {
       return unique(Quests, userId, doc);
     };
+    uniqueAcc = function(userId, doc) {
+      return unique(Accomplishments, userId, doc);
+    };
     /*
       Todos.allow
         insert: -> return true
@@ -41,10 +44,6 @@
         fetch: ['privateTo']
     */
 
-    Comments.allow({
-      insert: self,
-      update: creator
-    });
     Achievements.allow({
       insert: self,
       update: creator
@@ -61,8 +60,16 @@
       insert: uniqueFav,
       update: creator
     });
-    return Quests.allow({
+    Quests.allow({
       insert: uniqueQuest,
+      update: creator
+    });
+    Accomplishments.allow({
+      insert: uniqueAcc,
+      update: creator
+    });
+    return Comments.allow({
+      insert: self,
       update: creator
     });
   });

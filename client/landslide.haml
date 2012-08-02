@@ -91,6 +91,7 @@
       %section.well 
         %h3.heading Activity
         {{> filter }}
+        {{> timeline }}
         .clearfix
   {{/if}}
 
@@ -165,9 +166,6 @@
 
 %template(name='filter')
   .filter
-    -#.alert.alert-info
-      %span Showing search results for ... 
-
     %input.input-medium.search-query.pull-right(type="text" placeholder="Search")/
 
     %nav.nav.nav-tabs 
@@ -179,13 +177,13 @@
         %a Friends
 
     -#.btn-group.pull-right
-      %a.btn.active(href="#" title="Stories") 
+      %button.btn.active(href="#" title="Stories") 
         %i.icon-align-left
-      %a.btn(href="#" title="Achievements")
+      %button.btn(href="#" title="Achievements")
         %i.icon-certificate
-      %a.btn(href="#" title="Comments") 
+      %button.btn(href="#" title="Comments") 
         %i.icon-comment
-      %a.btn(href="#" title="Items") 
+      %button.btn(href="#" title="Items") 
         %i.icon-glass
 
     .sort.pull-left
@@ -215,9 +213,9 @@
 
   {{#if currentUser}}
   %a.profile-pic.nav-item.nav-img.pull-right(href="profile")
-  .score.pull-right<
+  .score.pull-right.hidden-phone<
     %span.value 0
-    %span.onescore-dollar
+    %span.dollar
   {{else}}
   .login.pull-right
     {{> loginButtons}}
@@ -237,7 +235,7 @@
 
     %h3.score<
       %span 0
-      %span.onescore-dollar.onescore-dollar-green
+      %span.dollar.dollar-green
 
     -#.rank
       %h3 
@@ -374,8 +372,7 @@
 
   .modal-footer.modal-separator
     %a.save-activity.btn 
-      %i.icon-edit
-      Save
+      %i.icon-edit Save
     %a.hand-in-activity.btn.btn-primary
       %i.icon-share.icon-white
       Hand-In
@@ -405,12 +402,28 @@
     .comments
       {{> comments}}
 
+%template(name='timeline')
+  {{#each accomplishments}}
+  {{> achievement}}
+  -#{{> story}}
+
+  {{else}}
+  {{> placeholder}}
+  {{/each}}
+
+%template(name='placeholder')
+  {{#if noContent}}
+  {{> noContent}}
+  {{else}}
+  {{> loading}}
+  {{/if}}
+
 %template(name='achievements')
   %h3.heading Achievements
   {{> filter}}
 
   {{#with newAchievement}}
-  <a class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></a>
+  <button class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></button>
   .clearfix
 
   .dummy
@@ -420,11 +433,7 @@
   {{#each achievements}}
   {{> achievement}}
   {{else}}
-  {{#if noContent}}
-  {{> noContent}}
-  {{else}}
-  {{> loading}}
-  {{/if}}
+  {{> placeholder}}
   {{/each}}
 
 %template(name='achievement')
@@ -524,9 +533,6 @@
     <li class="{{isActive "expandTab" "info"}}">
     %a.tab(data-tab="info") Info
     </li>
-    <li class="{{isActive "expandTab" "accomplish"}}">
-    %a.tab(data-tab="accomplish") Accomplish
-    </li>
     <li class="{{isActive "expandTab" "edit"}}">
     %a.tab(data-tab="edit") Edit
     </li>
@@ -536,6 +542,9 @@
     -#<li class="{{isActive "expandTab" "rev"}}">
     -#%a.tab(data-tab="rev") Revisions
     -#</li>
+    <li class="pull-right {{isActive "expandTab" "accomplish"}}">
+    %a.tab(data-tab="accomplish") Accomplish
+    </li>
   {{/if}}
 
 %template(name="expandAchievement")
@@ -562,12 +571,32 @@
   {{/if}}
 
 %template(name="accomplish")
-  %form
-  %label(for="accomplish-{{_id}}") Story (optional) 
-  %textarea.ta100(id="accomplish-{{_id}}" rows="10") {{text}}
-  %span.help-block
-    %strong HINT:
-    You can style your post using markdown.
+  .btn-group
+    %button.btn.active(href="#" title="Text") 
+      %i.icon-align-left
+    %button.btn(href="#" title="Picture")
+      %i.icon-picture
+    %button.btn(href="#" title="Link") 
+      %i.icon-bookmark
+    -#%button.btn(href="#" title="Audio") 
+      %i.icon-headphones
+    -#%button.btn(href="#" title="Video") 
+      %i.icon-film
+
+  .control-group
+  %label.control-label(for="accomplish-{{_id}}") Story (optional) 
+  .controls
+    %textarea.ta100(id="accomplish-{{_id}}" rows="12") {{text}}
+    %span.help-block
+      %strong HINT:
+      You can style your post using markdown.
+  .control-group
+
+  %label.control-label Preview 
+  .preview
+
+  %footer.form-actions
+    %button.btn.btn-primary.btn-large.create Accomplish
 
 %template(name="editAchievement")
   {{#if equals "newAchievement" _id}}
@@ -637,9 +666,8 @@
         %label.control-label(for="fileInput") Image
         %div.controls 
           %input.input-file(id="fileInput" type="file")/
-      %div.form-actions
-        %a.btn.btn-primary.create Create
-        %a.btn.discard Discard
+      %footer.form-actions
+        %button.btn.btn-primary.btn-large.create Save
 
 %template(name='noContent')
   .fold
@@ -653,13 +681,9 @@
   {{#each replies}}
   {{> comment}}
   {{/each}}
+  {{else}}
+  {{> placeholder}}
   {{/each}}
-  {{else}}
-  {{#if noContent}}
-  .alert No comments so far.
-  {{else}}
-  {{> loading}}
-  {{/if}}
 
 %template(name='comment')
   %article.comment(id="comment-{{_id}}" class="{{nested}}")

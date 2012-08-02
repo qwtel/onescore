@@ -12,3 +12,4 @@ var Slideshows = new Meteor.Collection('slideshows'),
     Votes = new Meteor.Collection('votes');
     Favourites = new Meteor.Collection('favourites');
     Quests = new Meteor.Collection('quests');
+    Accomplishments = new Meteor.Collection('accomplishments');
