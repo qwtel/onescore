@@ -65,3 +65,6 @@ Meteor.startup ->
     insert: self
     update: creator
 
+  Meteor.users.allow
+    update: -> return true
+

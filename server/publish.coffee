@@ -17,6 +17,9 @@ Meteor.publish 'comments', (topic) ->
   return Comments.find topic: topic
 
 
+Meteor.publish 'users', ->
+  return Meteor.users.find()
+
 Meteor.publish 'achievements', ->
   return Achievements.find()
 

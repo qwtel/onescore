@@ -75,6 +75,8 @@
     return Session.set('questsLoaded', true);
   });
 
+  Meteor.subscribe('users');
+
   Session.set('accomplishmentsLoaded', false);
 
   Meteor.subscribe('accomplishments', function() {

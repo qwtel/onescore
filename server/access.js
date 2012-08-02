@@ -68,9 +68,14 @@
       insert: uniqueAcc,
       update: creator
     });
-    return Comments.allow({
+    Comments.allow({
       insert: self,
       update: creator
+    });
+    return Meteor.users.allow({
+      update: function() {
+        return true;
+      }
     });
   });
 

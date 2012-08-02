@@ -108,8 +108,8 @@
       <section class='well'>
         <h3 class='heading'>Activity</h3>
         {{> filter }}
-        {{> timeline }}
         <div class='clearfix'></div>
+        {{> timeline }}
       </section>
     </div>
   </div>
@@ -244,7 +244,7 @@
   </nav>
   {{#if currentUser}}
   <a class='profile-pic nav-item nav-img pull-right' href='profile'></a>
-  <div class='score pull-right hidden-phone'><span class='value'>0</span>
+  <div class='score pull-right hidden-phone'><span class='value'>{{currentUser.score}}</span>
   <span class='dollar'></span></div>
   {{else}}
   <div class='login pull-right'>
@@ -262,7 +262,7 @@
     {{else}}
     <input id='user-name' type='text' value='{{name}}' />
     {{/unless}}
-    <h3 class='score'><span>0</span>
+    <h3 class='score'><span>{{currentUser.score}}</span>
     <span class='dollar dollar-green'></span></h3>
     <div class='clearfix'></div>
   </div>
@@ -429,7 +429,9 @@
 </template>
 <template name='timeline'>
   {{#each accomplishments}}
+  {{#with achievement}}
   {{> achievement}}
+  {{/with}}
   {{else}}
   {{> placeholder}}
   {{/each}}

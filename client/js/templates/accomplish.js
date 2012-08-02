@@ -4,25 +4,9 @@
   _.extend(Template.accomplish, {
     events: {
       'click .create': function(e) {
-        var acc, stry;
+        var stry;
         stry = $("#accomplish-" + this._id).val();
-        acc = Accomplishments.findOne({
-          user: Meteor.user()._id,
-          entity: this._id
-        });
-        if (acc) {
-          Accomplishments.update(acc._id, {
-            $set: {
-              story: stry
-            }
-          });
-        } else {
-          Accomplishments.insert({
-            user: Meteor.user()._id,
-            entity: this._id,
-            story: stry
-          });
-        }
+        Meteor.call('accomplish', this._id, stry);
         return Session.set('expand', null);
       }
     },

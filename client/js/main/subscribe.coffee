@@ -49,6 +49,8 @@ Session.set 'questsLoaded', false
 Meteor.subscribe 'quests', ->
   Session.set 'questsLoaded', true
 
+Meteor.subscribe 'users'
+
 Session.set 'accomplishmentsLoaded', false
 Meteor.subscribe 'accomplishments', ->
   Session.set 'accomplishmentsLoaded', true

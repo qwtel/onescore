@@ -25,6 +25,53 @@
   };
 
   Meteor.methods({
+    updateUserScoreComplete: function() {
+      var a, accs, entities, s, score;
+      accs = Accomplishments.find({
+        user: this.userId()
+      });
+      accs = accs.fetch();
+      entities = _.pluck(accs, 'entity');
+      a = Achievements.find({
+        _id: {
+          $in: entities
+        }
+      });
+      a = a.fetch();
+      s = _.pluck(a, 'score');
+      score = _.reduce(s, function(memo, num) {
+        return memo + num;
+      }, 0);
+      return updateScore(Meteor.users, this.userId(), score);
+    },
+    accomplish: function(id, stry) {
+      var a, acc;
+      acc = Accomplishments.findOne({
+        user: this.userId(),
+        entity: id
+      });
+      if (acc) {
+        return Accomplishments.update(acc._id, {
+          $set: {
+            story: stry
+          }
+        });
+      } else {
+        Accomplishments.insert({
+          user: this.userId(),
+          entity: id,
+          story: stry
+        });
+        a = Achievements.findOne(id);
+        if (a) {
+          return Meteor.users.update(this.userId(), {
+            $inc: {
+              score: a.score
+            }
+          });
+        }
+      }
+    },
     updateAchievementScore: function(id) {
       var score;
       score = calculateScore(id);

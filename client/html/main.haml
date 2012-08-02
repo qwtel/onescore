@@ -91,8 +91,8 @@
       %section.well 
         %h3.heading Activity
         {{> filter }}
-        {{> timeline }}
         .clearfix
+        {{> timeline }}
   {{/if}}
 
   {{#if page "activities"}}
@@ -214,7 +214,7 @@
   {{#if currentUser}}
   %a.profile-pic.nav-item.nav-img.pull-right(href="profile")
   .score.pull-right.hidden-phone<
-    %span.value 0
+    %span.value {{currentUser.score}}
     %span.dollar
   {{else}}
   .login.pull-right
@@ -234,7 +234,7 @@
     {{/unless}} 
 
     %h3.score<
-      %span 0
+      %span {{currentUser.score}}
       %span.dollar.dollar-green
 
     -#.rank
@@ -404,7 +404,9 @@
 
 %template(name='timeline')
   {{#each accomplishments}}
+  {{#with achievement}}
   {{> achievement}}
+  {{/with}}
   -#{{> story}}
 
   {{else}}

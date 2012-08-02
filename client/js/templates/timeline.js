@@ -2,7 +2,14 @@
 (function() {
 
   _.extend(Template.timeline, {
-    asdf: function() {}
+    accomplishments: function() {
+      return Accomplishments.find({
+        user: Meteor.user()._id
+      });
+    },
+    achievement: function() {
+      return Achievements.findOne(this.entity);
+    }
   });
 
 }).call(this);
