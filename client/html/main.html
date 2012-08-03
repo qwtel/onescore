@@ -481,10 +481,13 @@
       <div class='content'>
         <header class='head'>
           <nav class='menu pull-right'>
-            {{#unless equals "newAchievement" _id}}
             <li class='expand'>
               <a title='Expand'>{{#if equals "expand" _id}}
+              {{#if expandTab}}
               <i class="icon-chevron-up active"></i>
+              {{else}}
+              <i class="icon-chevron-down"></i>
+              {{/if}}
               {{else}}
               <i class="icon-chevron-down"></i>
               {{/if}}</a>
@@ -492,12 +495,12 @@
             <li class='fav'>
               <a title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
             </li>
-            <li class='quest'>
-              <a title='Add to quest log'><i class="icon-book {{quest}}"></i></a>
+            <li class='edit'>
+              <a title='Edit'><i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i></a>
             </li>
-            {{/unless}}
-            {{#unless equals "newAchievement" _id}}
-            {{/unless}}
+            <li class='talk'>
+              <a title='Comment'><i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i></a>
+            </li>
           </nav>
           <h4 class='title expand'>
             {{#if title}}
@@ -521,10 +524,10 @@
       </div>
       <div class='clearfix'></div>
     </article>
-    {{#if equals "expand" _id}}
-    {{> expandAchievement}}
-    {{/if}}
   </div>
+  {{#if equals "expand" _id}}{{#if expandTab}}
+  {{> expandAchievement}}
+  {{/if}}{{/if}}
 </template>
 <template name='titleSuggestions'>
   <table class='table table-condensed'>
@@ -565,7 +568,7 @@
     <li class="{{isActive "expandTab" "talk"}}">
     <a class='tab' data-tab='talk'>Comments</a>
     </li>
-    <li class="pull-right {{isActive "expandTab" "accomplish"}}">
+    <li class="{{isActive "expandTab" "accomplish"}}">
     <a class='tab' data-tab='accomplish'>Accomplish</a>
     </li>
   </nav>

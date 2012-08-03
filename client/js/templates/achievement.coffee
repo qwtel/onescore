@@ -1,20 +1,20 @@
 _.extend Template.achievement,
   events:
     'click .expand': (e) ->
-      Session.toggle 'expand', @_id
-      Session.set 'expandTab', 'info'
+      Session.set 'expand', @_id
+      Session.toggle 'expandTab', 'info'
 
     'click .accomplish': (e) ->
       Session.set 'expand', @_id
-      Session.set 'expandTab', 'accomplish'
+      Session.toggle 'expandTab', 'accomplish'
 
     'click .edit': (e) ->
       Session.set 'expand', @_id
-      Session.set 'expandTab', 'edit'
+      Session.toggle 'expandTab', 'edit'
 
     'click .talk': (e) ->
       Session.set 'expand', @_id
-      Session.set 'expandTab', 'talk'
+      Session.toggle 'expandTab', 'talk'
 
     'click .vote': (e) ->
       $t = $(e.target).parents '.vote'
@@ -64,6 +64,9 @@ _.extend Template.achievement,
           user: Meteor.user()._id
           entity: @_id
           active: true
+
+  expandTab: ->
+    return Session.get 'expandTab'
 
   faved: ->
     if Meteor.user()

@@ -49,6 +49,7 @@ Meteor.methods
         user: @userId()
         entity: id
         story: stry
+        update: new Date()
 
       a = Achievements.findOne id
       if a

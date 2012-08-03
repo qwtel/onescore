@@ -4,20 +4,20 @@
   _.extend(Template.achievement, {
     events: {
       'click .expand': function(e) {
-        Session.toggle('expand', this._id);
-        return Session.set('expandTab', 'info');
+        Session.set('expand', this._id);
+        return Session.toggle('expandTab', 'info');
       },
       'click .accomplish': function(e) {
         Session.set('expand', this._id);
-        return Session.set('expandTab', 'accomplish');
+        return Session.toggle('expandTab', 'accomplish');
       },
       'click .edit': function(e) {
         Session.set('expand', this._id);
-        return Session.set('expandTab', 'edit');
+        return Session.toggle('expandTab', 'edit');
       },
       'click .talk': function(e) {
         Session.set('expand', this._id);
-        return Session.set('expandTab', 'talk');
+        return Session.toggle('expandTab', 'talk');
       },
       'click .vote': function(e) {
         var $t, data, vote;
@@ -80,6 +80,9 @@
           });
         }
       }
+    },
+    expandTab: function() {
+      return Session.get('expandTab');
     },
     faved: function() {
       var fav;

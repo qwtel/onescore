@@ -60,7 +60,8 @@
         Accomplishments.insert({
           user: this.userId(),
           entity: id,
-          story: stry
+          story: stry,
+          update: new Date()
         });
         a = Achievements.findOne(id);
         if (a) {

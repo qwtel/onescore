@@ -459,32 +459,32 @@
       .content
         %header.head
           %nav.menu.pull-right
-            {{#unless equals "newAchievement" _id}}
             %li.expand
               %a(title="Expand")<
                 {{#if equals "expand" _id}}
+                {{#if expandTab}}
                 <i class="icon-chevron-up active"></i>
+                {{else}}
+                <i class="icon-chevron-down"></i>
+                {{/if}}
                 {{else}}
                 <i class="icon-chevron-down"></i>
                 {{/if}}
             -#%li.accomplish
               %a(title="Accomplish this achievement")<
                 <i class="icon-certificate {{#if equals "expandTab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
+            -#%li.quest
+              %a(title="Add to quest log")<
+                <i class="icon-book {{quest}}"></i>
             %li.fav
               %a(title="Add to favourites")<
                 <i class="icon-star {{faved}}"></i>
-            %li.quest
-              %a(title="Add to quest log")<
-                <i class="icon-book {{quest}}"></i>
-            {{/unless}}
-            -#%li.edit
+            %li.edit
               %a(title="Edit")<
                 <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
-            {{#unless equals "newAchievement" _id}}
-            -#%li.talk
+            %li.talk
               %a(title="Comment")<
                 <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
-            {{/unless}}
 
           %h4.title.expand
             {{#if title}}
@@ -504,9 +504,9 @@
           %span This is a preview!
           {{/if}}
       .clearfix
-    {{#if equals "expand" _id}}
-    {{> expandAchievement}}
-    {{/if}}
+  {{#if equals "expand" _id}}{{#if expandTab}}
+  {{> expandAchievement}}
+  {{/if}}{{/if}}
 
 %template(name='titleSuggestions')
   %table.table.table-condensed
@@ -545,7 +545,7 @@
     -#<li class="{{isActive "expandTab" "rev"}}">
     -#%a.tab(data-tab="rev") Revisions
     -#</li>
-    <li class="pull-right {{isActive "expandTab" "accomplish"}}">
+    <li class="{{isActive "expandTab" "accomplish"}}">
     %a.tab(data-tab="accomplish") Accomplish
     </li>
   {{/if}}
