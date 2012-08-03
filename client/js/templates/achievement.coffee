@@ -17,7 +17,7 @@ _.extend Template.achievement,
       Session.set 'expandTab', 'talk'
 
     'click .vote': (e) ->
-      $t = $(e.target)
+      $t = $(e.target).parents '.vote'
       data =
         user: Meteor.user()._id
         entity: @_id
@@ -96,7 +96,11 @@ _.extend Template.achievement,
         return 'active'
     return ''
 
-
-  likesNum: ->
-    return if @likes? then @likes.length else 0
-
+  completed: ->
+    if Meteor.user()
+      acc = Accomplishments.findOne
+        user: Meteor.user()._id
+        entity: @_id
+      if acc
+        return 'completed'
+    return ''

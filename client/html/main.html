@@ -432,6 +432,7 @@
   {{#with achievement}}
   {{> achievement}}
   {{/with}}
+  {{#markdown}}{{story}}{{/markdown}}
   {{else}}
   {{> placeholder}}
   {{/each}}
@@ -460,72 +461,70 @@
   {{/each}}
 </template>
 <template name='achievement'>
-  <article class='achievement fold'>
-    <a class='value pull-right accomplish'>
-      <span class='points'>{{score}}</span>
-    </a>
-    <div class='vote-container pull-right'>
-      <div>
-        <a>
-          <i class="vote icon-arrow-up {{voted "up"}}" title="Vote up" data-up="true"></i>
-        </a>
+  <div class='fold'>
+    <article class='achievement {{completed}}'>
+      <a class='value pull-right accomplish'>
+        <span class='points'>{{score}}</span>
+      </a>
+      <div class='vote-container pull-right'>
+        <div>
+          <a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
+        </div>
+        <div>
+          <span class='count'>{{score}}</span>
+        </div>
+        <div>
+          <a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+        </div>
       </div>
-      <div>
-        <span class='count'>{{score}}</span>
-      </div>
-      <div>
-        <a>
-          <i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i>
-        </a>
-      </div>
-    </div>
-    <a class='icon pull-left expand'></a>
-    <div class='content'>
-      <header class='head'>
-        <nav class='menu pull-right'>
-          {{#unless equals "newAchievement" _id}}
-          <li class='expand'>
-            <a title='Expand'>{{#if equals "expand" _id}}
-            <i class="icon-chevron-up active"></i>
+      <a class='icon pull-left expand'></a>
+      <div class='content'>
+        <header class='head'>
+          <nav class='menu pull-right'>
+            {{#unless equals "newAchievement" _id}}
+            <li class='expand'>
+              <a title='Expand'>{{#if equals "expand" _id}}
+              <i class="icon-chevron-up active"></i>
+              {{else}}
+              <i class="icon-chevron-down"></i>
+              {{/if}}</a>
+            </li>
+            <li class='fav'>
+              <a title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
+            </li>
+            <li class='quest'>
+              <a title='Add to quest log'><i class="icon-book {{quest}}"></i></a>
+            </li>
+            {{/unless}}
+            {{#unless equals "newAchievement" _id}}
+            {{/unless}}
+          </nav>
+          <h4 class='title expand'>
+            {{#if title}}
+            <a>{{title}}</a>
             {{else}}
-            <i class="icon-chevron-down"></i>
-            {{/if}}</a>
-          </li>
-          <li class='fav'>
-            <a title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
-          </li>
-          <li class='quest'>
-            <a title='Add to quest log'><i class="icon-book {{quest}}"></i></a>
-          </li>
-          {{/unless}}
-          {{#unless equals "newAchievement" _id}}
-          {{/unless}}
-        </nav>
-        <h4 class='title expand'>
-          {{#if title}}
-          <a>{{title}}</a>
+            {{#if equals "newAchievement" _id}}
+            <a class='edit'>Create new achievement</a>
+            {{else}}
+            <a style='font-weight: normal'>&lt;No title suggested&gt;</a>
+            {{/if}}
+            {{/if}}
+          </h4>
+        </header>
+        <div class='description'>
+          {{#if description}}
+          <span>{{{wrapTags description}}}</span>
           {{else}}
-          {{#if equals "newAchievement" _id}}
-          <a class='edit'>Create new achievement</a>
-          {{else}}
-          <a style='font-weight: normal'>&lt;No title suggested&gt;</a>
+          <span>This is a preview!</span>
           {{/if}}
-          {{/if}}
-        </h4>
-      </header>
-      <div class='description'>
-        {{#if description}}
-        <span>{{{wrapTags description}}}</span>
-        {{else}}
-        <span>This is a preview!</span>
-        {{/if}}
+        </div>
       </div>
-    </div>
-    <div class='clearfix'></div>
+      <div class='clearfix'></div>
+    </article>
     {{#if equals "expand" _id}}
     {{> expandAchievement}}
     {{/if}}
-  </article>
+  </div>
 </template>
 <template name='titleSuggestions'>
   <table class='table table-condensed'>
@@ -540,8 +539,8 @@
       {{#each titles}}
       <tr>
         <td>
-          <a><i class="vote icon-arrow-up {{voted "up"}}" title="Vote up" data-up="true"></i></a>
-          <a><i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i></a>
+          <a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
+          <a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
         </td>
         <td>
           <span>{{score}}</span>
@@ -738,7 +737,4 @@
       {{/if}}
     </div>
   </article>
-</template>
-<template name='microTasks'>
-  <div class='test'></div>
 </template>

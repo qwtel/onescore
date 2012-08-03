@@ -1,7 +1,7 @@
 _.extend Template.titleSuggestions,
   events:
     'click .vote': (e) ->
-      $t = $(e.target)
+      $t = $(e.target).parents '.vote'
       data =
         user: Meteor.user()._id
         entity: @_id

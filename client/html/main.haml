@@ -404,10 +404,11 @@
 
 %template(name='timeline')
   {{#each accomplishments}}
+
   {{#with achievement}}
   {{> achievement}}
   {{/with}}
-  -#{{> story}}
+  {{#markdown}}{{story}}{{/markdown}}
 
   {{else}}
   {{> placeholder}}
@@ -439,74 +440,74 @@
   {{/each}}
 
 %template(name='achievement')
-  %article.achievement.fold
-    %a.value.pull-right.accomplish
-      %span.points {{score}}
-    .vote-container.pull-right
-      %div
-        %a
-          <i class="vote icon-arrow-up {{voted "up"}}" title="Vote up" data-up="true"></i>
-      %div
-        %span.count {{score}}
-      %div
-        %a
-          <i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i>
+  .fold
+    %article.achievement(class="{{completed}}")
+      %a.value.pull-right.accomplish
+        %span.points {{score}}
+      .vote-container.pull-right
+        %div
+          %a.vote(data-up="true")<
+            <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+        %div
+          %span.count {{score}}
+        %div
+          %a.vote(data-up="false")<
+            <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
 
-    %a.icon.pull-left.expand
+      %a.icon.pull-left.expand
 
-    .content
-      %header.head
-        %nav.menu.pull-right
-          {{#unless equals "newAchievement" _id}}
-          %li.expand
-            %a(title="Expand")<
-              {{#if equals "expand" _id}}
-              <i class="icon-chevron-up active"></i>
-              {{else}}
-              <i class="icon-chevron-down"></i>
-              {{/if}}
-          -#%li.accomplish
-            %a(title="Accomplish this achievement")<
-              <i class="icon-certificate {{#if equals "expandTab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
-          %li.fav
-            %a(title="Add to favourites")<
-              <i class="icon-star {{faved}}"></i>
-          %li.quest
-            %a(title="Add to quest log")<
-              <i class="icon-book {{quest}}"></i>
-          {{/unless}}
-          -#%li.edit
-            %a(title="Edit")<
-              <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
-          {{#unless equals "newAchievement" _id}}
-          -#%li.talk
-            %a(title="Comment")<
-              <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
-          {{/unless}}
+      .content
+        %header.head
+          %nav.menu.pull-right
+            {{#unless equals "newAchievement" _id}}
+            %li.expand
+              %a(title="Expand")<
+                {{#if equals "expand" _id}}
+                <i class="icon-chevron-up active"></i>
+                {{else}}
+                <i class="icon-chevron-down"></i>
+                {{/if}}
+            -#%li.accomplish
+              %a(title="Accomplish this achievement")<
+                <i class="icon-certificate {{#if equals "expandTab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
+            %li.fav
+              %a(title="Add to favourites")<
+                <i class="icon-star {{faved}}"></i>
+            %li.quest
+              %a(title="Add to quest log")<
+                <i class="icon-book {{quest}}"></i>
+            {{/unless}}
+            -#%li.edit
+              %a(title="Edit")<
+                <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
+            {{#unless equals "newAchievement" _id}}
+            -#%li.talk
+              %a(title="Comment")<
+                <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
+            {{/unless}}
 
-        %h4.title.expand
-          {{#if title}}
-          %a {{title}}
+          %h4.title.expand
+            {{#if title}}
+            %a {{title}}
+            {{else}}
+            {{#if equals "newAchievement" _id}}
+            %a.edit Create new achievement
+            {{else}}
+            %a(style="font-weight: normal") &lt;No title suggested&gt;
+            {{/if}}
+            {{/if}}
+
+        .description
+          {{#if description}}
+          %span {{{wrapTags description}}}
           {{else}}
-          {{#if equals "newAchievement" _id}}
-          %a.edit Create new achievement
-          {{else}}
-          %a(style="font-weight: normal") &lt;No title suggested&gt;
+          %span This is a preview!
           {{/if}}
-          {{/if}}
-
-      .description
-        {{#if description}}
-        %span {{{wrapTags description}}}
-        {{else}}
-        %span This is a preview!
-        {{/if}}
-
-    .clearfix
+      .clearfix
     {{#if equals "expand" _id}}
     {{> expandAchievement}}
     {{/if}}
- 
+
 %template(name='titleSuggestions')
   %table.table.table-condensed
     %thead 
@@ -518,10 +519,10 @@
       {{#each titles}}
       %tr 
         %td
-          %a<
-            <i class="vote icon-arrow-up {{voted "up"}}" title="Vote up" data-up="true"></i>
-          %a<
-            <i class="vote icon-arrow-down {{voted "down"}}" title="Vote down" data-up="false"></i>
+          %a.vote(data-up="true")<
+            <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+          %a.vote(data-up="false")<
+            <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
         %td
           %span {{score}}
         %td {{title}}
@@ -716,6 +717,3 @@
       .text-wrapper.nested
         %textarea.comment-text.ta100(id="reply-{{_id}}" rows="3")
       {{/if}}
-
-%template(name='microTasks')
-  .test

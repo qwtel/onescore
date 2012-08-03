@@ -60,6 +60,7 @@ Meteor.startup ->
   Accomplishments.allow
     insert: uniqueAcc
     update: creator
+    delete: self
 
   Comments.allow
     insert: self

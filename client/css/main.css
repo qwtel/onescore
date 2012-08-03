@@ -282,10 +282,15 @@ i.active {
   float: left;
   width: 50px;
   height: 50px;
-  background: url("/img/bg.png");
-  background-size: 50px 50px; }
-.achievement .nav {
-  margin-top: 20px; }
+  background: url("/img/bg_new.png");
+  border: 3px solid #f70852;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
 .achievement .content {
   margin-left: 65px; }
   .achievement .content .title {
@@ -321,10 +326,17 @@ i.active {
 .achievement:hover .hide {
   display: block; }
 
-.dummy .achievement .icon {
-  background: url("/img/bg_new.png"); }
-.dummy .achievement .content .title a {
+.completed a {
+  color: #4dc206; }
+.completed .icon {
+  border-color: #4dc206; }
+.completed .value {
+  background-position: 0 50px; }
+
+.dummy a {
   color: gray; }
-.dummy .achievement .value {
+.dummy .icon {
+  border-color: gray; }
+.dummy .value {
   background: url("/img/tag_new.png");
   background-size: 50px 50px; }

@@ -21,7 +21,7 @@
       },
       'click .vote': function(e) {
         var $t, data, vote;
-        $t = $(e.target);
+        $t = $(e.target).parents('.vote');
         data = {
           user: Meteor.user()._id,
           entity: this._id,
@@ -123,12 +123,18 @@
       }
       return '';
     },
-    likesNum: function() {
-      if (this.likes != null) {
-        return this.likes.length;
-      } else {
-        return 0;
+    completed: function() {
+      var acc;
+      if (Meteor.user()) {
+        acc = Accomplishments.findOne({
+          user: Meteor.user()._id,
+          entity: this._id
+        });
+        if (acc) {
+          return 'completed';
+        }
       }
+      return '';
     }
   });
 

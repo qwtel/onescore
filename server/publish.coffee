@@ -13,9 +13,9 @@ Meteor.publish 'ushers', ->
 Meteor.publish 'slides', (slideshowId) ->
   return Slides.find slideshowId: slideshowId
 
+
 Meteor.publish 'comments', (topic) ->
   return Comments.find topic: topic
-
 
 Meteor.publish 'users', ->
   return Meteor.users.find()

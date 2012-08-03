@@ -5,7 +5,7 @@
     events: {
       'click .vote': function(e) {
         var $t, achievementId, data, vote;
-        $t = $(e.target);
+        $t = $(e.target).parents('.vote');
         data = {
           user: Meteor.user()._id,
           entity: this._id,

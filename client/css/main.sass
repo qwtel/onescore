@@ -341,11 +341,10 @@ i.active
     float: left
     width: $iconSize
     height: $iconSize
-    background: url('/img/bg.png')
-    background-size: $iconSize $iconSize
-
-  .nav
-    margin-top: 20px
+    background: url('/img/bg_new.png')
+    border: 3px solid $red
+    @include box-sizing(border-box)
+    @include background-size(cover)
 
   .content
     margin-left: $iconSize + $padding
@@ -389,14 +388,20 @@ i.active
     .hide
       display: block
 
+.completed
+  a
+    color: $green
+  .icon
+    border-color: $green
+  .value
+    background-position: 0 $iconSize
+
 .dummy
-  .achievement
-    .icon
-      background: url('/img/bg_new.png')
-    .content
-      .title a
-        color: #808080
-    .value
-      background: url('/img/tag_new.png')
-      background-size: $iconSize $iconSize 
+  a
+    color: #808080
+  .icon
+    border-color: #808080
+  .value
+    background: url('/img/tag_new.png')
+    background-size: $iconSize $iconSize 
     

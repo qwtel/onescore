@@ -66,7 +66,8 @@
     });
     Accomplishments.allow({
       insert: uniqueAcc,
-      update: creator
+      update: creator,
+      "delete": self
     });
     Comments.allow({
       insert: self,
