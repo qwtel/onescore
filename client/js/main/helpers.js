@@ -2,6 +2,30 @@
 (function() {
   var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
+  window.items = [
+    {
+      name: 'Achievements'
+    }, {
+      name: 'Ladder'
+    }
+  ];
+
+  window.categories = [
+    {
+      name: 'Carrier'
+    }, {
+      name: 'Education'
+    }, {
+      name: 'Health'
+    }, {
+      name: 'Meta'
+    }, {
+      name: 'Random'
+    }, {
+      name: 'Sports'
+    }
+  ];
+
   Session.toggle = function(name, value) {
     if (value != null) {
       if (Session.equals(name, value)) {
@@ -139,6 +163,22 @@
     return Session.set('tagFilter', null);
   };
 
+  Session.toggle = function(name, value) {
+    if (value != null) {
+      if (Session.equals(name, value)) {
+        return Session.set(name, null);
+      } else {
+        return Session.set(name, value);
+      }
+    } else {
+      return Session.set(name, !Session.get(name));
+    }
+  };
+
+  Handlebars.registerHelper('session', function(name) {
+    return Session.get(name);
+  });
+
   Handlebars.registerHelper('show', function(name) {
     return Session.equals(name, true);
   });
@@ -167,14 +207,6 @@
     }
   });
 
-  Handlebars.registerHelper('isLva', function(user) {
-    if (user <= 2000000) {
-      return 'lva';
-    } else {
-      return '';
-    }
-  });
-
   Handlebars.registerHelper('userIn', function(field) {
     var _ref;
     if (field != null) {
@@ -194,30 +226,6 @@
 
   Handlebars.registerHelper('getUsername', window.getUsername);
 
-  window.items = [
-    {
-      name: 'Achievements'
-    }, {
-      name: 'Ladder'
-    }
-  ];
-
-  window.categories = [
-    {
-      name: 'Carrier'
-    }, {
-      name: 'Education'
-    }, {
-      name: 'Health'
-    }, {
-      name: 'Meta'
-    }, {
-      name: 'Random'
-    }, {
-      name: 'Sports'
-    }
-  ];
-
   Handlebars.registerHelper('categories', function() {
     var cat, _i, _len, _ref;
     _ref = window.categories;
@@ -228,34 +236,6 @@
       }
     }
     return window.categories;
-  });
-
-  _.extend(Template.content, {
-    page: function(page) {
-      return Session.equals('page', page);
-    }
-  });
-
-  _.extend(Template.header, {
-    events: {
-      'click .nav-item': function(e) {
-        if (e.which === 1) {
-          e.preventDefault();
-          return window.Router.navigate($(e.target).attr('href'), true);
-        }
-      }
-    },
-    items: function() {
-      var item, _i, _len, _ref;
-      _ref = window.items;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
-        if (!item.url) {
-          item.url = item.name.toLowerCase();
-        }
-      }
-      return window.items;
-    }
   });
 
 }).call(this);

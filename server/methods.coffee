@@ -44,11 +44,14 @@ Meteor.methods
       Accomplishments.update acc._id,
         $set:
           story: stry
+          update: new Date()
     else
       Accomplishments.insert
         user: @userId()
         entity: id
         story: stry
+        score: 0
+        date: new Date()
         update: new Date()
 
       a = Achievements.findOne id

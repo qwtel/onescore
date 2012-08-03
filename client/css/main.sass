@@ -63,18 +63,26 @@ body
 a
   cursor: pointer
 
-.dollar
-  display: inline-block
-  width: 35px
-  height: 35px
-  background: url('/img/onescore_dollar.png') no-repeat
-  @include background-size(contain)
+.score
+  .value
+    font:
+      family: $font
+      size: 28px
+      weight: normal
 
-.dollar-green
-  background: url('/img/onescore_dollar_green.png') no-repeat
+  .dollar
+    display: inline-block
+    display: none
+    width: 35px
+    height: 35px
+    background: url('/img/onescore_dollar.png') no-repeat
+    @include background-size(contain)
 
-.dollar-red
-  background: url('/img/onescore_dollar_red.png') no-repeat
+  .dollar-green
+    background: url('/img/onescore_dollar_green.png') no-repeat
+
+  .dollar-red
+    background: url('/img/onescore_dollar_red.png') no-repeat
 
 .profile-pic
   background: url('/img/dummy.png') 
@@ -115,11 +123,6 @@ a
 
   .score
     padding: 8px 10px 0px
-    .value
-      font:
-        family: $font
-        size: 28px
-        weight: normal
     .dollar
       height: 21px
       width: 21px
@@ -284,7 +287,7 @@ $activityPadding: 15px
   &:hover
     color: #333
 
-.user
+.userWidget
   min-height: 50px
   .name 
     line-height: 80%
@@ -333,6 +336,9 @@ i.active
   opacity: 1
   filter: alpha(opacity=100)
 
+.vote-container
+  line-height: 130%
+  text-align: center
 
 .achievement
   .icon
@@ -345,6 +351,9 @@ i.active
     border: 3px solid $red
     @include box-sizing(border-box)
     @include background-size(cover)
+
+  .vote-container
+    margin-left: 10px
 
   .content
     margin-left: $iconSize + $padding
@@ -380,10 +389,6 @@ i.active
     background: url('/img/tag.png')
     background-size: $iconSize 2*$iconSize 
 
-  .vote-container
-    margin-left: 10px
-    text-align: center
-
   &:hover 
     .hide
       display: block
@@ -405,3 +410,37 @@ i.active
     background: url('/img/tag_new.png')
     background-size: $iconSize $iconSize 
     
+.user
+  border-bottom: 1px solid #ddd
+  padding-bottom: $padding/2
+  margin-bottom: $padding
+
+  .content
+    padding-top: 3px
+    margin-left: $iconSize/2 + $padding/2
+    color: $fg2
+    font:
+      size: 14px
+    .name
+      font-weight: bold
+
+    .score
+      .value
+        font-size: 18px
+      .dollar
+        width: 18px
+        height: 18px
+
+  .face
+    width: $iconSize/2
+    height: $iconSize/2
+
+.story
+  border-top: 1px solid #ddd
+  padding-top: $padding
+  margin-top: $padding
+
+  .vote-container
+    width: $iconSize
+  .content
+    margin-left: $iconSize + $padding

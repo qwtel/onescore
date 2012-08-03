@@ -4,8 +4,8 @@
   _.extend(Template.achievement, {
     events: {
       'click .expand': function(e) {
-        Session.set('expand', this._id);
-        return Session.toggle('expandTab', 'info');
+        Session.toggle('expand', this._id);
+        return Session.set('expandTab', 'info');
       },
       'click .accomplish': function(e) {
         Session.set('expand', this._id);

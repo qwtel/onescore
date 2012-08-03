@@ -34,7 +34,8 @@
       %section.well
         %h3.heading Home
         {{> filter }}
-        {{> dashboard }}
+        .clearfix
+        {{> home }}
 
     .span4
       %aside.well 
@@ -73,6 +74,7 @@
         %h3.heading Ladder
         {{> filter }}
         .clearfix
+        {{> ladder }}
   {{/if}}
 
   {{#if page "profile"}}
@@ -92,7 +94,7 @@
         %h3.heading Activity
         {{> filter }}
         .clearfix
-        {{> timeline }}
+        {{> accomplishments }}
   {{/if}}
 
   {{#if page "activities"}}
@@ -198,11 +200,15 @@
   %nav.nav
     %li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
+        {{#if session "category"}}
+        %span {{session "category"}}
+        {{else}}
         %span Onescore
+        {{/if}}
         %b.caret
       %ul.dropdown-menu
         {{#each categories}}
-        %li
+        %li.category(data-category="{{name}}")
           %a.nav-item {{name}}
         {{/each}}
     {{#each items}}
@@ -223,7 +229,7 @@
 
 %template(name='userWidget')
   {{#if currentUser}}
-  .user
+  .userWidget
     %a.profile-pic.pull-left(href="")
 
     {{#unless editUsername}} 
@@ -390,29 +396,69 @@
     <a id="lva-posts" class='btn btn-filter {{isActive "comment-filter" "lva"}}' data-filter="lva">LVA-Team Posts</a>
     -#%a.btn#my-posts(class="{{myPostsActive}}" data-filter="my") My Own Posts
     -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
-  .btn-group.pull-right
-    %a.btn.add-comment Add Comment
-  .clearfix
-  #comments
-    .temp
-      {{#if addComment}}
-      .text-wrapper
-        %textarea.comment-text.ta100(rows="3")
-      {{/if}}
-    .comments
-      {{> comments}}
+  .text-wrapper
+    %textarea.comment-text.ta100(rows="3")
+  .comments
+    {{> comments}}
 
-%template(name='timeline')
-  {{#each accomplishments}}
-
-  {{#with achievement}}
-  {{> achievement}}
-  {{/with}}
-  {{#markdown}}{{story}}{{/markdown}}
-
+%template(name='ladder')
+  {{#each users}}
+  {{> user}}
   {{else}}
   {{> placeholder}}
   {{/each}}
+
+%template(name='home')
+  {{#each accomplishments}}
+  {{> accomplishment}}
+  {{else}}
+  {{> placeholder}}
+  {{/each}}
+
+%template(name='accomplishments')
+  {{#each accomplishments}}
+  {{> accomplishment}}
+  {{else}}
+  {{> placeholder}}
+  {{/each}}
+
+%template(name='accomplishment')
+  {{#if achievement}}
+  .fold
+    {{#with user}}
+    {{> user}}
+    {{/with}}
+    {{#with achievement}}
+    {{> achievement}}
+    {{/with}}
+
+    {{#if story}}
+    .story
+      .vote-container.pull-left
+        %div
+          %a.vote(data-up="true")<
+            <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+        %div
+          %span.count {{score}}
+        %div
+          %a.vote(data-up="false")<
+            <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+      .content
+        {{#markdown}}{{story}}{{/markdown}}
+    {{/if}}
+  {{/if}}
+
+%template(name='user')
+  .user
+    %a.face.vader.profile-pic.pull-left
+    .content
+      %a.name {{name}}
+      -#%span.score (score)
+      %em.verb {{verb}}
+      .score.pull-right<
+        %span.value {{score}}
+        %span.dollar.dollar-green
+    .clearfix
 
 %template(name='placeholder')
   {{#if noContent}}
@@ -429,81 +475,81 @@
   <button class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></button>
   .clearfix
 
-  .dummy
+  .fold.dummy
     {{> achievement}}
   {{/with}}
 
   {{#each achievements}}
-  {{> achievement}}
+  .fold
+    {{> achievement}}
   {{else}}
   {{> placeholder}}
   {{/each}}
 
 %template(name='achievement')
-  .fold
-    %article.achievement(class="{{completed}}")
-      %a.value.pull-right.accomplish
-        %span.points {{score}}
-      .vote-container.pull-right
-        %div
-          %a.vote(data-up="true")<
-            <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-        %div
-          %span.count {{score}}
-        %div
-          %a.vote(data-up="false")<
-            <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+  %article.achievement(class="{{completed}}")
+    %a.value.pull-right.accomplish
+      %span.points {{score}}
+    .vote-container.pull-right
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
 
-      %a.icon.pull-left.expand
+    %a.icon.pull-left.expand
 
-      .content
-        %header.head
-          %nav.menu.pull-right
-            %li.expand
-              %a(title="Expand")<
-                {{#if equals "expand" _id}}
-                {{#if expandTab}}
-                <i class="icon-chevron-up active"></i>
-                {{else}}
-                <i class="icon-chevron-down"></i>
-                {{/if}}
-                {{else}}
-                <i class="icon-chevron-down"></i>
-                {{/if}}
-            -#%li.accomplish
-              %a(title="Accomplish this achievement")<
-                <i class="icon-certificate {{#if equals "expandTab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
-            -#%li.quest
-              %a(title="Add to quest log")<
-                <i class="icon-book {{quest}}"></i>
-            %li.fav
-              %a(title="Add to favourites")<
-                <i class="icon-star {{faved}}"></i>
-            %li.edit
-              %a(title="Edit")<
-                <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
-            %li.talk
-              %a(title="Comment")<
-                <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
+    .content
+      %header.head
+        %nav.menu.pull-right
+          %li.expand
+            %a(title="Expand")<
+              {{#if equals "expand" _id}}
+              {{#if expandTab}}
+              <i class="icon-chevron-up active"></i>
+              {{else}}
+              <i class="icon-chevron-down"></i>
+              {{/if}}
+              {{else}}
+              <i class="icon-chevron-down"></i>
+              {{/if}}
+          -#%li.accomplish
+            %a(title="Accomplish this achievement")<
+              <i class="icon-certificate {{#if equals "expandTab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
+          -#%li.quest
+            %a(title="Add to quest log")<
+              <i class="icon-book {{quest}}"></i>
+          %li.fav
+            %a(title="Add to favourites")<
+              <i class="icon-star {{faved}}"></i>
+          %li.edit
+            %a(title="Edit")<
+              <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
+          %li.talk
+            %a(title="Comment")<
+              <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
 
-          %h4.title.expand
-            {{#if title}}
-            %a {{title}}
-            {{else}}
-            {{#if equals "newAchievement" _id}}
-            %a.edit Create new achievement
-            {{else}}
-            %a(style="font-weight: normal") &lt;No title suggested&gt;
-            {{/if}}
-            {{/if}}
-
-        .description
-          {{#if description}}
-          %span {{{wrapTags description}}}
+        %h4.title.expand
+          {{#if title}}
+          %a {{title}}
           {{else}}
-          %span This is a preview!
+          {{#if equals "newAchievement" _id}}
+          %a.edit Create new achievement
+          {{else}}
+          %a(style="font-weight: normal") &lt;No title suggested&gt;
           {{/if}}
-      .clearfix
+          {{/if}}
+
+      .description
+        {{#if description}}
+        %span {{{wrapTags description}}}
+        {{else}}
+        %span This is a preview!
+        {{/if}}
+    .clearfix
   {{#if equals "expand" _id}}{{#if expandTab}}
   {{> expandAchievement}}
   {{/if}}{{/if}}
@@ -574,32 +620,34 @@
   {{/if}}
 
 %template(name="accomplish")
+  %label.control-label Tell your story: (optional)
   .btn-group
-    %button.btn.active(href="#" title="Text") 
-      %i.icon-align-left
-    %button.btn(href="#" title="Picture")
-      %i.icon-picture
-    %button.btn(href="#" title="Link") 
-      %i.icon-bookmark
+    <button class="btn text {{isActive "story" "text"}}" title="Text">
+    %i.icon-align-left
+    </button>
+    <button class="btn picture {{isActive "story" "picture"}}" title="Picture">
+    %i.icon-picture
+    </button>
+    <button class="btn link {{isActive "story" "link"}}" title="Link">
+    %i.icon-bookmark
+    </button>
     -#%button.btn(href="#" title="Audio") 
       %i.icon-headphones
     -#%button.btn(href="#" title="Video") 
       %i.icon-film
 
+  {{#if equals "story" "text"}}
   .control-group
-  %label.control-label(for="accomplish-{{_id}}") Story (optional) 
+  %label.control-label(for="accomplish-{{_id}}") Text
   .controls
-    %textarea.ta100(id="accomplish-{{_id}}" rows="12") {{text}}
+    %textarea.ta100(id="accomplish-{{_id}}" rows="12") {{#if accomplishment}}{{accomplishment.story}}{{/if}}
     %span.help-block
       %strong HINT:
       You can style your post using markdown.
-  .control-group
-
-  %label.control-label Preview 
-  .preview
+  {{/if}}
 
   %footer.form-actions
-    %button.btn.btn-primary.btn-large.create Accomplish
+    %button.btn.btn-primary.btn-large.create(style="margin-left: -20px") Accomplish
 
 %template(name="editAchievement")
   {{#if equals "newAchievement" _id}}
@@ -637,7 +685,7 @@
       %div.control-group 
         %label.control-label(for="description-{{_id}}") Description
         %div.controls 
-          %textarea.input-xlarge.description(id="description-{{_id}}" data-field="description" rows="4") {{description}}
+          %textarea.input-xlarge.description.lazy(id="description-{{_id}}" data-field="description" rows="4") {{description}}
           %p.help-block 
             What has to be done to complete this achievement?
             %br/
@@ -654,12 +702,13 @@
       %div.control-group 
         %label.control-label(for="category-{{_id}}") Category
         %div.controls                 
-          %select.category(id="category-{{_id}}" data-field="category") 
+          %select.category.lazy(id="category-{{_id}}" data-field="category") 
             %option
             {{#each categories}}
             <option value="{{name}}" {{selected ../category}}>{{name}}</option>
             {{/each}}
           %p.help-block If it doesn't fit in anywhere, choose 'Random'
+
       -#%div.control-group 
         %label.control-label(for="multiSelect") Multicon-select
         %div.controls 
@@ -690,6 +739,7 @@
 
 %template(name='comment')
   %article.comment(id="comment-{{_id}}" class="{{nested}}")
+    {{> user}}
     .sup
       .pull-left
         %span.name {{getUsername user}}

@@ -7,6 +7,10 @@ _.extend Template.achievements,
   select: () ->
     sel = {}
     sel.created = true
+
+    if Session.get('category')?
+      sel.category = Session.get 'category'
+
     return sel
 
   achievements: ->

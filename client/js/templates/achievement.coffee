@@ -1,8 +1,8 @@
 _.extend Template.achievement,
   events:
     'click .expand': (e) ->
-      Session.set 'expand', @_id
-      Session.toggle 'expandTab', 'info'
+      Session.toggle 'expand', @_id
+      Session.set 'expandTab', 'info'
 
     'click .accomplish': (e) ->
       Session.set 'expand', @_id

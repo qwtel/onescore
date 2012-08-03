@@ -19,32 +19,22 @@
           score: 0
         });
       },
-      'change .category': function(e) {
-        return Achievements.update(this._id, {
-          $set: {
-            category: $("#category-" + this._id).val()
-          }
-        });
-      },
-      'change .description': function(e) {
-        var description, tags;
-        description = $("#description-" + this._id).val();
-        tags = window.findTags(description);
-        return Achievements.update(this._id, {
-          $set: {
-            description: description,
-            tags: tags
-          }
-        });
-      },
       'click .create': function(e) {
-        var id;
-        Achievements.update(this._id, {
-          $set: {
-            created: true
+        var data, id;
+        data = {};
+        $("#form-" + this._id).find('.lazy').each(function() {
+          var $t, field;
+          $t = $(this);
+          field = $t.data('field');
+          if (field != null) {
+            return data[field] = $t.val();
           }
         });
-        id = createNewAchievement();
+        data.created = true;
+        Achievements.update(this._id, {
+          $set: data
+        });
+        id = window.createNewAchievement();
         Session.set('newAchievement', id);
         return Session.set('expand', null);
       }
@@ -52,6 +42,12 @@
     selected: function(category) {
       if (category) {
         if (category === this.name) {
+          return 'selected';
+        } else {
+          return '';
+        }
+      } else if (Session.get('category') != null) {
+        if (Session.get('category') === this.name) {
           return 'selected';
         } else {
           return '';

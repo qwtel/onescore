@@ -137,12 +137,14 @@ Session.toggle = (name, value) ->
   else
     Session.set name, !Session.get(name)
 
+Handlebars.registerHelper 'session', (name) ->
+  return Session.get name
 
 Handlebars.registerHelper 'show', (name) ->
-  return Session.equals(name, true)
+  return Session.equals name, true
 
 Handlebars.registerHelper 'equals', (name, value) ->
-  return Session.equals(name, value)
+  return Session.equals name, value
 
 Handlebars.registerHelper 'isActive', (name, value) ->
   return if Session.equals(name, value) then 'active' else ''
@@ -152,9 +154,6 @@ Handlebars.registerHelper 'belongsTo', (user) ->
 
 Handlebars.registerHelper 'isMe', (user) ->
   return if Session.equals('user', user) then 'my' else ''
-
-Handlebars.registerHelper 'isLva', (user) ->
-  return if user <= 2000000 then 'lva' else ''
 
 Handlebars.registerHelper 'userIn', (field) ->
   if field?
@@ -176,19 +175,3 @@ Handlebars.registerHelper 'categories', ->
       cat.url = cat.name.toLowerCase()
   return window.categories
 
-_.extend Template.content,
-  page: (page) ->
-    return Session.equals 'page', page
-
-_.extend Template.header,
-  events:
-    'click .nav-item': (e) ->
-      if e.which is 1
-        e.preventDefault()
-        window.Router.navigate $(e.target).attr('href'), true
-
-  items: ->
-    for item in window.items
-      unless item.url
-        item.url = item.name.toLowerCase()
-    return window.items

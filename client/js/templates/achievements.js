@@ -12,6 +12,9 @@
       var sel;
       sel = {};
       sel.created = true;
+      if (Session.get('category') != null) {
+        sel.category = Session.get('category');
+      }
       return sel;
     },
     achievements: function() {

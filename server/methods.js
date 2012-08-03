@@ -53,7 +53,8 @@
       if (acc) {
         return Accomplishments.update(acc._id, {
           $set: {
-            story: stry
+            story: stry,
+            update: new Date()
           }
         });
       } else {
@@ -61,6 +62,8 @@
           user: this.userId(),
           entity: id,
           story: stry,
+          score: 0,
+          date: new Date(),
           update: new Date()
         });
         a = Achievements.findOne(id);
