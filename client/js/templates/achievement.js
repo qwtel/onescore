@@ -20,25 +20,16 @@
         return Session.toggle('expandTab', 'talk');
       },
       'click .vote': function(e) {
-        var $t, data, vote;
-        $t = $(e.target).parents('.vote');
-        data = {
-          user: Meteor.user()._id,
-          entity: this._id,
-          up: $t.data('up')
-        };
-        vote = Votes.findOne({
-          user: Meteor.user()._id,
-          entity: this._id
-        });
-        if (vote) {
-          Votes.update(vote._id, {
-            $set: data
-          });
-        } else {
-          Votes.insert(data);
+        var $t, up;
+        if (!e.isPropagationStopped()) {
+          $t = $(e.target);
+          if (!$t.hasClass('vote')) {
+            $t = $t.parents('.vote');
+          }
+          up = $t.data('up');
+          Meteor.call('vote', 'achievements', this._id, up);
+          return e.stopPropagation();
         }
-        return Meteor.call('updateAchievementScore', this._id);
       },
       'click .fav': function(e) {
         var fav;

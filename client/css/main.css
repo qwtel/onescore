@@ -223,6 +223,9 @@ a {
   .edittag-input:hover {
     color: #333333; }
 
+.expandAchievement {
+  margin-top: 15px; }
+
 .userWidget {
   min-height: 50px; }
   .userWidget .name {
@@ -307,8 +310,6 @@ i.active {
 .achievement .menu {
   list-style: none;
   margin: 0; }
-  .achievement .menu .hide {
-    display: none; }
   .achievement .menu li {
     float: left;
     margin-right: 5px; }
@@ -335,6 +336,11 @@ i.active {
 .completed .value {
   background-position: 0 50px; }
 
+.minimal {
+  margin: 0; }
+  .minimal .menu {
+    display: none; }
+
 .dummy a {
   color: gray; }
 .dummy .icon {
@@ -346,7 +352,7 @@ i.active {
 .user {
   border-bottom: 1px solid #dddddd;
   padding-bottom: 7.5px;
-  margin-bottom: 15px; }
+  margin-bottom: 7.5px; }
   .user .content {
     padding-top: 3px;
     margin-left: 32.5px;
@@ -366,7 +372,7 @@ i.active {
 .story {
   border-top: 1px solid #dddddd;
   padding-top: 15px;
-  margin-top: 15px; }
+  margin-top: 7.5px; }
   .story .vote-container {
     width: 50px; }
   .story .content {

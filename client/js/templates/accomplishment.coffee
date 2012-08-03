@@ -1,4 +1,13 @@
 _.extend Template.accomplishment,
+  events:
+    'click .vote': (e) ->
+      unless e.isPropagationStopped()
+        $t = $(e.target)
+        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
+        up = $t.data 'up'
+        Meteor.call 'vote', 'accomplishments', @_id, up
+        e.stopPropagation()
+
   achievement: ->
     sel = {}
     sel._id = @entity
@@ -10,3 +19,14 @@ _.extend Template.accomplishment,
 
   user: ->
     return Meteor.users.findOne @user
+
+  voted: (state) ->
+    state = if state is 'up' then true else false
+
+    if Meteor.user()
+      vote = Votes.findOne
+        user: Meteor.user()._id
+        entity: @_id
+      if vote and vote.up is state
+        return 'active'
+    return ''

@@ -36,5 +36,4 @@ Meteor.publish 'quests', ->
   return Quests.find user: @userId()
 
 Meteor.publish 'accomplishments', ->
-  return Accomplishments.find user: @userId()
-
+  return Accomplishments.find()

@@ -17,8 +17,10 @@
       %header.container
         {{> header }}
 
+  {{#if currentUser}}
   #content.container
     {{> content }}
+  {{/if}}
 
 %template(name='content')
   {{#if page "dashboard"}}
@@ -32,7 +34,7 @@
   .row
     .span8
       %section.well
-        %h3.heading Home
+        -#%h3.heading Home
         {{> filter }}
         .clearfix
         {{> home }}
@@ -71,7 +73,7 @@
         %h3 Quest Items
     .span8
       %section.well 
-        %h3.heading Ladder
+        -#%h3.heading Ladder
         {{> filter }}
         .clearfix
         {{> ladder }}
@@ -91,7 +93,7 @@
         %h3 Quest Items
     .span8
       %section.well 
-        %h3.heading Activity
+        -#%h3.heading Accomplishments
         {{> filter }}
         .clearfix
         {{> accomplishments }}
@@ -228,7 +230,6 @@
   {{/if}}
 
 %template(name='userWidget')
-  {{#if currentUser}}
   .userWidget
     %a.profile-pic.pull-left(href="")
 
@@ -259,7 +260,6 @@
   {{else}}
   .login
     {{> loginButtons}}
-  {{/if}}
 
 %template(name='activities')
   .btn-group.pull-left
@@ -429,7 +429,8 @@
     {{> user}}
     {{/with}}
     {{#with achievement}}
-    {{> achievement}}
+    .minimal
+      {{> achievement}}
     {{/with}}
 
     {{#if story}}
@@ -444,6 +445,7 @@
           %a.vote(data-up="false")<
             <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
       .content
+        %time {{date}}
         {{#markdown}}{{story}}{{/markdown}}
     {{/if}}
   {{/if}}
@@ -454,7 +456,7 @@
     .content
       %a.name {{name}}
       -#%span.score (score)
-      %em.verb {{verb}}
+      %em.verb accomplished:
       .score.pull-right<
         %span.value {{score}}
         %span.dollar.dollar-green
@@ -468,7 +470,7 @@
   {{/if}}
 
 %template(name='achievements')
-  %h3.heading Achievements
+  -#%h3.heading Achievements
   {{> filter}}
 
   {{#with newAchievement}}
@@ -551,7 +553,8 @@
         {{/if}}
     .clearfix
   {{#if equals "expand" _id}}{{#if expandTab}}
-  {{> expandAchievement}}
+  .expandAchievement
+    {{> expandAchievement}}
   {{/if}}{{/if}}
 
 %template(name='titleSuggestions')

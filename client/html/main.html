@@ -17,16 +17,17 @@
       </header>
     </div>
   </div>
+  {{#if currentUser}}
   <div class='container' id='content'>
     {{> content }}
   </div>
+  {{/if}}
 </body>
 <template name='content'>
   {{#if page "dashboard"}}
   <div class='row'>
     <div class='span8'>
       <section class='well'>
-        <h3 class='heading'>Home</h3>
         {{> filter }}
         <div class='clearfix'></div>
         {{> home }}
@@ -80,7 +81,6 @@
     </div>
     <div class='span8'>
       <section class='well'>
-        <h3 class='heading'>Ladder</h3>
         {{> filter }}
         <div class='clearfix'></div>
         {{> ladder }}
@@ -108,7 +108,6 @@
     </div>
     <div class='span8'>
       <section class='well'>
-        <h3 class='heading'>Activity</h3>
         {{> filter }}
         <div class='clearfix'></div>
         {{> accomplishments }}
@@ -259,7 +258,6 @@
   {{/if}}
 </template>
 <template name='userWidget'>
-  {{#if currentUser}}
   <div class='userWidget'>
     <a class='profile-pic pull-left' href=''></a>
     {{#unless editUsername}}
@@ -276,7 +274,6 @@
   <div class='login'>
     {{> loginButtons}}
   </div>
-  {{/if}}
 </template>
 <template name='activities'>
   <div class='btn-group pull-left'>
@@ -451,7 +448,9 @@
     {{> user}}
     {{/with}}
     {{#with achievement}}
-    {{> achievement}}
+    <div class='minimal'>
+      {{> achievement}}
+    </div>
     {{/with}}
     {{#if story}}
     <div class='story'>
@@ -467,6 +466,7 @@
         </div>
       </div>
       <div class='content'>
+        <time>{{date}}</time>
         {{#markdown}}{{story}}{{/markdown}}
       </div>
     </div>
@@ -479,7 +479,7 @@
     <a class='face vader profile-pic pull-left'></a>
     <div class='content'>
       <a class='name'>{{name}}</a>
-      <em class='verb'>{{verb}}</em>
+      <em class='verb'>accomplished:</em>
       <div class='score pull-right'><span class='value'>{{score}}</span>
       <span class='dollar dollar-green'></span></div>
     </div>
@@ -494,7 +494,6 @@
   {{/if}}
 </template>
 <template name='achievements'>
-  <h3 class='heading'>Achievements</h3>
   {{> filter}}
   {{#with newAchievement}}
   <button class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></button>
@@ -575,7 +574,9 @@
     <div class='clearfix'></div>
   </article>
   {{#if equals "expand" _id}}{{#if expandTab}}
-  {{> expandAchievement}}
+  <div class='expandAchievement'>
+    {{> expandAchievement}}
+  </div>
   {{/if}}{{/if}}
 </template>
 <template name='titleSuggestions'>

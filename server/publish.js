@@ -64,9 +64,7 @@
   });
 
   Meteor.publish('accomplishments', function() {
-    return Accomplishments.find({
-      user: this.userId()
-    });
+    return Accomplishments.find();
   });
 
 }).call(this);

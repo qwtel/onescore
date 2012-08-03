@@ -52,10 +52,6 @@
       insert: self,
       update: creator
     });
-    Votes.allow({
-      insert: uniqueVote,
-      update: creator
-    });
     Favourites.allow({
       insert: uniqueFav,
       update: creator
@@ -69,14 +65,10 @@
       update: creator,
       "delete": self
     });
-    Comments.allow({
+    return Comments.allow({
       insert: self,
-      update: creator
-    });
-    return Meteor.users.allow({
-      update: function() {
-        return true;
-      }
+      update: creator,
+      "delete": self
     });
   });
 

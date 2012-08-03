@@ -17,23 +17,12 @@ _.extend Template.achievement,
       Session.toggle 'expandTab', 'talk'
 
     'click .vote': (e) ->
-      $t = $(e.target).parents '.vote'
-      data =
-        user: Meteor.user()._id
-        entity: @_id
-        up: $t.data 'up'
-
-      vote = Votes.findOne
-        user: Meteor.user()._id
-        entity: @_id
-
-      if vote
-        Votes.update vote._id,
-          $set: data
-      else
-        Votes.insert data
-
-      Meteor.call 'updateAchievementScore', @_id
+      unless e.isPropagationStopped()
+        $t = $(e.target)
+        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
+        up = $t.data 'up'
+        Meteor.call 'vote', 'achievements', @_id, up
+        e.stopPropagation()
 
     'click .fav': (e) ->
       fav = Favourites.findOne

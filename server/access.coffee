@@ -45,9 +45,9 @@ Meteor.startup ->
     insert: self
     update: creator
 
-  Votes.allow
-    insert: uniqueVote
-    update: creator
+  #Votes.allow
+  #  insert: uniqueVote
+  #  update: creator
 
   Favourites.allow
     insert: uniqueFav
@@ -65,7 +65,4 @@ Meteor.startup ->
   Comments.allow
     insert: self
     update: creator
-
-  Meteor.users.allow
-    update: -> return true
-
+    delete: self

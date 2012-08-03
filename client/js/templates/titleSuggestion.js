@@ -4,26 +4,16 @@
   _.extend(Template.titleSuggestions, {
     events: {
       'click .vote': function(e) {
-        var $t, achievementId, data, vote;
-        $t = $(e.target).parents('.vote');
-        data = {
-          user: Meteor.user()._id,
-          entity: this._id,
-          up: $t.data('up')
-        };
-        vote = Votes.findOne({
-          user: Meteor.user()._id,
-          entity: this._id
-        });
-        if (vote) {
-          Votes.update(vote._id, {
-            $set: data
-          });
-        } else {
-          Votes.insert(data);
+        var $t, up;
+        if (!e.isPropagationStopped()) {
+          $t = $(e.target);
+          if (!$t.hasClass('vote')) {
+            $t = $t.parents('.vote');
+          }
+          up = $t.data('up');
+          Meteor.call('vote', 'titles', this._id, up);
+          return e.stopPropagation();
         }
-        achievementId = Session.get('expand');
-        return Meteor.call('updateTitleScore', this._id, achievementId);
       }
     },
     titles: function() {

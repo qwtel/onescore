@@ -17,23 +17,51 @@ updateScore = (collection, id, score, callback) ->
     ,
       callback
 
+table = {}
+
+Meteor.startup ->
+  # HACK: Is there a better way?
+  table =
+    titles: Titles
+    achievements: Achievements
+    accomplishments: Accomplishments
+    comments: Comments
+
 Meteor.methods
-  updateUserScoreComplete: ->
-    accs = Accomplishments.find
+  vote: (collection, entity, up) ->
+    data =
       user: @userId()
+      entity: entity
+      up: up
+    
+    vote = Votes.findOne
+      user: @userId()
+      entity: entity
+    
+    if vote
+      Votes.update vote._id,
+        $set: data
+    else
+      Votes.insert data
 
-    accs = accs.fetch()
-    entities = _.pluck accs, 'entity'
+    # HACK: update achievement title
+    if collection is 'titles'
+      callback = ->
+        # HACK: I can't even begin to explain this...
+        achievement = Titles.findOne(entity).entity
+        best = Titles.findOne
+          entity: achievement
+        ,
+          sort:
+            score: -1
 
-    a = Achievements.find
-      _id: $in: entities
+        if best
+          Achievements.update achievement,
+            $set:
+              title: best.title
 
-    a = a.fetch()
-    s = _.pluck a, 'score'
-    score = _.reduce s, (memo, num) ->
-      return memo + num
-    , 0
-    updateScore Meteor.users, @userId(), score
+    score = calculateScore entity
+    updateScore table[collection], entity, score, callback
 
   accomplish: (id, stry) ->
     acc = Accomplishments.findOne
@@ -60,21 +88,20 @@ Meteor.methods
           $inc:
             score: a.score
 
-  # TODO: Write stubs on client
-  updateAchievementScore: (id) ->
-    score = calculateScore id
-    updateScore Achievements, id, score
+  # HACK: this will cause problems at num achievements > some constant
+  updateUserScoreComplete: ->
+    accs = Accomplishments.find
+      user: @userId()
 
-  updateTitleScore: (titleId, achievementId) ->
-    score = calculateScore titleId
-    updateScore Titles, titleId, score, ->
-      best = Titles.findOne
-        entity: achievementId
-      ,
-        sort:
-          score: -1
+    accs = accs.fetch()
+    entities = _.pluck accs, 'entity'
 
-      if best
-        Achievements.update achievementId,
-          $set:
-            title: best.title
+    a = Achievements.find
+      _id: $in: entities
+
+    a = a.fetch()
+    s = _.pluck a, 'score'
+    score = _.reduce s, (memo, num) ->
+      return memo + num
+    , 0
+    updateScore Meteor.users, @userId(), score
