@@ -281,6 +281,13 @@ i.active {
   line-height: 130%;
   text-align: center; }
 
+.icons {
+  list-style: none;
+  margin: 0; }
+  .icons li {
+    float: left;
+    margin-right: 5px; }
+
 .achievement .icon {
   -webkit-border-radius: 6px;
   border-radius: 6px;
@@ -307,12 +314,6 @@ i.active {
   .achievement .content .description .tag {
     color: #777777;
     font-weight: normal; }
-.achievement .menu {
-  list-style: none;
-  margin: 0; }
-  .achievement .menu li {
-    float: left;
-    margin-right: 5px; }
 .achievement .value {
   display: block;
   font-size: 200%;

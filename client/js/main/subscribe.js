@@ -32,14 +32,14 @@
 
   Meteor.autosubscribe(function() {
     var achievement, topic;
-    topic = Session.get('expand');
+    topic = Session.get('single');
     if (topic) {
       Session.set('commentsLoaded', false);
       Meteor.subscribe('comments', topic, function() {
         return Session.set('commentsLoaded', true);
       });
     }
-    achievement = Session.get('expand');
+    achievement = Session.get('single');
     if (achievement) {
       Session.set('titlesLoaded', false);
       return Meteor.subscribe('titles', achievement, function() {

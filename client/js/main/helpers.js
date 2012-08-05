@@ -144,25 +144,6 @@
     return '';
   };
 
-  window.softReset = function() {
-    $('.modal').modal('hide');
-    Session.set('add-comment', null);
-    Session.set('edit-comment', null);
-    Session.set('topic', 'dashboard');
-    Session.set('thread', null);
-    Session.set('activity', null);
-    return Session.set('addingTag', null);
-  };
-
-  window.hardReset = function() {
-    window.softReset();
-    $(document).scrollTop(0);
-    Session.set('comment-filter', null);
-    Session.set('activity-filter-1', null);
-    Session.set('activity-filter-2', null);
-    return Session.set('tagFilter', null);
-  };
-
   Session.toggle = function(name, value) {
     if (value != null) {
       if (Session.equals(name, value)) {

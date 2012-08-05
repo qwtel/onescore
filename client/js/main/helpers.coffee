@@ -111,23 +111,6 @@ window.getUsername = (userId) ->
     return user.name
   return ''
 
-window.softReset = ->
-  $('.modal').modal 'hide'
-  Session.set 'add-comment', null
-  Session.set 'edit-comment', null
-  Session.set 'topic', 'dashboard'
-  Session.set 'thread', null
-  Session.set 'activity', null
-  Session.set 'addingTag', null
-
-window.hardReset = ->
-  window.softReset()
-  $(document).scrollTop 0
-  Session.set 'comment-filter', null
-  Session.set 'activity-filter-1', null
-  Session.set 'activity-filter-2', null
-  Session.set 'tagFilter', null
-
 Session.toggle = (name, value) ->
   if value?
     if Session.equals name, value
@@ -174,4 +157,3 @@ Handlebars.registerHelper 'categories', ->
     unless cat.url
       cat.url = cat.name.toLowerCase()
   return window.categories
-

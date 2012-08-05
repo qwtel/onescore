@@ -5,7 +5,7 @@
     events: {
       'click .new': function(e) {
         Session.toggle('expand', this._id);
-        return Session.set('expandTab', 'edit');
+        return Session.set('tab', 'edit');
       }
     },
     select: function() {

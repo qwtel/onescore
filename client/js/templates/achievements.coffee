@@ -2,7 +2,7 @@ _.extend Template.achievements,
   events:
     'click .new': (e) ->
       Session.toggle 'expand', @_id
-      Session.set 'expandTab', 'edit'
+      Session.set 'tab', 'edit'
 
   select: () ->
     sel = {}

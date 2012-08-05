@@ -19,13 +19,13 @@ Meteor.subscribe 'drafts', Session.get 'user'
 
 Session.set 'topic', 'dashboard'
 Meteor.autosubscribe ->
-  topic = Session.get 'expand'
+  topic = Session.get 'single'
   if topic
     Session.set 'commentsLoaded', false
     Meteor.subscribe 'comments', topic, ->
       Session.set 'commentsLoaded', true
 
-  achievement = Session.get 'expand'
+  achievement = Session.get 'single'
   if achievement
     Session.set 'titlesLoaded', false
     Meteor.subscribe 'titles', achievement, ->

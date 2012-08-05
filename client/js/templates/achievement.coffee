@@ -1,21 +1,5 @@
 _.extend Template.achievement,
   events:
-    'click .expand': (e) ->
-      Session.toggle 'expand', @_id
-      Session.set 'expandTab', 'info'
-
-    'click .accomplish': (e) ->
-      Session.set 'expand', @_id
-      Session.toggle 'expandTab', 'accomplish'
-
-    'click .edit': (e) ->
-      Session.set 'expand', @_id
-      Session.toggle 'expandTab', 'edit'
-
-    'click .talk': (e) ->
-      Session.set 'expand', @_id
-      Session.toggle 'expandTab', 'talk'
-
     'click .vote': (e) ->
       unless e.isPropagationStopped()
         $t = $(e.target)
@@ -23,6 +7,9 @@ _.extend Template.achievement,
         up = $t.data 'up'
         Meteor.call 'vote', 'achievements', @_id, up
         e.stopPropagation()
+
+    'click .expand': (e) ->
+      Session.toggle 'expand', @_id
 
     'click .fav': (e) ->
       fav = Favourites.findOne
@@ -39,23 +26,20 @@ _.extend Template.achievement,
           entity: @_id
           active: true
 
-    'click .quest': (e) ->
-      quest = Quests.findOne
-        user: Meteor.user()._id
-        entity: @_id
-
-      if quest
-        Quests.update quest._id,
-          $set:
-            active: !quest.active
-      else
-        Quests.insert
-          user: Meteor.user()._id
-          entity: @_id
-          active: true
-
-  expandTab: ->
-    return Session.get 'expandTab'
+    #'click .quest': (e) ->
+    #  quest = Quests.findOne
+    #    user: Meteor.user()._id
+    #    entity: @_id
+    #
+    #  if quest
+    #    Quests.update quest._id,
+    #      $set:
+    #        active: !quest.active
+    #  else
+    #    Quests.insert
+    #      user: Meteor.user()._id
+    #      entity: @_id
+    #      active: true
 
   faved: ->
     if Meteor.user()
@@ -67,15 +51,15 @@ _.extend Template.achievement,
         return 'active'
     return ''
 
-  quest: ->
-    if Meteor.user()
-      fav = Quests.findOne
-        user: Meteor.user()._id
-        entity: @_id
-        active: true
-      if fav
-        return 'active'
-    return ''
+  #quest: ->
+  #  if Meteor.user()
+  #    fav = Quests.findOne
+  #      user: Meteor.user()._id
+  #      entity: @_id
+  #      active: true
+  #    if fav
+  #      return 'active'
+  #  return ''
 
   voted: (state) ->
     state = if state is 'up' then true else false

@@ -12,6 +12,9 @@
   %link(rel="apple-touch-precomposed" href="img/icon96.png")
 
 %body
+  {{> wrapper}}
+
+%template(name='wrapper')
   .navbar.navbar-fixed-top
     .navbar-inner
       %header.container
@@ -23,7 +26,7 @@
   {{/if}}
 
 %template(name='content')
-  {{#if page "dashboard"}}
+  {{#if equals "page" "dashboard"}}
   -#.row
     .span12
       .hero-unit
@@ -50,8 +53,18 @@
         %h3 Quest Items
   {{/if}}
 
-  {{#if page "achievements"}}
+  {{#if equals "page" "accomplishments"}}
   .row
+    {{#if session "single"}}
+    .span8.offset2
+      %section.well 
+        {{> single}}
+    {{/if}}
+  {{/if}}
+
+  {{#if equals "page" "achievements"}}
+  .row
+    {{#unless session "single"}}
     .span4
       %aside.well.hidden-phone
         %h3 Tags
@@ -59,10 +72,15 @@
         %h3 Quest Items
     .span8
       %section.well 
-        {{> achievements }}
+        {{> achievements}}
+    {{else}}
+    .span8.offset2
+      %section.well 
+        {{> single}}
+    {{/unless}}
   {{/if}}
 
-  {{#if page "ladder"}}
+  {{#if equals "page" "ladder"}}
   .row
     .span4
       %aside.well.hidden-phone 
@@ -79,7 +97,7 @@
         {{> ladder }}
   {{/if}}
 
-  {{#if page "profile"}}
+  {{#if equals "page" "profile"}}
   .row
     .span12
       %section.well 
@@ -99,21 +117,21 @@
         {{> accomplishments }}
   {{/if}}
 
-  {{#if page "activities"}}
+  {{#if equals "page" "activities"}}
   .row
     .span12
       .well 
         {{> activities }}
   {{/if}}
 
-  {{#if page "slides"}}
+  {{#if equals "page" "slides"}}
   .row
     .span12
       .well 
         {{> slideshows }}
   {{/if}}
 
-  {{#if page "feedback"}}
+  {{#if equals "page" "feedback"}}
   .row
     .span12 
       .well
@@ -148,23 +166,23 @@
   %nav.menu
     %ul.nav.nav-tabs.nav-stacked
       %li
-        %a(href="#")
+        %a
           %i.icon-book
           Quests
       %li
-        %a(href="#")
+        %a
           %i.icon-star
           Favourites
       %li
-        %a(href="#")
+        %a
           %i.icon-pencil
           Edits
       %li
-        %a(href="#")
+        %a
           %i.icon-arrow-right
           Votes
       -#%li
-        %a(href="#")
+        %a
           %i.icon-glass
           Inventory
 
@@ -181,13 +199,13 @@
         %a Friends
 
     -#.btn-group.pull-right
-      %button.btn.active(href="#" title="Stories") 
+      %button.btn.active(title="Stories") 
         %i.icon-align-left
-      %button.btn(href="#" title="Achievements")
+      %button.btn(title="Achievements")
         %i.icon-certificate
-      %button.btn(href="#" title="Comments") 
+      %button.btn(title="Comments") 
         %i.icon-comment
-      %button.btn(href="#" title="Items") 
+      %button.btn(title="Items") 
         %i.icon-glass
 
     .sort.pull-left
@@ -198,7 +216,7 @@
         %option Best
 
 %template(name='header')
-  %a.brand.nav-img.pull-left.nav-item(href="dashboard")
+  %a.brand.nav-img.pull-left.nav-item(href="/dashboard")
   %nav.nav
     %li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
@@ -213,14 +231,15 @@
         %li.category(data-category="{{name}}")
           %a.nav-item {{name}}
         {{/each}}
+
     {{#each items}}
     <li class="nav-{{url}} {{isActive "page" url}}">
-    %a.nav-item(href="{{url}}") {{name}}
+    %a.nav-item(href="/{{url}}") {{name}}
     </li>
     {{/each}}
 
   {{#if currentUser}}
-  %a.profile-pic.nav-item.nav-img.pull-right(href="profile")
+  %a.profile-pic.nav-item.nav-img.pull-right(href="/profile")
   .score.pull-right.hidden-phone<
     %span.value {{currentUser.score}}
     %span.dollar
@@ -231,7 +250,7 @@
 
 %template(name='userWidget')
   .userWidget
-    %a.profile-pic.pull-left(href="")
+    %a.profile-pic.pull-left(href="#")
 
     {{#unless editUsername}} 
     %a.edit.pull-right (edit)
@@ -410,44 +429,50 @@
 
 %template(name='home')
   {{#each accomplishments}}
-  {{> accomplishment}}
+  .fold
+    {{> accomplishment}}
   {{else}}
   {{> placeholder}}
   {{/each}}
 
 %template(name='accomplishments')
   {{#each accomplishments}}
-  {{> accomplishment}}
+  .fold
+    {{> accomplishment}}
   {{else}}
   {{> placeholder}}
   {{/each}}
 
 %template(name='accomplishment')
-  {{#if achievement}}
-  .fold
-    {{#with user}}
-    {{> user}}
-    {{/with}}
-    {{#with achievement}}
-    .minimal
-      {{> achievement}}
-    {{/with}}
+  {{#with user}}
+  {{> user}}
+  {{/with}}
+  {{#with achievement}}
+  .minimal
+    {{> achievement}}
+  {{/with}}
 
-    {{#if story}}
-    .story
-      .vote-container.pull-left
-        %div
-          %a.vote(data-up="true")<
-            <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-        %div
-          %span.count {{score}}
-        %div
-          %a.vote(data-up="false")<
-            <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
-      .content
-        %time {{date}}
-        {{#markdown}}{{story}}{{/markdown}}
-    {{/if}}
+  {{#if story}}
+  .story
+    .vote-container.pull-left
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+    .content
+      %nav.icons.pull-right
+        %li
+          %a.href(title="Link" href="/accomplishments/{{_id}}")<
+            <i class="icon-bookmark"></i>
+        %li
+          %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
+            <i class="icon-comment"></i> (26)
+      %time {{date}}
+      {{#markdown}}{{story}}{{/markdown}}
   {{/if}}
 
 %template(name='user')
@@ -469,15 +494,33 @@
   {{> loading}}
   {{/if}}
 
+%template(name='single')
+  {{#if equals "page" "achievements"}}
+  {{#with achievement}}
+  {{#if equals "newAchievement" _id}}
+  .dummy
+    {{> achievement}}
+  {{else}}
+  {{> achievement}}
+  {{/if}}
+  {{/with}}
+  {{/if}}
+
+  {{#if equals "page" "accomplishments"}}
+  {{#with accomplishment}}
+  {{> accomplishment}}
+  {{/with}}
+  {{/if}}
+
 %template(name='achievements')
   -#%h3.heading Achievements
   {{> filter}}
 
   {{#with newAchievement}}
-  <button class="btn pull-right new {{isActive "expand" _id}}" title="Create new achievement"><i class="icon-file"></i></button>
+  <a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="Create new achievement"><i class="icon-file"></i> Create new achievement</a>
   .clearfix
 
-  .fold.dummy
+  -#.fold.dummy
     {{> achievement}}
   {{/with}}
 
@@ -490,7 +533,7 @@
 
 %template(name='achievement')
   %article.achievement(class="{{completed}}")
-    %a.value.pull-right.accomplish
+    %a.value.pull-right.href(href="/achievements/{{_id}}/accomplish")
       %span.points {{score}}
     .vote-container.pull-right
       %div
@@ -502,48 +545,48 @@
         %a.vote(data-up="false")<
           <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
 
-    %a.icon.pull-left.expand
+    %a.icon.pull-left.href(href="/achievements/{{_id}}")
 
     .content
       %header.head
-        %nav.menu.pull-right
-          %li.expand
-            %a(title="Expand")<
+        {{#unless session "single"}}
+        %nav.icons.pull-right
+          %li
+            %a.expand(title="Expand")<
               {{#if equals "expand" _id}}
-              {{#if expandTab}}
               <i class="icon-chevron-up active"></i>
-              {{else}}
-              <i class="icon-chevron-down"></i>
-              {{/if}}
               {{else}}
               <i class="icon-chevron-down"></i>
               {{/if}}
           -#%li.accomplish
             %a(title="Accomplish this achievement")<
-              <i class="icon-certificate {{#if equals "expandTab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
+              <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
           -#%li.quest
             %a(title="Add to quest log")<
               <i class="icon-book {{quest}}"></i>
-          %li.fav
+          -#%li.fav
             %a(title="Add to favourites")<
               <i class="icon-star {{faved}}"></i>
-          %li.edit
-            %a(title="Edit")<
-              <i class="icon-pencil {{#if equals "expandTab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
-          %li.talk
-            %a(title="Comment")<
-              <i class="icon-comment {{#if equals "expandTab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
+          %li
+            %a.href(title="Edit" href="/achievements/{{_id}}/edit")<
+              <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
+          %li
+            %a.href(title="Comment" href="/achievements/{{_id}}/talk")<
+              <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
+        {{/unless}}
 
-        %h4.title.expand
+        %h4.title
           {{#if title}}
-          %a {{title}}
+          %a.href(href="/achievements/{{_id}}") {{title}}
           {{else}}
           {{#if equals "newAchievement" _id}}
           %a.edit Create new achievement
           {{else}}
-          %a(style="font-weight: normal") &lt;No title suggested&gt;
+          %a.href(href="/achievements/{{_id}}" style="font-weight: normal") &lt;No title suggested&gt;
           {{/if}}
           {{/if}}
+          %a.fav(title="Add to favourites")<
+            <i class="icon-star {{faved}}"></i>
 
       .description
         {{#if description}}
@@ -552,12 +595,17 @@
         %span This is a preview!
         {{/if}}
     .clearfix
-  {{#if equals "expand" _id}}{{#if expandTab}}
+  {{#if equals "expand" _id}}
   .expandAchievement
-    {{> expandAchievement}}
+    {{> info}}
+  {{/if}}
+  {{#if equals "single" _id}}{{#if session "tab"}}
+  .expandAchievement
+    {{> expand}}
   {{/if}}{{/if}}
 
 %template(name='titleSuggestions')
+  {{#if hasTitles}}
   %table.table.table-condensed
     %thead 
       %tr 
@@ -576,50 +624,50 @@
           %span {{score}}
         %td {{title}}
       {{/each}}
+  {{/if}}
 
 %template(name="editTabs")
   {{#if equals "newAchievement" _id}}
   %h3.heading.line Create new achievement
   {{else}}
   %nav.nav.nav-tabs 
-    <li class="{{isActive "expandTab" "info"}}">
-    %a.tab(data-tab="info") Info
+    <li class="{{isActive "tab" "info"}}">
+    %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
     </li>
-    <li class="{{isActive "expandTab" "edit"}}">
-    %a.tab(data-tab="edit") Edit
+    <li class="{{isActive "tab" "edit"}}">
+    %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit") Edit
     </li>
-    <li class="{{isActive "expandTab" "talk"}}">
-    %a.tab(data-tab="talk") Comments
+    <li class="{{isActive "tab" "talk"}}">
+    %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk") Comments
     </li>
-    -#<li class="{{isActive "expandTab" "rev"}}">
+    -#<li class="{{isActive "tab" "rev"}}">
     -#%a.tab(data-tab="rev") Revisions
     -#</li>
-    <li class="{{isActive "expandTab" "accomplish"}}">
-    %a.tab(data-tab="accomplish") Accomplish
+    <li class="{{isActive "tab" "accomplish"}}">
+    %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
     </li>
   {{/if}}
 
-%template(name="expandAchievement")
+%template(name="info")
+  %h1 INFO
+
+%template(name="expand")
   {{> editTabs}}
 
-  {{#if equals "expandTab" "info"}}
-  -#{{> info}}
+  {{#if equals "tab" "info"}}
+  {{> info}}
   {{/if}}
 
-  {{#if equals "expandTab" "accomplish"}}
+  {{#if equals "tab" "accomplish"}}
   {{> accomplish}}
   {{/if}}
 
-  {{#if equals "expandTab" "edit"}}
-  {{> editAchievement}}
+  {{#if equals "tab" "edit"}}
+  {{> edit}}
   {{/if}}
 
-  {{#if equals "expandTab" "talk"}}
+  {{#if equals "tab" "talk"}}
   {{> dashboard}}
-  {{/if}}
-
-  {{#if equals "expandTab" "rev"}}
-  %span rev...
   {{/if}}
 
 %template(name="accomplish")
@@ -634,9 +682,9 @@
     <button class="btn link {{isActive "story" "link"}}" title="Link">
     %i.icon-bookmark
     </button>
-    -#%button.btn(href="#" title="Audio") 
+    -#%button.btn(title="Audio") 
       %i.icon-headphones
-    -#%button.btn(href="#" title="Video") 
+    -#%button.btn(title="Video") 
       %i.icon-film
 
   {{#if equals "story" "text"}}
@@ -652,11 +700,11 @@
   %footer.form-actions
     %button.btn.btn-primary.btn-large.create(style="margin-left: -20px") Accomplish
 
-%template(name="editAchievement")
+%template(name="edit")
   {{#if equals "newAchievement" _id}}
   {{#if show "styleGuide"}}
   %div.alert.alert-block.alert-info
-    %a.close(data-dismiss="alert" href="#") ×
+    %a.close(data-dismiss="alert") ×
     %h4.alert-heading Achievement style guide
     %p Achievements should have the following properties:
     %dl 

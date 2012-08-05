@@ -18,7 +18,7 @@
     },
     titles: function() {
       var id, titles;
-      id = Session.get('expand');
+      id = Session.get('single');
       titles = Titles.find({
         entity: id,
         user: Meteor.user()._id
@@ -28,6 +28,15 @@
         }
       });
       return titles;
+    },
+    hasTitles: function() {
+      var id, titles;
+      id = Session.get('single');
+      titles = Titles.find({
+        entity: id,
+        user: Meteor.user()._id
+      });
+      return titles.count();
     },
     voted: function(state) {
       var vote;

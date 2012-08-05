@@ -9,7 +9,7 @@ _.extend Template.titleSuggestions,
         e.stopPropagation()
 
   titles: ->
-    id = Session.get 'expand'
+    id = Session.get 'single'
     titles = Titles.find
       entity: id
       user: Meteor.user()._id
@@ -18,6 +18,14 @@ _.extend Template.titleSuggestions,
         score: -1
 
     return titles
+  
+  # NOTE: Empty cursor gets not interpreted as "falsy" value by handlebars
+  hasTitles: ->
+    id = Session.get 'single'
+    titles = Titles.find
+      entity: id
+      user: Meteor.user()._id
+    return titles.count()
 
   voted: (state) ->
     state = if state is "up" then true else false

@@ -1,4 +1,4 @@
-_.extend Template.editAchievement,
+_.extend Template.edit,
   events:
     'click .close': (e) ->
       Session.set 'styleGuide', false

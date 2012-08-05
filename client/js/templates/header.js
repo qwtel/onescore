@@ -5,15 +5,9 @@
     events: {
       'click .category .nav-item': function(e) {
         var $t, category;
-        $t = $(e.target).parents('.category');
+        $t = $(e.target).closest('.category');
         category = $t.data('category');
         return Session.set('category', category);
-      },
-      'click .nav-item': function(e) {
-        if (e.which === 1) {
-          e.preventDefault();
-          return window.Router.navigate($(e.target).attr('href'), true);
-        }
       }
     },
     items: function() {

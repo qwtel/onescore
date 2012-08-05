@@ -15,9 +15,10 @@
     AppRouter.prototype.routes = {
       '': 'default',
       ':menu': 'menu',
-      'activities/new': 'activityNew',
-      'activities/show/:id': 'activityShow',
-      'activities/edit/:id': 'activityEdit'
+      'achievements/:id': 'achievements',
+      'achievements/:id/:tab': 'achievements',
+      'accomplishments/:id': 'accomplishments',
+      'accomplishments/:id/:tab': 'accomplishments'
     };
 
     AppRouter.prototype["default"] = function() {
@@ -25,30 +26,39 @@
     };
 
     AppRouter.prototype.menu = function(page) {
-      window.softReset();
+      this.hardReset();
       return Session.set('page', page);
     };
 
-    AppRouter.prototype.activityShow = function(id) {
-      Session.set('page', 'activities');
-      Session.set('activity', id);
-      Session.set('topic', id);
-      Meteor.flush();
-      return window.positionActivityModal($('.accomplish-modal'), id);
+    AppRouter.prototype.achievements = function(id, tab) {
+      this.softReset();
+      Session.set('page', 'achievements');
+      Session.set('single', id);
+      if (!tab) {
+        tab = 'info';
+      }
+      return Session.set('tab', tab);
     };
 
-    AppRouter.prototype.activityNew = function() {
-      Session.set('page', 'activities');
-      Session.set('activity', null);
-      Meteor.flush();
-      return window.positionActivityModal($('.create-modal'));
+    AppRouter.prototype.accomplishments = function(id, tab) {
+      this.softReset();
+      Session.set('page', 'accomplishments');
+      Session.set('single', id);
+      if (!tab) {
+        tab = 'info';
+      }
+      return Session.set('tab', tab);
     };
 
-    AppRouter.prototype.activityEdit = function(id) {
-      Session.set('page', 'activities');
-      Session.set('activity', id);
-      Meteor.flush();
-      return window.positionActivityModal($('.create-modal'), id);
+    AppRouter.prototype.softReset = function() {
+      return Session.set('expand', null);
+    };
+
+    AppRouter.prototype.hardReset = function() {
+      this.softReset();
+      $(document).scrollTop(0);
+      Session.set('single', null);
+      return Session.set('tab', null);
     };
 
     return AppRouter;
