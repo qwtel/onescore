@@ -45,9 +45,9 @@ Session.set 'favsLoaded', false
 Meteor.subscribe 'favourites', ->
   Session.set 'favsLoaded', true
 
-Session.set 'questsLoaded', false
-Meteor.subscribe 'quests', ->
-  Session.set 'questsLoaded', true
+#Session.set 'questsLoaded', false
+#Meteor.subscribe 'quests', ->
+#  Session.set 'questsLoaded', true
 
 Meteor.subscribe 'users'
 

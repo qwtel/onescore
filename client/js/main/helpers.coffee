@@ -133,10 +133,11 @@ Handlebars.registerHelper 'isActive', (name, value) ->
   return if Session.equals(name, value) then 'active' else ''
 
 Handlebars.registerHelper 'belongsTo', (user) ->
-  return Session.equals 'user', user
+  return Meteor.user()._id is user._id
 
 Handlebars.registerHelper 'isMe', (user) ->
-  return if Session.equals('user', user) then 'my' else ''
+  if user
+    return if Meteor.user()._id is user._id then 'my' else ''
 
 Handlebars.registerHelper 'userIn', (field) ->
   if field?
@@ -157,3 +158,8 @@ Handlebars.registerHelper 'categories', ->
     unless cat.url
       cat.url = cat.name.toLowerCase()
   return window.categories
+
+Handlebars.registerHelper 'formatDate', (date) ->
+  d = moment(new Date(date))
+  return d.format "DD.MM.YYYY, hh:mm"
+

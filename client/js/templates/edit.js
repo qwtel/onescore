@@ -19,6 +19,11 @@
           score: 0
         });
       },
+      'change .description': function(e) {
+        var description, tags;
+        description = $("#description-" + this._id).val();
+        return tags = window.findTags(description);
+      },
       'click .create': function(e) {
         var data, id;
         data = {};

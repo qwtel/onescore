@@ -141,40 +141,31 @@ a
 
 .menu
   .nav-tabs > li > a
-    background: whiteSmoke
+    background: whitesmoke
+
+.nav-tabs > li > a 
+  color: gray
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover
+  background: whitesmoke
 
 #content
   margin-top: 60px
 
 .comment
-  margin-bottom: 10px
+  margin-bottom: $padding
+  .body
+    margin-left: $iconSize/2
+    .text
+      width: 100%
 
-  .sup
-    border-bottom: 1px solid #e5e5e5
-
-  .name
-    font-weight: bold
-
-  .hud
-    color: $fg2
-
-  .text
-    clear: both
-    width: 100%
-
-  .my
-    background-color: #FBFCCD
-
-  .lva
-    background-color: #E5EBFD
+.my
+  color: $green
 
 .nested
-  padding-left: 30px
+  padding-left: 2*$padding
 
 .text-wrapper
-  width: 100%
-  @include box-sizing(border-box)
-
   .comment-text
     margin-bottom: 20px
 
@@ -212,12 +203,6 @@ $activityPadding: 15px
       background: rgba(255, 255, 255, 0.75)
       -webkit-border-radius: 0 0 4px 4px
       border-radius: 0 0 4px 4px
-
-    .my
-      background-color: rgba(253,252,205,0.75)
-
-    .lva
-      background-color: rgba(229,235,253,0.75)
 
 .btn-group
   margin-bottom: 20px
@@ -351,6 +336,9 @@ i.active
     margin-right: 5px
 
 .achievement
+  a
+    color: gray
+
   .icon
     @include border-radius(6px)
     display: block
@@ -358,7 +346,7 @@ i.active
     width: $iconSize
     height: $iconSize
     background: url('/img/bg_new.png')
-    border: 3px solid $red
+    border: 3px solid gray
     @include box-sizing(border-box)
     @include background-size(cover)
 
@@ -387,12 +375,22 @@ i.active
     height: $iconSize
     margin-left: 10px
     font-family: $font
-    background: url('/img/tag.png')
-    background-size: $iconSize 2*$iconSize 
+    background: url('/img/tag_new.png')
+    background-size: $iconSize $iconSize 
 
   &:hover 
     .hide
       display: block
+
+.uncompleted
+  a
+    color: $red
+  .icon
+    border-color: $red
+  .value
+    background: url('/img/tag.png')
+    background-size: $iconSize 2*$iconSize 
+    background-position: 0 0
 
 .completed
   a
@@ -400,6 +398,8 @@ i.active
   .icon
     border-color: $green
   .value
+    background: url('/img/tag.png')
+    background-size: $iconSize 2*$iconSize 
     background-position: 0 $iconSize
 
 .minimal
@@ -408,14 +408,6 @@ i.active
   .menu
     display: none
 
-.dummy
-  a
-    color: #808080
-  .icon
-    border-color: #808080
-  .value
-    background: url('/img/tag_new.png')
-    background-size: $iconSize $iconSize 
     
 .user
   border-bottom: 1px solid #ddd
@@ -446,6 +438,7 @@ i.active
   border-top: 1px solid #ddd
   padding-top: $padding
   margin-top: $padding/2
+  margin-bottom: 2*$padding
 
   .vote-container
     width: $iconSize

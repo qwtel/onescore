@@ -1,25 +1,33 @@
 _.extend Template.comment,
   events:
     'click .reply': (e) ->
-      Session.set 'add-comment', @_id
+      Session.toggle 'add-comment', @_id
       Session.set 'edit-comment', null
       Session.set 'thread', window.getThreadId(this)
       Meteor.flush()
       window.focusById "reply-#{@_id}"
 
-    'click .like': (e) ->
-      Comments.update @_id,
-        $push:
-          likes: Session.get 'user'
+    'click .vote': (e) ->
+      unless e.isPropagationStopped()
+        $t = $(e.target)
+        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
+        up = $t.data 'up'
+        Meteor.call 'vote', 'comments', @_id, up
+        e.stopPropagation()
 
-    'click .unlike': (e) ->
-      Comments.update @_id,
-        $pull:
-          likes: Session.get 'user'
+    #'click .like': (e) ->
+    #  Comments.update @_id,
+    #    $push:
+    #      likes: Session.get 'user'
+    #
+    #'click .unlike': (e) ->
+    #  Comments.update @_id,
+    #    $pull:
+    #      likes: Session.get 'user'
 
     'click .edit': (e) ->
       Session.set 'add-comment', null
-      Session.set 'edit-comment', @_id
+      Session.toggle 'edit-comment', @_id
       Session.set 'thread', window.getThreadId(this)
       Meteor.flush()
       window.focusById "reply-#{@_id}"
@@ -27,19 +35,18 @@ _.extend Template.comment,
     'click .remove': (e) ->
       Comments.remove @_id
 
-  addComment: ->
-    return Session.equals 'add-comment', @_id
+  user: ->
+    return Meteor.users.findOne @user
 
-  editComment: ->
-    return Session.equals 'edit-comment', @_id
-  
-  formatDate: (date) ->
-    d = moment(new Date(@date))
-    return d.format "DD.MM.YYYY, hh:mm"
+  mention: ->
+    if @mention
+      return Meteor.users.findOne @mention
 
-  likesNum: ->
-    return if @likes? then @likes.length else 0
-  
+  verb: ->
+    if @parent?
+      return 'replied to'
+    return 'commented'
+
   nested: ->
     return if @parent then 'nested' else ''
   
@@ -47,7 +54,13 @@ _.extend Template.comment,
     text = _.escape text
     return text.replace '\n', '<br>'
 
-  mention: ->
-    if @mention isnt null
-      return "@#{window.getUsername(@mention)}:"
+  voted: (state) ->
+    state = if state is 'up' then true else false
 
+    if Meteor.user()
+      vote = Votes.findOne
+        user: Meteor.user()._id
+        entity: @_id
+      if vote and vote.up is state
+        return 'active'
+    return ''

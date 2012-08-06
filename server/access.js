@@ -56,19 +56,15 @@
       insert: uniqueFav,
       update: creator
     });
-    Quests.allow({
-      insert: uniqueQuest,
-      update: creator
-    });
     Accomplishments.allow({
       insert: uniqueAcc,
       update: creator,
-      "delete": self
+      remove: self
     });
     return Comments.allow({
       insert: self,
       update: creator,
-      "delete": self
+      remove: self
     });
   });
 

@@ -32,6 +32,8 @@ Meteor.methods
     data =
       user: @userId()
       entity: entity
+      collection: collection
+      date: new Date()
       up: up
     
     vote = Votes.findOne
@@ -80,7 +82,6 @@ Meteor.methods
         story: stry
         score: 0
         date: new Date()
-        update: new Date()
 
       a = Achievements.findOne id
       if a

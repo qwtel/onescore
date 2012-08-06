@@ -27,6 +27,19 @@
 
     AppRouter.prototype.menu = function(page) {
       this.hardReset();
+      switch (page) {
+        case 'dashboard':
+          Session.set('sort', 'hot');
+          break;
+        case 'achievements':
+          Session.set('sort', 'best');
+          break;
+        case 'ladder':
+          Session.set('sort', 'best');
+          break;
+        case 'profile':
+          Session.set('sort', 'new');
+      }
       return Session.set('page', page);
     };
 

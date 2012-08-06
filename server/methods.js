@@ -41,6 +41,8 @@
       data = {
         user: this.userId(),
         entity: entity,
+        collection: collection,
+        date: new Date(),
         up: up
       };
       vote = Votes.findOne({
@@ -96,8 +98,7 @@
           entity: id,
           story: stry,
           score: 0,
-          date: new Date(),
-          update: new Date()
+          date: new Date()
         });
         a = Achievements.findOne(id);
         if (a) {

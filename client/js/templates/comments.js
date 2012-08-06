@@ -3,6 +3,22 @@
 
   _.extend(Template.comments, {
     events: {
+      'keyup .new-thread,  keydown .new-thread': window.makeOkCancelHandler({
+        ok: function(text, e) {
+          Comments.insert({
+            text: text,
+            date: new Date,
+            topic: Session.get('single'),
+            parent: null,
+            mention: null,
+            user: Meteor.user()._id,
+            score: 0
+          });
+          Session.set('add-comment', null);
+          Session.set('edit-comment', null);
+          return e.target.value = "";
+        }
+      }),
       'keyup .comment-text, keydown .comment-text, \
      keyup .edit-text, keydown .edit-text': window.makeOkCancelHandler({
         ok: function(text, e) {
@@ -10,10 +26,11 @@
             Comments.insert({
               text: text,
               date: new Date,
-              topic: Session.get('expand'),
+              topic: Session.get('single'),
               parent: Session.get('thread'),
               mention: this.user,
-              user: Meteor.user()._id
+              user: Meteor.user()._id,
+              score: 0
             });
           } else if (Session.equals('edit-comment', this._id)) {
             Comments.update(this._id, {
@@ -31,7 +48,7 @@
     select: function(id) {
       var sel;
       sel = {
-        topic: Session.get('expand'),
+        topic: Session.get('single'),
         parent: null
       };
       if (id) {
@@ -39,21 +56,47 @@
       } else {
         if (Session.equals('comment-filter', 'my')) {
           sel.user = Session.get('user');
-        } else if (Session.equals('comment-filter', 'lva')) {
-          sel.user = {
-            $lt: 2000000
-          };
         }
       }
       return sel;
     },
     comments: function() {
-      var sel;
+      var data, sel, sort;
+      sort = Session.get('sort');
+      switch (sort) {
+        case 'hot':
+          data = {
+            score: -1
+          };
+          break;
+        case 'cool':
+          data = {
+            score: 1
+          };
+          break;
+        case 'new':
+          data = {
+            date: -1
+          };
+          break;
+        case 'old':
+          data = {
+            date: 1
+          };
+          break;
+        case 'best':
+          data = {
+            score: -1
+          };
+          break;
+        case 'wort':
+          data = {
+            score: 1
+          };
+      }
       sel = Template.comments.select();
       return Comments.find(sel, {
-        sort: {
-          date: -1
-        }
+        sort: data
       });
     },
     replies: function() {

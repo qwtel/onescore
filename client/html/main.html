@@ -58,6 +58,9 @@
     <div class='span8 offset2'>
       <section class='well'>
         {{> single}}
+        {{> filter}}
+        <div class='clearfix'></div>
+        {{> comments}}
       </section>
     </div>
     {{/if}}
@@ -105,6 +108,7 @@
       <section class='well'>
         {{> filter }}
         <div class='clearfix'></div>
+        <div class='fold'></div>
         {{> ladder }}
       </section>
     </div>
@@ -235,12 +239,13 @@
         <a>Friends</a>
       </li>
     </nav>
-    <div class='sort pull-left'>
+    <div class='pull-left'>
       <span>Sort by:</span>
-      <select class='span1'>
-        <option>Hot</option>
-        <option>New</option>
-        <option>Best</option>
+      <select class='sort span1'>
+        <option value="hot" {{#if equals "sort" "hot"}}selected{{/if}}>Hot</option>
+        <option value="new" {{#if equals "sort" "new"}}selected{{/if}}>New</option>
+        <option value="old" {{#if equals "sort" "old"}}selected{{/if}}>Old</option>
+        <option value="best" {{#if equals "sort" "best"}}selected{{/if}}>Best</option>
       </select>
     </div>
   </div>
@@ -431,14 +436,6 @@
   {{/with}}
   <div class='modal-body'>
     <h3>Comments</h3>
-    {{> dashboard}}
-  </div>
-</template>
-<template name='dashboard'>
-  <div class='text-wrapper'>
-    <textarea class='comment-text ta100' rows='3'></textarea>
-  </div>
-  <div class='comments'>
     {{> comments}}
   </div>
 </template>
@@ -468,9 +465,15 @@
   {{/each}}
 </template>
 <template name='accomplishment'>
-  {{#with user}}
-  {{> user}}
-  {{/with}}
+  <div class='user'>
+    <a class='face profile-pic pull-left'></a>
+    <div class='content'>
+      <a class="name {{isMe user}}">{{user.name}}</a>
+      <em class='verb'>{{verb}}:</em>
+      <div class='score pull-right'><span class='value'>{{user.score}}</span>
+      <span class='dollar dollar-green'></span></div>
+    </div>
+  </div>
   {{#with achievement}}
   <div class='minimal'>
     {{> achievement}}
@@ -495,10 +498,10 @@
           <a class='href' href='/accomplishments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
         </li>
         <li>
-          <a class='href' href='/accomplishments/{{_id}}/talk' title='Comments'><i class="icon-comment"></i> (26)</a>
+          <a class='href' href='/accomplishments/{{_id}}/talk' title='Comments'><i class="icon-comment"></i></a>
         </li>
       </nav>
-      <time>{{date}}</time>
+      <time>{{formatDate date}}</time>
       {{#markdown}}{{story}}{{/markdown}}
     </div>
   </div>
@@ -506,14 +509,12 @@
 </template>
 <template name='user'>
   <div class='user'>
-    <a class='face vader profile-pic pull-left'></a>
+    <a class='face profile-pic pull-left'></a>
     <div class='content'>
-      <a class='name'>{{name}}</a>
-      <em class='verb'>accomplished:</em>
+      <a class="name {{isMe user}}">{{user.name}}</a>
       <div class='score pull-right'><span class='value'>{{score}}</span>
       <span class='dollar dollar-green'></span></div>
     </div>
-    <div class='clearfix'></div>
   </div>
 </template>
 <template name='placeholder'>
@@ -526,13 +527,7 @@
 <template name='single'>
   {{#if equals "page" "achievements"}}
   {{#with achievement}}
-  {{#if equals "newAchievement" _id}}
-  <div class='dummy'>
-    {{> achievement}}
-  </div>
-  {{else}}
   {{> achievement}}
-  {{/if}}
   {{/with}}
   {{/if}}
   {{#if equals "page" "accomplishments"}}
@@ -556,7 +551,7 @@
   {{/each}}
 </template>
 <template name='achievement'>
-  <article class='achievement {{completed}}'>
+  <article class='achievement {{color}}'>
     <a class='value pull-right href' href='/achievements/{{_id}}/accomplish'>
       <span class='points'>{{score}}</span>
     </a>
@@ -595,11 +590,7 @@
           {{#if title}}
           <a class='href' href='/achievements/{{_id}}'>{{title}}</a>
           {{else}}
-          {{#if equals "newAchievement" _id}}
-          <a class='edit'>Create new achievement</a>
-          {{else}}
           <a class='href' href='/achievements/{{_id}}' style='font-weight: normal'>&lt;No title suggested&gt;</a>
-          {{/if}}
           {{/if}}
           <a class='fav' title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
         </h4>
@@ -608,7 +599,7 @@
         {{#if description}}
         <span>{{{wrapTags description}}}</span>
         {{else}}
-        <span>This is a preview!</span>
+        <span>&lt;No content&gt;</span>
         {{/if}}
       </div>
     </div>
@@ -687,7 +678,9 @@
   {{> edit}}
   {{/if}}
   {{#if equals "tab" "talk"}}
-  {{> dashboard}}
+  {{> filter}}
+  <div class='clearfix'></div>
+  {{> comments}}
   {{/if}}
 </template>
 <template name='accomplish'>
@@ -794,47 +787,68 @@
   </div>
 </template>
 <template name='comments'>
-  {{#each comments}}
-  {{> comment}}
-  {{#each replies}}
-  {{> comment}}
-  {{/each}}
-  {{else}}
-  {{> placeholder}}
-  {{/each}}
+  <div class='control-group'></div>
+  <label class='control-label' for='add-{{_id}}'>Add a comment:</label>
+  <div class='controls'>
+    <textarea class='new-thread ta100' id='add-{{_id}}' rows='3'></textarea>
+  </div>
+  <div class='comments'>
+    {{#each comments}}
+    {{> comment}}
+    {{#each replies}}
+    {{> comment}}
+    {{/each}}
+    {{else}}
+    {{> placeholder}}
+    {{/each}}
+  </div>
 </template>
 <template name='comment'>
   <article class='comment {{nested}}' id='comment-{{_id}}'>
-    {{> user}}
-    <div class='sup'>
-      <div class='pull-left'>
-        <span class='name'>{{getUsername user}}</span>
-        {{#if userIn likes}}
-        <a class='unlike icon-star' title='Unlike'></a>
-        {{else}}
-        <a class='like icon-star-empty' title='Like'></a>
-        {{/if}}
-        <span class='count'>{{likesNum}}</span>
+    <div class='vote-container pull-left'>
+      <div>
+        <a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
       </div>
-      <div class='hud pull-right'>
-        <span class='date'>{{formatDate date}}</span>
-        {{#if belongsTo user}}
-        <a class='remove icon-remove' title='Delete'></a>
-        <a class='edit icon-pencil' title='Edit'></a>
-        {{/if}}
-        <a class='reply icon-share-alt' title='Reply'></a>
+      <div>
+        <span class='count'>{{score}}</span>
+      </div>
+      <div>
+        <a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+      </div>
+    </div>
+    <div class='body'>
+      <div class='user'>
+        <a class='face profile-pic pull-left'></a>
+        <div class='content'>
+          <a class="name {{isMe user}}">{{user.name}}</a>
+          <em class='verb'>{{verb}}:</em>
+          {{#if parent}}
+          <a class="name {{isMe mention}}">{{mention.name}}</a>
+          {{/if}}
+          <nav class='icons pull-right'>
+            <li>
+              <a class='remove' title='Remove'><i class="icon-remove"></i></a>
+            </li>
+            <li>
+              <a class='edit' title='Edit'><i class="icon-pencil"></i></a>
+            </li>
+            <li>
+              <a class='reply' title='Link'><i class="icon-share-alt"></i></a>
+            </li>
+          </nav>
+        </div>
       </div>
       <div class='text'>
-        {{#if editComment}}
+        {{#if equals "edit-comment" _id}}
         <div class='text-wrapper'>
           <textarea class='edit-text ta100' id='edit-{{_id}}' rows='3'>{{text}}</textarea>
         </div>
         {{else}}
-        <p>{{mention}} {{{addLineBreaks text}}}</p>
+        <p>{{{addLineBreaks text}}}</p>
         {{/if}}
       </div>
-      {{#if addComment}}
-      <div class='text-wrapper nested'>
+      {{#if equals "add-comment" _id}}
+      <div class='text-wrapper'>
         <textarea class='comment-text ta100' id='reply-{{_id}}' rows='3'></textarea>
       </div>
       {{/if}}

@@ -28,6 +28,13 @@
     user: function() {
       return Meteor.users.findOne(this.user);
     },
+    verb: function() {
+      if (this.story !== '') {
+        return 'posted';
+      } else {
+        return 'accomplished';
+      }
+    },
     voted: function(state) {
       var vote;
       state = state === 'up' ? true : false;

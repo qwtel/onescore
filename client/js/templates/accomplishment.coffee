@@ -19,6 +19,12 @@ _.extend Template.accomplishment,
 
   user: ->
     return Meteor.users.findOne @user
+  
+  verb: ->
+    if @story isnt ''
+      return 'posted'
+    else
+      return 'accomplished'
 
   voted: (state) ->
     state = if state is 'up' then true else false

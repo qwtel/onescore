@@ -88,39 +88,34 @@ a {
     margin-bottom: 20px; }
 
 .menu .nav-tabs > li > a {
-  background: whiteSmoke; }
+  background: whitesmoke; }
+
+.nav-tabs > li > a {
+  color: gray; }
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+  background: whitesmoke; }
 
 #content {
   margin-top: 60px; }
 
 .comment {
-  margin-bottom: 10px; }
-  .comment .sup {
-    border-bottom: 1px solid #e5e5e5; }
-  .comment .name {
-    font-weight: bold; }
-  .comment .hud {
-    color: #777777; }
-  .comment .text {
-    clear: both;
-    width: 100%; }
-  .comment .my {
-    background-color: #fbfccd; }
-  .comment .lva {
-    background-color: #e5ebfd; }
+  margin-bottom: 15px; }
+  .comment .body {
+    margin-left: 25px; }
+    .comment .body .text {
+      width: 100%; }
+
+.my {
+  color: #4dc206; }
 
 .nested {
   padding-left: 30px; }
 
-.text-wrapper {
-  width: 100%;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
-  .text-wrapper .comment-text {
-    margin-bottom: 20px; }
-  .text-wrapper .edit-text {
-    background: none; }
+.text-wrapper .comment-text {
+  margin-bottom: 20px; }
+.text-wrapper .edit-text {
+  background: none; }
 
 .activity {
   display: block;
@@ -152,10 +147,6 @@ a {
       background: rgba(255, 255, 255, 0.75);
       -webkit-border-radius: 0 0 4px 4px;
       border-radius: 0 0 4px 4px; }
-    .activity .well .my {
-      background-color: rgba(253, 252, 205, 0.75); }
-    .activity .well .lva {
-      background-color: rgba(229, 235, 253, 0.75); }
 
 .btn-group {
   margin-bottom: 20px; }
@@ -288,6 +279,8 @@ i.active {
     float: left;
     margin-right: 5px; }
 
+.achievement a {
+  color: gray; }
 .achievement .icon {
   -webkit-border-radius: 6px;
   border-radius: 6px;
@@ -296,7 +289,7 @@ i.active {
   width: 50px;
   height: 50px;
   background: url("/img/bg_new.png");
-  border: 3px solid #f70852;
+  border: 3px solid gray;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -325,30 +318,33 @@ i.active {
   height: 50px;
   margin-left: 10px;
   font-family: "SubtleSansRegular";
-  background: url("/img/tag.png");
-  background-size: 50px 100px; }
+  background: url("/img/tag_new.png");
+  background-size: 50px 50px; }
 .achievement:hover .hide {
   display: block; }
+
+.uncompleted a {
+  color: #f70852; }
+.uncompleted .icon {
+  border-color: #f70852; }
+.uncompleted .value {
+  background: url("/img/tag.png");
+  background-size: 50px 100px;
+  background-position: 0 0; }
 
 .completed a {
   color: #4dc206; }
 .completed .icon {
   border-color: #4dc206; }
 .completed .value {
+  background: url("/img/tag.png");
+  background-size: 50px 100px;
   background-position: 0 50px; }
 
 .minimal {
   margin: 0; }
   .minimal .menu {
     display: none; }
-
-.dummy a {
-  color: gray; }
-.dummy .icon {
-  border-color: gray; }
-.dummy .value {
-  background: url("/img/tag_new.png");
-  background-size: 50px 50px; }
 
 .user {
   border-bottom: 1px solid #dddddd;
@@ -373,7 +369,8 @@ i.active {
 .story {
   border-top: 1px solid #dddddd;
   padding-top: 15px;
-  margin-top: 7.5px; }
+  margin-top: 7.5px;
+  margin-bottom: 30px; }
   .story .vote-container {
     width: 50px; }
   .story .content {

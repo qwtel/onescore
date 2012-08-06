@@ -177,14 +177,16 @@
   });
 
   Handlebars.registerHelper('belongsTo', function(user) {
-    return Session.equals('user', user);
+    return Meteor.user()._id === user._id;
   });
 
   Handlebars.registerHelper('isMe', function(user) {
-    if (Session.equals('user', user)) {
-      return 'my';
-    } else {
-      return '';
+    if (user) {
+      if (Meteor.user()._id === user._id) {
+        return 'my';
+      } else {
+        return '';
+      }
     }
   });
 
@@ -217,6 +219,12 @@
       }
     }
     return window.categories;
+  });
+
+  Handlebars.registerHelper('formatDate', function(date) {
+    var d;
+    d = moment(new Date(date));
+    return d.format("DD.MM.YYYY, hh:mm");
   });
 
 }).call(this);

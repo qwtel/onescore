@@ -67,16 +67,19 @@
       }
       return '';
     },
-    completed: function() {
+    color: function() {
       var acc;
-      if (Meteor.user()) {
-        acc = Accomplishments.findOne({
-          user: Meteor.user()._id,
-          entity: this._id
-        });
-        if (acc) {
-          return 'completed';
-        }
+      if (Session.equals('newAchievement', this._id)) {
+        return '';
+      }
+      acc = Accomplishments.findOne({
+        user: Meteor.user()._id,
+        entity: this._id
+      });
+      if (acc) {
+        return 'completed';
+      } else if (Session.get('accomplishmentsLoaded')) {
+        return 'uncompleted';
       }
       return '';
     }

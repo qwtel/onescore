@@ -69,12 +69,6 @@
     return Session.set('favsLoaded', true);
   });
 
-  Session.set('questsLoaded', false);
-
-  Meteor.subscribe('quests', function() {
-    return Session.set('questsLoaded', true);
-  });
-
   Meteor.subscribe('users');
 
   Session.set('accomplishmentsLoaded', false);

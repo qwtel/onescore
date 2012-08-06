@@ -4,29 +4,27 @@
   _.extend(Template.comment, {
     events: {
       'click .reply': function(e) {
-        Session.set('add-comment', this._id);
+        Session.toggle('add-comment', this._id);
         Session.set('edit-comment', null);
         Session.set('thread', window.getThreadId(this));
         Meteor.flush();
         return window.focusById("reply-" + this._id);
       },
-      'click .like': function(e) {
-        return Comments.update(this._id, {
-          $push: {
-            likes: Session.get('user')
+      'click .vote': function(e) {
+        var $t, up;
+        if (!e.isPropagationStopped()) {
+          $t = $(e.target);
+          if (!$t.hasClass('vote')) {
+            $t = $t.parents('.vote');
           }
-        });
-      },
-      'click .unlike': function(e) {
-        return Comments.update(this._id, {
-          $pull: {
-            likes: Session.get('user')
-          }
-        });
+          up = $t.data('up');
+          Meteor.call('vote', 'comments', this._id, up);
+          return e.stopPropagation();
+        }
       },
       'click .edit': function(e) {
         Session.set('add-comment', null);
-        Session.set('edit-comment', this._id);
+        Session.toggle('edit-comment', this._id);
         Session.set('thread', window.getThreadId(this));
         Meteor.flush();
         return window.focusById("reply-" + this._id);
@@ -35,23 +33,19 @@
         return Comments.remove(this._id);
       }
     },
-    addComment: function() {
-      return Session.equals('add-comment', this._id);
+    user: function() {
+      return Meteor.users.findOne(this.user);
     },
-    editComment: function() {
-      return Session.equals('edit-comment', this._id);
-    },
-    formatDate: function(date) {
-      var d;
-      d = moment(new Date(this.date));
-      return d.format("DD.MM.YYYY, hh:mm");
-    },
-    likesNum: function() {
-      if (this.likes != null) {
-        return this.likes.length;
-      } else {
-        return 0;
+    mention: function() {
+      if (this.mention) {
+        return Meteor.users.findOne(this.mention);
       }
+    },
+    verb: function() {
+      if (this.parent != null) {
+        return 'replied to';
+      }
+      return 'commented';
     },
     nested: function() {
       if (this.parent) {
@@ -64,10 +58,19 @@
       text = _.escape(text);
       return text.replace('\n', '<br>');
     },
-    mention: function() {
-      if (this.mention !== null) {
-        return "@" + (window.getUsername(this.mention)) + ":";
+    voted: function(state) {
+      var vote;
+      state = state === 'up' ? true : false;
+      if (Meteor.user()) {
+        vote = Votes.findOne({
+          user: Meteor.user()._id,
+          entity: this._id
+        });
+        if (vote && vote.up === state) {
+          return 'active';
+        }
       }
+      return '';
     }
   });
 

@@ -20,18 +20,24 @@ _.extend Template.edit,
     #    $set:
     #      category: $("#category-#{@_id}").val()
     #
-    #'change .description': (e) ->
-    #  description = $("#description-#{@_id}").val()
-    #  tags = window.findTags description
-    #
-    #  #_.each @tags, (x) ->
-    #  #  unless _.contains tags, x
-    #  #    tags.push x
-    #
-    #  Achievements.update @_id,
-    #    $set:
-    #      description: description
-    #      tags: tags
+    'change .description': (e) ->
+      description = $("#description-#{@_id}").val()
+      tags = window.findTags description
+    
+      #@description = description
+      #@tags = tags
+      ## HACK: force redraw
+      #Session.set 'tab', 'info'
+      #Session.set 'tab', 'edit'
+
+      #_.each @tags, (x) ->
+      #  unless _.contains tags, x
+      #    tags.push x
+    
+      #Achievements.update @_id,
+      #  $set:
+      #    description: description
+      #    tags: tags
 
     'click .create': (e) ->
       data = {}

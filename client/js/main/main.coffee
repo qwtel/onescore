@@ -15,6 +15,11 @@ class AppRouter extends Backbone.Router
 
   menu: (page) ->
     @hardReset()
+    switch page
+      when 'dashboard' then Session.set 'sort', 'hot'
+      when 'achievements' then Session.set 'sort', 'best'
+      when 'ladder' then Session.set 'sort', 'best'
+      when 'profile' then Session.set 'sort', 'new'
     Session.set 'page', page
 
   achievements: (id, tab) ->

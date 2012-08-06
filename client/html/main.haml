@@ -59,6 +59,9 @@
     .span8.offset2
       %section.well 
         {{> single}}
+        {{> filter}}
+        .clearfix
+        {{> comments}}
     {{/if}}
   {{/if}}
 
@@ -94,6 +97,7 @@
         -#%h3.heading Ladder
         {{> filter }}
         .clearfix
+        .fold
         {{> ladder }}
   {{/if}}
 
@@ -208,12 +212,13 @@
       %button.btn(title="Items") 
         %i.icon-glass
 
-    .sort.pull-left
+    .pull-left
       %span Sort by:
-      %select.span1
-        %option Hot
-        %option New
-        %option Best
+      %select.sort.span1
+        <option value="hot" {{#if equals "sort" "hot"}}selected{{/if}}>Hot</option>
+        <option value="new" {{#if equals "sort" "new"}}selected{{/if}}>New</option>
+        <option value="old" {{#if equals "sort" "old"}}selected{{/if}}>Old</option>
+        <option value="best" {{#if equals "sort" "best"}}selected{{/if}}>Best</option>
 
 %template(name='header')
   %a.brand.nav-img.pull-left.nav-item(href="/dashboard")
@@ -407,17 +412,6 @@
 
   .modal-body
     %h3 Comments
-    {{> dashboard}}
-
-%template(name='dashboard')
-  -#.btn-group.pull-left
-    <a id="my-posts" class='btn btn-filter {{isActive "comment-filter" "my"}}' data-filter="my">My Posts</a>
-    <a id="lva-posts" class='btn btn-filter {{isActive "comment-filter" "lva"}}' data-filter="lva">LVA-Team Posts</a>
-    -#%a.btn#my-posts(class="{{myPostsActive}}" data-filter="my") My Own Posts
-    -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
-  .text-wrapper
-    %textarea.comment-text.ta100(rows="3")
-  .comments
     {{> comments}}
 
 %template(name='ladder')
@@ -444,9 +438,15 @@
   {{/each}}
 
 %template(name='accomplishment')
-  {{#with user}}
-  {{> user}}
-  {{/with}}
+  .user
+    %a.face.profile-pic.pull-left
+    .content
+      <a class="name {{isMe user}}">{{user.name}}</a>
+      -#%span.score (score)
+      %em.verb {{verb}}:
+      .score.pull-right<
+        %span.value {{user.score}}
+        %span.dollar.dollar-green
   {{#with achievement}}
   .minimal
     {{> achievement}}
@@ -470,22 +470,20 @@
             <i class="icon-bookmark"></i>
         %li
           %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
-            <i class="icon-comment"></i> (26)
-      %time {{date}}
+            <i class="icon-comment"></i>
+      %time {{formatDate date}}
       {{#markdown}}{{story}}{{/markdown}}
   {{/if}}
 
 %template(name='user')
   .user
-    %a.face.vader.profile-pic.pull-left
+    %a.face.profile-pic.pull-left
     .content
-      %a.name {{name}}
+      <a class="name {{isMe user}}">{{user.name}}</a>
       -#%span.score (score)
-      %em.verb accomplished:
       .score.pull-right<
         %span.value {{score}}
         %span.dollar.dollar-green
-    .clearfix
 
 %template(name='placeholder')
   {{#if noContent}}
@@ -497,12 +495,7 @@
 %template(name='single')
   {{#if equals "page" "achievements"}}
   {{#with achievement}}
-  {{#if equals "newAchievement" _id}}
-  .dummy
-    {{> achievement}}
-  {{else}}
   {{> achievement}}
-  {{/if}}
   {{/with}}
   {{/if}}
 
@@ -532,7 +525,7 @@
   {{/each}}
 
 %template(name='achievement')
-  %article.achievement(class="{{completed}}")
+  %article.achievement(class="{{color}}")
     %a.value.pull-right.href(href="/achievements/{{_id}}/accomplish")
       %span.points {{score}}
     .vote-container.pull-right
@@ -579,11 +572,7 @@
           {{#if title}}
           %a.href(href="/achievements/{{_id}}") {{title}}
           {{else}}
-          {{#if equals "newAchievement" _id}}
-          %a.edit Create new achievement
-          {{else}}
           %a.href(href="/achievements/{{_id}}" style="font-weight: normal") &lt;No title suggested&gt;
-          {{/if}}
           {{/if}}
           %a.fav(title="Add to favourites")<
             <i class="icon-star {{faved}}"></i>
@@ -592,7 +581,7 @@
         {{#if description}}
         %span {{{wrapTags description}}}
         {{else}}
-        %span This is a preview!
+        %span &lt;No content&gt;
         {{/if}}
     .clearfix
   {{#if equals "expand" _id}}
@@ -667,7 +656,9 @@
   {{/if}}
 
   {{#if equals "tab" "talk"}}
-  {{> dashboard}}
+  {{> filter}}
+  .clearfix
+  {{> comments}}
   {{/if}}
 
 %template(name="accomplish")
@@ -779,42 +770,84 @@
       No Content.
 
 %template(name='comments')
-  {{#each comments}}
-  {{> comment}}
-  {{#each replies}}
-  {{> comment}}
-  {{/each}}
-  {{else}}
-  {{> placeholder}}
-  {{/each}}
+  -#.btn-group.pull-left
+    <a id="my-posts" class='btn btn-filter {{isActive "comment-filter" "my"}}' data-filter="my">My Posts</a>
+    <a id="lva-posts" class='btn btn-filter {{isActive "comment-filter" "lva"}}' data-filter="lva">LVA-Team Posts</a>
+    -#%a.btn#my-posts(class="{{myPostsActive}}" data-filter="my") My Own Posts
+    -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
+  -#{{> filter}}
+  -#.clearfix
+  .control-group
+  %label.control-label(for="add-{{_id}}") Add a comment:
+  .controls
+    %textarea.new-thread.ta100(id="add-{{_id}}" rows="3")
+
+  .comments
+    {{#each comments}}
+    {{> comment}}
+    {{#each replies}}
+    {{> comment}}
+    {{/each}}
+    {{else}}
+    {{> placeholder}}
+    {{/each}}
 
 %template(name='comment')
   %article.comment(id="comment-{{_id}}" class="{{nested}}")
-    {{> user}}
-    .sup
-      .pull-left
-        %span.name {{getUsername user}}
-        {{#if userIn likes}}
-        %a.unlike.icon-star(title="Unlike")
-        {{else}}
-        %a.like.icon-star-empty(title="Like")
-        {{/if}}
-        %span.count {{likesNum}}
-      .hud.pull-right
-        %span.date {{formatDate date}}
-        {{#if belongsTo user}}
-        %a.remove.icon-remove(title="Delete")
-        %a.edit.icon-pencil(title="Edit")
-        {{/if}}
-        %a.reply.icon-share-alt(title="Reply")
+    .vote-container.pull-left
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+    .body
+      -#{{> user}}
+      .user
+        %a.face.profile-pic.pull-left
+        .content
+          <a class="name {{isMe user}}">{{user.name}}</a>
+          -#%span.score (score)
+          %em.verb {{verb}}:
+          {{#if parent}}
+          <a class="name {{isMe mention}}">{{mention.name}}</a>
+          {{/if}}
+          %nav.icons.pull-right
+            -#%li
+              %span 24
+              %a.vote(data-up="true")<
+                <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+              %a.vote(data-up="false")<
+                <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+            %li
+              %a.remove(title="Remove")<
+                <i class="icon-remove"></i>
+            %li
+              %a.edit(title="Edit")<
+                <i class="icon-pencil"></i>
+            %li
+              %a.reply(title="Link")<
+                <i class="icon-share-alt"></i>
+          -#.score.pull-right<
+            %span.value {{user.score}}
+            %span.dollar.dollar-green
+      -#.pull-left
+        %time {{formatDate date}}
+        -#{{#if belongsTo user}}
+        -#%a.remove.icon-remove(title="Delete")
+        -#%a.edit.icon-pencil(title="Edit")
+        -#{{/if}}
+        -#%a.reply.icon-share-alt(title="Reply")
       .text
-        {{#if editComment}}
+        {{#if equals "edit-comment" _id}}
         .text-wrapper
           %textarea.edit-text.ta100(id="edit-{{_id}}" rows="3") {{text}}
         {{else}}
-        %p {{mention}} {{{addLineBreaks text}}}
+        %p {{{addLineBreaks text}}}
         {{/if}}
-      {{#if addComment}}
-      .text-wrapper.nested
+      {{#if equals "add-comment" _id}}
+      .text-wrapper
         %textarea.comment-text.ta100(id="reply-{{_id}}" rows="3")
       {{/if}}
