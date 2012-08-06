@@ -3,6 +3,7 @@ $font: 'SubtleSansRegular'
 
 $red: #f70852
 $green: #4dc206
+$yellow: #f89406
 
 $bg1: #ebebeb
 $bg2: #f8f8f8
@@ -358,11 +359,9 @@ i.active
     .title
       line-height: 80%
       margin-bottom: 5px
-
     .description
       .tag
-        color: $fg2
-        font-weight: normal
+        color: gray
 
   .value
     display: block
@@ -375,8 +374,9 @@ i.active
     height: $iconSize
     margin-left: 10px
     font-family: $font
-    background: url('/img/tag_new.png')
-    background-size: $iconSize $iconSize 
+    background: url('/img/tag.png')
+    background-size: $iconSize 4*$iconSize 
+    background-position: 0 0 
 
   &:hover 
     .hide
@@ -388,9 +388,15 @@ i.active
   .icon
     border-color: $red
   .value
-    background: url('/img/tag.png')
-    background-size: $iconSize 2*$iconSize 
-    background-position: 0 0
+    background-position: 0 $iconSize
+
+.accepted
+  a
+    color: $yellow
+  .icon
+    border-color: $yellow
+  .value
+    background-position: 0 3*$iconSize
 
 .completed
   a
@@ -398,16 +404,15 @@ i.active
   .icon
     border-color: $green
   .value
-    background: url('/img/tag.png')
-    background-size: $iconSize 2*$iconSize 
-    background-position: 0 $iconSize
+    background-position: 0 2*$iconSize
+
+.time
+  color: gray
 
 .minimal
   margin: 0
-  //padding: 5px
   .menu
     display: none
-
     
 .user
   border-bottom: 1px solid #ddd
@@ -417,7 +422,7 @@ i.active
   .content
     padding-top: 3px
     margin-left: $iconSize/2 + $padding/2
-    color: $fg2
+    color: gray
     font:
       size: 14px
     .name

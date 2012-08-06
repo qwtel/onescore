@@ -29,7 +29,7 @@
       return Meteor.users.findOne(this.user);
     },
     verb: function() {
-      if (this.story !== '') {
+      if (this.story && this.story !== '') {
         return 'posted';
       } else {
         return 'accomplished';

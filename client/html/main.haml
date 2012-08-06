@@ -379,7 +379,7 @@
 
   .modal-footer
     %a.btn(data-dismiss="modal") Discard
-    %a.create-activity.btn.btn-primary Save
+    %a.create-activity.btn.btn-success Save
   {{/with}}
 
 %template(name='accomplishActivityModal')
@@ -468,10 +468,10 @@
         %li
           %a.href(title="Link" href="/accomplishments/{{_id}}")<
             <i class="icon-bookmark"></i>
-        %li
+        -#%li
           %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
             <i class="icon-comment"></i>
-      %time {{formatDate date}}
+      %time.time {{formatDate date}}
       {{#markdown}}{{story}}{{/markdown}}
   {{/if}}
 
@@ -581,7 +581,7 @@
         {{#if description}}
         %span {{{wrapTags description}}}
         {{else}}
-        %span &lt;No content&gt;
+        %span.tag &lt;No content&gt;
         {{/if}}
     .clearfix
   {{#if equals "expand" _id}}
@@ -689,7 +689,11 @@
   {{/if}}
 
   %footer.form-actions
-    %button.btn.btn-primary.btn-large.create(style="margin-left: -20px") Accomplish
+    {{#if accomplishment}}
+    %button.btn.btn-warning.btn-large.uncreate(style="margin-left: -20px") Unaccomplish
+    {{else}}
+    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    {{/if}}
 
 %template(name="edit")
   {{#if equals "newAchievement" _id}}
@@ -761,7 +765,7 @@
         %div.controls 
           %input.input-file(id="fileInput" type="file")/
       %footer.form-actions
-        %button.btn.btn-primary.btn-large.create Save
+        %button.btn.btn-success.btn-large.create Save
 
 %template(name='noContent')
   .fold
@@ -814,23 +818,7 @@
           {{#if parent}}
           <a class="name {{isMe mention}}">{{mention.name}}</a>
           {{/if}}
-          %nav.icons.pull-right
-            -#%li
-              %span 24
-              %a.vote(data-up="true")<
-                <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-              %a.vote(data-up="false")<
-                <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
-            %li
-              %a.remove(title="Remove")<
-                <i class="icon-remove"></i>
-            %li
-              %a.edit(title="Edit")<
-                <i class="icon-pencil"></i>
-            %li
-              %a.reply(title="Link")<
-                <i class="icon-share-alt"></i>
-          -#.score.pull-right<
+          .score.pull-right<
             %span.value {{user.score}}
             %span.dollar.dollar-green
       -#.pull-left
@@ -840,6 +828,20 @@
         -#%a.edit.icon-pencil(title="Edit")
         -#{{/if}}
         -#%a.reply.icon-share-alt(title="Reply")
+      %nav.icons.pull-right
+        -#%li
+          %a.href(title="Link" href="/accomplishments/{{_id}}")<
+            <i class="icon-bookmark"></i>
+        %li
+          %a.remove(title="Remove")<
+            <i class="icon-remove"></i>
+        %li
+          %a.edit(title="Edit")<
+            <i class="icon-pencil"></i>
+        %li
+          %a.reply(title="Reply")<
+            <i class="icon-share-alt"></i>
+      %time.time {{formatDate date}}
       .text
         {{#if equals "edit-comment" _id}}
         .text-wrapper

@@ -7,6 +7,8 @@
       name: 'Achievements'
     }, {
       name: 'Ladder'
+    }, {
+      name: 'Profile'
     }
   ];
 

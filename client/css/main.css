@@ -305,8 +305,7 @@ i.active {
     line-height: 80%;
     margin-bottom: 5px; }
   .achievement .content .description .tag {
-    color: #777777;
-    font-weight: normal; }
+    color: gray; }
 .achievement .value {
   display: block;
   font-size: 200%;
@@ -318,8 +317,9 @@ i.active {
   height: 50px;
   margin-left: 10px;
   font-family: "SubtleSansRegular";
-  background: url("/img/tag_new.png");
-  background-size: 50px 50px; }
+  background: url("/img/tag.png");
+  background-size: 50px 200px;
+  background-position: 0 0; }
 .achievement:hover .hide {
   display: block; }
 
@@ -328,18 +328,24 @@ i.active {
 .uncompleted .icon {
   border-color: #f70852; }
 .uncompleted .value {
-  background: url("/img/tag.png");
-  background-size: 50px 100px;
-  background-position: 0 0; }
+  background-position: 0 50px; }
+
+.accepted a {
+  color: #f89406; }
+.accepted .icon {
+  border-color: #f89406; }
+.accepted .value {
+  background-position: 0 150px; }
 
 .completed a {
   color: #4dc206; }
 .completed .icon {
   border-color: #4dc206; }
 .completed .value {
-  background: url("/img/tag.png");
-  background-size: 50px 100px;
-  background-position: 0 50px; }
+  background-position: 0 100px; }
+
+.time {
+  color: gray; }
 
 .minimal {
   margin: 0; }
@@ -353,7 +359,7 @@ i.active {
   .user .content {
     padding-top: 3px;
     margin-left: 32.5px;
-    color: #777777;
+    color: gray;
     font-size: 14px; }
     .user .content .name {
       font-weight: bold; }

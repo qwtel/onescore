@@ -401,7 +401,7 @@
   </div>
   <div class='modal-footer'>
     <a class='btn' data-dismiss='modal'>Discard</a>
-    <a class='create-activity btn btn-primary'>Save</a>
+    <a class='create-activity btn btn-success'>Save</a>
   </div>
   {{/with}}
 </template>
@@ -497,11 +497,8 @@
         <li>
           <a class='href' href='/accomplishments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
         </li>
-        <li>
-          <a class='href' href='/accomplishments/{{_id}}/talk' title='Comments'><i class="icon-comment"></i></a>
-        </li>
       </nav>
-      <time>{{formatDate date}}</time>
+      <time class='time'>{{formatDate date}}</time>
       {{#markdown}}{{story}}{{/markdown}}
     </div>
   </div>
@@ -599,7 +596,7 @@
         {{#if description}}
         <span>{{{wrapTags description}}}</span>
         {{else}}
-        <span>&lt;No content&gt;</span>
+        <span class='tag'>&lt;No content&gt;</span>
         {{/if}}
       </div>
     </div>
@@ -708,7 +705,11 @@
   </div>
   {{/if}}
   <footer class='form-actions'>
-    <button class='btn btn-primary btn-large create' style='margin-left: -20px'>Accomplish</button>
+    {{#if accomplishment}}
+    <button class='btn btn-warning btn-large uncreate' style='margin-left: -20px'>Unaccomplish</button>
+    {{else}}
+    <button class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</button>
+    {{/if}}
   </footer>
 </template>
 <template name='edit'>
@@ -773,7 +774,7 @@
         </div>
       </div>
       <footer class='form-actions'>
-        <button class='btn btn-primary btn-large create'>Save</button>
+        <button class='btn btn-success btn-large create'>Save</button>
       </footer>
     </fieldset>
   </div>
@@ -825,19 +826,22 @@
           {{#if parent}}
           <a class="name {{isMe mention}}">{{mention.name}}</a>
           {{/if}}
-          <nav class='icons pull-right'>
-            <li>
-              <a class='remove' title='Remove'><i class="icon-remove"></i></a>
-            </li>
-            <li>
-              <a class='edit' title='Edit'><i class="icon-pencil"></i></a>
-            </li>
-            <li>
-              <a class='reply' title='Link'><i class="icon-share-alt"></i></a>
-            </li>
-          </nav>
+          <div class='score pull-right'><span class='value'>{{user.score}}</span>
+          <span class='dollar dollar-green'></span></div>
         </div>
       </div>
+      <nav class='icons pull-right'>
+        <li>
+          <a class='remove' title='Remove'><i class="icon-remove"></i></a>
+        </li>
+        <li>
+          <a class='edit' title='Edit'><i class="icon-pencil"></i></a>
+        </li>
+        <li>
+          <a class='reply' title='Reply'><i class="icon-share-alt"></i></a>
+        </li>
+      </nav>
+      <time class='time'>{{formatDate date}}</time>
       <div class='text'>
         {{#if equals "edit-comment" _id}}
         <div class='text-wrapper'>

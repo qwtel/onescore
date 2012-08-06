@@ -68,7 +68,7 @@
       return '';
     },
     color: function() {
-      var acc;
+      var acc, fav;
       if (Session.equals('newAchievement', this._id)) {
         return '';
       }
@@ -78,6 +78,14 @@
       });
       if (acc) {
         return 'completed';
+      }
+      fav = Favourites.findOne({
+        user: Meteor.user()._id,
+        entity: this._id,
+        active: true
+      });
+      if (fav) {
+        return 'accepted';
       } else if (Session.get('accomplishmentsLoaded')) {
         return 'uncompleted';
       }

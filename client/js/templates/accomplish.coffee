@@ -2,8 +2,11 @@ _.extend Template.accomplish,
   events:
     'click .create': (e) ->
       stry = $("#accomplish-#{@_id}").val()
-      Meteor.call 'accomplish', @_id, stry
       Session.set 'expand', null
+      Meteor.call 'accomplish', @_id, stry
+
+    'click .uncreate': (e) ->
+      Accomplishments.remove @_id
 
     'click .text': (e) ->
       Session.toggle 'story', 'text'

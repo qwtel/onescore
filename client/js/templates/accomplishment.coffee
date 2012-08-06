@@ -21,7 +21,7 @@ _.extend Template.accomplishment,
     return Meteor.users.findOne @user
   
   verb: ->
-    if @story isnt ''
+    if @story and @story isnt ''
       return 'posted'
     else
       return 'accomplished'

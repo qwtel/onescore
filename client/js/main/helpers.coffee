@@ -2,6 +2,8 @@ window.items = [
     name: 'Achievements'
   ,
     name: 'Ladder'
+  ,
+    name: 'Profile'
 ]
 
 window.categories = [

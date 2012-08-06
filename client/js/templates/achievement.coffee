@@ -75,11 +75,21 @@ _.extend Template.achievement,
   color: ->
     if Session.equals 'newAchievement', @_id
       return ''
+
     acc = Accomplishments.findOne
       user: Meteor.user()._id
       entity: @_id
     if acc
       return 'completed'
+
+    fav = Favourites.findOne
+      user: Meteor.user()._id
+      entity: @_id
+      active: true
+    if fav
+      return 'accepted'
+
     else if Session.get 'accomplishmentsLoaded'
       return 'uncompleted'
+
     return ''

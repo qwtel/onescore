@@ -6,8 +6,11 @@
       'click .create': function(e) {
         var stry;
         stry = $("#accomplish-" + this._id).val();
-        Meteor.call('accomplish', this._id, stry);
-        return Session.set('expand', null);
+        Session.set('expand', null);
+        return Meteor.call('accomplish', this._id, stry);
+      },
+      'click .uncreate': function(e) {
+        return Accomplishments.remove(this._id);
       },
       'click .text': function(e) {
         return Session.toggle('story', 'text');
