@@ -87,7 +87,7 @@
   };
 
   window.focusById = function(id) {
-    return $('#' + id).focus().select();
+    return $('#' + id).focus();
   };
 
   window.findTags = function(text) {
@@ -156,6 +156,21 @@
     } else {
       return Session.set(name, !Session.get(name));
     }
+  };
+
+  Session.push = function(name, key, value) {
+    var field;
+    field = Session.get(name);
+    if (!field) {
+      field = {};
+      Session.set(name, field);
+    }
+    if (field[key] === value) {
+      field[key] = null;
+    } else {
+      field[key] = value;
+    }
+    return Session.toggle('redraw', true);
   };
 
   Handlebars.registerHelper('session', function(name) {

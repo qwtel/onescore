@@ -1,3 +1,38 @@
+table = {}
+Meteor.startup ->
+  # HACK: Is there a better way?
+  table =
+    titles: Titles
+    achievements: Achievements
+    accomplishments: Accomplishments
+    comments: Comments
+
+  Meteor.users.find().observe
+    added: (user) ->
+      url = "https://graph.facebook.com/#{user.services.facebook.id}"
+      options =
+        params:
+          access_token: user.services.facebook.accessToken
+  
+      Meteor.http.get url, options, (error, res) =>
+        Meteor.users.update user._id,
+          $set:
+            username: res.data.username
+            bio: res.data.bio
+            location: res.data.location.name
+
+  Achievements.find().observe
+    added: (achievement) ->
+      Achievements.update achievement._id,
+        $set:
+          date: new Date()
+
+  Comments.find().observe
+    added: (comment) ->
+      Comments.update comment._id,
+        $set:
+          date: new Date()
+
 countVotes = (id, up) ->
   return Votes.find(
     entity: id
@@ -16,16 +51,6 @@ updateScore = (collection, id, score, callback) ->
       score: score
     ,
       callback
-
-table = {}
-
-Meteor.startup ->
-  # HACK: Is there a better way?
-  table =
-    titles: Titles
-    achievements: Achievements
-    accomplishments: Accomplishments
-    comments: Comments
 
 Meteor.methods
   vote: (collection, entity, up) ->

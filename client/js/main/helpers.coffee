@@ -69,7 +69,7 @@ window.focusById = (id) ->
   #$t = $('#'+id)
   #t = $t.val()
   #$t.focus().val('').val(t)
-  $('#'+id).focus().select()
+  $('#'+id).focus()#.select()
 
 window.findTags = (text) ->
   pattern = /// [^&]\B(#(\w\w+)) ///g
@@ -121,6 +121,19 @@ Session.toggle = (name, value) ->
       Session.set name, value
   else
     Session.set name, !Session.get(name)
+
+Session.push = (name, key, value) ->
+  field = Session.get name
+  unless field
+    field = {}
+    Session.set name, field
+
+  if field[key] is value
+    field[key] = null
+  else
+    field[key] = value
+
+  Session.toggle 'redraw', true
 
 Handlebars.registerHelper 'session', (name) ->
   return Session.get name

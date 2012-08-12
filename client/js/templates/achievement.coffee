@@ -9,7 +9,9 @@ _.extend Template.achievement,
         e.stopPropagation()
 
     'click .expand': (e) ->
-      Session.toggle 'expand', @_id
+      unless e.isPropagationStopped()
+        Session.toggle 'expand', @_id
+        e.stopPropagation()
 
     'click .fav': (e) ->
       fav = Favourites.findOne
@@ -93,3 +95,9 @@ _.extend Template.achievement,
       return 'uncompleted'
 
     return ''
+
+  hasScore: ->
+    if @score?
+      return true
+    else
+      return false

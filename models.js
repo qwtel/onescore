@@ -1,10 +1,11 @@
-var Slideshows = new Meteor.Collection('slideshows'),
-    Slides = new Meteor.Collection('slides'),
-    Comments = new Meteor.Collection('comments'),
-    Ushers = new Meteor.Collection('ushers'),
+    //Slideshows = new Meteor.Collection('slideshows'),
+    //Slides = new Meteor.Collection('slides'),
+    //Ushers = new Meteor.Collection('ushers'),
     //Activities = new Meteor.Collection('activities'),
-    Drafts = new Meteor.Collection('drafts'),
+    //Drafts = new Meteor.Collection('drafts'),
 
+    var
+    Comments = new Meteor.Collection('comments'),
     Achievements = new Meteor.Collection('achievements');
     Activities = new Meteor.Collection('activities');
     Titles = new Meteor.Collection('titles');

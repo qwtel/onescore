@@ -15,10 +15,13 @@
     AppRouter.prototype.routes = {
       '': 'default',
       ':menu': 'menu',
+      ':user': 'user',
       'achievements/:id': 'achievements',
       'achievements/:id/:tab': 'achievements',
       'accomplishments/:id': 'accomplishments',
-      'accomplishments/:id/:tab': 'accomplishments'
+      'accomplishments/:id/:tab': 'accomplishments',
+      'profile/:menu': 'profile',
+      'comments/:id': 'comments'
     };
 
     AppRouter.prototype["default"] = function() {
@@ -30,17 +33,35 @@
       switch (page) {
         case 'dashboard':
           Session.set('sort', 'hot');
-          break;
+          Session.set('page', page);
+          return Session.set('limit', 'all');
         case 'achievements':
           Session.set('sort', 'best');
-          break;
+          Session.set('page', page);
+          return Session.set('limit', 'all');
         case 'ladder':
           Session.set('sort', 'best');
-          break;
+          Session.set('page', page);
+          return Session.set('limit', 'all');
         case 'profile':
           Session.set('sort', 'new');
+          Session.set('menu', 'activity');
+          Session.set('page', page);
+          return Session.set('limit', 'me');
+        default:
+          Session.set('sort', 'new');
+          Session.set('menu', 'activity');
+          Session.set('page', 'profile');
+          return Session.set('limit', 'me');
       }
-      return Session.set('page', page);
+    };
+
+    AppRouter.prototype.comments = function(id) {
+      var c;
+      this.softReset();
+      Session.set('parent', id);
+      c = Comments.findOne(id);
+      return Session.set('level', c.level);
     };
 
     AppRouter.prototype.achievements = function(id, tab) {
@@ -63,15 +84,34 @@
       return Session.set('tab', tab);
     };
 
+    AppRouter.prototype.user = function(user) {
+      console.log(user);
+      return this.profile();
+    };
+
+    AppRouter.prototype.profile = function(menu) {
+      this.softReset();
+      Session.set('page', 'profile');
+      if (!menu) {
+        menu = 'activity';
+      }
+      Session.set('menu', menu);
+      return false;
+    };
+
     AppRouter.prototype.softReset = function() {
-      return Session.set('expand', null);
+      Session.set('expand', null);
+      Session.set('story', null);
+      Session.set('parent', null);
+      return Session.set('level', 0);
     };
 
     AppRouter.prototype.hardReset = function() {
       this.softReset();
       $(document).scrollTop(0);
       Session.set('single', null);
-      return Session.set('tab', null);
+      Session.set('tab', null);
+      return Session.set('unexpand', null);
     };
 
     return AppRouter;

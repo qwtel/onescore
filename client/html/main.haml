@@ -25,6 +25,40 @@
     {{> content }}
   {{/if}}
 
+%template(name='header')
+  %a.brand.nav-img.pull-left.nav-item(href="/dashboard")
+  %nav.nav
+    %li.dropdown
+      %a.dropdown-toggle(data-toggle="dropdown")<
+        {{#if session "category"}}
+        %span {{session "category"}}
+        {{else}}
+        %span Onescore
+        {{/if}}
+        %b.caret
+      %ul.dropdown-menu
+        {{#each categories}}
+        %li.category(data-category="{{name}}")
+          %a.nav-item {{name}}
+        {{/each}}
+
+    {{#each items}}
+    <li class="nav-{{url}} {{isActive "page" url}}">
+    %a.nav-item(href="/{{url}}") {{name}}
+    </li>
+    {{/each}}
+
+  {{#if currentUser}}
+  %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
+    <img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture"/> 
+  .score.pull-right.hidden-phone<
+    -#%span.dollar
+    %span.value {{currentUser.score}}
+  {{else}}
+  .login.pull-right
+    {{> loginButtons}}
+  {{/if}}
+
 %template(name='content')
   {{#if equals "page" "dashboard"}}
   -#.row
@@ -59,6 +93,7 @@
     .span8.offset2
       %section.well 
         {{> single}}
+        .fold
         {{> filter}}
         .clearfix
         {{> comments}}
@@ -75,6 +110,7 @@
         %h3 Quest Items
     .span8
       %section.well 
+        {{> filter}}
         {{> achievements}}
     {{else}}
     .span8.offset2
@@ -105,7 +141,7 @@
   .row
     .span12
       %section.well 
-        {{> userWidget }}
+        {{> userBanner }}
   .row
     .span4
       {{> menu }}
@@ -117,8 +153,23 @@
       %section.well 
         -#%h3.heading Accomplishments
         {{> filter }}
+
+        {{#if equals "menu" "activity"}}
         .clearfix
         {{> accomplishments }}
+        {{/if}}
+
+        {{#if equals "menu" "quests"}}
+        {{> achievements }}
+        {{/if}}
+
+        {{#if equals "menu" "favourites"}}
+        {{> achievements }}
+        {{/if}}
+
+        {{#if equals "menu" "edits"}}
+        {{> achievements }}
+        {{/if}}
   {{/if}}
 
   {{#if equals "page" "activities"}}
@@ -142,65 +193,67 @@
         %h3 Y U NO MAKE BETTER?
   {{/if}}
 
-%template(name='tags')
-  .tag-list
-    {{#each tags}}
-    %span.tag.label.active(data-tag="{{tag}}")
-      {{tag}}
-      %a.remove(id="{{../_id}}" title="Remove this tag") ×
-    {{/each}}
-
-    {{#if addingTag}}
-    %input.edittag-input.label.input-mini(id="edittag-{{_id}}" type="text")/
-    {{else}}
-    %a.add.tag.label(title="Add a tag") + tag
-    {{/if}}
-
-%template(name='tagFilter')
-  #tag-filter.tag-list
-    %h6.tags Tags: 
-    {{#each tags}}
-    <a class="tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
-    {{tag}}
-    %span.count ({{count}})
-    </a>
-    {{/each}}
-
 %template(name='menu')
   %nav.menu
     %ul.nav.nav-tabs.nav-stacked
-      %li
-        %a
-          %i.icon-book
-          Quests
-      %li
-        %a
-          %i.icon-star
-          Favourites
-      %li
-        %a
-          %i.icon-pencil
-          Edits
-      %li
-        %a
-          %i.icon-arrow-right
-          Votes
+      <li class="{{isActive "menu" "activity"}}">
+      %a(href="/{{user.username}}/activity")
+        %i.icon-certificate
+        Activity
+        %i.icon-chevron-right.pull-right
+      </li>
+
+      <li class="{{isActive "menu" "quests"}}">
+      %a(href="/{{user.username}}/quests")
+        %i.icon-book
+        Quest Log
+        %i.icon-chevron-right.pull-right
+      </li>
+
+      <li class="{{isActive "menu" "favourites"}}">
+      %a(href="/{{user.username}}/favourites")
+        %i.icon-star
+        Favourites
+        %i.icon-chevron-right.pull-right
+      </li>
+
+      -#<li class="{{isActive "menu" "edits"}}">
+      -#%a(href="/profile/edits")
+        %i.icon-pencil
+        Edits
+      -#</li>
+
+      -#<li class="{{isActive "menu" "likes"}}">
+      -#%a(href="/profile/likes")
+        %i.icon-arrow-up
+        Likes
+      -#</li>
+
       -#%li
         %a
           %i.icon-glass
           Inventory
 
 %template(name='filter')
-  .filter
+  .filter.linebreak
     %input.input-medium.search-query.pull-right(type="text" placeholder="Search")/
 
     %nav.nav.nav-tabs 
-      %li.active 
-        %a All
-      %li
-        %a City
-      %li
-        %a Friends
+      <li class="{{isActive "limit" "all"}}">
+      %a.tab(data-tab="all") All
+      </li>
+
+      -#<li class="{{isActive "limit" "city"}}">
+      -#%a.tab(data-tab="city") City
+      -#</li>
+
+      <li class="{{isActive "limit" "friends"}}">
+      %a.tab(data-tab="friends") Friends
+      </li>
+
+      <li class="{{isActive "limit" "me"}}">
+      %a.tab(data-tab="me") Me
+      </li>
 
     -#.btn-group.pull-right
       %button.btn.active(title="Stories") 
@@ -213,60 +266,37 @@
         %i.icon-glass
 
     .pull-left
-      %span Sort by:
-      %select.sort.span1
+      %select.sort.span2
         <option value="hot" {{#if equals "sort" "hot"}}selected{{/if}}>Hot</option>
         <option value="new" {{#if equals "sort" "new"}}selected{{/if}}>New</option>
         <option value="old" {{#if equals "sort" "old"}}selected{{/if}}>Old</option>
         <option value="best" {{#if equals "sort" "best"}}selected{{/if}}>Best</option>
 
-%template(name='header')
-  %a.brand.nav-img.pull-left.nav-item(href="/dashboard")
-  %nav.nav
-    %li.dropdown
-      %a.dropdown-toggle(data-toggle="dropdown")<
-        {{#if session "category"}}
-        %span {{session "category"}}
-        {{else}}
-        %span Onescore
-        {{/if}}
-        %b.caret
-      %ul.dropdown-menu
-        {{#each categories}}
-        %li.category(data-category="{{name}}")
-          %a.nav-item {{name}}
-        {{/each}}
-
-    {{#each items}}
-    <li class="nav-{{url}} {{isActive "page" url}}">
-    %a.nav-item(href="/{{url}}") {{name}}
-    </li>
-    {{/each}}
-
-  {{#if currentUser}}
-  %a.profile-pic.nav-item.nav-img.pull-right(href="/profile")
-  .score.pull-right.hidden-phone<
-    %span.value {{currentUser.score}}
-    %span.dollar
-  {{else}}
-  .login.pull-right
-    {{> loginButtons}}
-  {{/if}}
+%template(name='userBanner')
+  .userBanner
+    %a.profile-pic.pull-left(href="/{{currentUser.username}}")
+      {{#if currentUser}}
+      <img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=normal"/> 
+      {{/if}}
+    %h3.name {{currentUser.username}}
+    -#%h3.score<
+      -#%span.dollar.dollar-green
+      %span {{currentUser.score}}
+    .bio
+      %p {{currentUser.bio}}
+    .loc
+      %p {{currentUser.location}}
 
 %template(name='userWidget')
   .userWidget
-    %a.profile-pic.pull-left(href="#")
-
-    {{#unless editUsername}} 
-    %a.edit.pull-right (edit)
-    %h3.name {{currentUser.name}}
-    {{else}} 
-    %input#user-name(type="text" value="{{name}}")/
-    {{/unless}} 
-
+    %a.profile-pic.pull-left(href="/{{currentUser.username}}")
+      {{#if currentUser}}
+      <img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture"/> 
+      {{/if}}
+    %h3.name {{currentUser.username}}
     %h3.score<
+      -#%span.dollar.dollar-green
       %span {{currentUser.score}}
-      %span.dollar.dollar-green
 
     -#.rank
       %h3 
@@ -280,53 +310,489 @@
       .group.span4
         %h4 Group
         %p.score 0
-    .clearfix
-  {{else}}
-  .login
-    {{> loginButtons}}
-
-%template(name='activities')
-  .btn-group.pull-left
-    <a id="my-activities" class='btn btn-filter {{isActive "activity-filter-1" "my"}}' data-filter="my" data-which="1">My Activities</a>
-    <a id="lva-activities" class='btn btn-filter {{isActive "activity-filter-1" "lva"}}' data-filter="lva" data-which="1">LVA-Team Activities</a>
-  .btn-group.pull-right
-    <a id="fav-activities" class='btn btn-filter {{isActive "activity-filter-2" "fav"}}' data-filter="fav" data-which="2"><i class="icon-star"></i> Favourites</a>
-    <a id="saved-activities" class='btn btn-filter {{isActive "activity-filter-2" "saved"}}' data-filter="saved" data-which="2"><i class="icon-edit"></i> Saved</a>
-    <a id="pending-activities" class='btn btn-filter {{isActive "activity-filter-2" "pending"}}' data-filter="pending" data-which="2"><i class="icon-share"></i> Handed-In</a>
-    <a id="done-activities" class='btn btn-filter {{isActive "activity-filter-2" "done"}}' data-filter="done" data-which="2"><i class="icon-check"></i> Evaluated</a>
-  .clearfix
-  {{> tagFilter }}
-
-  .activity.create#create
-    .well
-      .text
-        %h4
-          %a.open Create New Activity
-        %p Create an activity that others can accomplish
-
-  {{#each activities}}
-  {{> activity}}
-  {{else}}
-  {{#if noContent}}
-  .alert.pull-left
-    %strong Warning! 
-    No activities matching the selection
-  {{else}}
-  {{> loading}}
-  {{/if}}
-  {{/each}}
-
-  .modal.activity-modal.hide.create-modal
-    {{> createActivityModal}}
-
-  .modal.activity-modal.hide.accomplish-modal
-    {{> accomplishActivityModal}}
-
-  .clearfix
+    -#.clearfix
 
 %template(name='loading')
   .loading
     %img(src="/loading.gif")/
+
+%template(name='ladder')
+  {{#each users}}
+  {{> user}}
+  {{else}}
+  {{> placeholder}}
+  {{/each}}
+
+%template(name='home')
+  {{#each accomplishments}}
+  .fold
+    {{> accomplishment}}
+  {{else}}
+  {{> placeholder}}
+  {{/each}}
+
+%template(name='accomplishments')
+  {{#each accomplishments}}
+  .fold
+    {{> accomplishment}}
+  {{else}}
+  {{> placeholder}}
+  {{/each}}
+
+%template(name='accomplishment')
+  .user
+    .content
+      %a.face.profile-pic(href="/{{user.username}}")
+        <img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/> 
+      <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+      %span.score ({{user.score}})
+
+      %em.verb {{verb}}
+      -#.score.pull-right<
+        %span.dollar.dollar-green
+        %span.value {{user.score}}
+  {{#with achievement}}
+  .minimal
+    {{> achievement}}
+  {{/with}}
+
+  {{#if story}}
+  .story
+    .vote-container.pull-left
+      %div
+        %a.href(title="Link" href="/accomplishments/{{_id}}")<
+          <i class="icon-bookmark"></i>
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+    .content
+      -#%nav.icons.pull-right
+        %li
+          %a.href(title="Link" href="/accomplishments/{{_id}}")<
+            <i class="icon-bookmark"></i>
+        -#%li
+          %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
+            <i class="icon-comment"></i>
+      %time.time {{formatDate date}}
+      {{#markdown}}{{{story}}}{{/markdown}}
+  {{/if}}
+
+%template(name='user')
+  .user
+    .content
+      %a.face.profile-pic(href="/{{currentUser.username}}")
+        <img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/> 
+      <a class="name {{isMe user}}" href="/{{currentUser.username}}">{{user.username}}</a>
+      .score.pull-right<
+        -#%span.dollar.dollar-green
+        %span.value {{score}}
+
+%template(name='placeholder')
+  {{#if noContent}}
+  {{> noContent}}
+  {{else}}
+  .fold
+    {{> loading}}
+  {{/if}}
+
+%template(name='single')
+  {{#if equals "page" "achievements"}}
+  {{#with achievement}}
+  {{> achievement}}
+  {{/with}}
+  {{/if}}
+
+  {{#if equals "page" "accomplishments"}}
+  {{#with accomplishment}}
+  {{> accomplishment}}
+  {{/with}}
+  {{/if}}
+
+%template(name='achievements')
+  {{#with newAchievement}}
+  <a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="Create new achievement"><i class="icon-file"></i> Create new achievement</a>
+  .clearfix
+
+  -#.fold.dummy
+    {{> achievement}}
+  {{/with}}
+
+  {{#if achievements}}
+  {{#each achievements}}
+  .fold
+    {{> achievement}}
+  {{else}}
+  {{> loading}}
+  {{/each}}
+  {{else}}
+  {{> noContent}}
+  {{/if}}
+
+%template(name='achievement')
+  %article.achievement(class="{{color}}")
+    %a.value.pull-right(href="/achievements/{{_id}}/accomplish")
+      %span.points
+        {{#if hasScore}}
+        {{score}}
+        {{else}}
+        %img(src="/grayLoading.gif")/
+        {{/if}}
+    .vote-container.pull-right
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+
+    %a.icon.pull-left(href="/achievements/{{_id}}")
+
+    .content
+      %header.head
+        {{#unless session "single"}}
+        %nav.icons.pull-right
+          %li
+            %a.expand(title="Expand")<
+              {{#if equals "expand" _id}}
+              <i class="icon-chevron-up active"></i>
+              {{else}}
+              <i class="icon-chevron-down"></i>
+              {{/if}}
+          -#%li.accomplish
+            %a(title="Accomplish this achievement")<
+              <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
+          -#%li.quest
+            %a(title="Add to quest log")<
+              <i class="icon-book {{quest}}"></i>
+          -#%li.fav
+            %a(title="Add to favourites")<
+              <i class="icon-star {{faved}}"></i>
+          %li
+            %a(title="Edit" href="/achievements/{{_id}}/edit")<
+              <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
+          %li
+            %a(title="Comment" href="/achievements/{{_id}}/talk")<
+              <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
+        {{/unless}}
+
+        %h4.title
+          {{#if title}}
+          %a(href="/achievements/{{_id}}") {{title}}
+          {{else}}
+          %a(href="/achievements/{{_id}}" style="font-weight: normal") &lt;No title suggested&gt;
+          {{/if}}
+          %a.fav(title="Add to favourites")<
+            <i class="icon-star {{faved}}"></i>
+
+      .description
+        {{#if description}}
+        %span {{{wrapTags description}}}
+        {{else}}
+        %span.tag &lt;No content&gt;
+        {{/if}}
+    .clearfix
+  {{#if equals "expand" _id}}
+  .expandAchievement
+    {{> info}}
+  {{/if}}
+  {{#if equals "single" _id}}{{#if session "tab"}}
+  .expandAchievement
+    {{> expand}}
+  {{/if}}{{/if}}
+
+%template(name="info")
+  %h1 INFO
+
+%template(name="expand")
+  {{#if equals "newAchievement" _id}}
+  %h3.heading.line Create new achievement
+  {{else}}
+  .linebreak
+    %nav.nav.nav-tabs 
+      <li class="{{isActive "tab" "info"}}">
+      %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
+      </li>
+      <li class="{{isActive "tab" "edit"}}">
+      %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit") Edit
+      </li>
+      <li class="{{isActive "tab" "talk"}}">
+      %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk") Comments
+      </li>
+      -#<li class="{{isActive "tab" "rev"}}">
+      -#%a.tab(data-tab="rev") Revisions
+      -#</li>
+      <li class="{{isActive "tab" "accomplish"}}">
+      %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
+      </li>
+  {{/if}}
+
+
+  {{#if equals "tab" "info"}}
+  {{> info}}
+  {{/if}}
+
+  {{#if equals "tab" "accomplish"}}
+  {{> accomplish}}
+  {{/if}}
+
+  {{#if equals "tab" "edit"}}
+  {{> edit}}
+  {{/if}}
+
+  {{#if equals "tab" "talk"}}
+  {{> filter}}
+  .clearfix
+  {{> comments}}
+  {{/if}}
+
+%template(name='accomplish')
+  {{#if session "story"}}
+  {{#if equals "story" "text"}}
+  .controls
+    %textarea.ta100(id="editor-{{_id}}" rows="15") {{story}}
+    %span.help-block
+      %strong HINT:
+      You can style your post using markdown.
+
+  %footer.form-actions
+    {{#if accomplishment}}
+    %button.btn.btn-large.create(style="margin-left: -20px") Save
+    {{else}}
+    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    {{/if}}
+    %button.btn.btn-large.preview Preview
+  {{/if}}
+  {{else}}
+  %label.control-label Tell your story: (optional)
+  .btn-group
+    <button class="btn btn-large text {{isActive "story" "text"}}" title="Text">
+    %i.icon-align-left
+    </button>
+    <button class="btn btn-large picture {{isActive "story" "picture"}}" title="Picture">
+    %i.icon-picture
+    </button>
+    <button class="btn btn-large link {{isActive "story" "link"}}" title="Link">
+    %i.icon-bookmark
+    </button>
+    -#%button.btn(title="Audio") 
+      %i.icon-headphones
+    -#%button.btn(title="Video") 
+      %i.icon-film
+  %footer.form-actions
+    {{#if accomplishment}}
+    %button.btn.btn-warning.btn-large.uncreate(style="margin-left: -20px") Unaccomplish
+    {{else}}
+    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    {{/if}}
+  {{/if}}
+
+%template(name="edit")
+  {{#if equals "newAchievement" _id}}
+  {{#if show "styleGuide"}}
+  %div.alert.alert-block.alert-info
+    %a.close(data-dismiss="alert") ×
+    %h4.alert-heading Achievement style guide
+    %p Achievements should have the following properties:
+    %dl 
+      %dt 
+        %h5.alert-heading Atomic
+      %dd Achievements should not be composed.
+      %dt 
+        %h5.alert-heading Universal
+      %dd Achievements should be easy to agree on.
+      %dt 
+        %h5.alert-heading Unique
+      %dd Check if the achievement already exists!
+  {{/if}}
+  {{/if}}
+
+  .form-horizontal(id="form-{{_id}}")
+    %fieldset 
+      %div.control-group
+        %label.control-label(for="title-{{_id}}") Title
+        %div.controls 
+          .input-append<
+            %input.span3.title(type="text" id="title-{{_id}}" data-field="title")/
+            %button.btn.suggest(type="button")> Suggest
+          %p.help-block.heading
+            %strong NOTE:
+            You don't have to suggest a title.
+
+          {{#if hasTitles}}
+          %table.table.table-condensed
+            %thead 
+              %tr 
+                %th Vote
+                %th Title
+            %tbody 
+              {{#each titles}}
+              %tr 
+                %td
+                  %a.vote(data-up="true")<
+                    <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+                  %span {{score}}
+                  %a.vote(data-up="false")<
+                    <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+                %td {{title}}
+              {{/each}}
+          {{/if}}
+
+      %div.control-group 
+        %label.control-label(for="description-{{_id}}") Description
+        %div.controls 
+          %textarea.input-xlarge.description.lazy(id="description-{{_id}}" data-field="description" rows="4") {{description}}
+          %p.help-block 
+            What has to be done to complete this achievement?
+            %br/
+            %strong HINT:
+            You can include #tags here.
+
+      -#%div.control-group 
+        %label.control-label(for="optionsCheckbox") Visibility
+        %div.controls 
+          %label.checkbox 
+            %input(type="checkbox" id="optionsCheckbox" value="option1")/
+              Make this achievement private
+
+      %div.control-group 
+        %label.control-label(for="category-{{_id}}") Category
+        %div.controls                 
+          %select.category.lazy(id="category-{{_id}}" data-field="category") 
+            %option
+            {{#each categories}}
+            <option value="{{name}}" {{selected ../category}}>{{name}}</option>
+            {{/each}}
+          %p.help-block If it doesn't fit in anywhere, choose 'Random'
+
+      -#%div.control-group 
+        %label.control-label(for="multiSelect") Multicon-select
+        %div.controls 
+          %select(multiple="multiple" id="multiSelect") 
+            %option 1
+      -#%div.control-group 
+        %label.control-label(for="fileInput") Image
+        %div.controls 
+          %input.input-file(id="fileInput" type="file")/
+      %footer.form-actions
+        %button.btn.btn-large.create Save
+
+%template(name='noContent')
+  .alert
+    %strong Warning! 
+    No Content.
+
+%template(name='comments')
+  -#.btn-group.pull-left
+    <a id="my-posts" class='btn btn-filter {{isActive "comment-filter" "my"}}' data-filter="my">My Posts</a>
+    <a id="lva-posts" class='btn btn-filter {{isActive "comment-filter" "lva"}}' data-filter="lva">LVA-Team Posts</a>
+    -#%a.btn#my-posts(class="{{myPostsActive}}" data-filter="my") My Own Posts
+    -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
+  -#{{> filter}}
+  -#.clearfix
+  .control-group
+  %label.control-label(for="add-{{_id}}") Add a comment:
+  .controls
+    %textarea.new-thread.ta100(id="add-{{_id}}" rows="3")
+
+  .fold
+  {{#if breadcrumbs}}
+  %ul.breadcrumb
+    {{#each breadcrumbs}}
+    %li
+      <a class="back {{isMe user}}" data-id="{{_id}}" data-level="{{level}}">{{user.username}}</a>
+      %span.divider >
+    {{/each}}
+  {{/if}}
+
+  .comments
+    {{#if comments}}
+    {{#each comments}}
+    {{> comment}}
+    {{else}}
+    {{> noContent}}
+    {{/each}}
+    {{else}}
+    {{> loading}}
+    {{/if}}
+
+%template(name='comment')
+  %article.comment(id="comment-{{_id}}" class="{{nested}}")
+    .vote-container.pull-left
+      %div
+        %a.link.highlight(title="Link")<
+          <i class="icon-bookmark"></i>
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+    .body
+      -#{{> user}}
+      .user
+        .content
+          %a.face.profile-pic(href="/{{user.username}}")
+            <img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/> 
+          <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+          %span.score ({{user.score}})
+
+          %em.verb {{verb}}
+
+          -#{{#if mention}}
+          -#%a.face.profile-pic(href="/{{mention.username}}")
+          -#  <img src="https://graph.facebook.com/{{mention.services.facebook.id}}/picture"/> 
+          -#<a class="name {{isMe mention}}" href="/{{mention.username}}">{{mention.username}}</a>
+          -#%span.score ({{mention.score}})
+          -#{{/if}}
+
+          %nav.icons.pull-right
+            %li
+              %a.unexpand(title="Expand")<
+                {{#unless unexpand}}
+                <i class="icon-chevron-up"></i>
+                {{else}}
+                <i class="icon-chevron-down active"></i>
+                {{/unless}}
+            %li
+              %a.edit(title="Edit")<
+                <i class="icon-pencil {{isActive "editComment" _id}}"></i>
+            %li
+              %a.reply(title="Reply")<
+                <i class="icon-share-alt {{isActive "addComment" _id}}"></i>
+            -#%li
+              %a.remove(title="Remove")<
+                <i class="icon-remove"></i>
+          -#%time.time <{{formatDate date}}>
+      .text
+        {{#if equals "editComment" _id}}
+        .text-wrapper
+          %textarea.edit-text.ta100(id="edit-{{_id}}" rows="3") {{text}}
+        {{else}}
+        %p {{{addLineBreaks text}}}
+        {{/if}}
+      {{#if equals "addComment" _id}}
+      .text-wrapper
+        %textarea.comment-text.ta100(id="reply-{{_id}}" rows="3")
+      {{/if}}
+
+    {{#unless unexpand}}
+    {{#unless cutoff}}
+    {{#each replies}}
+    {{> comment}}
+    {{/each}}
+    {{else}}
+    %hr
+    {{/unless}}
+    {{/unless}}
 
 %template(name='activity')
   .activity(id="activity-{{_id}}")
@@ -382,6 +848,30 @@
     %a.create-activity.btn.btn-success Save
   {{/with}}
 
+%template(name='tags')
+  .tag-list
+    {{#each tags}}
+    %span.tag.label.active(data-tag="{{tag}}")
+      {{tag}}
+      %a.remove(id="{{../_id}}" title="Remove this tag") ×
+    {{/each}}
+
+    {{#if addingTag}}
+    %input.edittag-input.label.input-mini(id="edittag-{{_id}}" type="text")/
+    {{else}}
+    %a.add.tag.label(title="Add a tag") + tag
+    {{/if}}
+
+%template(name='tagFilter')
+  #tag-filter.tag-list
+    %h6.tags Tags: 
+    {{#each tags}}
+    <a class="tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
+    {{tag}}
+    %span.count ({{count}})
+    </a>
+    {{/each}}
+
 %template(name='accomplishActivityModal')
   {{#with activity}}
   .modal-header
@@ -414,442 +904,41 @@
     %h3 Comments
     {{> comments}}
 
-%template(name='ladder')
-  {{#each users}}
-  {{> user}}
+%template(name='activities')
+  .btn-group.pull-left
+    <a id="my-activities" class='btn btn-filter {{isActive "activity-filter-1" "my"}}' data-filter="my" data-which="1">My Activities</a>
+    <a id="lva-activities" class='btn btn-filter {{isActive "activity-filter-1" "lva"}}' data-filter="lva" data-which="1">LVA-Team Activities</a>
+  .btn-group.pull-right
+    <a id="fav-activities" class='btn btn-filter {{isActive "activity-filter-2" "fav"}}' data-filter="fav" data-which="2"><i class="icon-star"></i> Favourites</a>
+    <a id="saved-activities" class='btn btn-filter {{isActive "activity-filter-2" "saved"}}' data-filter="saved" data-which="2"><i class="icon-edit"></i> Saved</a>
+    <a id="pending-activities" class='btn btn-filter {{isActive "activity-filter-2" "pending"}}' data-filter="pending" data-which="2"><i class="icon-share"></i> Handed-In</a>
+    <a id="done-activities" class='btn btn-filter {{isActive "activity-filter-2" "done"}}' data-filter="done" data-which="2"><i class="icon-check"></i> Evaluated</a>
+  .clearfix
+  {{> tagFilter }}
+
+  .activity.create#create
+    .well
+      .text
+        %h4
+          %a.open Create New Activity
+        %p Create an activity that others can accomplish
+
+  {{#each activities}}
+  {{> activity}}
   {{else}}
-  {{> placeholder}}
-  {{/each}}
-
-%template(name='home')
-  {{#each accomplishments}}
-  .fold
-    {{> accomplishment}}
-  {{else}}
-  {{> placeholder}}
-  {{/each}}
-
-%template(name='accomplishments')
-  {{#each accomplishments}}
-  .fold
-    {{> accomplishment}}
-  {{else}}
-  {{> placeholder}}
-  {{/each}}
-
-%template(name='accomplishment')
-  .user
-    %a.face.profile-pic.pull-left
-    .content
-      <a class="name {{isMe user}}">{{user.name}}</a>
-      -#%span.score (score)
-      %em.verb {{verb}}:
-      .score.pull-right<
-        %span.value {{user.score}}
-        %span.dollar.dollar-green
-  {{#with achievement}}
-  .minimal
-    {{> achievement}}
-  {{/with}}
-
-  {{#if story}}
-  .story
-    .vote-container.pull-left
-      %div
-        %a.vote(data-up="true")<
-          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-      %div
-        %span.count {{score}}
-      %div
-        %a.vote(data-up="false")<
-          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
-    .content
-      %nav.icons.pull-right
-        %li
-          %a.href(title="Link" href="/accomplishments/{{_id}}")<
-            <i class="icon-bookmark"></i>
-        -#%li
-          %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
-            <i class="icon-comment"></i>
-      %time.time {{formatDate date}}
-      {{#markdown}}{{story}}{{/markdown}}
-  {{/if}}
-
-%template(name='user')
-  .user
-    %a.face.profile-pic.pull-left
-    .content
-      <a class="name {{isMe user}}">{{user.name}}</a>
-      -#%span.score (score)
-      .score.pull-right<
-        %span.value {{score}}
-        %span.dollar.dollar-green
-
-%template(name='placeholder')
   {{#if noContent}}
-  {{> noContent}}
+  .alert.pull-left
+    %strong Warning! 
+    No activities matching the selection
   {{else}}
   {{> loading}}
   {{/if}}
-
-%template(name='single')
-  {{#if equals "page" "achievements"}}
-  {{#with achievement}}
-  {{> achievement}}
-  {{/with}}
-  {{/if}}
-
-  {{#if equals "page" "accomplishments"}}
-  {{#with accomplishment}}
-  {{> accomplishment}}
-  {{/with}}
-  {{/if}}
-
-%template(name='achievements')
-  -#%h3.heading Achievements
-  {{> filter}}
-
-  {{#with newAchievement}}
-  <a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="Create new achievement"><i class="icon-file"></i> Create new achievement</a>
-  .clearfix
-
-  -#.fold.dummy
-    {{> achievement}}
-  {{/with}}
-
-  {{#each achievements}}
-  .fold
-    {{> achievement}}
-  {{else}}
-  {{> placeholder}}
   {{/each}}
 
-%template(name='achievement')
-  %article.achievement(class="{{color}}")
-    %a.value.pull-right.href(href="/achievements/{{_id}}/accomplish")
-      %span.points {{score}}
-    .vote-container.pull-right
-      %div
-        %a.vote(data-up="true")<
-          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-      %div
-        %span.count {{score}}
-      %div
-        %a.vote(data-up="false")<
-          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+  .modal.activity-modal.hide.create-modal
+    {{> createActivityModal}}
 
-    %a.icon.pull-left.href(href="/achievements/{{_id}}")
+  .modal.activity-modal.hide.accomplish-modal
+    {{> accomplishActivityModal}}
 
-    .content
-      %header.head
-        {{#unless session "single"}}
-        %nav.icons.pull-right
-          %li
-            %a.expand(title="Expand")<
-              {{#if equals "expand" _id}}
-              <i class="icon-chevron-up active"></i>
-              {{else}}
-              <i class="icon-chevron-down"></i>
-              {{/if}}
-          -#%li.accomplish
-            %a(title="Accomplish this achievement")<
-              <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
-          -#%li.quest
-            %a(title="Add to quest log")<
-              <i class="icon-book {{quest}}"></i>
-          -#%li.fav
-            %a(title="Add to favourites")<
-              <i class="icon-star {{faved}}"></i>
-          %li
-            %a.href(title="Edit" href="/achievements/{{_id}}/edit")<
-              <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
-          %li
-            %a.href(title="Comment" href="/achievements/{{_id}}/talk")<
-              <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
-        {{/unless}}
-
-        %h4.title
-          {{#if title}}
-          %a.href(href="/achievements/{{_id}}") {{title}}
-          {{else}}
-          %a.href(href="/achievements/{{_id}}" style="font-weight: normal") &lt;No title suggested&gt;
-          {{/if}}
-          %a.fav(title="Add to favourites")<
-            <i class="icon-star {{faved}}"></i>
-
-      .description
-        {{#if description}}
-        %span {{{wrapTags description}}}
-        {{else}}
-        %span.tag &lt;No content&gt;
-        {{/if}}
-    .clearfix
-  {{#if equals "expand" _id}}
-  .expandAchievement
-    {{> info}}
-  {{/if}}
-  {{#if equals "single" _id}}{{#if session "tab"}}
-  .expandAchievement
-    {{> expand}}
-  {{/if}}{{/if}}
-
-%template(name='titleSuggestions')
-  {{#if hasTitles}}
-  %table.table.table-condensed
-    %thead 
-      %tr 
-        %th Vote
-        %th Score
-        %th Title
-    %tbody 
-      {{#each titles}}
-      %tr 
-        %td
-          %a.vote(data-up="true")<
-            <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-          %a.vote(data-up="false")<
-            <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
-        %td
-          %span {{score}}
-        %td {{title}}
-      {{/each}}
-  {{/if}}
-
-%template(name="editTabs")
-  {{#if equals "newAchievement" _id}}
-  %h3.heading.line Create new achievement
-  {{else}}
-  %nav.nav.nav-tabs 
-    <li class="{{isActive "tab" "info"}}">
-    %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
-    </li>
-    <li class="{{isActive "tab" "edit"}}">
-    %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit") Edit
-    </li>
-    <li class="{{isActive "tab" "talk"}}">
-    %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk") Comments
-    </li>
-    -#<li class="{{isActive "tab" "rev"}}">
-    -#%a.tab(data-tab="rev") Revisions
-    -#</li>
-    <li class="{{isActive "tab" "accomplish"}}">
-    %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
-    </li>
-  {{/if}}
-
-%template(name="info")
-  %h1 INFO
-
-%template(name="expand")
-  {{> editTabs}}
-
-  {{#if equals "tab" "info"}}
-  {{> info}}
-  {{/if}}
-
-  {{#if equals "tab" "accomplish"}}
-  {{> accomplish}}
-  {{/if}}
-
-  {{#if equals "tab" "edit"}}
-  {{> edit}}
-  {{/if}}
-
-  {{#if equals "tab" "talk"}}
-  {{> filter}}
   .clearfix
-  {{> comments}}
-  {{/if}}
-
-%template(name="accomplish")
-  %label.control-label Tell your story: (optional)
-  .btn-group
-    <button class="btn text {{isActive "story" "text"}}" title="Text">
-    %i.icon-align-left
-    </button>
-    <button class="btn picture {{isActive "story" "picture"}}" title="Picture">
-    %i.icon-picture
-    </button>
-    <button class="btn link {{isActive "story" "link"}}" title="Link">
-    %i.icon-bookmark
-    </button>
-    -#%button.btn(title="Audio") 
-      %i.icon-headphones
-    -#%button.btn(title="Video") 
-      %i.icon-film
-
-  {{#if equals "story" "text"}}
-  .control-group
-  %label.control-label(for="accomplish-{{_id}}") Text
-  .controls
-    %textarea.ta100(id="accomplish-{{_id}}" rows="12") {{#if accomplishment}}{{accomplishment.story}}{{/if}}
-    %span.help-block
-      %strong HINT:
-      You can style your post using markdown.
-  {{/if}}
-
-  %footer.form-actions
-    {{#if accomplishment}}
-    %button.btn.btn-warning.btn-large.uncreate(style="margin-left: -20px") Unaccomplish
-    {{else}}
-    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
-    {{/if}}
-
-%template(name="edit")
-  {{#if equals "newAchievement" _id}}
-  {{#if show "styleGuide"}}
-  %div.alert.alert-block.alert-info
-    %a.close(data-dismiss="alert") ×
-    %h4.alert-heading Achievement style guide
-    %p Achievements should have the following properties:
-    %dl 
-      %dt 
-        %h5.alert-heading Atomic
-      %dd Achievements should not be composed.
-      %dt 
-        %h5.alert-heading Universal
-      %dd Achievements should be easy to agree on.
-      %dt 
-        %h5.alert-heading Unique
-      %dd Check if the achievement already exists!
-  {{/if}}
-  {{/if}}
-
-  .form-horizontal(id="form-{{_id}}")
-    %fieldset 
-      %div.control-group
-        %label.control-label(for="title-{{_id}}") Title
-        %div.controls 
-          .input-append<
-            %input.span3.title(type="text" id="title-{{_id}}" data-field="title")/
-            %button.btn.suggest(type="button")> Suggest
-          %p.help-block.heading
-            %strong NOTE:
-            You don't have to suggest a title.
-          {{> titleSuggestions}}
-
-      %div.control-group 
-        %label.control-label(for="description-{{_id}}") Description
-        %div.controls 
-          %textarea.input-xlarge.description.lazy(id="description-{{_id}}" data-field="description" rows="4") {{description}}
-          %p.help-block 
-            What has to be done to complete this achievement?
-            %br/
-            %strong HINT:
-            You can include #tags here.
-
-      -#%div.control-group 
-        %label.control-label(for="optionsCheckbox") Visibility
-        %div.controls 
-          %label.checkbox 
-            %input(type="checkbox" id="optionsCheckbox" value="option1")/
-              Make this achievement private
-
-      %div.control-group 
-        %label.control-label(for="category-{{_id}}") Category
-        %div.controls                 
-          %select.category.lazy(id="category-{{_id}}" data-field="category") 
-            %option
-            {{#each categories}}
-            <option value="{{name}}" {{selected ../category}}>{{name}}</option>
-            {{/each}}
-          %p.help-block If it doesn't fit in anywhere, choose 'Random'
-
-      -#%div.control-group 
-        %label.control-label(for="multiSelect") Multicon-select
-        %div.controls 
-          %select(multiple="multiple" id="multiSelect") 
-            %option 1
-      -#%div.control-group 
-        %label.control-label(for="fileInput") Image
-        %div.controls 
-          %input.input-file(id="fileInput" type="file")/
-      %footer.form-actions
-        %button.btn.btn-success.btn-large.create Save
-
-%template(name='noContent')
-  .fold
-    .alert
-      %strong Warning! 
-      No Content.
-
-%template(name='comments')
-  -#.btn-group.pull-left
-    <a id="my-posts" class='btn btn-filter {{isActive "comment-filter" "my"}}' data-filter="my">My Posts</a>
-    <a id="lva-posts" class='btn btn-filter {{isActive "comment-filter" "lva"}}' data-filter="lva">LVA-Team Posts</a>
-    -#%a.btn#my-posts(class="{{myPostsActive}}" data-filter="my") My Own Posts
-    -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
-  -#{{> filter}}
-  -#.clearfix
-  .control-group
-  %label.control-label(for="add-{{_id}}") Add a comment:
-  .controls
-    %textarea.new-thread.ta100(id="add-{{_id}}" rows="3")
-
-  .comments
-    {{#each comments}}
-    {{> comment}}
-    {{#each replies}}
-    {{> comment}}
-    {{/each}}
-    {{else}}
-    {{> placeholder}}
-    {{/each}}
-
-%template(name='comment')
-  %article.comment(id="comment-{{_id}}" class="{{nested}}")
-    .vote-container.pull-left
-      %div
-        %a.vote(data-up="true")<
-          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-      %div
-        %span.count {{score}}
-      %div
-        %a.vote(data-up="false")<
-          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
-    .body
-      -#{{> user}}
-      .user
-        %a.face.profile-pic.pull-left
-        .content
-          <a class="name {{isMe user}}">{{user.name}}</a>
-          -#%span.score (score)
-          %em.verb {{verb}}:
-          {{#if parent}}
-          <a class="name {{isMe mention}}">{{mention.name}}</a>
-          {{/if}}
-          .score.pull-right<
-            %span.value {{user.score}}
-            %span.dollar.dollar-green
-      -#.pull-left
-        %time {{formatDate date}}
-        -#{{#if belongsTo user}}
-        -#%a.remove.icon-remove(title="Delete")
-        -#%a.edit.icon-pencil(title="Edit")
-        -#{{/if}}
-        -#%a.reply.icon-share-alt(title="Reply")
-      %nav.icons.pull-right
-        -#%li
-          %a.href(title="Link" href="/accomplishments/{{_id}}")<
-            <i class="icon-bookmark"></i>
-        %li
-          %a.remove(title="Remove")<
-            <i class="icon-remove"></i>
-        %li
-          %a.edit(title="Edit")<
-            <i class="icon-pencil"></i>
-        %li
-          %a.reply(title="Reply")<
-            <i class="icon-share-alt"></i>
-      %time.time {{formatDate date}}
-      .text
-        {{#if equals "edit-comment" _id}}
-        .text-wrapper
-          %textarea.edit-text.ta100(id="edit-{{_id}}" rows="3") {{text}}
-        {{else}}
-        %p {{{addLineBreaks text}}}
-        {{/if}}
-      {{#if equals "add-comment" _id}}
-      .text-wrapper
-        %textarea.comment-text.ta100(id="reply-{{_id}}" rows="3")
-      {{/if}}

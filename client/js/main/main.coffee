@@ -2,13 +2,13 @@ class AppRouter extends Backbone.Router
   routes:
     '': 'default'
     ':menu': 'menu'
+    ':user': 'user'
     'achievements/:id': 'achievements'
     'achievements/:id/:tab': 'achievements'
     'accomplishments/:id': 'accomplishments'
     'accomplishments/:id/:tab': 'accomplishments'
-    #'activities/new': 'activityNew'
-    #'activities/show/:id': 'activityShow'
-    #'activities/edit/:id': 'activityEdit'
+    'profile/:menu': 'profile'
+    'comments/:id': 'comments'
 
   default: ->
     @navigate 'dashboard', true
@@ -16,11 +16,34 @@ class AppRouter extends Backbone.Router
   menu: (page) ->
     @hardReset()
     switch page
-      when 'dashboard' then Session.set 'sort', 'hot'
-      when 'achievements' then Session.set 'sort', 'best'
-      when 'ladder' then Session.set 'sort', 'best'
-      when 'profile' then Session.set 'sort', 'new'
-    Session.set 'page', page
+      when 'dashboard'
+        Session.set 'sort', 'hot'
+        Session.set 'page', page
+        Session.set 'limit', 'all'
+      when 'achievements'
+        Session.set 'sort', 'best'
+        Session.set 'page', page
+        Session.set 'limit', 'all'
+      when 'ladder'
+        Session.set 'sort', 'best'
+        Session.set 'page', page
+        Session.set 'limit', 'all'
+      when 'profile'
+        Session.set 'sort', 'new'
+        Session.set 'menu', 'activity'
+        Session.set 'page', page
+        Session.set 'limit', 'me'
+      else
+        Session.set 'sort', 'new'
+        Session.set 'menu', 'activity'
+        Session.set 'page', 'profile'
+        Session.set 'limit', 'me'
+
+  comments: (id) ->
+    @softReset()
+    Session.set 'parent', id
+    c = Comments.findOne id
+    Session.set 'level', c.level
 
   achievements: (id, tab) ->
     @softReset()
@@ -38,8 +61,23 @@ class AppRouter extends Backbone.Router
     unless tab then tab = 'info'
     Session.set 'tab', tab
 
+  user: (user) ->
+    console.log user
+    @profile()
+
+  profile: (menu) ->
+    @softReset()
+    Session.set 'page', 'profile'
+
+    unless menu then menu = 'activity'
+    Session.set 'menu', menu
+    return false
+
   softReset: ->
     Session.set 'expand', null
+    Session.set 'story', null
+    Session.set 'parent', null
+    Session.set 'level', 0
 
     #$('.modal').modal 'hide'
     #Session.set 'add-comment', null
@@ -54,6 +92,7 @@ class AppRouter extends Backbone.Router
     $(document).scrollTop 0
     Session.set 'single', null
     Session.set 'tab', null
+    Session.set 'unexpand', null
 
     #Session.set 'comment-filter', null
     #Session.set 'activity-filter-1', null

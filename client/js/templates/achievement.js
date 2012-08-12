@@ -16,7 +16,10 @@
         }
       },
       'click .expand': function(e) {
-        return Session.toggle('expand', this._id);
+        if (!e.isPropagationStopped()) {
+          Session.toggle('expand', this._id);
+          return e.stopPropagation();
+        }
       },
       'click .fav': function(e) {
         var fav;
@@ -90,6 +93,13 @@
         return 'uncompleted';
       }
       return '';
+    },
+    hasScore: function() {
+      if (this.score != null) {
+        return true;
+      } else {
+        return false;
+      }
     }
   });
 

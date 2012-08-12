@@ -1,39 +1,63 @@
 _.extend Template.comment,
   events:
     'click .reply': (e) ->
-      Session.toggle 'add-comment', @_id
-      Session.set 'edit-comment', null
-      Session.set 'thread', window.getThreadId(this)
-      Meteor.flush()
-      window.focusById "reply-#{@_id}"
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+        Session.toggle 'addComment', @_id
+        Session.set 'editComment', null
+        #Session.set 'thread', window.getThreadId(this)
+        Meteor.flush()
+        window.focusById "reply-#{@_id}"
+
+    'click .edit': (e) ->
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+        Session.set 'addComment', null
+        Session.toggle 'editComment', @_id
+        #Session.set 'thread', window.getThreadId(this)
+        Meteor.flush()
+        window.focusById "edit-#{@_id}"
 
     'click .vote': (e) ->
       unless e.isPropagationStopped()
+        e.stopPropagation()
         $t = $(e.target)
         unless $t.hasClass 'vote' then $t = $t.parents '.vote'
         up = $t.data 'up'
         Meteor.call 'vote', 'comments', @_id, up
-        e.stopPropagation()
-
-    #'click .like': (e) ->
-    #  Comments.update @_id,
-    #    $push:
-    #      likes: Session.get 'user'
-    #
-    #'click .unlike': (e) ->
-    #  Comments.update @_id,
-    #    $pull:
-    #      likes: Session.get 'user'
-
-    'click .edit': (e) ->
-      Session.set 'add-comment', null
-      Session.toggle 'edit-comment', @_id
-      Session.set 'thread', window.getThreadId(this)
-      Meteor.flush()
-      window.focusById "reply-#{@_id}"
 
     'click .remove': (e) ->
-      Comments.remove @_id
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+        Comments.remove @_id
+
+    'click .unexpand': (e) ->
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+        Session.push 'unexpand', @_id, true
+
+    'click .link': (e) ->
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+        Session.set 'parent', @_id
+        Session.set 'level', @level
+
+    'mouseover .highlight': (e) ->
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+        $(e.target).closest('.comment').addClass 'hover'
+
+    'mouseleave .highlight': (e) ->
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+        $(e.target).closest('.comment').removeClass 'hover'
+
+  unexpand: ->
+    Session.get 'redraw'
+    field = Session.get 'unexpand'
+    if field
+      return field[@_id]
+    return false
 
   user: ->
     return Meteor.users.findOne @user
@@ -44,11 +68,18 @@ _.extend Template.comment,
 
   verb: ->
     if @parent?
-      return 'replied to'
+      return 'replied'
     return 'commented'
 
+  hidden: ->
+    return false
+
   nested: ->
-    return if @parent then 'nested' else ''
+    parent = Session.get 'parent'
+    if parent
+      return if @level-1 > Session.get('level') then 'nested' else ''
+    else
+      return if @level > Session.get('level') then 'nested' else ''
   
   addLineBreaks: (text) ->
     text = _.escape text
@@ -64,3 +95,28 @@ _.extend Template.comment,
       if vote and vote.up is state
         return 'active'
     return ''
+
+  cutoff: ->
+    parent = Session.get 'parent'
+    if parent
+      return @level > Session.get('level') + 4
+    else
+      return @level > Session.get('level') + 3
+
+  replies: ->
+    sel = Template.comments.select @_id
+    sort = Session.get 'sort'
+
+    switch sort
+      when 'hot' then data = score: -1
+      when 'cool' then data = score: 1
+
+      when 'new' then data = date: -1
+      when 'old' then data = date: 1
+
+      when 'best' then data = score: -1
+      when 'wort' then data = score: 1
+
+    c = Comments.find sel,
+      sort: data
+    return c

@@ -5,28 +5,7 @@
 
   Session.set('editUsername', false);
 
-  Meteor.subscribe('ushers', function() {
-    var userId, userName;
-    if (cookie.get('user')) {
-      userId = cookie.get('user');
-      return Session.set('user', userId);
-    } else {
-      userName = Math.floor(1000000 + (Math.random() * ((9999999 - 1000000) + 1)));
-      userId = Ushers.insert({
-        name: userName
-      });
-      Session.set('user', userId);
-      return cookie.set('user', userId);
-    }
-  });
-
-  Session.set('activitiesLoaded', false);
-
-  Meteor.subscribe('activities', function() {
-    return Session.set('activitiesLoaded', true);
-  });
-
-  Meteor.subscribe('drafts', Session.get('user'));
+  Meteor.subscribe('users');
 
   Session.set('topic', 'dashboard');
 
@@ -68,8 +47,6 @@
   Meteor.subscribe('favourites', function() {
     return Session.set('favsLoaded', true);
   });
-
-  Meteor.subscribe('users');
 
   Session.set('accomplishmentsLoaded', false);
 

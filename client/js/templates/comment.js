@@ -4,34 +4,75 @@
   _.extend(Template.comment, {
     events: {
       'click .reply': function(e) {
-        Session.toggle('add-comment', this._id);
-        Session.set('edit-comment', null);
-        Session.set('thread', window.getThreadId(this));
-        Meteor.flush();
-        return window.focusById("reply-" + this._id);
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          Session.toggle('addComment', this._id);
+          Session.set('editComment', null);
+          Meteor.flush();
+          return window.focusById("reply-" + this._id);
+        }
+      },
+      'click .edit': function(e) {
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          Session.set('addComment', null);
+          Session.toggle('editComment', this._id);
+          Meteor.flush();
+          return window.focusById("edit-" + this._id);
+        }
       },
       'click .vote': function(e) {
         var $t, up;
         if (!e.isPropagationStopped()) {
+          e.stopPropagation();
           $t = $(e.target);
           if (!$t.hasClass('vote')) {
             $t = $t.parents('.vote');
           }
           up = $t.data('up');
-          Meteor.call('vote', 'comments', this._id, up);
-          return e.stopPropagation();
+          return Meteor.call('vote', 'comments', this._id, up);
         }
       },
-      'click .edit': function(e) {
-        Session.set('add-comment', null);
-        Session.toggle('edit-comment', this._id);
-        Session.set('thread', window.getThreadId(this));
-        Meteor.flush();
-        return window.focusById("reply-" + this._id);
-      },
       'click .remove': function(e) {
-        return Comments.remove(this._id);
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          return Comments.remove(this._id);
+        }
+      },
+      'click .unexpand': function(e) {
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          return Session.push('unexpand', this._id, true);
+        }
+      },
+      'click .link': function(e) {
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          Session.set('parent', this._id);
+          return Session.set('level', this.level);
+        }
+      },
+      'mouseover .highlight': function(e) {
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          return $(e.target).closest('.comment').addClass('hover');
+        }
+      },
+      'mouseleave .highlight': function(e) {
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          return $(e.target).closest('.comment').removeClass('hover');
+        }
       }
+    },
+    unexpand: function() {
+      var field;
+      Session.get('redraw');
+      field = Session.get('unexpand');
+      if (field) {
+        return field[this._id];
+      }
+      return false;
     },
     user: function() {
       return Meteor.users.findOne(this.user);
@@ -43,15 +84,28 @@
     },
     verb: function() {
       if (this.parent != null) {
-        return 'replied to';
+        return 'replied';
       }
       return 'commented';
     },
+    hidden: function() {
+      return false;
+    },
     nested: function() {
-      if (this.parent) {
-        return 'nested';
+      var parent;
+      parent = Session.get('parent');
+      if (parent) {
+        if (this.level - 1 > Session.get('level')) {
+          return 'nested';
+        } else {
+          return '';
+        }
       } else {
-        return '';
+        if (this.level > Session.get('level')) {
+          return 'nested';
+        } else {
+          return '';
+        }
       }
     },
     addLineBreaks: function(text) {
@@ -71,6 +125,55 @@
         }
       }
       return '';
+    },
+    cutoff: function() {
+      var parent;
+      parent = Session.get('parent');
+      if (parent) {
+        return this.level > Session.get('level') + 4;
+      } else {
+        return this.level > Session.get('level') + 3;
+      }
+    },
+    replies: function() {
+      var c, data, sel, sort;
+      sel = Template.comments.select(this._id);
+      sort = Session.get('sort');
+      switch (sort) {
+        case 'hot':
+          data = {
+            score: -1
+          };
+          break;
+        case 'cool':
+          data = {
+            score: 1
+          };
+          break;
+        case 'new':
+          data = {
+            date: -1
+          };
+          break;
+        case 'old':
+          data = {
+            date: 1
+          };
+          break;
+        case 'best':
+          data = {
+            score: -1
+          };
+          break;
+        case 'wort':
+          data = {
+            score: 1
+          };
+      }
+      c = Comments.find(sel, {
+        sort: data
+      });
+      return c;
     }
   });
 

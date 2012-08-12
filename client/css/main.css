@@ -19,7 +19,6 @@ a {
   font-weight: normal; }
 .score .dollar {
   display: inline-block;
-  display: none;
   width: 35px;
   height: 35px;
   background: url("/img/onescore_dollar.png") no-repeat;
@@ -39,6 +38,11 @@ a {
   -o-background-size: contain;
   background-size: contain; }
 
+.loading {
+  text-align: center; }
+  .loading img {
+    display: inline; }
+
 .filter .sort {
   margin: 0 8px 11px 2px; }
 .filter .search-query {
@@ -47,16 +51,25 @@ a {
   margin-bottom: 6px;
   -webkit-border-radius: 14px;
   border-radius: 14px; }
-.filter .nav-tabs {
+
+.linebreak .nav-tabs {
   width: 100%;
   padding: 0 20px;
   margin-left: -19px; }
+.linebreak .nav-tabs > li > a {
+  color: gray; }
+.linebreak .nav-tabs > .active > a, .linebreak .nav-tabs > .active > a:hover {
+  background: whitesmoke; }
 
 .navbar {
   z-index: 1060;
   text-shadow: none; }
   .navbar nav {
     font-weight: bold; }
+  .navbar .nav > li > a {
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+    -webkit-box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05); }
   .navbar .brand {
     padding: 0;
     margin: 0;
@@ -76,7 +89,7 @@ a {
       width: 21px; }
   .navbar .profile-pic {
     display: block;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
@@ -87,35 +100,52 @@ a {
   .well .heading {
     margin-bottom: 20px; }
 
-.menu .nav-tabs > li > a {
-  background: whitesmoke; }
-
-.nav-tabs > li > a {
-  color: gray; }
-
-.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
-  background: whitesmoke; }
+.menu .nav-stacked > li > a {
+  color: gray;
+  font-size: 14px;
+  background-color: whitesmoke; }
+  .menu .nav-stacked > li > a i {
+    margin-right: 3px; }
+.menu .nav-tabs > li > a:hover {
+  background-color: #fefefe; }
+.menu .nav-tabs > .active > a, .menu .nav-tabs > .active > a:hover {
+  font-weight: bold;
+  background-color: #fefefe; }
 
 #content {
   margin-top: 60px; }
 
-.comment {
-  margin-bottom: 15px; }
-  .comment .body {
-    margin-left: 25px; }
-    .comment .body .text {
-      width: 100%; }
+.fold:last-child {
+  padding-bottom: 0; }
+
+.alert:last-child {
+  margin-bottom: 0; }
+
+.comments {
+  margin-left: 15px; }
+  .comments .comment {
+    min-height: 65px;
+    border-left: 1px dashed #dddddd;
+    -webkit-border-radius: 3px;
+    border-radius: 3px; }
+    .comments .comment .vote-container {
+      margin-left: -15px; }
+    .comments .comment .body {
+      margin-left: 20px;
+      margin-bottom: 15px; }
+      .comments .comment .body .text {
+        width: 100%; }
+  .comments .hover {
+    background: #efefef; }
+  .comments .nested {
+    margin-left: 30px; }
+  .comments .text-wrapper .comment-text {
+    margin-bottom: 20px; }
+  .comments .text-wrapper .edit-text {
+    background: none; }
 
 .my {
   color: #4dc206; }
-
-.nested {
-  padding-left: 30px; }
-
-.text-wrapper .comment-text {
-  margin-bottom: 20px; }
-.text-wrapper .edit-text {
-  background: none; }
 
 .activity {
   display: block;
@@ -147,9 +177,6 @@ a {
       background: rgba(255, 255, 255, 0.75);
       -webkit-border-radius: 0 0 4px 4px;
       border-radius: 0 0 4px 4px; }
-
-.btn-group {
-  margin-bottom: 20px; }
 
 .create .well {
   background-color: transparent;
@@ -217,30 +244,48 @@ a {
 .expandAchievement {
   margin-top: 15px; }
 
-.userWidget {
+.userWidget, .userBanner {
   min-height: 50px; }
-  .userWidget .name {
+  .userWidget .name, .userBanner .name {
+    margin-left: 65px;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 2px;
     line-height: 80%; }
-    .userWidget .name a {
+    .userWidget .name a, .userBanner .name a {
       color: inherit; }
-      .userWidget .name a:hover {
+      .userWidget .name a:hover, .userBanner .name a:hover {
         text-decoration: none; }
-  .userWidget .score {
+  .userWidget .score, .userBanner .score {
     color: #4dc206;
     font-family: "SubtleSansRegular";
-    font-size: 48px;
+    font-size: 36px;
     font-weight: normal;
-    line-height: 100%; }
-  .userWidget .profile-pic {
+    line-height: 100%;
+    text-align: right; }
+  .userWidget .profile-pic, .userBanner .profile-pic {
     margin-right: 15px;
     margin-bottom: 15px;
     width: 50px;
     height: 50px; }
-  .userWidget .rank {
+  .userWidget .rank, .userBanner .rank {
     clear: both; }
-    .userWidget .rank .span4 {
+    .userWidget .rank .span4, .userBanner .rank .span4 {
       width: 33%;
       margin: 0; }
+
+.userBanner {
+  min-height: 100px; }
+  .userBanner .profile-pic {
+    width: 100px;
+    height: 100px; }
+  .userBanner .name {
+    margin-left: 115px;
+    margin-bottom: 7.5px; }
+  .userBanner .bio {
+    color: gray;
+    font-style: italic; }
+  .userBanner .loc {
+    color: gray; }
 
 .line {
   width: 100%;
@@ -260,17 +305,23 @@ a {
   background: -ms-linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px);
   background: linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px); }
 
-i {
+a i, button i {
   opacity: 0.5;
-  filter: alpha(opacity=50); }
+  filter: alpha(opacity=50);
+  transition: opacity 0.2s linear;
+  -moz-transition: opacity 0.21s linear;
+  -o-transition: opacity 0.21s linear;
+  -webkit-transition: opacity 0.2s linear; }
 
-i.active {
+a:hover i, a i.active, button:hover i, button i.active {
   opacity: 1;
   filter: alpha(opacity=100); }
 
 .vote-container {
+  width: 30px;
   line-height: 130%;
-  text-align: center; }
+  text-align: center;
+  color: gray; }
 
 .icons {
   list-style: none;
@@ -289,7 +340,7 @@ i.active {
   width: 50px;
   height: 50px;
   background: url("/img/bg_new.png");
-  border: 3px solid gray;
+  border: 2px solid gray;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -297,8 +348,6 @@ i.active {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover; }
-.achievement .vote-container {
-  margin-left: 10px; }
 .achievement .content {
   margin-left: 65px; }
   .achievement .content .title {
@@ -315,7 +364,6 @@ i.active {
   text-decoration: none;
   width: 50px;
   height: 50px;
-  margin-left: 10px;
   font-family: "SubtleSansRegular";
   background: url("/img/tag.png");
   background-size: 50px 200px;
@@ -348,27 +396,18 @@ i.active {
   color: gray; }
 
 .minimal {
-  margin: 0; }
+  margin-top: 7.5px; }
   .minimal .menu {
     display: none; }
 
 .user {
   border-bottom: 1px solid #dddddd;
-  padding-bottom: 7.5px;
-  margin-bottom: 7.5px; }
+  padding-bottom: 3px;
+  margin-bottom: 3px; }
   .user .content {
-    padding-top: 3px;
-    margin-left: 32.5px;
-    color: gray;
-    font-size: 14px; }
-    .user .content .name {
-      font-weight: bold; }
-    .user .content .score .value {
-      font-size: 18px; }
-    .user .content .score .dollar {
-      width: 18px;
-      height: 18px; }
+    color: gray; }
   .user .face {
+    display: inline-block;
     width: 25px;
     height: 25px; }
 
@@ -377,7 +416,5 @@ i.active {
   padding-top: 15px;
   margin-top: 7.5px;
   margin-bottom: 30px; }
-  .story .vote-container {
-    width: 50px; }
   .story .content {
-    margin-left: 65px; }
+    margin-left: 35px; }

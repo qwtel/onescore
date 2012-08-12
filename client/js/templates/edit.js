@@ -42,6 +42,18 @@
         id = window.createNewAchievement();
         Session.set('newAchievement', id);
         return Session.set('expand', null);
+      },
+      'click .vote': function(e) {
+        var $t, up;
+        if (!e.isPropagationStopped()) {
+          $t = $(e.target);
+          if (!$t.hasClass('vote')) {
+            $t = $t.parents('.vote');
+          }
+          up = $t.data('up');
+          Meteor.call('vote', 'titles', this._id, up);
+          return e.stopPropagation();
+        }
       }
     },
     selected: function(category) {
@@ -64,6 +76,40 @@
           return '';
         }
       }
+    },
+    titles: function() {
+      var id, titles;
+      id = Session.get('single');
+      titles = Titles.find({
+        entity: id,
+        user: Meteor.user()._id
+      }, {
+        sort: {
+          score: -1
+        }
+      });
+      return titles;
+    },
+    hasTitles: function() {
+      var id, titles;
+      id = Session.get('single');
+      titles = Titles.find({
+        entity: id,
+        user: Meteor.user()._id
+      });
+      return titles.count();
+    },
+    voted: function(state) {
+      var vote;
+      state = state === "up" ? true : false;
+      vote = Votes.findOne({
+        user: Meteor.user()._id,
+        entity: this._id
+      });
+      if (vote && vote.up === state) {
+        return 'active';
+      }
+      return '';
     }
   });
 

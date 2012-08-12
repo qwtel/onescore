@@ -18,27 +18,49 @@
       return sel;
     },
     achievements: function() {
-      var sel;
+      var a, data, sel, sort;
       sel = Template.achievements.select();
-      return Achievements.find(sel, {
-        sort: {
-          score: -1,
-          _id: -1
-        }
+      sort = Session.get('sort');
+      switch (sort) {
+        case 'hot':
+          data = {
+            score: -1
+          };
+          break;
+        case 'cool':
+          data = {
+            score: 1
+          };
+          break;
+        case 'new':
+          data = {
+            date: -1
+          };
+          break;
+        case 'old':
+          data = {
+            date: 1
+          };
+          break;
+        case 'best':
+          data = {
+            score: -1
+          };
+          break;
+        case 'wort':
+          data = {
+            score: 1
+          };
+      }
+      a = Achievements.find(sel, {
+        sort: data
       });
+      return a;
     },
     newAchievement: function() {
       var id;
       id = Session.get('newAchievement');
       return Achievements.findOne(id);
-    },
-    noContent: function() {
-      var sel;
-      if (Session.equals('achievementsLoaded', true)) {
-        sel = Template.achievements.select();
-        return Achievements.find(sel).count() === 0;
-      }
-      return false;
     }
   });
 

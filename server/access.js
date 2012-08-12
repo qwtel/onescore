@@ -44,6 +44,17 @@
         fetch: ['privateTo']
     */
 
+    Meteor.users.allow({
+      insert: function() {
+        return true;
+      },
+      update: function() {
+        return true;
+      },
+      remove: function() {
+        return true;
+      }
+    });
     Achievements.allow({
       insert: self,
       update: creator
@@ -64,7 +75,9 @@
     return Comments.allow({
       insert: self,
       update: creator,
-      remove: self
+      remove: function() {
+        return true;
+      }
     });
   });
 

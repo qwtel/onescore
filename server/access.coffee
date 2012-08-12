@@ -37,6 +37,11 @@ Meteor.startup ->
     fetch: ['privateTo']
   ###
 
+  Meteor.users.allow
+    insert: -> return true
+    update: -> return true
+    remove: -> return true
+
   Achievements.allow
     insert: self
     update: creator
@@ -65,4 +70,4 @@ Meteor.startup ->
   Comments.allow
     insert: self
     update: creator
-    remove: self
+    remove: -> return true

@@ -73,7 +73,6 @@ a
 
   .dollar
     display: inline-block
-    display: none
     width: 35px
     height: 35px
     background: url('/img/onescore_dollar.png') no-repeat
@@ -89,6 +88,11 @@ a
   background: url('/img/dummy.png') 
   @include background-size(contain)
 
+.loading
+  text-align: center
+  img
+    display: inline
+
 .filter
   .sort
     margin: 0 8px 11px 2px
@@ -99,17 +103,29 @@ a
     margin-bottom: 6px
     @include border-radius(14px)
 
+.linebreak
   .nav-tabs
     width: 100%
     padding: 0 20px
     margin-left: -19px
-  
+
+  .nav-tabs > li > a 
+    color: gray
+
+  .nav-tabs > .active > a, .nav-tabs > .active > a:hover
+    background: whitesmoke
+
 .navbar
   z-index: 1060
   text-shadow: none
 
   nav
     font-weight: bold
+
+  .nav > li > a
+    border-right: 1px solid rgba(255, 255, 255, 0.25)
+    -webkit-box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)
+    box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)
 
   .brand
     padding: 0
@@ -130,7 +146,7 @@ a
 
   .profile-pic
     display: block
-    border: 1px solid rgba(255,255,255,0.5)
+    border: 1px solid rgba(255,255,255,0.25)
     @include box-sizing(border-box)
 
 .well
@@ -141,37 +157,62 @@ a
     margin-bottom: 20px
 
 .menu
-  .nav-tabs > li > a
-    background: whitesmoke
+  .nav-stacked > li > a
+    color: gray
+    font-size: 14px
+    background-color: whitesmoke
 
-.nav-tabs > li > a 
-  color: gray
+    i
+      margin-right: 3px
 
-.nav-tabs > .active > a, .nav-tabs > .active > a:hover
-  background: whitesmoke
+  .nav-tabs > li > a:hover
+    background-color: #fefefe
+
+  .nav-tabs > .active > a, .nav-tabs > .active > a:hover
+    font-weight: bold
+    background-color: #fefefe
 
 #content
   margin-top: 60px
 
-.comment
-  margin-bottom: $padding
-  .body
-    margin-left: $iconSize/2
-    .text
-      width: 100%
+.fold:last-child
+  padding-bottom: 0
+
+.alert:last-child
+  margin-bottom: 0
+
+.comments
+  margin-left: $padding
+  .comment
+    min-height: 65px
+    border-left: 1px dashed #ddd
+    @include border-radius(3px)
+
+    .vote-container
+      margin-left: -$padding
+
+    .body
+      margin-left: 20px
+      margin-bottom: $padding
+
+      .text
+        width: 100%
+
+  .hover
+    background: #efefef
+
+  .nested
+    margin-left: 2*$padding
+
+  .text-wrapper
+    .comment-text
+      margin-bottom: 20px
+
+    .edit-text
+      background: none
 
 .my
   color: $green
-
-.nested
-  padding-left: 2*$padding
-
-.text-wrapper
-  .comment-text
-    margin-bottom: 20px
-
-  .edit-text
-    background: none
 
 $activityWidth: 160px
 $activityHeight: 220px
@@ -205,9 +246,6 @@ $activityPadding: 15px
       -webkit-border-radius: 0 0 4px 4px
       border-radius: 0 0 4px 4px
 
-.btn-group
-  margin-bottom: 20px
-       
 .create
   .well
     background-color: transparent
@@ -276,9 +314,12 @@ $activityPadding: 15px
 .expandAchievement
   margin-top: $padding
 
-.userWidget
+.userWidget, .userBanner
   min-height: 50px
   .name 
+    margin-left: $iconSize + $padding
+    border-bottom: 1px solid #ddd
+    padding-bottom: 2px
     line-height: 80%
     a
       color: inherit
@@ -289,9 +330,10 @@ $activityPadding: 15px
     color: $green
     font:
       family: $font
-      size: 48px
+      size: 36px
       weight: normal
     line-height: 100%
+    text-align: right
 
   .profile-pic
     margin-right: $margin
@@ -305,29 +347,50 @@ $activityPadding: 15px
       width: 33%
       margin: 0
 
+.userBanner
+  min-height: 100px
+
+  .profile-pic
+    width: 100px
+    height: 100px
+  .name 
+    margin-left: 100px + $padding
+    margin-bottom: $padding/2
+  .bio
+    color: gray
+    font-style: italic
+  .loc
+    color: gray
+
 .line
   width: 100%
   border-bottom: 1px solid #e5e5e5
 
 .fold
   width: 100%
-  padding: 15px 19px
+  padding: $padding 19px
   margin-left: -20px
   border-left: 1px solid #ddd
   border-right: 1px solid #ddd
   @include achievement-shadow(whiteSmoke, #d9d9d9)
 
-i 
+a i, button i
   opacity: 0.5
   filter: alpha(opacity=50)
+  transition: opacity 0.2s linear
+  -moz-transition: opacity 0.21s linear
+  -o-transition: opacity 0.21s linear
+  -webkit-transition: opacity 0.2s linear
 
-i.active
+a:hover i, a i.active, button:hover i, button i.active
   opacity: 1
   filter: alpha(opacity=100)
 
 .vote-container
+  width: 2*$padding
   line-height: 130%
   text-align: center
+  color: gray
 
 .icons
   list-style: none
@@ -347,12 +410,9 @@ i.active
     width: $iconSize
     height: $iconSize
     background: url('/img/bg_new.png')
-    border: 3px solid gray
+    border: 2px solid gray
     @include box-sizing(border-box)
     @include background-size(cover)
-
-  .vote-container
-    margin-left: 10px
 
   .content
     margin-left: $iconSize + $padding
@@ -372,7 +432,6 @@ i.active
     text-decoration: none
     width: $iconSize
     height: $iconSize
-    margin-left: 10px
     font-family: $font
     background: url('/img/tag.png')
     background-size: $iconSize 4*$iconSize 
@@ -410,32 +469,29 @@ i.active
   color: gray
 
 .minimal
-  margin: 0
+  margin-top: $padding/2
   .menu
     display: none
     
 .user
   border-bottom: 1px solid #ddd
-  padding-bottom: $padding/2
-  margin-bottom: $padding/2
+  padding-bottom: 3px
+  margin-bottom: 3px
 
   .content
-    padding-top: 3px
-    margin-left: $iconSize/2 + $padding/2
     color: gray
-    font:
-      size: 14px
-    .name
-      font-weight: bold
+    //font:
+    //  size: 14px
 
-    .score
-      .value
-        font-size: 18px
-      .dollar
-        width: 18px
-        height: 18px
+    //.score
+    //  .value
+    //    font-size: 18px
+    //  .dollar
+    //    width: 18px
+    //    height: 18px
 
   .face
+    display: inline-block
     width: $iconSize/2
     height: $iconSize/2
 
@@ -445,7 +501,5 @@ i.active
   margin-top: $padding/2
   margin-bottom: 2*$padding
 
-  .vote-container
-    width: $iconSize
   .content
-    margin-left: $iconSize + $padding
+    margin-left: 35px

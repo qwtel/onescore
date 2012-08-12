@@ -3,57 +3,87 @@ _.extend Template.comments,
     'keyup .new-thread,  keydown .new-thread':
       window.makeOkCancelHandler
         ok: (text, e) ->
+          parent = Session.get 'parent'
+          if parent
+            level = 1 + Session.get 'level'
+          else
+            level = 0
+
           Comments.insert
             text: text
             date: new Date
             topic: Session.get 'single'
-            parent: null
-            mention: null
+            parent: parent
+            #mention: parent
             user: Meteor.user()._id
             score: 0
+            level: level
 
-          Session.set 'add-comment', null
-          Session.set 'edit-comment', null
+          Session.set 'addComment', null
+          Session.set 'editComment', null
           e.target.value = ""
 
-    'keyup .comment-text, keydown .comment-text, 
-     keyup .edit-text, keydown .edit-text':
+    'keyup .comment-text, keydown .comment-text':
       window.makeOkCancelHandler
         ok: (text, e) ->
-          if Session.get('add-comment') isnt null
+          if Session.get('addComment') isnt null
             Comments.insert
               text: text
               date: new Date
               topic: Session.get 'single'
-              parent: Session.get 'thread'
+              parent: @_id
               mention: @user
               user: Meteor.user()._id
               score: 0
+              level: @level+1
 
-          else if Session.equals 'edit-comment', @_id
+          Session.set 'addComment', null
+          Session.set 'editComment', null
+          e.target.value = ""
+
+     'keyup .edit-text, keydown .edit-text':
+      window.makeOkCancelHandler
+        ok: (text, e) ->
+          if Session.equals 'editComment', @_id
             Comments.update @_id,
               $set:
                 text: text
 
-          Session.set 'add-comment', null
-          Session.set 'edit-comment', null
+          Session.set 'addComment', null
+          Session.set 'editComment', null
           e.target.value = ""
+
+     'click .back': (e) ->
+       unless e.isPropagationStopped()
+         e.stopPropagation()
+         $t = $(e.target).closest '.back'
+         id = $t.data 'id'
+         level = $t.data 'level'
+         if id and level
+           Session.set 'parent', $t.data('id')
+           Session.set 'level', $t.data('level')
+         else
+           Session.set 'parent', null
+           Session.set 'level', null
 
   select: (id) ->
     sel =
       topic: Session.get 'single'
-      parent: null
+      parent: Session.get 'parent'
     
     if id
       sel.parent = id
 
-    else
-      if Session.equals 'comment-filter', 'my'
-        sel.user = Session.get 'user'
+    if Session.equals 'limit', 'me'
+      sel.user = Meteor.user()._id
+
+    if Session.equals 'limit', 'friends'
+      sel.user = 'hugo'
 
     return sel
 
   comments: ->
+    sel = Template.comments.select()
     sort = Session.get 'sort'
 
     switch sort
@@ -66,19 +96,20 @@ _.extend Template.comments,
       when 'best' then data = score: -1
       when 'wort' then data = score: 1
 
-    sel = Template.comments.select()
-    return Comments.find sel,
+    c = Comments.find sel,
       sort: data
+    return c
 
-  replies: ->
-    sel = Template.comments.select @_id
-    return Comments.find sel,
-      sort:
-        date: 1
+  user: ->
+    return Meteor.users.findOne @user
 
-  noContent: ->
-    console.log 'tasdf<'
-    if Session.equals 'commentsLoaded', true
-      sel = Template.comments.select()
-      return Comments.find(sel).count() is 0
-    return false
+  breadcrumbs: ->
+    comments = []
+    parent = Session.get 'parent'
+    if parent
+      comment = Comments.findOne parent
+      comments.push comment
+      while comment.parent isnt null
+        comment = Comments.findOne comment.parent
+        comments.push comment
+    return comments.reverse()

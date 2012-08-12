@@ -2,6 +2,56 @@
 (function() {
   var calculateScore, countVotes, table, updateScore;
 
+  table = {};
+
+  Meteor.startup(function() {
+    table = {
+      titles: Titles,
+      achievements: Achievements,
+      accomplishments: Accomplishments,
+      comments: Comments
+    };
+    Meteor.users.find().observe({
+      added: function(user) {
+        var options, url,
+          _this = this;
+        url = "https://graph.facebook.com/" + user.services.facebook.id;
+        options = {
+          params: {
+            access_token: user.services.facebook.accessToken
+          }
+        };
+        return Meteor.http.get(url, options, function(error, res) {
+          return Meteor.users.update(user._id, {
+            $set: {
+              username: res.data.username,
+              bio: res.data.bio,
+              location: res.data.location.name
+            }
+          });
+        });
+      }
+    });
+    Achievements.find().observe({
+      added: function(achievement) {
+        return Achievements.update(achievement._id, {
+          $set: {
+            date: new Date()
+          }
+        });
+      }
+    });
+    return Comments.find().observe({
+      added: function(comment) {
+        return Comments.update(comment._id, {
+          $set: {
+            date: new Date()
+          }
+        });
+      }
+    });
+  });
+
   countVotes = function(id, up) {
     return Votes.find({
       entity: id,
@@ -23,17 +73,6 @@
       }
     }, callback);
   };
-
-  table = {};
-
-  Meteor.startup(function() {
-    return table = {
-      titles: Titles,
-      achievements: Achievements,
-      accomplishments: Accomplishments,
-      comments: Comments
-    };
-  });
 
   Meteor.methods({
     vote: function(collection, entity, up) {

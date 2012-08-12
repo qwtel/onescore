@@ -5,7 +5,7 @@
     events: {
       'click .create': function(e) {
         var stry;
-        stry = $("#accomplish-" + this._id).val();
+        stry = $("#editor-" + this._id).val();
         Session.set('expand', null);
         return Meteor.call('accomplish', this._id, stry);
       },
@@ -27,6 +27,19 @@
         user: Meteor.user()._id,
         entity: this._id
       });
+    },
+    story: function() {
+      var acpl;
+      acpl = Accomplishments.findOne({
+        user: Meteor.user()._id,
+        entity: this._id
+      });
+      if (acpl) {
+        if (acpl.story) {
+          return acpl.story;
+        }
+      }
+      return '';
     }
   });
 

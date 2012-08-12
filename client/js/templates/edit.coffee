@@ -20,6 +20,7 @@ _.extend Template.edit,
     #    $set:
     #      category: $("#category-#{@_id}").val()
     #
+
     'change .description': (e) ->
       description = $("#description-#{@_id}").val()
       tags = window.findTags description
@@ -58,6 +59,14 @@ _.extend Template.edit,
       Session.set 'newAchievement', id
       Session.set 'expand', null
 
+    'click .vote': (e) ->
+      unless e.isPropagationStopped()
+        $t = $(e.target)
+        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
+        up = $t.data 'up'
+        Meteor.call 'vote', 'titles', @_id, up
+        e.stopPropagation()
+
   selected: (category) ->
     if category
       return if category is @name then 'selected' else ''
@@ -66,3 +75,31 @@ _.extend Template.edit,
     else
       return if 'Random' is @name then 'selected' else ''
 
+  titles: ->
+    id = Session.get 'single'
+    titles = Titles.find
+      entity: id
+      user: Meteor.user()._id
+    ,
+      sort:
+        score: -1
+
+    return titles
+  
+  # NOTE: Empty cursor gets not interpreted as "falsy" value by handlebars
+  hasTitles: ->
+    id = Session.get 'single'
+    titles = Titles.find
+      entity: id
+      user: Meteor.user()._id
+    return titles.count()
+
+  voted: (state) ->
+    state = if state is "up" then true else false
+
+    vote = Votes.findOne
+      user: Meteor.user()._id
+      entity: @_id
+    if vote and vote.up is state
+      return 'active'
+    return ''

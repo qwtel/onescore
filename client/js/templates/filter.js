@@ -7,6 +7,11 @@
         var $t;
         $t = $(e.target).closest('.sort');
         return Session.set('sort', $t.find(':selected').val());
+      },
+      'click .tab': function(e) {
+        var $t;
+        $t = $(e.target).closest('.tab');
+        return Session.set('limit', $t.data('tab'));
       }
     }
   });

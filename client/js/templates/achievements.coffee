@@ -4,7 +4,7 @@ _.extend Template.achievements,
       Session.toggle 'expand', @_id
       Session.set 'tab', 'edit'
 
-  select: () ->
+  select: ->
     sel = {}
     sel.created = true
 
@@ -15,18 +15,22 @@ _.extend Template.achievements,
 
   achievements: ->
     sel = Template.achievements.select()
-    return Achievements.find sel,
-      sort:
-        score: -1
-        _id: -1
+    sort = Session.get 'sort'
+
+    switch sort
+      when 'hot' then data = score: -1
+      when 'cool' then data = score: 1
+
+      when 'new' then data = date: -1
+      when 'old' then data = date: 1
+
+      when 'best' then data = score: -1
+      when 'wort' then data = score: 1
+
+    a = Achievements.find sel,
+      sort: data
+    return a
 
   newAchievement: ->
     id = Session.get 'newAchievement'
     return Achievements.findOne id
-
-  noContent: ->
-    if Session.equals 'achievementsLoaded', true
-      sel = Template.achievements.select()
-      return Achievements.find(sel).count() is 0
-    return false
-

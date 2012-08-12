@@ -1,21 +1,23 @@
 Session.set 'styleGuide', true
 Session.set 'editUsername', false
 
-Meteor.subscribe 'ushers', ->
-  if cookie.get 'user'
-    userId = cookie.get('user')
-    Session.set 'user', userId
-  else
-    userName = Math.floor(1000000 + (Math.random() * ((9999999 - 1000000) + 1)))
-    userId = Ushers.insert name: userName
-    Session.set 'user', userId
-    cookie.set 'user', userId
+#Meteor.subscribe 'ushers', ->
+#  if cookie.get 'user'
+#    userId = cookie.get('user')
+#    Session.set 'user', userId
+#  else
+#    userName = Math.floor(1000000 + (Math.random() * ((9999999 - 1000000) + 1)))
+#    userId = Ushers.insert name: userName
+#    Session.set 'user', userId
+#    cookie.set 'user', userId
+#
+#Session.set 'activitiesLoaded', false
+#Meteor.subscribe 'activities', ->
+#  Session.set 'activitiesLoaded', true
+#
+#Meteor.subscribe 'drafts', Session.get 'user'
 
-Session.set 'activitiesLoaded', false
-Meteor.subscribe 'activities', ->
-  Session.set 'activitiesLoaded', true
-
-Meteor.subscribe 'drafts', Session.get 'user'
+Meteor.subscribe 'users'
 
 Session.set 'topic', 'dashboard'
 Meteor.autosubscribe ->
@@ -48,8 +50,6 @@ Meteor.subscribe 'favourites', ->
 #Session.set 'questsLoaded', false
 #Meteor.subscribe 'quests', ->
 #  Session.set 'questsLoaded', true
-
-Meteor.subscribe 'users'
 
 Session.set 'accomplishmentsLoaded', false
 Meteor.subscribe 'accomplishments', ->

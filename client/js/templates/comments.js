@@ -5,63 +5,97 @@
     events: {
       'keyup .new-thread,  keydown .new-thread': window.makeOkCancelHandler({
         ok: function(text, e) {
+          var level, parent;
+          parent = Session.get('parent');
+          if (parent) {
+            level = 1 + Session.get('level');
+          } else {
+            level = 0;
+          }
           Comments.insert({
             text: text,
             date: new Date,
             topic: Session.get('single'),
-            parent: null,
-            mention: null,
+            parent: parent,
             user: Meteor.user()._id,
-            score: 0
+            score: 0,
+            level: level
           });
-          Session.set('add-comment', null);
-          Session.set('edit-comment', null);
+          Session.set('addComment', null);
+          Session.set('editComment', null);
           return e.target.value = "";
         }
       }),
-      'keyup .comment-text, keydown .comment-text, \
-     keyup .edit-text, keydown .edit-text': window.makeOkCancelHandler({
+      'keyup .comment-text, keydown .comment-text': window.makeOkCancelHandler({
         ok: function(text, e) {
-          if (Session.get('add-comment') !== null) {
+          if (Session.get('addComment') !== null) {
             Comments.insert({
               text: text,
               date: new Date,
               topic: Session.get('single'),
-              parent: Session.get('thread'),
+              parent: this._id,
               mention: this.user,
               user: Meteor.user()._id,
-              score: 0
+              score: 0,
+              level: this.level + 1
             });
-          } else if (Session.equals('edit-comment', this._id)) {
+          }
+          Session.set('addComment', null);
+          Session.set('editComment', null);
+          return e.target.value = "";
+        }
+      }),
+      'keyup .edit-text, keydown .edit-text': window.makeOkCancelHandler({
+        ok: function(text, e) {
+          if (Session.equals('editComment', this._id)) {
             Comments.update(this._id, {
               $set: {
                 text: text
               }
             });
           }
-          Session.set('add-comment', null);
-          Session.set('edit-comment', null);
+          Session.set('addComment', null);
+          Session.set('editComment', null);
           return e.target.value = "";
         }
-      })
+      }),
+      'click .back': function(e) {
+        var $t, id, level;
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          $t = $(e.target).closest('.back');
+          id = $t.data('id');
+          level = $t.data('level');
+          if (id && level) {
+            Session.set('parent', $t.data('id'));
+            return Session.set('level', $t.data('level'));
+          } else {
+            Session.set('parent', null);
+            return Session.set('level', null);
+          }
+        }
+      }
     },
     select: function(id) {
       var sel;
       sel = {
         topic: Session.get('single'),
-        parent: null
+        parent: Session.get('parent')
       };
       if (id) {
         sel.parent = id;
-      } else {
-        if (Session.equals('comment-filter', 'my')) {
-          sel.user = Session.get('user');
-        }
+      }
+      if (Session.equals('limit', 'me')) {
+        sel.user = Meteor.user()._id;
+      }
+      if (Session.equals('limit', 'friends')) {
+        sel.user = 'hugo';
       }
       return sel;
     },
     comments: function() {
-      var data, sel, sort;
+      var c, data, sel, sort;
+      sel = Template.comments.select();
       sort = Session.get('sort');
       switch (sort) {
         case 'hot':
@@ -94,28 +128,27 @@
             score: 1
           };
       }
-      sel = Template.comments.select();
-      return Comments.find(sel, {
+      c = Comments.find(sel, {
         sort: data
       });
+      return c;
     },
-    replies: function() {
-      var sel;
-      sel = Template.comments.select(this._id);
-      return Comments.find(sel, {
-        sort: {
-          date: 1
+    user: function() {
+      return Meteor.users.findOne(this.user);
+    },
+    breadcrumbs: function() {
+      var comment, comments, parent;
+      comments = [];
+      parent = Session.get('parent');
+      if (parent) {
+        comment = Comments.findOne(parent);
+        comments.push(comment);
+        while (comment.parent !== null) {
+          comment = Comments.findOne(comment.parent);
+          comments.push(comment);
         }
-      });
-    },
-    noContent: function() {
-      var sel;
-      console.log('tasdf<');
-      if (Session.equals('commentsLoaded', true)) {
-        sel = Template.comments.select();
-        return Comments.find(sel).count() === 0;
       }
-      return false;
+      return comments.reverse();
     }
   });
 
