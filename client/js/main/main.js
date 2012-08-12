@@ -67,6 +67,7 @@
     AppRouter.prototype.achievements = function(id, tab) {
       this.softReset();
       Session.set('page', 'achievements');
+      Session.set('limit', 'all');
       Session.set('single', id);
       if (!tab) {
         tab = 'info';
@@ -77,6 +78,7 @@
     AppRouter.prototype.accomplishments = function(id, tab) {
       this.softReset();
       Session.set('page', 'accomplishments');
+      Session.set('limit', 'all');
       Session.set('single', id);
       if (!tab) {
         tab = 'info';

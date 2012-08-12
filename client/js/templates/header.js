@@ -10,6 +10,16 @@
         return Session.set('category', category);
       }
     },
+    pic: function() {
+      var fbid, user;
+      user = Meteor.user();
+      if (user) {
+        if (user.services) {
+          fbid = _.escape(user.services.facebook.id);
+          return "<img src='https://graph.facebook.com/" + fbid + "/picture'/>";
+        }
+      }
+    },
     items: function() {
       var item, _i, _len, _ref;
       _ref = window.items;

@@ -130,9 +130,9 @@
       var parent;
       parent = Session.get('parent');
       if (parent) {
-        return this.level > Session.get('level') + 4;
+        return this.level > Session.get('level') + 5;
       } else {
-        return this.level > Session.get('level') + 3;
+        return this.level > Session.get('level') + 4;
       }
     },
     replies: function() {

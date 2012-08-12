@@ -130,6 +130,7 @@ a
   .brand
     padding: 0
     margin: 0
+    margin-right: 5px
     background: url('/img/logo128.png') no-repeat
     @include background-size(cover)
 
@@ -181,6 +182,22 @@ a
 .alert:last-child
   margin-bottom: 0
 
+.accomplishment
+  .icon-side
+    float: left
+    margin-left: -35px
+    width: 35px
+    text-align: center
+    
+  .body
+    margin-left: 35px
+
+  .story
+    border-top: 1px solid #ddd
+    padding-top: $padding/2
+    margin-top: $padding/2
+    margin-bottom: $padding
+
 .comments
   margin-left: $padding
   .comment
@@ -203,6 +220,9 @@ a
 
   .nested
     margin-left: 2*$padding
+
+  .alert
+    margin-left: -$padding
 
   .text-wrapper
     .comment-text
@@ -350,17 +370,24 @@ $activityPadding: 15px
 .userBanner
   min-height: 100px
 
+  .pull-right
+    text-align: right
+
+  .score
+    font-size: 48px
+
   .profile-pic
     width: 100px
     height: 100px
+
   .name 
     margin-left: 100px + $padding
     margin-bottom: $padding/2
-  .bio
+
+  .about
     color: gray
-    font-style: italic
-  .loc
-    color: gray
+    .bio
+      font-style: italic
 
 .line
   width: 100%
@@ -374,7 +401,7 @@ $activityPadding: 15px
   border-right: 1px solid #ddd
   @include achievement-shadow(whiteSmoke, #d9d9d9)
 
-a i, button i
+i
   opacity: 0.5
   filter: alpha(opacity=50)
   transition: opacity 0.2s linear
@@ -388,7 +415,7 @@ a:hover i, a i.active, button:hover i, button i.active
 
 .vote-container
   width: 2*$padding
-  line-height: 130%
+  //line-height: 130%
   text-align: center
   color: gray
 
@@ -495,11 +522,3 @@ a:hover i, a i.active, button:hover i, button i.active
     width: $iconSize/2
     height: $iconSize/2
 
-.story
-  border-top: 1px solid #ddd
-  padding-top: $padding
-  margin-top: $padding/2
-  margin-bottom: 2*$padding
-
-  .content
-    margin-left: 35px

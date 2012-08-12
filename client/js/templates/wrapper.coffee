@@ -6,4 +6,3 @@ _.extend Template.wrapper,
         $t = $(e.target).closest 'a[href^="/"]'
         href = $t.attr 'href'
         if href then window.Router.navigate href, true
-

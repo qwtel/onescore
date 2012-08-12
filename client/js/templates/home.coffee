@@ -13,6 +13,7 @@ _.extend Template.home,
       when 'wort' then data = score: 1
 
     return Accomplishments.find
-      story: $ne: ''
+      story: $exists: true
+      #story: $ne: ''
     ,
       sort: data

@@ -29,21 +29,6 @@
 <template name='header'>
 <a class='brand nav-img pull-left nav-item' href='/dashboard'></a>
 <nav class='nav'>
-<li class='dropdown'>
-<a class='dropdown-toggle' data-toggle='dropdown'>{{#if session "category"}}
-<span>{{session "category"}}</span>
-{{else}}
-<span>Onescore</span>
-{{/if}}
-<b class='caret'></b></a>
-<ul class='dropdown-menu'>
-{{#each categories}}
-<li class='category' data-category='{{name}}'>
-<a class='nav-item'>{{name}}</a>
-</li>
-{{/each}}
-</ul>
-</li>
 {{#each items}}
 <li class="nav-{{url}} {{isActive "page" url}}">
 <a class='nav-item' href='/{{url}}'>{{name}}</a>
@@ -52,7 +37,7 @@
 </nav>
 {{#if currentUser}}
 <a class='profile-pic nav-item nav-img pull-right' href='/{{currentUser.username}}'>
-<img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture"/>
+{{{pic}}}
 </a>
 <div class='score pull-right hidden-phone'><span class='value'>{{currentUser.score}}</span></div>
 {{else}}
@@ -93,10 +78,6 @@
 <div class='span8 offset2'>
 <section class='well'>
 {{> single}}
-<div class='fold'></div>
-{{> filter}}
-<div class='clearfix'></div>
-{{> comments}}
 </section>
 </div>
 {{/if}}
@@ -155,7 +136,7 @@
 <div class='row'>
 <div class='span12'>
 <section class='well'>
-{{> userBanner }}
+{{> userBanner}}
 </section>
 </div>
 </div>
@@ -271,25 +252,24 @@ Favourites
 <template name='userBanner'>
 <div class='userBanner'>
 <a class='profile-pic pull-left' href='/{{currentUser.username}}'>
-{{#if currentUser}}
-<img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=normal"/>
-{{/if}}
+{{{pic}}}
 </a>
 <h3 class='name'>{{currentUser.username}}</h3>
-<div class='bio'>
-<p>{{currentUser.bio}}</p>
+<div class='pull-right'>
+<h6>Score:</h6>
+<h3 class='score pull-right'><span>{{currentUser.score}}</span></h3>
 </div>
-<div class='loc'>
-<p>{{currentUser.location}}</p>
+<div class='about'>
+<h6>About:</h6>
+<em class='bio'>{{currentUser.bio}}</em>
+<div class='loc'>{{currentUser.location}}</div>
 </div>
 </div>
 </template>
 <template name='userWidget'>
 <div class='userWidget'>
 <a class='profile-pic pull-left' href='/{{currentUser.username}}'>
-{{#if currentUser}}
-<img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture"/>
-{{/if}}
+{{{pic}}}
 </a>
 <h3 class='name'>{{currentUser.username}}</h3>
 <h3 class='score'><span>{{currentUser.score}}</span></h3>
@@ -326,26 +306,10 @@ Favourites
 {{/each}}
 </template>
 <template name='accomplishment'>
-<div class='user'>
-<div class='content'>
-<a class='face profile-pic' href='/{{user.username}}'>
-<img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/>
-</a>
-<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-<span class='score'>({{user.score}})</span>
-<em class='verb'>{{verb}}</em>
-</div>
-</div>
-{{#with achievement}}
-<div class='minimal'>
-{{> achievement}}
-</div>
-{{/with}}
-{{#if story}}
-<div class='story'>
+<article class='accomplishment' id='accomplishment-{{_id}}'>
 <div class='vote-container pull-left'>
 <div>
-<a class='href' href='/accomplishments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
+<a class='href' href='/accomplishments/{{_id}}' title='Link'><i class="icon-bookmark {{isActive "single" _id}}"></i></a>
 </div>
 <div>
 <a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
@@ -357,20 +321,42 @@ Favourites
 <a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
 </div>
 </div>
+<div class='body'>
+{{#if user}}
+<div class='user'>
 <div class='content'>
-<time class='time'>{{formatDate date}}</time>
-{{#markdown}}{{{story}}}{{/markdown}}
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+<span class='score'>({{user.score}})</span>
+<em class='verb'>{{verb}}:</em>
 </div>
 </div>
 {{/if}}
+{{#with achievement}}
+<div class='minimal'>
+{{> achievement}}
+</div>
+{{/with}}
+{{#if story}}
+<div class='story'>
+<span class='icon-side' title='Text'>
+<i class='icon-align-left'></i>
+</span>
+{{#markdown}}{{{story}}}{{/markdown}}
+</div>
+{{/if}}
+</div>
+</article>
 </template>
 <template name='user'>
 <div class='user'>
 <div class='content'>
-<a class='face profile-pic' href='/{{currentUser.username}}'>
-<img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/>
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
 </a>
-<a class="name {{isMe user}}" href="/{{currentUser.username}}">{{user.username}}</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
 <div class='score pull-right'><span class='value'>{{score}}</span></div>
 </div>
 </div>
@@ -398,7 +384,7 @@ Favourites
 </template>
 <template name='achievements'>
 {{#with newAchievement}}
-<a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="Create new achievement"><i class="icon-file"></i> Create new achievement</a>
+<a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="New achievement"><i class="icon-file"></i> New achievement</a>
 <div class='clearfix'></div>
 {{/with}}
 {{#if achievements}}
@@ -438,8 +424,8 @@ Favourites
 <a class='icon pull-left' href='/achievements/{{_id}}'></a>
 <div class='content'>
 <header class='head'>
-{{#unless session "single"}}
 <nav class='icons pull-right'>
+{{#unless session "single"}}
 <li>
 <a class='expand' title='Expand'>{{#if equals "expand" _id}}
 <i class="icon-chevron-up active"></i>
@@ -447,14 +433,14 @@ Favourites
 <i class="icon-chevron-down"></i>
 {{/if}}</a>
 </li>
+{{/unless}}
 <li>
-<a href='/achievements/{{_id}}/edit' title='Edit'><i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i></a>
+<a href='/achievements/{{_id}}/edit' title='Edit'><i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i></a>
 </li>
 <li>
-<a href='/achievements/{{_id}}/talk' title='Comment'><i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i></a>
+<a href='/achievements/{{_id}}/talk' title='Comment'><i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i></a>
 </li>
 </nav>
-{{/unless}}
 <h4 class='title'>
 {{#if title}}
 <a href='/achievements/{{_id}}'>{{title}}</a>
@@ -481,6 +467,7 @@ Favourites
 {{/if}}
 {{#if equals "single" _id}}{{#if session "tab"}}
 <div class='expandAchievement'>
+<div class='fold'></div>
 {{> expand}}
 </div>
 {{/if}}{{/if}}
@@ -492,22 +479,6 @@ Favourites
 {{#if equals "newAchievement" _id}}
 <h3 class='heading line'>Create new achievement</h3>
 {{else}}
-<div class='linebreak'>
-<nav class='nav nav-tabs'>
-<li class="{{isActive "tab" "info"}}">
-<a class='tab' data-tab='info' href='/achievements/{{_id}}/info'>Info</a>
-</li>
-<li class="{{isActive "tab" "edit"}}">
-<a class='tab' data-tab='edit' href='/achievements/{{_id}}/edit'>Edit</a>
-</li>
-<li class="{{isActive "tab" "talk"}}">
-<a class='tab' data-tab='talk' href='/achievements/{{_id}}/talk'>Comments</a>
-</li>
-<li class="{{isActive "tab" "accomplish"}}">
-<a class='tab' data-tab='accomplish' href='/achievements/{{_id}}/accomplish'>Accomplish</a>
-</li>
-</nav>
-</div>
 {{/if}}
 {{#if equals "tab" "info"}}
 {{> info}}
@@ -660,11 +631,6 @@ No Content.
 </div>
 </template>
 <template name='comments'>
-<div class='control-group'></div>
-<label class='control-label' for='add-{{_id}}'>Add a comment:</label>
-<div class='controls'>
-<textarea class='new-thread ta100' id='add-{{_id}}' rows='3'></textarea>
-</div>
 <div class='fold'></div>
 {{#if breadcrumbs}}
 <ul class='breadcrumb'>
@@ -676,17 +642,22 @@ No Content.
 {{/each}}
 </ul>
 {{/if}}
-<div class='comments'>
+<div class='control-group'>
+<div class='controls'>
+<textarea class='new-thread ta100' id='add-{{_id}}' placeholder='Add a comment' rows='3'></textarea>
+</div>
+</div>
 {{#if comments}}
+<div class='comments'>
 {{#each comments}}
 {{> comment}}
 {{else}}
 {{> noContent}}
 {{/each}}
+</div>
 {{else}}
 {{> loading}}
 {{/if}}
-</div>
 </template>
 <template name='comment'>
 <article class='comment {{nested}}' id='comment-{{_id}}'>
@@ -708,11 +679,11 @@ No Content.
 <div class='user'>
 <div class='content'>
 <a class='face profile-pic' href='/{{user.username}}'>
-<img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
 </a>
 <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
 <span class='score'>({{user.score}})</span>
-<em class='verb'>{{verb}}</em>
+<em class='verb'>{{verb}}:</em>
 <nav class='icons pull-right'>
 <li>
 <a class='unexpand' title='Expand'>{{#unless unexpand}}

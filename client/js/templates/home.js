@@ -38,7 +38,7 @@
       }
       return Accomplishments.find({
         story: {
-          $ne: ''
+          $exists: true
         }
       }, {
         sort: data

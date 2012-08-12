@@ -5,6 +5,13 @@ _.extend Template.header,
       category = $t.data 'category'
       Session.set 'category', category
 
+  pic: ->
+    user = Meteor.user()
+    if user
+      if user.services
+        fbid = _.escape user.services.facebook.id
+        return "<img src='https://graph.facebook.com/#{fbid}/picture'/>"
+
   items: ->
     for item in window.items
       unless item.url

@@ -73,6 +73,7 @@ a {
   .navbar .brand {
     padding: 0;
     margin: 0;
+    margin-right: 5px;
     background: url("/img/logo128.png") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -121,6 +122,19 @@ a {
 .alert:last-child {
   margin-bottom: 0; }
 
+.accomplishment .icon-side {
+  float: left;
+  margin-left: -35px;
+  width: 35px;
+  text-align: center; }
+.accomplishment .body {
+  margin-left: 35px; }
+.accomplishment .story {
+  border-top: 1px solid #dddddd;
+  padding-top: 7.5px;
+  margin-top: 7.5px;
+  margin-bottom: 15px; }
+
 .comments {
   margin-left: 15px; }
   .comments .comment {
@@ -139,6 +153,8 @@ a {
     background: #efefef; }
   .comments .nested {
     margin-left: 30px; }
+  .comments .alert {
+    margin-left: -15px; }
   .comments .text-wrapper .comment-text {
     margin-bottom: 20px; }
   .comments .text-wrapper .edit-text {
@@ -275,17 +291,20 @@ a {
 
 .userBanner {
   min-height: 100px; }
+  .userBanner .pull-right {
+    text-align: right; }
+  .userBanner .score {
+    font-size: 48px; }
   .userBanner .profile-pic {
     width: 100px;
     height: 100px; }
   .userBanner .name {
     margin-left: 115px;
     margin-bottom: 7.5px; }
-  .userBanner .bio {
-    color: gray;
-    font-style: italic; }
-  .userBanner .loc {
+  .userBanner .about {
     color: gray; }
+    .userBanner .about .bio {
+      font-style: italic; }
 
 .line {
   width: 100%;
@@ -305,7 +324,7 @@ a {
   background: -ms-linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px);
   background: linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px); }
 
-a i, button i {
+i {
   opacity: 0.5;
   filter: alpha(opacity=50);
   transition: opacity 0.2s linear;
@@ -319,7 +338,6 @@ a:hover i, a i.active, button:hover i, button i.active {
 
 .vote-container {
   width: 30px;
-  line-height: 130%;
   text-align: center;
   color: gray; }
 
@@ -410,11 +428,3 @@ a:hover i, a i.active, button:hover i, button i.active {
     display: inline-block;
     width: 25px;
     height: 25px; }
-
-.story {
-  border-top: 1px solid #dddddd;
-  padding-top: 15px;
-  margin-top: 7.5px;
-  margin-bottom: 30px; }
-  .story .content {
-    margin-left: 35px; }

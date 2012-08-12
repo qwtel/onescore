@@ -48,6 +48,7 @@ class AppRouter extends Backbone.Router
   achievements: (id, tab) ->
     @softReset()
     Session.set 'page', 'achievements'
+    Session.set 'limit', 'all'
     Session.set 'single', id
 
     unless tab then tab = 'info'
@@ -56,6 +57,7 @@ class AppRouter extends Backbone.Router
   accomplishments: (id, tab) ->
     @softReset()
     Session.set 'page', 'accomplishments'
+    Session.set 'limit', 'all'
     Session.set 'single', id
 
     unless tab then tab = 'info'

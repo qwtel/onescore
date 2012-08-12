@@ -28,7 +28,7 @@
 %template(name='header')
   %a.brand.nav-img.pull-left.nav-item(href="/dashboard")
   %nav.nav
-    %li.dropdown
+    -#%li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
         {{#if session "category"}}
         %span {{session "category"}}
@@ -50,7 +50,7 @@
 
   {{#if currentUser}}
   %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
-    <img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture"/> 
+    {{{pic}}}
   .score.pull-right.hidden-phone<
     -#%span.dollar
     %span.value {{currentUser.score}}
@@ -93,10 +93,6 @@
     .span8.offset2
       %section.well 
         {{> single}}
-        .fold
-        {{> filter}}
-        .clearfix
-        {{> comments}}
     {{/if}}
   {{/if}}
 
@@ -141,7 +137,7 @@
   .row
     .span12
       %section.well 
-        {{> userBanner }}
+        {{> userBanner}}
   .row
     .span4
       {{> menu }}
@@ -275,24 +271,22 @@
 %template(name='userBanner')
   .userBanner
     %a.profile-pic.pull-left(href="/{{currentUser.username}}")
-      {{#if currentUser}}
-      <img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture?type=normal"/> 
-      {{/if}}
+      {{{pic}}}
     %h3.name {{currentUser.username}}
-    -#%h3.score<
-      -#%span.dollar.dollar-green
-      %span {{currentUser.score}}
-    .bio
-      %p {{currentUser.bio}}
-    .loc
-      %p {{currentUser.location}}
+    .pull-right
+      %h6 Score:
+      %h3.score.pull-right<
+        -#%span.dollar.dollar-green
+        %span {{currentUser.score}}
+    .about
+      %h6 About:
+      %em.bio {{currentUser.bio}}
+      .loc {{currentUser.location}}
 
 %template(name='userWidget')
   .userWidget
     %a.profile-pic.pull-left(href="/{{currentUser.username}}")
-      {{#if currentUser}}
-      <img src="https://graph.facebook.com/{{currentUser.services.facebook.id}}/picture"/> 
-      {{/if}}
+      {{{pic}}}
     %h3.name {{currentUser.username}}
     %h3.score<
       -#%span.dollar.dollar-green
@@ -340,28 +334,11 @@
   {{/each}}
 
 %template(name='accomplishment')
-  .user
-    .content
-      %a.face.profile-pic(href="/{{user.username}}")
-        <img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/> 
-      <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-      %span.score ({{user.score}})
-
-      %em.verb {{verb}}
-      -#.score.pull-right<
-        %span.dollar.dollar-green
-        %span.value {{user.score}}
-  {{#with achievement}}
-  .minimal
-    {{> achievement}}
-  {{/with}}
-
-  {{#if story}}
-  .story
+  %article.accomplishment(id="accomplishment-{{_id}}")
     .vote-container.pull-left
       %div
         %a.href(title="Link" href="/accomplishments/{{_id}}")<
-          <i class="icon-bookmark"></i>
+          <i class="icon-bookmark {{isActive "single" _id}}"></i>
       %div
         %a.vote(data-up="true")<
           <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
@@ -370,24 +347,85 @@
       %div
         %a.vote(data-up="false")<
           <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
-    .content
-      -#%nav.icons.pull-right
-        %li
-          %a.href(title="Link" href="/accomplishments/{{_id}}")<
-            <i class="icon-bookmark"></i>
-        -#%li
-          %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
-            <i class="icon-comment"></i>
-      %time.time {{formatDate date}}
-      {{#markdown}}{{{story}}}{{/markdown}}
-  {{/if}}
+    .body
+      -#{{> user}}
+      {{#if user}}
+      .user
+        .content
+          %a.face.profile-pic(href="/{{user.username}}")
+            %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+          <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+          %span.score ({{user.score}})
+
+          %em.verb {{verb}}:
+          -#.score.pull-right<
+            %span.dollar.dollar-green
+            %span.value {{user.score}}
+      {{/if}}
+
+      {{#with achievement}}
+      .minimal
+        {{> achievement}}
+      {{/with}}
+
+      {{#if story}}
+      .story
+        %span.icon-side(title="Text")
+          %i.icon-align-left
+        {{#markdown}}{{{story}}}{{/markdown}}
+      {{/if}}
+
+  -#{{#if user}}
+  -#.user
+  -#  .content
+  -#    %a.face.profile-pic(href="/{{user.username}}")
+  -#      %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+  -#    <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+  -#    %span.score ({{user.score}})
+  -#
+  -#    %em.verb {{verb}}:
+  -#    -#.score.pull-right<
+  -#      %span.dollar.dollar-green
+  -#      %span.value {{user.score}}
+  -#{{/if}}
+  -#
+  -#{{#with achievement}}
+  -#.minimal
+  -#  {{> achievement}}
+  -#{{/with}}
+  -#
+  -#{{#if story}}
+  -#.story
+  -#  .vote-container.pull-left
+  -#    %div
+  -#      %a.href(title="Link" href="/accomplishments/{{_id}}")<
+  -#        <i class="icon-bookmark"></i>
+  -#    %div
+  -#      %a.vote(data-up="true")<
+  -#        <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+  -#    %div
+  -#      %span.count {{score}}
+  -#    %div
+  -#      %a.vote(data-up="false")<
+  -#        <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+  -#  .content
+  -#    -#%nav.icons.pull-right
+  -#      %li
+  -#        %a.href(title="Link" href="/accomplishments/{{_id}}")<
+  -#          <i class="icon-bookmark"></i>
+  -#      -#%li
+  -#        %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
+  -#          <i class="icon-comment"></i>
+  -#    -#%time.time {{formatDate date}}
+  -#    {{#markdown}}{{{story}}}{{/markdown}}
+  -#{{/if}}
 
 %template(name='user')
   .user
     .content
-      %a.face.profile-pic(href="/{{currentUser.username}}")
-        <img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/> 
-      <a class="name {{isMe user}}" href="/{{currentUser.username}}">{{user.username}}</a>
+      %a.face.profile-pic(href="/{{user.username}}")
+        %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+      <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
       .score.pull-right<
         -#%span.dollar.dollar-green
         %span.value {{score}}
@@ -415,7 +453,7 @@
 
 %template(name='achievements')
   {{#with newAchievement}}
-  <a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="Create new achievement"><i class="icon-file"></i> Create new achievement</a>
+  <a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="New achievement"><i class="icon-file"></i> New achievement</a>
   .clearfix
 
   -#.fold.dummy
@@ -456,8 +494,8 @@
 
     .content
       %header.head
-        {{#unless session "single"}}
         %nav.icons.pull-right
+          {{#unless session "single"}}
           %li
             %a.expand(title="Expand")<
               {{#if equals "expand" _id}}
@@ -465,6 +503,7 @@
               {{else}}
               <i class="icon-chevron-down"></i>
               {{/if}}
+          {{/unless}}
           -#%li.accomplish
             %a(title="Accomplish this achievement")<
               <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
@@ -476,11 +515,10 @@
               <i class="icon-star {{faved}}"></i>
           %li
             %a(title="Edit" href="/achievements/{{_id}}/edit")<
-              <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "expand" _id}}{{/if}}"></i>
+              <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i>
           %li
             %a(title="Comment" href="/achievements/{{_id}}/talk")<
-              <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "expand" _id}}{{/if}}"></i>
-        {{/unless}}
+              <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i>
 
         %h4.title
           {{#if title}}
@@ -498,12 +536,15 @@
         %span.tag &lt;No content&gt;
         {{/if}}
     .clearfix
+
   {{#if equals "expand" _id}}
   .expandAchievement
     {{> info}}
   {{/if}}
+
   {{#if equals "single" _id}}{{#if session "tab"}}
   .expandAchievement
+    .fold
     {{> expand}}
   {{/if}}{{/if}}
 
@@ -514,7 +555,7 @@
   {{#if equals "newAchievement" _id}}
   %h3.heading.line Create new achievement
   {{else}}
-  .linebreak
+  -#.linebreak
     %nav.nav.nav-tabs 
       <li class="{{isActive "tab" "info"}}">
       %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
@@ -696,12 +737,8 @@
     -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
   -#{{> filter}}
   -#.clearfix
-  .control-group
-  %label.control-label(for="add-{{_id}}") Add a comment:
-  .controls
-    %textarea.new-thread.ta100(id="add-{{_id}}" rows="3")
-
   .fold
+
   {{#if breadcrumbs}}
   %ul.breadcrumb
     {{#each breadcrumbs}}
@@ -711,16 +748,21 @@
     {{/each}}
   {{/if}}
 
+  .control-group
+    -#%label.control-label(for="add-{{_id}}") Add a comment:
+    .controls
+      %textarea.new-thread.ta100(id="add-{{_id}}" rows="3" placeholder="Add a comment")
+
+  {{#if comments}}
   .comments
-    {{#if comments}}
     {{#each comments}}
     {{> comment}}
     {{else}}
     {{> noContent}}
     {{/each}}
-    {{else}}
-    {{> loading}}
-    {{/if}}
+  {{else}}
+  {{> loading}}
+  {{/if}}
 
 %template(name='comment')
   %article.comment(id="comment-{{_id}}" class="{{nested}}")
@@ -741,11 +783,11 @@
       .user
         .content
           %a.face.profile-pic(href="/{{user.username}}")
-            <img src="https://graph.facebook.com/{{user.services.facebook.id}}/picture"/> 
+            %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
           <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
           %span.score ({{user.score}})
 
-          %em.verb {{verb}}
+          %em.verb {{verb}}:
 
           -#{{#if mention}}
           -#%a.face.profile-pic(href="/{{mention.username}}")

@@ -4,7 +4,11 @@
 
   window.items = [
     {
-      name: 'Achievements'
+      name: 'Home',
+      url: 'dashboard'
+    }, {
+      name: 'Explore',
+      url: 'achievements'
     }, {
       name: 'Ladder'
     }, {
