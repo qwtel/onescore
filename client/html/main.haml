@@ -141,19 +141,15 @@
 
         {{#if equals "menu" "activity"}}
         .clearfix
-        {{> accomplishments }}
+        {{> accomplishments}}
         {{/if}}
 
-        {{#if equals "menu" "quests"}}
-        {{> achievements }}
+        {{#if equals "menu" "questlog"}}
+        {{> favourites}}
         {{/if}}
 
         {{#if equals "menu" "favourites"}}
-        {{> achievements }}
-        {{/if}}
-
-        {{#if equals "menu" "edits"}}
-        {{> achievements }}
+        {{> favourites}}
         {{/if}}
   {{/if}}
 
@@ -187,30 +183,27 @@
 
 %template(name='menu')
   %nav.menu
-    {{#if user}}
     %ul.nav.nav-tabs.nav-stacked
-      {{#with user}}
       <li class="{{isActive "menu" "activity"}}">
-      %a(href="/{{username}}/activity")
+      %a(href='/{{session "username"}}/activity')
         %i.icon-certificate
         Activity
         %i.icon-chevron-right.pull-right
       </li>
 
-      <li class="{{isActive "menu" "quests"}}">
-      %a(href="/{{username}}/quests")
+      <li class="{{isActive "menu" "questlog"}}">
+      %a(href='/{{session "username"}}/questlog')
         %i.icon-book
         Quest Log
         %i.icon-chevron-right.pull-right
       </li>
 
       <li class="{{isActive "menu" "favourites"}}">
-      %a(href="/{{username}}/favourites")
+      %a(href='/{{session "username"}}/favourites')
         %i.icon-star
         Favourites
         %i.icon-chevron-right.pull-right
       </li>
-      {{/with}}
 
       -#<li class="{{isActive "menu" "edits"}}">
       -#%a(href="/profile/edits")
@@ -228,10 +221,6 @@
         %a
           %i.icon-glass
           Inventory
-    {{else}}
-    .well
-      {{> loading}}
-    {{/if}}
 
 %template(name='filter')
   .filter.linebreak
@@ -466,16 +455,35 @@
   {{/with}}
   {{/if}}
 
-%template(name='achievements')
-  {{#if newAchievement}}
-  {{#with newAchievement}}
-  <a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="New achievement"><i class="icon-file"></i> New achievement</a>
-  -#.fold.dummy
+%template(name='favourites')
+  .clearfix
+
+  {{#if favourites}}
+  {{#each favourites}}
+  {{#if achievement}}
+  .fold
+    {{#with achievement}}
     {{> achievement}}
-  {{/with}}
+    {{/with}}
+  {{/if}}
+  {{else}}
+  .fold
+    {{> loading}}
+  {{/each}}
+  {{else}}
+  .fold
+    {{> noContent}}
   {{/if}}
 
+%template(name='achievements')
   .clearfix
+
+  {{#if newAchievement}}
+  {{#with newAchievement}}
+  <a href="/achievements/{{newAchievement._id}}/edit" class="new fold"><i class="icon-certificate"></i> New achievement</a>
+  -#{{> achievement}}
+  {{/with}}
+  {{/if}}
 
   {{#if achievements}}
   {{#each achievements}}
@@ -613,13 +621,18 @@
   {{/if}}
 
 %template(name='accomplish')
+  %h6 Tell your story: (optional)
   {{#if session "story"}}
   {{#if equals "story" "text"}}
-  .controls
+  .editor
+    %div(id="toolbar-{{_id}}")
     %textarea.ta100(id="editor-{{_id}}" rows="15") {{story}}
-    %span.help-block
+    %span.help-block<
       %strong HINT:
-      You can style your post using markdown.
+      You can style your post using
+      %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
+      \.
+  .preview.hide(id="preview-{{_id}}")
 
   %footer.form-actions
     {{#if accomplishment}}
@@ -627,10 +640,12 @@
     {{else}}
     %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
     {{/if}}
-    %button.btn.btn-large.preview Preview
+    %button.btn.btn-large.editor Preview
+    %button.btn.btn-large.preview.hide Edit
+  {{callback}}
   {{/if}}
+
   {{else}}
-  %h6 Tell your story: (optional)
   .btn-toolbar
     .btn-group
       %a(href="/achievements/{{_id}}/accomplish/text" class="btn btn-large" title="Text")
@@ -754,8 +769,17 @@
     -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
   -#{{> filter}}
   -#.clearfix
-  .fold
 
+  {{#unless equals "addComment" "new"}}
+  %a.fold.new
+    %i.icon-comment
+    Add a comment
+  {{else}}
+  .fold
+    %textarea.new-thread.ta100(id="add-{{_id}}" rows="4" placeholder="Add a comment")
+  {{/unless}}
+
+  .fold
   {{#if breadcrumbs}}
   %ul.breadcrumb
     {{#each breadcrumbs}}
@@ -764,11 +788,6 @@
       %span.divider >
     {{/each}}
   {{/if}}
-
-  .control-group
-    -#%label.control-label(for="add-{{_id}}") Add a comment:
-    .controls
-      %textarea.new-thread.ta100(id="add-{{_id}}" rows="3" placeholder="Add a comment")
 
   {{#if comments}}
   .comments

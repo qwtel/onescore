@@ -139,16 +139,13 @@
 {{> filter }}
 {{#if equals "menu" "activity"}}
 <div class='clearfix'></div>
-{{> accomplishments }}
+{{> accomplishments}}
 {{/if}}
-{{#if equals "menu" "quests"}}
-{{> achievements }}
+{{#if equals "menu" "questlog"}}
+{{> favourites}}
 {{/if}}
 {{#if equals "menu" "favourites"}}
-{{> achievements }}
-{{/if}}
-{{#if equals "menu" "edits"}}
-{{> achievements }}
+{{> favourites}}
 {{/if}}
 </section>
 </div>
@@ -193,37 +190,29 @@
 </template>
 <template name='menu'>
 <nav class='menu'>
-{{#if user}}
 <ul class='nav nav-tabs nav-stacked'>
-{{#with user}}
 <li class="{{isActive "menu" "activity"}}">
-<a href='/{{username}}/activity'>
+<a href='/{{session "username"}}/activity'>
 <i class='icon-certificate'></i>
 Activity
 <i class='icon-chevron-right pull-right'></i>
 </a>
 </li>
-<li class="{{isActive "menu" "quests"}}">
-<a href='/{{username}}/quests'>
+<li class="{{isActive "menu" "questlog"}}">
+<a href='/{{session "username"}}/questlog'>
 <i class='icon-book'></i>
 Quest Log
 <i class='icon-chevron-right pull-right'></i>
 </a>
 </li>
 <li class="{{isActive "menu" "favourites"}}">
-<a href='/{{username}}/favourites'>
+<a href='/{{session "username"}}/favourites'>
 <i class='icon-star'></i>
 Favourites
 <i class='icon-chevron-right pull-right'></i>
 </a>
 </li>
-{{/with}}
 </ul>
-{{else}}
-<div class='well'>
-{{> loading}}
-</div>
-{{/if}}
 </nav>
 </template>
 <template name='filter'>
@@ -397,13 +386,35 @@ Favourites
 {{/with}}
 {{/if}}
 </template>
+<template name='favourites'>
+<div class='clearfix'></div>
+{{#if favourites}}
+{{#each favourites}}
+{{#if achievement}}
+<div class='fold'>
+{{#with achievement}}
+{{> achievement}}
+{{/with}}
+</div>
+{{/if}}
+{{else}}
+<div class='fold'>
+{{> loading}}
+</div>
+{{/each}}
+{{else}}
+<div class='fold'>
+{{> noContent}}
+</div>
+{{/if}}
+</template>
 <template name='achievements'>
+<div class='clearfix'></div>
 {{#if newAchievement}}
 {{#with newAchievement}}
-<a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="New achievement"><i class="icon-file"></i> New achievement</a>
+<a href="/achievements/{{newAchievement._id}}/edit" class="new fold"><i class="icon-certificate"></i> New achievement</a>
 {{/with}}
 {{/if}}
-<div class='clearfix'></div>
 {{#if achievements}}
 {{#each achievements}}
 <div class='fold'>
@@ -517,26 +528,30 @@ Favourites
 {{/if}}
 </template>
 <template name='accomplish'>
+<h6>Tell your story: (optional)</h6>
 {{#if session "story"}}
 {{#if equals "story" "text"}}
-<div class='controls'>
+<div class='editor'>
+<div id='toolbar-{{_id}}'></div>
 <textarea class='ta100' id='editor-{{_id}}' rows='15'>{{story}}</textarea>
-<span class='help-block'>
-<strong>HINT:</strong>
-You can style your post using markdown.
-</span>
+<span class='help-block'><strong>HINT:</strong>
+You can style your post using
+<a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
+.</span>
 </div>
+<div class='preview hide' id='preview-{{_id}}'></div>
 <footer class='form-actions'>
 {{#if accomplishment}}
 <button class='btn btn-large create' style='margin-left: -20px'>Save</button>
 {{else}}
 <button class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</button>
 {{/if}}
-<button class='btn btn-large preview'>Preview</button>
+<button class='btn btn-large editor'>Preview</button>
+<button class='btn btn-large preview hide'>Edit</button>
 </footer>
+{{callback}}
 {{/if}}
 {{else}}
-<h6>Tell your story: (optional)</h6>
 <div class='btn-toolbar'>
 <div class='btn-group'>
 <a class='btn btn-large' href='/achievements/{{_id}}/accomplish/text' title='Text'>
@@ -657,6 +672,16 @@ No Content.
 </div>
 </template>
 <template name='comments'>
+{{#unless equals "addComment" "new"}}
+<a class='fold new'>
+<i class='icon-comment'></i>
+Add a comment
+</a>
+{{else}}
+<div class='fold'>
+<textarea class='new-thread ta100' id='add-{{_id}}' placeholder='Add a comment' rows='4'></textarea>
+</div>
+{{/unless}}
 <div class='fold'></div>
 {{#if breadcrumbs}}
 <ul class='breadcrumb'>
@@ -668,11 +693,6 @@ No Content.
 {{/each}}
 </ul>
 {{/if}}
-<div class='control-group'>
-<div class='controls'>
-<textarea class='new-thread ta100' id='add-{{_id}}' placeholder='Add a comment' rows='3'></textarea>
-</div>
-</div>
 {{#if comments}}
 <div class='comments'>
 {{#each comments}}

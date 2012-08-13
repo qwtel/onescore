@@ -70,27 +70,38 @@
       }
       return '';
     },
+    accepted: function(id) {
+      var fav;
+      fav = Favourites.findOne({
+        user: Meteor.user()._id,
+        entity: id,
+        active: true
+      });
+      if (fav) {
+        return true;
+      }
+    },
+    completed: function(id) {
+      var acc;
+      acc = Accomplishments.findOne({
+        user: Meteor.user()._id,
+        entity: id
+      });
+      if (acc) {
+        return true;
+      }
+    },
     color: function() {
-      var acc, fav;
       if (this) {
         if (Session.equals('newAchievement', this._id)) {
           return '';
         }
       }
       if (Meteor.user()) {
-        acc = Accomplishments.findOne({
-          user: Meteor.user()._id,
-          entity: this._id
-        });
-        if (acc) {
+        if (Template.achievement.completed(this._id)) {
           return 'completed';
         }
-        fav = Favourites.findOne({
-          user: Meteor.user()._id,
-          entity: this._id,
-          active: true
-        });
-        if (fav) {
+        if (Template.achievement.accepted(this._id)) {
           return 'accepted';
         } else if (Session.get('accomplishmentsLoaded')) {
           return 'uncompleted';

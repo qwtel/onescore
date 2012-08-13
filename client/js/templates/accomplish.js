@@ -11,6 +11,14 @@
       },
       'click .uncreate': function(e) {
         return Accomplishments.remove(this._id);
+      },
+      'click button.editor': function(e) {
+        $('.editor').hide();
+        return $('.preview').show();
+      },
+      'click button.preview': function(e) {
+        $('.editor').show();
+        return $('.preview').hide();
       }
     },
     accomplishment: function() {
@@ -30,6 +38,17 @@
           return acpl.story;
         }
       }
+      return '';
+    },
+    callback: function() {
+      var _this = this;
+      Meteor.setTimeout(function() {
+        return $("#editor-" + _this._id).markdownEditor({
+          toolbarLoc: $("#toolbar-" + _this._id),
+          toolbar: "default",
+          preview: $("#preview-" + _this._id)
+        });
+      }, 0);
       return '';
     }
   });

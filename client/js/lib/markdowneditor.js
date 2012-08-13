@@ -27,23 +27,24 @@
 		  //'savemd' : {'name': 'Save Source', 'icon':'share', 'btn_class':'btn-primary', 'icon_class':'icon-white', callback: function(){}},
 		  //'savehtml' : {'name': 'Save HTML', 'icon':'share-alt', 'btn_class':'btn-primary', 'icon_class':'icon-white', callback: function(){}},
 
-			'h1' : {'name': 'H1', 'icon':'', callback: h(1)},
-			'h2' : {'name': 'H2', 'icon':'', callback: h(2)},
-			'h3' : {'name': 'H3', 'icon':'', callback: h(3)},
-			'h4' : {'name': 'H4', 'icon':'', callback: h(4)},
-			'h5' : {'name': 'H5', 'icon':'', callback: h(5)},
-			'h6' : {'name': 'H6', 'icon':'', callback: h(6)},
+			'h1' : {'name': 'h1', 'icon':'', callback: h(1)},
+			'h2' : {'name': 'h2', 'icon':'', callback: h(2)},
+			'h3' : {'name': 'h3', 'icon':'', callback: h(3)},
+			'h4' : {'name': 'h4', 'icon':'', callback: h(4)},
+			'h5' : {'name': 'h5', 'icon':'', callback: h(5)},
+			'h6' : {'name': 'h6', 'icon':'', callback: h(6)},
 			'bold'  : {'name': 'Bold', 'icon':'bold', callback: wrap('**')},
 			'italic': {'name': 'Italic', 'icon':'italic', callback: wrap('*')},
 			'code'  : {'name': 'Code', 'icon':'barcode', callback: wrap('`')},
 			'quote' : {'name': 'Quote', 'icon':'comment', callback: function (caret) {caret.prependToLeadingLine('> ');}},
 			'hr' : {'name': 'Page Break', 'icon':'resize-horizontal', callback: replace('*****', true)},
 			'link' : {'name': 'Link', 'icon':'bookmark', callback: function(caret) {caret.wrap('['+caret.text+'](', ')');}},
+			'image' : {'name': 'Image', 'icon':'picture', callback: function(caret) {caret.wrap('!['+caret.text+'](', ')');}},
 			'indent' : {'name': 'Indent', 'icon':'indent-left', callback: function (caret) {caret.prependToEveryLine("    ")}},
 			'outdent': {'name': 'Outdent', 'icon':'indent-right', callback: function (caret) {caret.replaceInSelection(/[ ]{4}(?![ ]{4})/g, "");}}
 		},
 		toolbars: {
-			'default': [/*['open', 'savemd', 'savehtml'],*/['h1','h2','h3'], ['bold','italic'], ['link'], ['quote', 'code'], ['hr']]
+			'default': [/*['open', 'savemd', 'savehtml'],*/['h1','h2','h3'], ['bold','italic'], ['image','link'], ['quote', 'code'] /*,['hr']*/]
 		}
 	};
 	$.fn.markdownEditor = function (opts) {
@@ -109,16 +110,16 @@
 		this.$bar.html(bar);
 	}
 	$.markdownEditor.ui.prototype.makeButton = function(key, obj) {
-        var button = $("<button></button>").addClass('me-'+key).addClass('btn').addClass('btn-mini').attr('alt', obj.name).click(this.clickHandler(obj.callback));
+        var button = $("<button></button>").addClass('me-'+key).addClass('btn').attr('alt', obj.name).click(this.clickHandler(obj.callback));
         button.addClass(obj.btn_class);
         if (obj.icon == '') {
 		    button.html(obj.name)
 		} else {
 		    var icon = $("<i></i>").addClass('icon-'+obj.icon).addClass(obj.icon_class);
 		    button.append(icon);
-            button.attr('rel', 'tooltip');
+            //button.attr('rel', 'tooltip');
             button.attr('title', obj.name);
-            button.tooltip({"placement": "bottom"})
+            //button.tooltip({"placement": "bottom"})
         }
         return button
 

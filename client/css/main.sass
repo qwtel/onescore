@@ -63,6 +63,10 @@ body
 
 a
   cursor: pointer
+  transition: color 0.2s linear
+  -moz-transition: color 0.21s linear
+  -o-transition: color 0.21s linear
+  -webkit-transition: color 0.2s linear
 
 .score
   .value
@@ -192,9 +196,10 @@ a
     margin-left: 35px
 
   .story
-    border-top: 1px solid #ddd
-    padding-top: $padding/2
-    margin-top: $padding/2
+    //border-top: 1px solid #ddd
+    //padding-top: $padding/2
+    //margin-top: $padding/2
+    margin-top: $padding
     margin-bottom: $padding
 
 .comments
@@ -425,6 +430,17 @@ a:hover i, a i.active, button:hover i, button i.active
     float: left
     margin-right: 5px
 
+.new
+  display: block
+  font:
+    weight: bold
+    size: 14px
+  text:
+    align: center
+    decoration: none
+  &:hover
+    text-decoration: none
+
 .achievement
   a
     color: gray
@@ -441,7 +457,7 @@ a:hover i, a i.active, button:hover i, button i.active
     @include background-size(cover)
 
   .content
-    margin-left: $iconSize + $padding
+    margin-left: $iconSize + 10px
     .title
       line-height: 80%
       margin-bottom: 5px

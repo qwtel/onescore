@@ -28,21 +28,6 @@ _.extend Template.achievement,
           entity: @_id
           active: true
 
-    #'click .quest': (e) ->
-    #  quest = Quests.findOne
-    #    user: Meteor.user()._id
-    #    entity: @_id
-    #
-    #  if quest
-    #    Quests.update quest._id,
-    #      $set:
-    #        active: !quest.active
-    #  else
-    #    Quests.insert
-    #      user: Meteor.user()._id
-    #      entity: @_id
-    #      active: true
-
   faved: ->
     if Meteor.user()
       fav = Favourites.findOne
@@ -52,16 +37,6 @@ _.extend Template.achievement,
       if fav
         return 'active'
     return ''
-
-  #quest: ->
-  #  if Meteor.user()
-  #    fav = Quests.findOne
-  #      user: Meteor.user()._id
-  #      entity: @_id
-  #      active: true
-  #    if fav
-  #      return 'active'
-  #  return ''
 
   voted: (state) ->
     state = if state is 'up' then true else false
@@ -74,23 +49,31 @@ _.extend Template.achievement,
         return 'active'
     return ''
 
+  accepted: (id) ->
+    fav = Favourites.findOne
+      user: Meteor.user()._id
+      entity: id
+      active: true
+    if fav
+      return true
+
+  completed: (id) ->
+    acc = Accomplishments.findOne
+      user: Meteor.user()._id
+      entity: id
+    if acc
+      return true
+
   color: ->
     if this
       if Session.equals 'newAchievement', @_id
         return ''
 
     if Meteor.user()
-      acc = Accomplishments.findOne
-        user: Meteor.user()._id
-        entity: @_id
-      if acc
+      if Template.achievement.completed @_id
         return 'completed'
 
-      fav = Favourites.findOne
-        user: Meteor.user()._id
-        entity: @_id
-        active: true
-      if fav
+      if Template.achievement.accepted @_id
         return 'accepted'
 
       else if Session.get 'accomplishmentsLoaded'

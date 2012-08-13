@@ -15,18 +15,16 @@ _.extend Template.edit,
         user: Meteor.user()._id
         score: 0
 
-    #'change .category': (e) ->
-    #  Achievements.update @_id,
-    #    $set:
-    #      category: $("#category-#{@_id}").val()
-    #
+    'change .category': (e) ->
+      @category = $("#category-#{@_id}").val()
 
     'change .description': (e) ->
       description = $("#description-#{@_id}").val()
       tags = window.findTags description
     
-      #@description = description
-      #@tags = tags
+      @description = description
+      @tags = tags
+
       ## HACK: force redraw
       #Session.set 'tab', 'info'
       #Session.set 'tab', 'edit'

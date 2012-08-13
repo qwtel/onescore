@@ -3,6 +3,11 @@
 
   _.extend(Template.comments, {
     events: {
+      'click .new': function(e) {
+        Session.set('addComment', 'new');
+        Meteor.flush();
+        return window.focusById("add-" + this._id);
+      },
       'keyup .new-thread,  keydown .new-thread': window.makeOkCancelHandler({
         ok: function(text, e) {
           var level, parent;

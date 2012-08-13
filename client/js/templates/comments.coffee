@@ -1,5 +1,10 @@
 _.extend Template.comments,
   events:
+    'click .new': (e) ->
+      Session.set 'addComment', 'new'
+      Meteor.flush()
+      window.focusById "add-#{@_id}"
+
     'keyup .new-thread,  keydown .new-thread':
       window.makeOkCancelHandler
         ok: (text, e) ->

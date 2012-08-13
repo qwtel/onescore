@@ -11,7 +11,11 @@ body {
   overflow-x: hidden; }
 
 a {
-  cursor: pointer; }
+  cursor: pointer;
+  transition: color 0.2s linear;
+  -moz-transition: color 0.21s linear;
+  -o-transition: color 0.21s linear;
+  -webkit-transition: color 0.2s linear; }
 
 .score .value {
   font-family: "SubtleSansRegular";
@@ -129,9 +133,7 @@ a {
 .accomplishment .body {
   margin-left: 35px; }
 .accomplishment .story {
-  border-top: 1px solid #dddddd;
-  padding-top: 7.5px;
-  margin-top: 7.5px;
+  margin-top: 15px;
   margin-bottom: 15px; }
 
 .comments {
@@ -347,6 +349,15 @@ a:hover i, a i.active, button:hover i, button i.active {
     float: left;
     margin-right: 5px; }
 
+.new {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none; }
+  .new:hover {
+    text-decoration: none; }
+
 .achievement a {
   color: gray; }
 .achievement .icon {
@@ -366,7 +377,7 @@ a:hover i, a i.active, button:hover i, button i.active {
   -o-background-size: cover;
   background-size: cover; }
 .achievement .content {
-  margin-left: 65px; }
+  margin-left: 60px; }
   .achievement .content .title {
     line-height: 80%;
     margin-bottom: 5px; }

@@ -19,10 +19,15 @@
           score: 0
         });
       },
+      'change .category': function(e) {
+        return this.category = $("#category-" + this._id).val();
+      },
       'change .description': function(e) {
         var description, tags;
         description = $("#description-" + this._id).val();
-        return tags = window.findTags(description);
+        tags = window.findTags(description);
+        this.description = description;
+        return this.tags = tags;
       },
       'click .create': function(e) {
         var data, id;

@@ -8,19 +8,13 @@ _.extend Template.accomplish,
     'click .uncreate': (e) ->
       Accomplishments.remove @_id
 
-    #'click .preview': (e) ->
-    #  Session.toggle 'preview', true
-    #  if Session.get('preview') is true
-    #    $('#preview').show()
-    #    $('#editor').hide()
-    #  else
-    #    $('#preview').hide()
-    #    $('#editor').show()
-    #  Meteor.flush()
-    #  $("#editor-#{@_id}").markdownEditor
-    #    toolbarLoc: $('#toolbar')
-    #    toolbar: 'default'
-    #    preview: $('#preview')
+    'click button.editor': (e) ->
+      $('.editor').hide()
+      $('.preview').show()
+
+    'click button.preview': (e) ->
+      $('.editor').show()
+      $('.preview').hide()
 
   accomplishment: ->
     return Accomplishments.findOne
@@ -34,4 +28,14 @@ _.extend Template.accomplish,
     if acpl
       if acpl.story
         return acpl.story
+    return ''
+ 
+  callback: ->
+    Meteor.setTimeout =>
+      $("#editor-#{@_id}").markdownEditor
+        toolbarLoc: $("#toolbar-#{@_id}")
+        toolbar: "default"
+        preview: $("#preview-#{@_id}")
+    ,
+      0
     return ''
