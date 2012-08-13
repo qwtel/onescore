@@ -15,9 +15,10 @@ _.extend Template.comments,
             level = 0
 
           Comments.insert
+            type: Session.get 'page'
             text: text
             date: new Date
-            topic: Session.get 'single'
+            topic: Session.get 'topic'
             parent: parent
             #mention: parent
             user: Meteor.user()._id
@@ -33,9 +34,10 @@ _.extend Template.comments,
         ok: (text, e) ->
           if Session.get('addComment') isnt null
             Comments.insert
+              type: Session.get 'page'
               text: text
               date: new Date
-              topic: Session.get 'single'
+              topic: Session.get 'topic'
               parent: @_id
               mention: @user
               user: Meteor.user()._id
@@ -58,22 +60,9 @@ _.extend Template.comments,
           Session.set 'editComment', null
           e.target.value = ""
 
-     'click .back': (e) ->
-       unless e.isPropagationStopped()
-         e.stopPropagation()
-         $t = $(e.target).closest '.back'
-         id = $t.data 'id'
-         level = $t.data 'level'
-         if id and level
-           Session.set 'parent', $t.data('id')
-           Session.set 'level', $t.data('level')
-         else
-           Session.set 'parent', null
-           Session.set 'level', null
-
   select: (id) ->
     sel =
-      topic: Session.get 'single'
+      topic: Session.get 'topic'
       parent: Session.get 'parent'
     
     if id
@@ -107,14 +96,3 @@ _.extend Template.comments,
 
   user: ->
     return Meteor.users.findOne @user
-
-  breadcrumbs: ->
-    comments = []
-    parent = Session.get 'parent'
-    if parent
-      comment = Comments.findOne parent
-      comments.push comment
-      while comment.parent isnt null
-        comment = Comments.findOne comment.parent
-        comments.push comment
-    return comments.reverse()

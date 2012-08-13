@@ -3,55 +3,28 @@
 
   Session.set('styleGuide', true);
 
-  Session.set('editUsername', false);
-
   Meteor.subscribe('users');
 
-  Session.set('topic', 'dashboard');
+  Meteor.subscribe('comments');
 
   Meteor.autosubscribe(function() {
-    var achievement, topic;
-    topic = Session.get('single');
-    if (topic) {
-      Session.set('commentsLoaded', false);
-      Meteor.subscribe('comments', topic, function() {
-        return Session.set('commentsLoaded', true);
-      });
-    }
+    var achievement;
     achievement = Session.get('single');
     if (achievement) {
-      Session.set('titlesLoaded', false);
-      return Meteor.subscribe('titles', achievement, function() {
-        return Session.set('titlesLoaded', true);
-      });
+      return Meteor.subscribe('titles', achievement, function() {});
     }
   });
 
-  Session.set('achievements', false);
-
   Meteor.subscribe('achievements', function() {
     var id;
-    Session.set('achievementsLoaded', true);
     id = window.createNewAchievement();
     return Session.set('newAchievement', id);
   });
 
-  Session.set('votesLoaded', false);
+  Meteor.subscribe('votes', function() {});
 
-  Meteor.subscribe('votes', function() {
-    return Session.set('votesLoaded', true);
-  });
+  Meteor.subscribe('favourites', function() {});
 
-  Session.set('favsLoaded', false);
-
-  Meteor.subscribe('favourites', function() {
-    return Session.set('favsLoaded', true);
-  });
-
-  Session.set('accomplishmentsLoaded', false);
-
-  Meteor.subscribe('accomplishments', function() {
-    return Session.set('accomplishmentsLoaded', true);
-  });
+  Meteor.subscribe('accomplishments', function() {});
 
 }).call(this);

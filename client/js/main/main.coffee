@@ -9,7 +9,8 @@ class AppRouter extends Backbone.Router
     'achievements/:id/:tab/:type': 'achievements'
     'accomplishments/:id': 'accomplishments'
     'accomplishments/:id/:tab': 'accomplishments'
-    #'comments/:id': 'comments'
+    'comments/:id': 'comments'
+    'comments/:id/:level': 'comments'
     ':user': 'user'
     ':user/:menu': 'user'
 
@@ -67,14 +68,14 @@ class AppRouter extends Backbone.Router
     unless tab then tab = 'info'
     Session.set 'tab', tab
 
-  comments: (id) ->
+  comments: (id, level) ->
     @softReset()
-    Session.set 'parent', id
-    c = Comments.findOne id
-    Session.set 'level', c.level
-
+    Session.set 'page', 'comments'
+    Session.set 'limit', 'all'
+    Session.set 'single', id
 
   softReset: ->
+    $(document).scrollTop 0
     Session.set 'expand', null
     Session.set 'story', null
     Session.set 'parent', null
@@ -90,7 +91,6 @@ class AppRouter extends Backbone.Router
 
   hardReset: ->
     @softReset()
-    $(document).scrollTop 0
     Session.set 'single', null
     Session.set 'tab', null
     Session.set 'unexpand', null

@@ -36,11 +36,11 @@ _.extend Template.comment,
         e.stopPropagation()
         Session.push 'unexpand', @_id, true
 
-    'click .link': (e) ->
-      unless e.isPropagationStopped()
-        e.stopPropagation()
-        Session.set 'parent', @_id
-        Session.set 'level', @level
+    #'click .link': (e) ->
+    #  unless e.isPropagationStopped()
+    #    e.stopPropagation()
+    #    Session.set 'parent', @_id
+    #    Session.set 'level', @level
 
     'mouseover .highlight': (e) ->
       unless e.isPropagationStopped()

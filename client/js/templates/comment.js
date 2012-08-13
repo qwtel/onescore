@@ -45,13 +45,6 @@
           return Session.push('unexpand', this._id, true);
         }
       },
-      'click .link': function(e) {
-        if (!e.isPropagationStopped()) {
-          e.stopPropagation();
-          Session.set('parent', this._id);
-          return Session.set('level', this.level);
-        }
-      },
       'mouseover .highlight': function(e) {
         if (!e.isPropagationStopped()) {
           e.stopPropagation();

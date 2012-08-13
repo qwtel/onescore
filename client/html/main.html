@@ -285,9 +285,8 @@ Favourites
 </template>
 <template name='home'>
 {{#each accomplishments}}
-<div class='fold'>
+<div class='fold'></div>
 {{> accomplishment}}
-</div>
 {{else}}
 {{> placeholder}}
 {{/each}}
@@ -295,9 +294,8 @@ Favourites
 <template name='accomplishments'>
 {{#if accomplishments}}
 {{#each accomplishments}}
-<div class='fold'>
+<div class='fold'></div>
 {{> accomplishment}}
-</div>
 {{else}}
 <div class='fold'>
 {{> noContent}}
@@ -337,9 +335,11 @@ Favourites
 <em class='verb'>{{verb}}:</em>
 </div>
 </div>
+{{else}}
+{{> loading}}
 {{/if}}
 {{#with achievement}}
-<div class='minimal'>
+<div class='minimal well'>
 {{> achievement}}
 </div>
 {{/with}}
@@ -353,6 +353,13 @@ Favourites
 {{/if}}
 </div>
 </article>
+{{#if equals "single" _id}}
+<div class='fold'></div>
+<h6 class='heading line'>Comments</h6>
+{{> filter}}
+<div class='clearfix'></div>
+{{> comments}}
+{{/if}}
 </template>
 <template name='user'>
 <div class='user'>
@@ -383,6 +390,11 @@ Favourites
 {{#if equals "page" "accomplishments"}}
 {{#with accomplishment}}
 {{> accomplishment}}
+{{/with}}
+{{/if}}
+{{#if equals "page" "comments"}}
+{{#with comment}}
+{{> singleComment}}
 {{/with}}
 {{/if}}
 </template>
@@ -472,6 +484,9 @@ Favourites
 <li>
 <a href='/achievements/{{_id}}/talk' title='Comment'><i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i></a>
 </li>
+<li>
+<a href='/achievements/{{_id}}/accomplish' title='Accomplish'><i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i></a>
+</li>
 </nav>
 <h4 class='title'>
 {{#if title}}
@@ -513,22 +528,25 @@ Favourites
 {{else}}
 {{/if}}
 {{#if equals "tab" "info"}}
+<h6 class='heading line'>Info</h6>
 {{> info}}
 {{/if}}
 {{#if equals "tab" "accomplish"}}
+<h6 class='heading line'>Tell your story (optional)</h6>
 {{> accomplish}}
 {{/if}}
 {{#if equals "tab" "edit"}}
+<h6 class='heading line'>Edit</h6>
 {{> edit}}
 {{/if}}
 {{#if equals "tab" "talk"}}
+<h6 class='heading line'>Comments</h6>
 {{> filter}}
 <div class='clearfix'></div>
 {{> comments}}
 {{/if}}
 </template>
 <template name='accomplish'>
-<h6>Tell your story: (optional)</h6>
 {{#if session "story"}}
 {{#if equals "story" "text"}}
 <div class='editor'>
@@ -683,16 +701,6 @@ Add a comment
 </div>
 {{/unless}}
 <div class='fold'></div>
-{{#if breadcrumbs}}
-<ul class='breadcrumb'>
-{{#each breadcrumbs}}
-<li>
-<a class="back {{isMe user}}" data-id="{{_id}}" data-level="{{level}}">{{user.username}}</a>
-<span class='divider'>></span>
-</li>
-{{/each}}
-</ul>
-{{/if}}
 {{#if comments}}
 <div class='comments'>
 {{#each comments}}
@@ -705,11 +713,75 @@ Add a comment
 {{> loading}}
 {{/if}}
 </template>
+<template name='singleComment'>
+<ul class='breadcrumb'>
+{{#each breadcrumbs}}
+<li>
+<a class="{{isMe user}}" href="{{url}}">{{name}}</a>
+<span class='divider'>></span>
+</li>
+{{/each}}
+</ul>
+<article class='comment {{nested}}' id='comment-{{_id}}'>
+<div class='vote-container pull-left'>
+<div>
+<a href='/comments/{{_id}}' title='Link'><i class="icon-bookmark {{isActive "single" _id}}"></i></a>
+</div>
+<div>
+<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
+</div>
+<div>
+<span class='count'>{{score}}</span>
+</div>
+<div>
+<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+</div>
+</div>
+<div class='body'>
+{{#if user}}
+<div class='user'>
+<div class='content'>
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+<span class='score'>({{user.score}})</span>
+<em class='verb'>{{verb}}:</em>
+<nav class='icons pull-right'>
+<li>
+<a class='edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
+</li>
+<li>
+<a class='reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" _id}}"></i></a>
+</li>
+</nav>
+</div>
+</div>
+{{else}}
+{{> loading}}
+{{/if}}
+<div class='text'>
+{{#if equals "editComment" _id}}
+<div class='text-wrapper'>
+<textarea class='edit-text ta100' id='edit-{{_id}}' rows='4'>{{text}}</textarea>
+</div>
+{{else}}
+<p>{{{addLineBreaks text}}}</p>
+{{/if}}
+</div>
+</div>
+</article>
+<div class='fold'></div>
+<h6 class='heading line'>Replies</h6>
+{{> filter}}
+<div class='clearfix'></div>
+{{> comments}}
+</template>
 <template name='comment'>
 <article class='comment {{nested}}' id='comment-{{_id}}'>
 <div class='vote-container pull-left'>
 <div>
-<a class='link highlight' title='Link'><i class="icon-bookmark"></i></a>
+<a class='link highlight' href='/comments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
 </div>
 <div>
 <a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
@@ -750,7 +822,7 @@ Add a comment
 <div class='text'>
 {{#if equals "editComment" _id}}
 <div class='text-wrapper'>
-<textarea class='edit-text ta100' id='edit-{{_id}}' rows='3'>{{text}}</textarea>
+<textarea class='edit-text ta100' id='edit-{{_id}}' rows='4'>{{text}}</textarea>
 </div>
 {{else}}
 <p>{{{addLineBreaks text}}}</p>
@@ -758,7 +830,7 @@ Add a comment
 </div>
 {{#if equals "addComment" _id}}
 <div class='text-wrapper'>
-<textarea class='comment-text ta100' id='reply-{{_id}}' rows='3'></textarea>
+<textarea class='comment-text ta100' id='reply-{{_id}}' rows='4'></textarea>
 </div>
 {{/if}}
 </div>
@@ -768,7 +840,16 @@ Add a comment
 {{> comment}}
 {{/each}}
 {{else}}
-<hr />
+<div class='body'>
+<div class='text'>
+<div class='alert alert-info'>
+<strong>NOTE:</strong>
+We have to go
+<a class='link alert-heading' href='/comments/{{_id}}'>deeper</a>
+...
+</div>
+</div>
+</div>
 {{/unless}}
 {{/unless}}
 </article>

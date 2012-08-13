@@ -1,8 +1,25 @@
 _.extend Template.single,
   achievement: ->
     id = Session.get 'single'
-    return Achievements.findOne id
+    entity = Achievements.findOne id
+    if entity
+      Session.set 'topic', entity._id
+      return entity
 
   accomplishment: ->
     id = Session.get 'single'
-    return Accomplishments.findOne id
+    entity = Accomplishments.findOne id
+    console.log id, entity
+    if entity
+      Session.set 'topic', entity._id
+      return entity
+
+  comment: ->
+    id = Session.get 'single'
+    entity = Comments.findOne id
+    console.log id, entity
+    if entity
+      Session.set 'topic', entity.topic
+      Session.set 'parent', entity._id
+      Session.set 'level', entity.level
+      return entity

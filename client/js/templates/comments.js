@@ -18,9 +18,10 @@
             level = 0;
           }
           Comments.insert({
+            type: Session.get('page'),
             text: text,
             date: new Date,
-            topic: Session.get('single'),
+            topic: Session.get('topic'),
             parent: parent,
             user: Meteor.user()._id,
             score: 0,
@@ -35,9 +36,10 @@
         ok: function(text, e) {
           if (Session.get('addComment') !== null) {
             Comments.insert({
+              type: Session.get('page'),
               text: text,
               date: new Date,
-              topic: Session.get('single'),
+              topic: Session.get('topic'),
               parent: this._id,
               mention: this.user,
               user: Meteor.user()._id,
@@ -63,28 +65,12 @@
           Session.set('editComment', null);
           return e.target.value = "";
         }
-      }),
-      'click .back': function(e) {
-        var $t, id, level;
-        if (!e.isPropagationStopped()) {
-          e.stopPropagation();
-          $t = $(e.target).closest('.back');
-          id = $t.data('id');
-          level = $t.data('level');
-          if (id && level) {
-            Session.set('parent', $t.data('id'));
-            return Session.set('level', $t.data('level'));
-          } else {
-            Session.set('parent', null);
-            return Session.set('level', null);
-          }
-        }
-      }
+      })
     },
     select: function(id) {
       var sel;
       sel = {
-        topic: Session.get('single'),
+        topic: Session.get('topic'),
         parent: Session.get('parent')
       };
       if (id) {
@@ -140,20 +126,6 @@
     },
     user: function() {
       return Meteor.users.findOne(this.user);
-    },
-    breadcrumbs: function() {
-      var comment, comments, parent;
-      comments = [];
-      parent = Session.get('parent');
-      if (parent) {
-        comment = Comments.findOne(parent);
-        comments.push(comment);
-        while (comment.parent !== null) {
-          comment = Comments.findOne(comment.parent);
-          comments.push(comment);
-        }
-      }
-      return comments.reverse();
     }
   });
 

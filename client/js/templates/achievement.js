@@ -103,7 +103,7 @@
         }
         if (Template.achievement.accepted(this._id)) {
           return 'accepted';
-        } else if (Session.get('accomplishmentsLoaded')) {
+        } else if (Achievements.find().count() > 0) {
           return 'uncompleted';
         }
         return '';

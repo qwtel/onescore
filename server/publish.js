@@ -5,10 +5,8 @@
     return Meteor.users.find();
   });
 
-  Meteor.publish('comments', function(topic) {
-    return Comments.find({
-      topic: topic
-    });
+  Meteor.publish('comments', function() {
+    return Comments.find();
   });
 
   Meteor.publish('achievements', function() {

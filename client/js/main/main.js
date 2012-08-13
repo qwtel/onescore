@@ -22,6 +22,8 @@
       'achievements/:id/:tab/:type': 'achievements',
       'accomplishments/:id': 'accomplishments',
       'accomplishments/:id/:tab': 'accomplishments',
+      'comments/:id': 'comments',
+      'comments/:id/:level': 'comments',
       ':user': 'user',
       ':user/:menu': 'user'
     };
@@ -90,15 +92,15 @@
       return Session.set('tab', tab);
     };
 
-    AppRouter.prototype.comments = function(id) {
-      var c;
+    AppRouter.prototype.comments = function(id, level) {
       this.softReset();
-      Session.set('parent', id);
-      c = Comments.findOne(id);
-      return Session.set('level', c.level);
+      Session.set('page', 'comments');
+      Session.set('limit', 'all');
+      return Session.set('single', id);
     };
 
     AppRouter.prototype.softReset = function() {
+      $(document).scrollTop(0);
       Session.set('expand', null);
       Session.set('story', null);
       Session.set('parent', null);
@@ -107,7 +109,6 @@
 
     AppRouter.prototype.hardReset = function() {
       this.softReset();
-      $(document).scrollTop(0);
       Session.set('single', null);
       Session.set('tab', null);
       return Session.set('unexpand', null);
