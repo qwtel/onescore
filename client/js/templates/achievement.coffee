@@ -75,29 +75,32 @@ _.extend Template.achievement,
     return ''
 
   color: ->
-    if Session.equals 'newAchievement', @_id
+    if this
+      if Session.equals 'newAchievement', @_id
+        return ''
+
+    if Meteor.user()
+      acc = Accomplishments.findOne
+        user: Meteor.user()._id
+        entity: @_id
+      if acc
+        return 'completed'
+
+      fav = Favourites.findOne
+        user: Meteor.user()._id
+        entity: @_id
+        active: true
+      if fav
+        return 'accepted'
+
+      else if Session.get 'accomplishmentsLoaded'
+        return 'uncompleted'
+
       return ''
 
-    acc = Accomplishments.findOne
-      user: Meteor.user()._id
-      entity: @_id
-    if acc
-      return 'completed'
-
-    fav = Favourites.findOne
-      user: Meteor.user()._id
-      entity: @_id
-      active: true
-    if fav
-      return 'accepted'
-
-    else if Session.get 'accomplishmentsLoaded'
-      return 'uncompleted'
-
-    return ''
-
   hasScore: ->
-    if @score?
-      return true
-    else
-      return false
+    if this
+      if @score?
+        return true
+      else
+        return false

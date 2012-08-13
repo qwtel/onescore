@@ -26,7 +26,7 @@
   {{/if}}
 
 %template(name='header')
-  %a.brand.nav-img.pull-left.nav-item(href="/dashboard")
+  %a.brand.nav-img.pull-left.nav-item(href="/home")
   %nav.nav
     -#%li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
@@ -43,10 +43,14 @@
         {{/each}}
 
     {{#each items}}
-    <li class="nav-{{url}} {{isActive "page" url}}">
+    <li class="{{isActive "page" url}}">
     %a.nav-item(href="/{{url}}") {{name}}
     </li>
     {{/each}}
+
+    <li class="{{isActive "page" "profile"}}">
+    %a.nav-item(href="/{{currentUser.username}}") Profile
+    </li>
 
   {{#if currentUser}}
   %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
@@ -60,7 +64,7 @@
   {{/if}}
 
 %template(name='content')
-  {{#if equals "page" "dashboard"}}
+  {{#if equals "page" "home"}}
   -#.row
     .span12
       .hero-unit
@@ -87,18 +91,8 @@
         %h3 Quest Items
   {{/if}}
 
-  {{#if equals "page" "accomplishments"}}
+  {{#if equals "page" "explore"}}
   .row
-    {{#if session "single"}}
-    .span8.offset2
-      %section.well 
-        {{> single}}
-    {{/if}}
-  {{/if}}
-
-  {{#if equals "page" "achievements"}}
-  .row
-    {{#unless session "single"}}
     .span4
       %aside.well.hidden-phone
         %h3 Tags
@@ -108,11 +102,6 @@
       %section.well 
         {{> filter}}
         {{> achievements}}
-    {{else}}
-    .span8.offset2
-      %section.well 
-        {{> single}}
-    {{/unless}}
   {{/if}}
 
   {{#if equals "page" "ladder"}}
@@ -168,6 +157,13 @@
         {{/if}}
   {{/if}}
 
+  {{#if session "single"}}
+  .row
+    .span8.offset2
+      %section.well 
+        {{> single}}
+  {{/if}}
+
   {{#if equals "page" "activities"}}
   .row
     .span12
@@ -191,27 +187,30 @@
 
 %template(name='menu')
   %nav.menu
+    {{#if user}}
     %ul.nav.nav-tabs.nav-stacked
+      {{#with user}}
       <li class="{{isActive "menu" "activity"}}">
-      %a(href="/{{user.username}}/activity")
+      %a(href="/{{username}}/activity")
         %i.icon-certificate
         Activity
         %i.icon-chevron-right.pull-right
       </li>
 
       <li class="{{isActive "menu" "quests"}}">
-      %a(href="/{{user.username}}/quests")
+      %a(href="/{{username}}/quests")
         %i.icon-book
         Quest Log
         %i.icon-chevron-right.pull-right
       </li>
 
       <li class="{{isActive "menu" "favourites"}}">
-      %a(href="/{{user.username}}/favourites")
+      %a(href="/{{username}}/favourites")
         %i.icon-star
         Favourites
         %i.icon-chevron-right.pull-right
       </li>
+      {{/with}}
 
       -#<li class="{{isActive "menu" "edits"}}">
       -#%a(href="/profile/edits")
@@ -229,6 +228,10 @@
         %a
           %i.icon-glass
           Inventory
+    {{else}}
+    .well
+      {{> loading}}
+    {{/if}}
 
 %template(name='filter')
   .filter.linebreak
@@ -270,18 +273,24 @@
 
 %template(name='userBanner')
   .userBanner
-    %a.profile-pic.pull-left(href="/{{currentUser.username}}")
+    %a.profile-pic.pull-left(href='/{{session "username"}}')
       {{{pic}}}
-    %h3.name {{currentUser.username}}
+    %h2.name {{session "username"}}
+    {{#if user}}
+    {{#with user}}
     .pull-right
       %h6 Score:
       %h3.score.pull-right<
         -#%span.dollar.dollar-green
-        %span {{currentUser.score}}
+        %span {{score}}
     .about
       %h6 About:
-      %em.bio {{currentUser.bio}}
-      .loc {{currentUser.location}}
+      %em.bio {{bio}}
+      .loc {{location}}
+    {{/with}}
+    {{else}}
+    {{> loading}}
+    {{/if}}
 
 %template(name='userWidget')
   .userWidget
@@ -326,12 +335,18 @@
   {{/each}}
 
 %template(name='accomplishments')
+  {{#if accomplishments}}
   {{#each accomplishments}}
   .fold
     {{> accomplishment}}
   {{else}}
-  {{> placeholder}}
+  .fold
+    {{> noContent}}
   {{/each}}
+  {{else}}
+  .fold
+    {{> loading}}
+  {{/if}}
 
 %template(name='accomplishment')
   %article.accomplishment(id="accomplishment-{{_id}}")
@@ -452,23 +467,27 @@
   {{/if}}
 
 %template(name='achievements')
+  {{#if newAchievement}}
   {{#with newAchievement}}
   <a href="/achievements/{{newAchievement._id}}/edit" class="btn pull-right new" title="New achievement"><i class="icon-file"></i> New achievement</a>
-  .clearfix
-
   -#.fold.dummy
     {{> achievement}}
   {{/with}}
+  {{/if}}
+
+  .clearfix
 
   {{#if achievements}}
   {{#each achievements}}
   .fold
     {{> achievement}}
   {{else}}
-  {{> loading}}
+  .fold
+    {{> loading}}
   {{/each}}
   {{else}}
-  {{> noContent}}
+  .fold
+    {{> noContent}}
   {{/if}}
 
 %template(name='achievement')
@@ -611,21 +630,19 @@
     %button.btn.btn-large.preview Preview
   {{/if}}
   {{else}}
-  %label.control-label Tell your story: (optional)
-  .btn-group
-    <button class="btn btn-large text {{isActive "story" "text"}}" title="Text">
-    %i.icon-align-left
-    </button>
-    <button class="btn btn-large picture {{isActive "story" "picture"}}" title="Picture">
-    %i.icon-picture
-    </button>
-    <button class="btn btn-large link {{isActive "story" "link"}}" title="Link">
-    %i.icon-bookmark
-    </button>
-    -#%button.btn(title="Audio") 
-      %i.icon-headphones
-    -#%button.btn(title="Video") 
-      %i.icon-film
+  %h6 Tell your story: (optional)
+  .btn-toolbar
+    .btn-group
+      %a(href="/achievements/{{_id}}/accomplish/text" class="btn btn-large" title="Text")
+        %i.icon-align-left
+      %a(href="/achievements/{{_id}}/accomplish/picture" class="btn btn-large" title="Picture")
+        %i.icon-picture
+      %a(href="/achievements/{{_id}}/accomplish/video" class="btn btn-large" title="Video")
+        %i.icon-film
+      %a(href="/achievements/{{_id}}/accomplish/link" class="btn btn-large" title="Link")
+        %i.icon-bookmark
+      -#%button.btn(title="Audio") 
+        %i.icon-headphones
   %footer.form-actions
     {{#if accomplishment}}
     %button.btn.btn-warning.btn-large.uncreate(style="margin-left: -20px") Unaccomplish

@@ -72,33 +72,39 @@
     },
     color: function() {
       var acc, fav;
-      if (Session.equals('newAchievement', this._id)) {
+      if (this) {
+        if (Session.equals('newAchievement', this._id)) {
+          return '';
+        }
+      }
+      if (Meteor.user()) {
+        acc = Accomplishments.findOne({
+          user: Meteor.user()._id,
+          entity: this._id
+        });
+        if (acc) {
+          return 'completed';
+        }
+        fav = Favourites.findOne({
+          user: Meteor.user()._id,
+          entity: this._id,
+          active: true
+        });
+        if (fav) {
+          return 'accepted';
+        } else if (Session.get('accomplishmentsLoaded')) {
+          return 'uncompleted';
+        }
         return '';
       }
-      acc = Accomplishments.findOne({
-        user: Meteor.user()._id,
-        entity: this._id
-      });
-      if (acc) {
-        return 'completed';
-      }
-      fav = Favourites.findOne({
-        user: Meteor.user()._id,
-        entity: this._id,
-        active: true
-      });
-      if (fav) {
-        return 'accepted';
-      } else if (Session.get('accomplishmentsLoaded')) {
-        return 'uncompleted';
-      }
-      return '';
     },
     hasScore: function() {
-      if (this.score != null) {
-        return true;
-      } else {
-        return false;
+      if (this) {
+        if (this.score != null) {
+          return true;
+        } else {
+          return false;
+        }
       }
     }
   });

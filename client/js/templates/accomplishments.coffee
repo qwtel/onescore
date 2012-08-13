@@ -12,7 +12,13 @@ _.extend Template.accomplishments,
       when 'best' then data = score: -1
       when 'wort' then data = score: 1
 
-    return Accomplishments.find
-      user: Meteor.user()._id
-    ,
-      sort: data
+    username = Session.get 'username'
+    if username
+      user =  Meteor.users.findOne
+        username: username
+
+      if user
+        return Accomplishments.find
+          user: user._id
+        ,
+          sort: data

@@ -3,7 +3,7 @@
 
   _.extend(Template.accomplishments, {
     accomplishments: function() {
-      var data, sort;
+      var data, sort, user, username;
       sort = Session.get('sort');
       switch (sort) {
         case 'hot':
@@ -36,11 +36,19 @@
             score: 1
           };
       }
-      return Accomplishments.find({
-        user: Meteor.user()._id
-      }, {
-        sort: data
-      });
+      username = Session.get('username');
+      if (username) {
+        user = Meteor.users.findOne({
+          username: username
+        });
+        if (user) {
+          return Accomplishments.find({
+            user: user._id
+          }, {
+            sort: data
+          });
+        }
+      }
     }
   });
 

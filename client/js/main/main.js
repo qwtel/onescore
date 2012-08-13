@@ -14,57 +14,56 @@
 
     AppRouter.prototype.routes = {
       '': 'default',
-      ':menu': 'menu',
-      ':user': 'user',
+      'home': 'home',
+      'explore': 'explore',
+      'ladder': 'ladder',
       'achievements/:id': 'achievements',
       'achievements/:id/:tab': 'achievements',
+      'achievements/:id/:tab/:type': 'achievements',
       'accomplishments/:id': 'accomplishments',
       'accomplishments/:id/:tab': 'accomplishments',
-      'profile/:menu': 'profile',
-      'comments/:id': 'comments'
+      ':user': 'user',
+      ':user/:menu': 'user'
     };
 
     AppRouter.prototype["default"] = function() {
-      return this.navigate('dashboard', true);
+      return this.navigate('home', true);
     };
 
-    AppRouter.prototype.menu = function(page) {
+    AppRouter.prototype.home = function() {
       this.hardReset();
-      switch (page) {
-        case 'dashboard':
-          Session.set('sort', 'hot');
-          Session.set('page', page);
-          return Session.set('limit', 'all');
-        case 'achievements':
-          Session.set('sort', 'best');
-          Session.set('page', page);
-          return Session.set('limit', 'all');
-        case 'ladder':
-          Session.set('sort', 'best');
-          Session.set('page', page);
-          return Session.set('limit', 'all');
-        case 'profile':
-          Session.set('sort', 'new');
-          Session.set('menu', 'activity');
-          Session.set('page', page);
-          return Session.set('limit', 'me');
-        default:
-          Session.set('sort', 'new');
-          Session.set('menu', 'activity');
-          Session.set('page', 'profile');
-          return Session.set('limit', 'me');
+      Session.set('page', 'home');
+      Session.set('sort', 'hot');
+      return Session.set('limit', 'all');
+    };
+
+    AppRouter.prototype.explore = function() {
+      this.hardReset();
+      Session.set('page', 'explore');
+      Session.set('sort', 'best');
+      return Session.set('limit', 'all');
+    };
+
+    AppRouter.prototype.ladder = function() {
+      this.hardReset();
+      Session.set('page', 'ladder');
+      Session.set('sort', 'best');
+      return Session.set('limit', 'all');
+    };
+
+    AppRouter.prototype.user = function(user, menu) {
+      this.hardReset();
+      Session.set('page', 'profile');
+      Session.set('sort', 'new');
+      Session.set('limit', 'me');
+      Session.set('username', user);
+      if (!menu) {
+        menu = 'activity';
       }
+      return Session.set('menu', menu);
     };
 
-    AppRouter.prototype.comments = function(id) {
-      var c;
-      this.softReset();
-      Session.set('parent', id);
-      c = Comments.findOne(id);
-      return Session.set('level', c.level);
-    };
-
-    AppRouter.prototype.achievements = function(id, tab) {
+    AppRouter.prototype.achievements = function(id, tab, type) {
       this.softReset();
       Session.set('page', 'achievements');
       Session.set('limit', 'all');
@@ -72,7 +71,12 @@
       if (!tab) {
         tab = 'info';
       }
-      return Session.set('tab', tab);
+      Session.set('tab', tab);
+      if (type) {
+        return Session.set('story', type);
+      } else {
+        return Session.set('story', null);
+      }
     };
 
     AppRouter.prototype.accomplishments = function(id, tab) {
@@ -86,19 +90,12 @@
       return Session.set('tab', tab);
     };
 
-    AppRouter.prototype.user = function(user) {
-      console.log(user);
-      return this.profile();
-    };
-
-    AppRouter.prototype.profile = function(menu) {
+    AppRouter.prototype.comments = function(id) {
+      var c;
       this.softReset();
-      Session.set('page', 'profile');
-      if (!menu) {
-        menu = 'activity';
-      }
-      Session.set('menu', menu);
-      return false;
+      Session.set('parent', id);
+      c = Comments.findOne(id);
+      return Session.set('level', c.level);
     };
 
     AppRouter.prototype.softReset = function() {

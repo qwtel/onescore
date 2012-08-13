@@ -22,14 +22,6 @@ _.extend Template.accomplish,
     #    toolbar: 'default'
     #    preview: $('#preview')
 
-    'click .text': (e) ->
-      Session.toggle 'story', 'text'
-    'click .picture': (e) ->
-      Session.toggle 'story', 'picture'
-
-    'click .link': (e) ->
-      Session.toggle 'story', 'link'
-
   accomplishment: ->
     return Accomplishments.findOne
       user: Meteor.user()._id

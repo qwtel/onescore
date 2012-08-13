@@ -102,16 +102,15 @@ a {
     margin-bottom: 20px; }
 
 .menu .nav-stacked > li > a {
-  color: gray;
   font-size: 14px;
   background-color: whitesmoke; }
   .menu .nav-stacked > li > a i {
     margin-right: 3px; }
-.menu .nav-tabs > li > a:hover {
-  background-color: #fefefe; }
+.menu .nav-tabs > li > a:hover i {
+  opacity: 0.5;
+  filter: alpha(opacity=50); }
 .menu .nav-tabs > .active > a, .menu .nav-tabs > .active > a:hover {
-  font-weight: bold;
-  background-color: #fefefe; }
+  font-weight: bold; }
 
 #content {
   margin-top: 60px; }

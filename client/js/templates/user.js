@@ -2,10 +2,6 @@
 (function() {
 
   _.extend(Template.user, {
-    verb: function() {
-      console.log(this);
-      return 'accomplished';
-    },
     user: function() {
       return this;
     }

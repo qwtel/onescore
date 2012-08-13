@@ -1,8 +1,4 @@
 _.extend Template.user,
-  verb: ->
-    console.log this
-    return 'accomplished'
-
   user: ->
     return this
 

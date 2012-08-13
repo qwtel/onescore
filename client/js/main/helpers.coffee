@@ -1,13 +1,9 @@
 window.items = [
     name: 'Home'
-    url: 'dashboard'
   ,
     name: 'Explore'
-    url: 'achievements'
   ,
     name: 'Ladder'
-  ,
-    name: 'Profile'
 ]
 
 window.categories = [

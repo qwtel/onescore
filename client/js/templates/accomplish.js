@@ -11,15 +11,6 @@
       },
       'click .uncreate': function(e) {
         return Accomplishments.remove(this._id);
-      },
-      'click .text': function(e) {
-        return Session.toggle('story', 'text');
-      },
-      'click .picture': function(e) {
-        return Session.toggle('story', 'picture');
-      },
-      'click .link': function(e) {
-        return Session.toggle('story', 'link');
       }
     },
     accomplishment: function() {

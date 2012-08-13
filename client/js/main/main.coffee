@@ -1,51 +1,50 @@
 class AppRouter extends Backbone.Router
   routes:
     '': 'default'
-    ':menu': 'menu'
-    ':user': 'user'
+    'home': 'home'
+    'explore': 'explore'
+    'ladder': 'ladder'
     'achievements/:id': 'achievements'
     'achievements/:id/:tab': 'achievements'
+    'achievements/:id/:tab/:type': 'achievements'
     'accomplishments/:id': 'accomplishments'
     'accomplishments/:id/:tab': 'accomplishments'
-    'profile/:menu': 'profile'
-    'comments/:id': 'comments'
+    #'comments/:id': 'comments'
+    ':user': 'user'
+    ':user/:menu': 'user'
 
   default: ->
-    @navigate 'dashboard', true
+    @navigate 'home', true
 
-  menu: (page) ->
+  home: ->
     @hardReset()
-    switch page
-      when 'dashboard'
-        Session.set 'sort', 'hot'
-        Session.set 'page', page
-        Session.set 'limit', 'all'
-      when 'achievements'
-        Session.set 'sort', 'best'
-        Session.set 'page', page
-        Session.set 'limit', 'all'
-      when 'ladder'
-        Session.set 'sort', 'best'
-        Session.set 'page', page
-        Session.set 'limit', 'all'
-      when 'profile'
-        Session.set 'sort', 'new'
-        Session.set 'menu', 'activity'
-        Session.set 'page', page
-        Session.set 'limit', 'me'
-      else
-        Session.set 'sort', 'new'
-        Session.set 'menu', 'activity'
-        Session.set 'page', 'profile'
-        Session.set 'limit', 'me'
+    Session.set 'page', 'home'
+    Session.set 'sort', 'hot'
+    Session.set 'limit', 'all'
 
-  comments: (id) ->
-    @softReset()
-    Session.set 'parent', id
-    c = Comments.findOne id
-    Session.set 'level', c.level
+  explore: ->
+    @hardReset()
+    Session.set 'page', 'explore'
+    Session.set 'sort', 'best'
+    Session.set 'limit', 'all'
 
-  achievements: (id, tab) ->
+  ladder: ->
+    @hardReset()
+    Session.set 'page', 'ladder'
+    Session.set 'sort', 'best'
+    Session.set 'limit', 'all'
+
+  user: (user, menu) ->
+    @hardReset()
+    Session.set 'page', 'profile'
+    Session.set 'sort', 'new'
+    Session.set 'limit', 'me'
+    Session.set 'username', user
+
+    unless menu then menu = 'activity'
+    Session.set 'menu', menu
+
+  achievements: (id, tab, type) ->
     @softReset()
     Session.set 'page', 'achievements'
     Session.set 'limit', 'all'
@@ -53,6 +52,11 @@ class AppRouter extends Backbone.Router
 
     unless tab then tab = 'info'
     Session.set 'tab', tab
+
+    if type
+      Session.set 'story', type
+    else
+      Session.set 'story', null
 
   accomplishments: (id, tab) ->
     @softReset()
@@ -63,17 +67,12 @@ class AppRouter extends Backbone.Router
     unless tab then tab = 'info'
     Session.set 'tab', tab
 
-  user: (user) ->
-    console.log user
-    @profile()
-
-  profile: (menu) ->
+  comments: (id) ->
     @softReset()
-    Session.set 'page', 'profile'
+    Session.set 'parent', id
+    c = Comments.findOne id
+    Session.set 'level', c.level
 
-    unless menu then menu = 'activity'
-    Session.set 'menu', menu
-    return false
 
   softReset: ->
     Session.set 'expand', null

@@ -1,3 +1,7 @@
-_.extend Template.userWidget,
+_.extend Template.menu,
   user: ->
-    return Meteor.users.findOne Session.get('user')
+    username = Session.get 'username'
+    if username
+      return Meteor.users.findOne
+        username: username
+

@@ -1,8 +1,12 @@
 _.extend Template.userBanner,
+  user: ->
+    username = Session.get 'username'
+    if username
+      return Meteor.users.findOne
+        username: username
+
   pic: ->
-    user = Meteor.user()
-    if user
-      if user.services
-        fbid = _.escape user.services.facebook.id
-        return "<img src='https://graph.facebook.com/#{fbid}/picture&type=normal'/>"
+    username = Session.get 'username'
+    if username
+      return "<img src='https://graph.facebook.com/#{username}/picture&type=normal'/>"
 

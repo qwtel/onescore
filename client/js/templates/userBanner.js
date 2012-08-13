@@ -2,14 +2,20 @@
 (function() {
 
   _.extend(Template.userBanner, {
+    user: function() {
+      var username;
+      username = Session.get('username');
+      if (username) {
+        return Meteor.users.findOne({
+          username: username
+        });
+      }
+    },
     pic: function() {
-      var fbid, user;
-      user = Meteor.user();
-      if (user) {
-        if (user.services) {
-          fbid = _.escape(user.services.facebook.id);
-          return "<img src='https://graph.facebook.com/" + fbid + "/picture&type=normal'/>";
-        }
+      var username;
+      username = Session.get('username');
+      if (username) {
+        return "<img src='https://graph.facebook.com/" + username + "/picture&type=normal'/>";
       }
     }
   });
