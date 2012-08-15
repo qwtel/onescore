@@ -178,3 +178,6 @@ Handlebars.registerHelper 'formatDate', (date) ->
   d = moment(new Date(date))
   return d.format "DD.MM.YYYY, hh:mm"
 
+Handlebars.registerHelper 'timeago', (date) ->
+  d = moment(new Date(date))
+  d.fromNow()

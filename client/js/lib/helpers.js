@@ -244,4 +244,10 @@
     return d.format("DD.MM.YYYY, hh:mm");
   });
 
+  Handlebars.registerHelper('timeago', function(date) {
+    var d;
+    d = moment(new Date(date));
+    return d.fromNow();
+  });
+
 }).call(this);

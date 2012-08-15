@@ -29,7 +29,8 @@
           <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
           %span.score ({{user.score}})
 
-          %span.verb {{verb}}:
+          %span.verb {{verb}} - 
+          %time.times {{timeago date}}
 
           -#{{#if mention}}
           -#%a.face.profile-pic(href="/{{mention.username}}")
