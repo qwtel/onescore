@@ -1,0 +1,22 @@
+<template name='expand'>
+{{#if equals "tab" "edit"}}
+<h6 class='heading line'>Edit</h6>
+{{> edit}}
+{{/if}}
+{{#unless equals "newAchievement" _id}}
+{{#if equals "tab" "info"}}
+<h6 class='heading line'>Info</h6>
+{{> info}}
+{{/if}}
+{{#if equals "tab" "accomplish"}}
+<h6 class='heading line'>Tell your story (optional)</h6>
+{{> accomplish}}
+{{/if}}
+{{#if equals "tab" "talk"}}
+<h6 class='heading line'>Comments</h6>
+{{> filter}}
+<div class='clearfix'></div>
+{{> comments}}
+{{/if}}
+{{/unless}}
+</template>

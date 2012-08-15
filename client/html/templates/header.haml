@@ -1,0 +1,38 @@
+%template(name='header')
+  %a.brand.nav-img.pull-left.nav-item(href="/home")
+  {{#if currentUser}}
+  %nav.nav
+    -#%li.dropdown
+      %a.dropdown-toggle(data-toggle="dropdown")<
+        {{#if session "category"}}
+        %span {{session "category"}}
+        {{else}}
+        %span Onescore
+        {{/if}}
+        %b.caret
+      %ul.dropdown-menu
+        {{#each categories}}
+        %li.category(data-category="{{name}}")
+          %a.nav-item {{name}}
+        {{/each}}
+
+    {{#each items}}
+    <li class="{{isActive "page" url}}">
+    %a.nav-item(href="/{{url}}") {{name}}
+    </li>
+    {{/each}}
+
+    <li class="{{isActive "page" "profile"}}">
+    %a.nav-item(href="/{{currentUser.username}}") Profile
+    </li>
+
+  %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
+    {{{pic}}}
+  .score.pull-right.hidden-phone<
+    -#%span.dollar
+    %span.value {{currentUser.score}}
+  {{else}}
+  .login.pull-right
+    {{> loginButtons}}
+  {{/if}}
+

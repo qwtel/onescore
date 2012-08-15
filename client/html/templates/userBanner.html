@@ -1,0 +1,23 @@
+<template name='userBanner'>
+<div class='userBanner'>
+<a class='profile-pic pull-left' href='/{{session "username"}}'>
+{{{pic}}}
+</a>
+<h2 class='name'>{{session "username"}}</h2>
+{{#if user}}
+{{#with user}}
+<div class='pull-right'>
+<h6>Score:</h6>
+<h3 class='score pull-right'><span>{{score}}</span></h3>
+</div>
+<div class='about'>
+<h6>About:</h6>
+<em class='bio'>{{bio}}</em>
+<div class='loc'>{{location}}</div>
+</div>
+{{/with}}
+{{else}}
+{{> loading}}
+{{/if}}
+</div>
+</template>

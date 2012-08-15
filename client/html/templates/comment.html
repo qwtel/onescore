@@ -1,0 +1,68 @@
+<template name='comment'>
+<article class='comment {{nested}}' id='comment-{{_id}}'>
+<div class='vote-container pull-left'>
+<div>
+<a class='link highlight' href='/comments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
+</div>
+<div>
+<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
+</div>
+<div>
+<span class='count'>{{score}}</span>
+</div>
+<div>
+<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+</div>
+</div>
+<div class='body'>
+<div class='user'>
+<div class='content'>
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+<span class='score'>({{user.score}})</span>
+<span class='verb'>{{verb}}:</span>
+<nav class='icons pull-right'>
+<li>
+<a class='unexpand' title='Expand'>{{#unless unexpand}}
+<i class="icon-chevron-up"></i>
+{{else}}
+<i class="icon-chevron-down active"></i>
+{{/unless}}</a>
+</li>
+<li>
+<a class='edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
+</li>
+<li>
+<a class='reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" _id}}"></i></a>
+</li>
+</nav>
+</div>
+</div>
+<div class='text'>
+{{#if equals "editComment" _id}}
+<div class='text-wrapper'>
+<textarea class='edit-text ta100' id='edit-{{_id}}' rows='4'>{{text}}</textarea>
+</div>
+{{else}}
+<p>{{{addLineBreaks text}}}</p>
+{{/if}}
+</div>
+{{#if equals "addComment" _id}}
+<div class='text-wrapper'>
+<textarea class='comment-text ta100' id='reply-{{_id}}' rows='4'></textarea>
+</div>
+{{/if}}
+</div>
+{{#unless unexpand}}
+{{#unless cutoff}}
+{{#each replies}}
+{{> comment}}
+{{/each}}
+{{else}}
+<a class='cutoff highlight' href='/comments/{{_id}}'>We have to go deeper</a>
+{{/unless}}
+{{/unless}}
+</article>
+</template>

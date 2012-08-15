@@ -1,0 +1,80 @@
+%template(name='achievement')
+  %article.achievement(class="{{color}}")
+    %a.value.pull-right(href="/achievements/{{_id}}/accomplish")
+      %span.points
+        {{#if hasScore}}
+        {{score}}
+        {{else}}
+        %img(src="/grayLoading.gif")/
+        {{/if}}
+    .vote-container.pull-right
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+
+    %a.icon.pull-left(href="/achievements/{{_id}}")
+
+    .content
+      %header.head
+        %nav.icons.pull-right
+          {{#unless session "single"}}
+          %li
+            %a.expand(title="Expand")<
+              {{#if equals "expand" _id}}
+              <i class="icon-chevron-up active"></i>
+              {{else}}
+              <i class="icon-chevron-down"></i>
+              {{/if}}
+          {{/unless}}
+          -#%li.accomplish
+            %a(title="Accomplish this achievement")<
+              <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
+          -#%li.quest
+            %a(title="Add to quest log")<
+              <i class="icon-book {{quest}}"></i>
+          -#%li.fav
+            %a(title="Add to favourites")<
+              <i class="icon-star {{faved}}"></i>
+          %li
+            %a(title="Edit" href="/achievements/{{_id}}/edit")<
+              <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i>
+          %li
+            %a(title="Comment" href="/achievements/{{_id}}/talk")<
+              <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i>
+          %li
+            %a(title="Accomplish" href="/achievements/{{_id}}/accomplish")<
+              <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i>
+
+        %h4.title
+          {{#if title}}
+          %a(href="/achievements/{{_id}}") {{title}}
+          {{else}}
+          %a(href="/achievements/{{_id}}" style="font-weight: normal") &lt;No title suggested&gt;
+          {{/if}}
+          %a.fav(title="Add to favourites")<
+            <i class="icon-star {{faved}}"></i>
+
+      .description
+        {{#if description}}
+        %span {{{wrapTags description}}}
+        {{else}}
+        %span.tag &lt;No content&gt;
+        {{/if}}
+    .clearfix
+
+  {{#if equals "expand" _id}}
+  .expandAchievement
+    {{> info}}
+  {{/if}}
+
+  {{#if equals "single" _id}}{{#if session "tab"}}
+  .expandAchievement
+    .fold
+    {{> expand}}
+  {{/if}}{{/if}}
+

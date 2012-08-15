@@ -1,0 +1,23 @@
+%template(name='userWidget')
+  .userWidget
+    %a.profile-pic.pull-left(href="/{{currentUser.username}}")
+      {{{pic}}}
+    %h3.name {{currentUser.username}}
+    %h3.score<
+      -#%span.dollar.dollar-green
+      %span {{currentUser.score}}
+
+    -#.rank
+      %h3 
+        Rank
+      .friends.span4
+        %h4 Friends
+        %p.score 0
+      .city.span4
+        %h4 City
+        %p.score 0
+      .group.span4
+        %h4 Group
+        %p.score 0
+    -#.clearfix
+

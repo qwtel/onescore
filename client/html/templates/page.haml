@@ -1,0 +1,123 @@
+%template(name='page')
+  {{#if equals "page" "home"}}
+  -#.row
+    .span12
+      .hero-unit
+        %h1 Heading
+        %p Tagline
+        %p 
+          %a.btn.btn-primary.btn-large Learn more
+  .row
+    .span8
+      %section.well
+        %h6.heading.line Stories
+        {{> filter }}
+        .clearfix
+        {{> home }}
+
+    .span4
+      %aside.well 
+        {{> userWidget }}
+      %aside.well 
+        %h6.heading.line FAQ
+      %aside.well 
+        %h6.heading.line Tags
+      %aside.well 
+        %h6.heading.line Quest items
+  {{/if}}
+
+  {{#if equals "page" "explore"}}
+  .row
+    .span4
+      %aside.well.hidden-phone
+        %h6.heading.line Tags
+      %aside.well.hidden-phone
+        %h6.heading.line Quest items
+    .span8
+      %section.well 
+        %h6.heading.line Explore
+        {{> filter}}
+        {{> achievements}}
+  {{/if}}
+
+  {{#if equals "page" "ladder"}}
+  .row
+    .span4
+      %aside.well 
+        {{> userWidget }}
+      %aside.well.hidden-phone 
+        %h6.heading.line League
+      %aside.well.hidden-phone 
+        %h6.heading.line Quest items
+    .span8
+      %section.well 
+        %h6.heading.line Ladder
+        {{> filter }}
+        .clearfix
+        .fold
+        {{> ladder }}
+  {{/if}}
+
+  {{#if equals "page" "profile"}}
+  .row
+    .span12
+      %section.well 
+        {{> userBanner}}
+  .row
+    .span4
+      {{> menu }}
+      %aside.well.hidden-phone 
+        %h6.heading.line Tags
+      %aside.well.hidden-phone 
+        %h6.heading.line Quest items
+    .span8
+      %section.well 
+        {{#if equals "menu" "activity"}}
+        %h6.heading.line Activity
+        {{> filter }}
+        .clearfix
+        {{> accomplishments}}
+        {{/if}}
+
+        {{#if equals "menu" "questlog"}}
+        %h6.heading.line Quest log
+        {{> filter }}
+        .clearfix
+        {{> favourites}}
+        {{/if}}
+
+        {{#if equals "menu" "favourites"}}
+        %h6.heading.line Favourites
+        {{> filter }}
+        .clearfix
+        {{> favourites}}
+        {{/if}}
+  {{/if}}
+
+  {{#if session "single"}}
+  .row
+    .span8.offset2
+      %section.well 
+        {{> single}}
+  {{/if}}
+
+  {{#if equals "page" "activities"}}
+  .row
+    .span12
+      .well 
+        {{> activities }}
+  {{/if}}
+
+  {{#if equals "page" "slides"}}
+  .row
+    .span12
+      .well 
+        {{> slideshows }}
+  {{/if}}
+
+  {{#if equals "page" "feedback"}}
+  .row
+    .span12 
+      .well
+        %h3 Y U NO MAKE BETTER?
+  {{/if}}

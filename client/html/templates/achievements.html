@@ -1,0 +1,23 @@
+<template name='achievements'>
+<div class='clearfix'></div>
+{{#if newAchievement}}
+{{#with newAchievement}}
+<a href="/achievements/{{newAchievement._id}}/edit" class="new fold"><i class="icon-certificate"></i> New achievement</a>
+{{/with}}
+{{/if}}
+{{#if achievements}}
+{{#each achievements}}
+<div class='fold'>
+{{> achievement}}
+</div>
+{{else}}
+<div class='fold'>
+{{> loading}}
+</div>
+{{/each}}
+{{else}}
+<div class='fold'>
+{{> noContent}}
+</div>
+{{/if}}
+</template>

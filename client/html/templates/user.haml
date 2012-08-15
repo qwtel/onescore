@@ -1,0 +1,10 @@
+%template(name='user')
+  .user
+    .content
+      %a.face.profile-pic(href="/{{user.username}}")
+        %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+      <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+      .score.pull-right<
+        -#%span.dollar.dollar-green
+        %span.value {{score}}
+

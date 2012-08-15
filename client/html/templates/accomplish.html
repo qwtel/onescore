@@ -1,0 +1,49 @@
+<template name='accomplish'>
+{{#if session "story"}}
+{{#if equals "story" "text"}}
+<div class='editor'>
+<div id='toolbar-{{_id}}'></div>
+<textarea class='ta100' id='editor-{{_id}}' rows='15'>{{story}}</textarea>
+<span class='help-block'><strong>HINT:</strong>
+You can style your post using
+<a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
+.</span>
+</div>
+<div class='preview hide' id='preview-{{_id}}'></div>
+<footer class='form-actions'>
+{{#if accomplishment}}
+<button class='btn btn-large create' style='margin-left: -20px'>Save</button>
+{{else}}
+<button class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</button>
+{{/if}}
+<button class='btn btn-large editor'>Preview</button>
+<button class='btn btn-large preview hide'>Edit</button>
+</footer>
+{{callback}}
+{{/if}}
+{{else}}
+<div class='btn-toolbar'>
+<div class='btn-group'>
+<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/text' title='Text'>
+<i class='icon-align-left'></i>
+</a>
+<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/picture' title='Picture'>
+<i class='icon-picture'></i>
+</a>
+<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/video' title='Video'>
+<i class='icon-film'></i>
+</a>
+<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/link' title='Link'>
+<i class='icon-bookmark'></i>
+</a>
+</div>
+</div>
+<footer class='form-actions'>
+{{#if accomplishment}}
+<button class='btn btn-warning btn-large uncreate' style='margin-left: -20px'>Unaccomplish</button>
+{{else}}
+<button class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</button>
+{{/if}}
+</footer>
+{{/if}}
+</template>

@@ -1,0 +1,11 @@
+<template name='user'>
+<div class='user'>
+<div class='content'>
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+<div class='score pull-right'><span class='value'>{{score}}</span></div>
+</div>
+</div>
+</template>

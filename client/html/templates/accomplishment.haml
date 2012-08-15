@@ -1,0 +1,113 @@
+%template(name='accomplishment')
+  %article.accomplishment(id="accomplishment-{{_id}}")
+    .vote-container.pull-left
+      %div
+        %a(title="Link" href="/accomplishments/{{_id}}")<
+          <i class="icon-bookmark {{isActive "single" _id}}"></i>
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+    .body
+      -#{{> user}}
+      {{#if user}}
+      .user
+        .content
+          %a.face.profile-pic(href="/{{user.username}}")
+            %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+          <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+          %span.score ({{user.score}})
+          %span.verb {{verb}}:
+          %nav.icons.pull-right
+            {{#if isMe user}}
+            %li
+              %a(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
+                %i.icon-pencil
+            {{/if}}
+      {{else}}
+      {{> loading}}
+      {{/if}}
+
+      {{#with achievement}}
+      .minimal.well
+        {{> achievement}}
+      {{/with}}
+
+      {{#if story}}
+      %a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
+        %i.icon-align-left
+      .story.part
+        {{#markdown}}{{{story}}}{{/markdown}}
+
+      -#%span.icon-side(title="Tags")
+      -#  %i.icon-tags
+      -#.tags.part
+      -#  %a.tag.label tag1
+      -#  %a.tag.label tag2
+      -#  %a.tag.label tag3
+      {{/if}}
+
+      {{#if numComments}}
+      %a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<
+        %i.icon-comment
+      %a.times.part(href="/accomplishments/{{_id}}/talk")
+        {{numComments}} comments
+      {{/if}}
+
+  {{#if equals "single" _id}}
+  .fold
+  %h6.heading.line Comments
+  {{> filter}}
+  .clearfix
+  {{> comments}}
+  {{/if}}
+
+  -#{{#if user}}
+  -#.user
+  -#  .content
+  -#    %a.face.profile-pic(href="/{{user.username}}")
+  -#      %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+  -#    <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+  -#    %span.score ({{user.score}})
+  -#
+  -#    %span.verb {{verb}}:
+  -#    -#.score.pull-right<
+  -#      %span.dollar.dollar-green
+  -#      %span.value {{user.score}}
+  -#{{/if}}
+  -#
+  -#{{#with achievement}}
+  -#.minimal
+  -#  {{> achievement}}
+  -#{{/with}}
+  -#
+  -#{{#if story}}
+  -#.story
+  -#  .vote-container.pull-left
+  -#    %div
+  -#      %a.href(title="Link" href="/accomplishments/{{_id}}")<
+  -#        <i class="icon-bookmark"></i>
+  -#    %div
+  -#      %a.vote(data-up="true")<
+  -#        <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+  -#    %div
+  -#      %span.count {{score}}
+  -#    %div
+  -#      %a.vote(data-up="false")<
+  -#        <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+  -#  .content
+  -#    -#%nav.icons.pull-right
+  -#      %li
+  -#        %a.href(title="Link" href="/accomplishments/{{_id}}")<
+  -#          <i class="icon-bookmark"></i>
+  -#      -#%li
+  -#        %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
+  -#          <i class="icon-comment"></i>
+  -#    -#%time.time {{formatDate date}}
+  -#    {{#markdown}}{{{story}}}{{/markdown}}
+  -#{{/if}}
+

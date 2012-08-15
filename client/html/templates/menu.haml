@@ -1,0 +1,41 @@
+%template(name='menu')
+  %nav.menu
+    %ul.nav.nav-tabs.nav-stacked
+      <li class="{{isActive "menu" "activity"}}">
+      %a(href='/{{session "username"}}/activity')
+        %i.icon-certificate
+        Activity
+        %i.icon-chevron-right.pull-right
+      </li>
+
+      <li class="{{isActive "menu" "questlog"}}">
+      %a(href='/{{session "username"}}/questlog')
+        %i.icon-book
+        Quest Log
+        %i.icon-chevron-right.pull-right
+      </li>
+
+      <li class="{{isActive "menu" "favourites"}}">
+      %a(href='/{{session "username"}}/favourites')
+        %i.icon-star
+        Favourites
+        %i.icon-chevron-right.pull-right
+      </li>
+
+      -#<li class="{{isActive "menu" "edits"}}">
+      -#%a(href="/profile/edits")
+        %i.icon-pencil
+        Edits
+      -#</li>
+
+      -#<li class="{{isActive "menu" "likes"}}">
+      -#%a(href="/profile/likes")
+        %i.icon-arrow-up
+        Likes
+      -#</li>
+
+      -#%li
+        %a
+          %i.icon-glass
+          Inventory
+

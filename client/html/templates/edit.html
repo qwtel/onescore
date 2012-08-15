@@ -1,0 +1,88 @@
+<template name='edit'>
+{{#if equals "newAchievement" _id}}
+{{#unless session "styleGuide"}}
+<div class='alert alert-block alert-info'>
+<a class='close' data-dismiss='alert'>×</a>
+<h4 class='alert-heading'>Achievement style guide</h4>
+<p>Achievements should have the following properties:</p>
+<dl>
+<dt>
+<h5 class='alert-heading'>Atomic</h5>
+</dt>
+<dd>Achievements should not be composed.</dd>
+<dt>
+<h5 class='alert-heading'>Universal</h5>
+</dt>
+<dd>Achievements should be easy to agree on.</dd>
+<dt>
+<h5 class='alert-heading'>Unique</h5>
+</dt>
+<dd>Check if the achievement already exists!</dd>
+</dl>
+</div>
+{{/unless}}
+{{/if}}
+<div class='form-horizontal' id='form-{{_id}}'>
+<fieldset>
+<div class='control-group'>
+<label class='control-label' for='title-{{_id}}'>Title</label>
+<div class='controls'>
+<div class='input-append'><input class='span3 title' data-field='title' id='title-{{_id}}' type='text' /><button class='btn suggest' type='button'>Suggest</button></div>
+<p class='help-block heading'>
+<strong>NOTE:</strong>
+You don't have to suggest a title.
+</p>
+{{#if hasTitles}}
+<table class='table table-condensed'>
+<thead>
+<tr>
+<th>Vote</th>
+<th>Title</th>
+</tr>
+</thead>
+<tbody>
+{{#each titles}}
+<tr>
+<td>
+<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
+<span>{{score}}</span>
+<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+</td>
+<td>{{title}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+{{/if}}
+</div>
+</div>
+<div class='control-group'>
+<label class='control-label' for='description-{{_id}}'>Description</label>
+<div class='controls'>
+<textarea class='input-xlarge description lazy' data-field='description' id='description-{{_id}}' rows='4'>{{description}}</textarea>
+<p class='help-block'>
+What has to be done to complete this achievement?
+<br />
+<strong>HINT:</strong>
+You can include #tags here.
+</p>
+</div>
+</div>
+<div class='control-group'>
+<label class='control-label' for='category-{{_id}}'>Category</label>
+<div class='controls'>
+<select class='category lazy' data-field='category' id='category-{{_id}}'>
+<option></option>
+{{#each categories}}
+<option value="{{name}}" {{selected ../category}}>{{name}}</option>
+{{/each}}
+</select>
+<p class='help-block'>If it doesn't fit in anywhere, choose 'Random'</p>
+</div>
+</div>
+<footer class='form-actions'>
+<button class='btn btn-large create'>Save</button>
+</footer>
+</fieldset>
+</div>
+</template>

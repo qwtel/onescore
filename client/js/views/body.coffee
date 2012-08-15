@@ -1,4 +1,4 @@
-_.extend Template.wrapper,
+_.extend Template.body,
   events:
     'click a[href^="/"]': (e) ->
       if e.which is 1 and not (e.ctrlKey or e.metaKey)

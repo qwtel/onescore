@@ -1,0 +1,14 @@
+%template(name='accomplishments')
+  {{#if accomplishments}}
+  {{#each accomplishments}}
+  .fold
+  {{> accomplishment}}
+  {{else}}
+  .fold
+    {{> noContent}}
+  {{/each}}
+  {{else}}
+  .fold
+    {{> loading}}
+  {{/if}}
+

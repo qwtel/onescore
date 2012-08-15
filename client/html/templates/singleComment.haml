@@ -1,0 +1,70 @@
+%template(name='singleComment')
+
+  %ul.breadcrumb
+    {{#each breadcrumbs}}
+    %li
+      <a class="{{isMe user}}" href="{{url}}/talk">{{name}}</a>
+      %span.divider >
+    {{/each}}
+
+  %article.comment(id="comment-{{_id}}" class="{{nested}}")
+    .vote-container.pull-left
+      %div
+        %a(title="Link" href="/comments/{{_id}}")<
+          <i class="icon-bookmark {{isActive "single" _id}}"></i>
+      %div
+        %a.vote(data-up="true")<
+          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+      %div
+        %span.count {{score}}
+      %div
+        %a.vote(data-up="false")<
+          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+    .body
+      {{#if user}}
+      .user
+        .content
+          %a.face.profile-pic(href="/{{user.username}}")
+            %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+          <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+          %span.score ({{user.score}})
+
+          %span.verb {{verb}}:
+
+          -#{{#if mention}}
+          -#%a.face.profile-pic(href="/{{mention.username}}")
+          -#  <img src="https://graph.facebook.com/{{mention.services.facebook.id}}/picture"/> 
+          -#<a class="name {{isMe mention}}" href="/{{mention.username}}">{{mention.username}}</a>
+          -#%span.score ({{mention.score}})
+          -#{{/if}}
+
+          %nav.icons.pull-right
+            {{#if isMe user}}
+            %li
+              %a.edit(title="Edit")<
+                <i class="icon-pencil {{isActive "editComment" _id}}"></i>
+            {{/if}}
+            %li
+              %a.reply(title="Reply")<
+                <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
+            -#%li
+              %a.remove(title="Remove")<
+                <i class="icon-remove"></i>
+          -#%time.time <{{formatDate date}}>
+      {{else}}
+      {{> loading}}
+      {{/if}}
+      .text
+        {{#if equals "editComment" _id}}
+        .text-wrapper
+          %textarea.edit-text.ta100(id="edit-{{_id}}" rows="4") {{text}}
+        {{else}}
+        %p {{{addLineBreaks text}}}
+        {{/if}}
+
+  .fold
+  %h6.heading.line Replies
+  {{> filter}}
+  .clearfix
+  {{> comments}}
+

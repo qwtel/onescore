@@ -1,0 +1,24 @@
+<template name='comments'>
+{{#unless equals "addComment" "new"}}
+<a class='fold new'>
+<i class='icon-comment'></i>
+Add a comment
+</a>
+{{else}}
+<div class='fold'>
+<textarea class='new-thread ta100' id='add-{{_id}}' placeholder='Add a comment' rows='4'></textarea>
+</div>
+{{/unless}}
+<div class='fold'></div>
+{{#if comments}}
+<div class='comments'>
+{{#each comments}}
+{{> comment}}
+{{else}}
+{{> noContent}}
+{{/each}}
+</div>
+{{else}}
+{{> loading}}
+{{/if}}
+</template>

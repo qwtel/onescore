@@ -1,0 +1,14 @@
+<template name='body'>
+<div class='navbar navbar-fixed-top'>
+<div class='navbar-inner'>
+<header class='container'>
+{{> header }}
+</header>
+</div>
+</div>
+{{#if currentUser}}
+<div class='container' id='content'>
+{{> page }}
+</div>
+{{/if}}
+</template>

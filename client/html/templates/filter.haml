@@ -1,0 +1,38 @@
+%template(name='filter')
+  .filter.linebreak
+    %input.input-medium.search-query.pull-right(type="text" placeholder="Search")/
+
+    %nav.nav.nav-tabs 
+      <li class="{{isActive "limit" "all"}}">
+      %a.tab(data-tab="all") All
+      </li>
+
+      -#<li class="{{isActive "limit" "city"}}">
+      -#%a.tab(data-tab="city") City
+      -#</li>
+
+      <li class="{{isActive "limit" "friends"}}">
+      %a.tab(data-tab="friends") Friends
+      </li>
+
+      <li class="{{isActive "limit" "me"}}">
+      %a.tab(data-tab="me") Me
+      </li>
+
+    -#.btn-group.pull-right
+      %button.btn.active(title="Stories") 
+        %i.icon-align-left
+      %button.btn(title="Achievements")
+        %i.icon-certificate
+      %button.btn(title="Comments") 
+        %i.icon-comment
+      %button.btn(title="Items") 
+        %i.icon-glass
+
+    .pull-left
+      %select.sort.span2
+        <option value="hot" {{#if equals "sort" "hot"}}selected{{/if}}>Hot</option>
+        <option value="new" {{#if equals "sort" "new"}}selected{{/if}}>New</option>
+        <option value="old" {{#if equals "sort" "old"}}selected{{/if}}>Old</option>
+        <option value="best" {{#if equals "sort" "best"}}selected{{/if}}>Best</option>
+

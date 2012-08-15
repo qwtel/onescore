@@ -1,0 +1,149 @@
+<template name='page'>
+{{#if equals "page" "home"}}
+<div class='row'>
+<div class='span8'>
+<section class='well'>
+<h6 class='heading line'>Stories</h6>
+{{> filter }}
+<div class='clearfix'></div>
+{{> home }}
+</section>
+</div>
+<div class='span4'>
+<aside class='well'>
+{{> userWidget }}
+</aside>
+<aside class='well'>
+<h6 class='heading line'>FAQ</h6>
+</aside>
+<aside class='well'>
+<h6 class='heading line'>Tags</h6>
+</aside>
+<aside class='well'>
+<h6 class='heading line'>Quest items</h6>
+</aside>
+</div>
+</div>
+{{/if}}
+{{#if equals "page" "explore"}}
+<div class='row'>
+<div class='span4'>
+<aside class='well hidden-phone'>
+<h6 class='heading line'>Tags</h6>
+</aside>
+<aside class='well hidden-phone'>
+<h6 class='heading line'>Quest items</h6>
+</aside>
+</div>
+<div class='span8'>
+<section class='well'>
+<h6 class='heading line'>Explore</h6>
+{{> filter}}
+{{> achievements}}
+</section>
+</div>
+</div>
+{{/if}}
+{{#if equals "page" "ladder"}}
+<div class='row'>
+<div class='span4'>
+<aside class='well'>
+{{> userWidget }}
+</aside>
+<aside class='well hidden-phone'>
+<h6 class='heading line'>League</h6>
+</aside>
+<aside class='well hidden-phone'>
+<h6 class='heading line'>Quest items</h6>
+</aside>
+</div>
+<div class='span8'>
+<section class='well'>
+<h6 class='heading line'>Ladder</h6>
+{{> filter }}
+<div class='clearfix'></div>
+<div class='fold'></div>
+{{> ladder }}
+</section>
+</div>
+</div>
+{{/if}}
+{{#if equals "page" "profile"}}
+<div class='row'>
+<div class='span12'>
+<section class='well'>
+{{> userBanner}}
+</section>
+</div>
+</div>
+<div class='row'>
+<div class='span4'>
+{{> menu }}
+<aside class='well hidden-phone'>
+<h6 class='heading line'>Tags</h6>
+</aside>
+<aside class='well hidden-phone'>
+<h6 class='heading line'>Quest items</h6>
+</aside>
+</div>
+<div class='span8'>
+<section class='well'>
+{{#if equals "menu" "activity"}}
+<h6 class='heading line'>Activity</h6>
+{{> filter }}
+<div class='clearfix'></div>
+{{> accomplishments}}
+{{/if}}
+{{#if equals "menu" "questlog"}}
+<h6 class='heading line'>Quest log</h6>
+{{> filter }}
+<div class='clearfix'></div>
+{{> favourites}}
+{{/if}}
+{{#if equals "menu" "favourites"}}
+<h6 class='heading line'>Favourites</h6>
+{{> filter }}
+<div class='clearfix'></div>
+{{> favourites}}
+{{/if}}
+</section>
+</div>
+</div>
+{{/if}}
+{{#if session "single"}}
+<div class='row'>
+<div class='span8 offset2'>
+<section class='well'>
+{{> single}}
+</section>
+</div>
+</div>
+{{/if}}
+{{#if equals "page" "activities"}}
+<div class='row'>
+<div class='span12'>
+<div class='well'>
+{{> activities }}
+</div>
+</div>
+</div>
+{{/if}}
+{{#if equals "page" "slides"}}
+<div class='row'>
+<div class='span12'>
+<div class='well'>
+{{> slideshows }}
+</div>
+</div>
+</div>
+{{/if}}
+{{#if equals "page" "feedback"}}
+<div class='row'>
+<div class='span12'>
+<div class='well'>
+<h3>Y U NO MAKE BETTER?</h3>
+</div>
+</div>
+</div>
+{{/if}}
+</template>

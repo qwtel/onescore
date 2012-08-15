@@ -1,0 +1,30 @@
+%template(name='comments')
+  -#.btn-group.pull-left
+    <a id="my-posts" class='btn btn-filter {{isActive "comment-filter" "my"}}' data-filter="my">My Posts</a>
+    <a id="lva-posts" class='btn btn-filter {{isActive "comment-filter" "lva"}}' data-filter="lva">LVA-Team Posts</a>
+    -#%a.btn#my-posts(class="{{myPostsActive}}" data-filter="my") My Own Posts
+    -#%a.btn#lva-posts(class="{{lvaPostsActive}}" data-filter="lva") LVA-Team Posts
+  -#{{> filter}}
+  -#.clearfix
+
+  {{#unless equals "addComment" "new"}}
+  %a.fold.new
+    %i.icon-comment
+    Add a comment
+  {{else}}
+  .fold
+    %textarea.new-thread.ta100(id="add-{{_id}}" rows="4" placeholder="Add a comment")
+  {{/unless}}
+
+  .fold
+  {{#if comments}}
+  .comments
+    {{#each comments}}
+    {{> comment}}
+    {{else}}
+    {{> noContent}}
+    {{/each}}
+  {{else}}
+  {{> loading}}
+  {{/if}}
+

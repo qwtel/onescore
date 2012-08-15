@@ -1,0 +1,67 @@
+<template name='accomplishment'>
+<article class='accomplishment' id='accomplishment-{{_id}}'>
+<div class='vote-container pull-left'>
+<div>
+<a href='/accomplishments/{{_id}}' title='Link'><i class="icon-bookmark {{isActive "single" _id}}"></i></a>
+</div>
+<div>
+<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
+</div>
+<div>
+<span class='count'>{{score}}</span>
+</div>
+<div>
+<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+</div>
+</div>
+<div class='body'>
+{{#if user}}
+<div class='user'>
+<div class='content'>
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+<span class='score'>({{user.score}})</span>
+<span class='verb'>{{verb}}:</span>
+<nav class='icons pull-right'>
+{{#if isMe user}}
+<li>
+<a href='/achievements/{{achievement._id}}/accomplish/text' title='Edit'>
+<i class='icon-pencil'></i>
+</a>
+</li>
+{{/if}}
+</nav>
+</div>
+</div>
+{{else}}
+{{> loading}}
+{{/if}}
+{{#with achievement}}
+<div class='minimal well'>
+{{> achievement}}
+</div>
+{{/with}}
+{{#if story}}
+<a class='icon-side' href='/accomplishments/{{_id}}/text' title='Text'><i class='icon-align-left'></i></a>
+<div class='story part'>
+{{#markdown}}{{{story}}}{{/markdown}}
+</div>
+{{/if}}
+{{#if numComments}}
+<a class='icon-side' href='/accomplishments/{{_id}}/talk' title='Comments'><i class='icon-comment'></i></a>
+<a class='times part' href='/accomplishments/{{_id}}/talk'>
+{{numComments}} comments
+</a>
+{{/if}}
+</div>
+</article>
+{{#if equals "single" _id}}
+<div class='fold'></div>
+<h6 class='heading line'>Comments</h6>
+{{> filter}}
+<div class='clearfix'></div>
+{{> comments}}
+{{/if}}
+</template>

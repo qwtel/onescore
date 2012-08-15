@@ -1,0 +1,24 @@
+<template name='filter'>
+<div class='filter linebreak'>
+<input class='input-medium search-query pull-right' placeholder='Search' type='text' />
+<nav class='nav nav-tabs'>
+<li class="{{isActive "limit" "all"}}">
+<a class='tab' data-tab='all'>All</a>
+</li>
+<li class="{{isActive "limit" "friends"}}">
+<a class='tab' data-tab='friends'>Friends</a>
+</li>
+<li class="{{isActive "limit" "me"}}">
+<a class='tab' data-tab='me'>Me</a>
+</li>
+</nav>
+<div class='pull-left'>
+<select class='sort span2'>
+<option value="hot" {{#if equals "sort" "hot"}}selected{{/if}}>Hot</option>
+<option value="new" {{#if equals "sort" "new"}}selected{{/if}}>New</option>
+<option value="old" {{#if equals "sort" "old"}}selected{{/if}}>Old</option>
+<option value="best" {{#if equals "sort" "best"}}selected{{/if}}>Best</option>
+</select>
+</div>
+</div>
+</template>

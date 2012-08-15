@@ -1,0 +1,16 @@
+<template name='accomplishments'>
+{{#if accomplishments}}
+{{#each accomplishments}}
+<div class='fold'></div>
+{{> accomplishment}}
+{{else}}
+<div class='fold'>
+{{> noContent}}
+</div>
+{{/each}}
+{{else}}
+<div class='fold'>
+{{> loading}}
+</div>
+{{/if}}
+</template>

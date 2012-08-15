@@ -1,0 +1,49 @@
+%template(name="expand")
+  -#{{#if equals "newAchievement" _id}}
+  -#%h3.heading.line Create new achievement
+  -#{{else}}
+
+  -#.linebreak
+    %nav.nav.nav-tabs 
+      <li class="{{isActive "tab" "info"}}">
+      %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
+      </li>
+      <li class="{{isActive "tab" "edit"}}">
+      %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit") Edit
+      </li>
+      <li class="{{isActive "tab" "talk"}}">
+      %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk") Comments
+      </li>
+      -#<li class="{{isActive "tab" "rev"}}">
+      -#%a.tab(data-tab="rev") Revisions
+      -#</li>
+      <li class="{{isActive "tab" "accomplish"}}">
+      %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
+      </li>
+  -#{{/if}}
+
+
+  {{#if equals "tab" "edit"}}
+  %h6.heading.line Edit
+  {{> edit}}
+  {{/if}}
+
+  {{#unless equals "newAchievement" _id}}
+  {{#if equals "tab" "info"}}
+  %h6.heading.line Info
+  {{> info}}
+  {{/if}}
+
+  {{#if equals "tab" "accomplish"}}
+  %h6.heading.line Tell your story (optional)
+  {{> accomplish}}
+  {{/if}}
+
+  {{#if equals "tab" "talk"}}
+  %h6.heading.line Comments
+  {{> filter}}
+  .clearfix
+  {{> comments}}
+  {{/if}}
+  {{/unless}}
+

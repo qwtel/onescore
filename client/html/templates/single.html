@@ -1,0 +1,20 @@
+<template name='single'>
+{{#if equals "page" "achievements"}}
+<h6 class='heading line'>Achievement</h6>
+{{#with achievement}}
+{{> achievement}}
+{{/with}}
+{{/if}}
+{{#if equals "page" "accomplishments"}}
+<h6 class='heading line'>Accomplishment</h6>
+{{#with accomplishment}}
+{{> accomplishment}}
+{{/with}}
+{{/if}}
+{{#if equals "page" "comments"}}
+<h6 class='heading line'>Comment</h6>
+{{#with comment}}
+{{> singleComment}}
+{{/with}}
+{{/if}}
+</template>

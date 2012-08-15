@@ -1,0 +1,45 @@
+%template(name='accomplish')
+  {{#if session "story"}}
+  {{#if equals "story" "text"}}
+  .editor
+    %div(id="toolbar-{{_id}}")
+    %textarea.ta100(id="editor-{{_id}}" rows="15") {{story}}
+    %span.help-block<
+      %strong HINT:
+      You can style your post using
+      %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
+      \.
+  .preview.hide(id="preview-{{_id}}")
+
+  %footer.form-actions
+    {{#if accomplishment}}
+    %button.btn.btn-large.create(style="margin-left: -20px") Save
+    {{else}}
+    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    {{/if}}
+    %button.btn.btn-large.editor Preview
+    %button.btn.btn-large.preview.hide Edit
+  {{callback}}
+  {{/if}}
+
+  {{else}}
+  .btn-toolbar
+    .btn-group
+      %a(href="/achievements/{{_id}}/accomplish/text" class="btn btn-large" title="Text")
+        %i.icon-align-left
+      %a(href="/achievements/{{_id}}/accomplish/picture" class="btn btn-large" title="Picture")
+        %i.icon-picture
+      %a(href="/achievements/{{_id}}/accomplish/video" class="btn btn-large" title="Video")
+        %i.icon-film
+      %a(href="/achievements/{{_id}}/accomplish/link" class="btn btn-large" title="Link")
+        %i.icon-bookmark
+      -#%button.btn(title="Audio") 
+        %i.icon-headphones
+  %footer.form-actions
+    {{#if accomplishment}}
+    %button.btn.btn-warning.btn-large.uncreate(style="margin-left: -20px") Unaccomplish
+    {{else}}
+    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    {{/if}}
+  {{/if}}
+

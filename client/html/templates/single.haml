@@ -1,0 +1,22 @@
+%template(name='single')
+  {{#if equals "page" "achievements"}}
+  %h6.heading.line Achievement
+  {{#with achievement}}
+  {{> achievement}}
+  {{/with}}
+  {{/if}}
+
+  {{#if equals "page" "accomplishments"}}
+  %h6.heading.line Accomplishment
+  {{#with accomplishment}}
+  {{> accomplishment}}
+  {{/with}}
+  {{/if}}
+
+  {{#if equals "page" "comments"}}
+  %h6.heading.line Comment
+  {{#with comment}}
+  {{> singleComment}}
+  {{/with}}
+  {{/if}}
+

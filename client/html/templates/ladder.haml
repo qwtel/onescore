@@ -1,0 +1,7 @@
+%template(name='ladder')
+  {{#each users}}
+  {{> user}}
+  {{else}}
+  {{> loading}}
+  {{/each}}
+

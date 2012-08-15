@@ -1,0 +1,11 @@
+%template(name='body')
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      %header.container
+        {{> header }}
+
+  {{#if currentUser}}
+  #content.container
+    {{> page }}
+  {{/if}}
+

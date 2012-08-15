@@ -1,0 +1,66 @@
+<template name='singleComment'>
+<ul class='breadcrumb'>
+{{#each breadcrumbs}}
+<li>
+<a class="{{isMe user}}" href="{{url}}/talk">{{name}}</a>
+<span class='divider'>></span>
+</li>
+{{/each}}
+</ul>
+<article class='comment {{nested}}' id='comment-{{_id}}'>
+<div class='vote-container pull-left'>
+<div>
+<a href='/comments/{{_id}}' title='Link'><i class="icon-bookmark {{isActive "single" _id}}"></i></a>
+</div>
+<div>
+<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
+</div>
+<div>
+<span class='count'>{{score}}</span>
+</div>
+<div>
+<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+</div>
+</div>
+<div class='body'>
+{{#if user}}
+<div class='user'>
+<div class='content'>
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+<span class='score'>({{user.score}})</span>
+<span class='verb'>{{verb}}:</span>
+<nav class='icons pull-right'>
+{{#if isMe user}}
+<li>
+<a class='edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
+</li>
+{{/if}}
+<li>
+<a class='reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" "new"}}"></i></a>
+</li>
+</nav>
+</div>
+</div>
+{{else}}
+{{> loading}}
+{{/if}}
+<div class='text'>
+{{#if equals "editComment" _id}}
+<div class='text-wrapper'>
+<textarea class='edit-text ta100' id='edit-{{_id}}' rows='4'>{{text}}</textarea>
+</div>
+{{else}}
+<p>{{{addLineBreaks text}}}</p>
+{{/if}}
+</div>
+</div>
+</article>
+<div class='fold'></div>
+<h6 class='heading line'>Replies</h6>
+{{> filter}}
+<div class='clearfix'></div>
+{{> comments}}
+</template>
