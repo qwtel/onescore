@@ -27,6 +27,7 @@
 
 %template(name='header')
   %a.brand.nav-img.pull-left.nav-item(href="/home")
+  {{#if currentUser}}
   %nav.nav
     -#%li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
@@ -52,7 +53,6 @@
     %a.nav-item(href="/{{currentUser.username}}") Profile
     </li>
 
-  {{#if currentUser}}
   %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
     {{{pic}}}
   .score.pull-right.hidden-phone<
@@ -75,7 +75,7 @@
   .row
     .span8
       %section.well
-        -#%h3.heading Home
+        %h6.heading.line Stories
         {{> filter }}
         .clearfix
         {{> home }}
@@ -84,22 +84,23 @@
       %aside.well 
         {{> userWidget }}
       %aside.well 
-        %h3 FAQ
+        %h6.heading.line FAQ
       %aside.well 
-        %h3 Tags
+        %h6.heading.line Tags
       %aside.well 
-        %h3 Quest Items
+        %h6.heading.line Quest items
   {{/if}}
 
   {{#if equals "page" "explore"}}
   .row
     .span4
       %aside.well.hidden-phone
-        %h3 Tags
+        %h6.heading.line Tags
       %aside.well.hidden-phone
-        %h3 Quest Items
+        %h6.heading.line Quest items
     .span8
       %section.well 
+        %h6.heading.line Explore
         {{> filter}}
         {{> achievements}}
   {{/if}}
@@ -107,15 +108,15 @@
   {{#if equals "page" "ladder"}}
   .row
     .span4
+      %aside.well 
+        {{> userWidget }}
       %aside.well.hidden-phone 
-        %h3 League
+        %h6.heading.line League
       %aside.well.hidden-phone 
-        %h3 ???
-      %aside.well.hidden-phone 
-        %h3 Quest Items
+        %h6.heading.line Quest items
     .span8
       %section.well 
-        -#%h3.heading Ladder
+        %h6.heading.line Ladder
         {{> filter }}
         .clearfix
         .fold
@@ -131,24 +132,29 @@
     .span4
       {{> menu }}
       %aside.well.hidden-phone 
-        %h3 Tags
+        %h6.heading.line Tags
       %aside.well.hidden-phone 
-        %h3 Quest Items
+        %h6.heading.line Quest items
     .span8
       %section.well 
-        -#%h3.heading Accomplishments
-        {{> filter }}
-
         {{#if equals "menu" "activity"}}
+        %h6.heading.line Activity
+        {{> filter }}
         .clearfix
         {{> accomplishments}}
         {{/if}}
 
         {{#if equals "menu" "questlog"}}
+        %h6.heading.line Quest log
+        {{> filter }}
+        .clearfix
         {{> favourites}}
         {{/if}}
 
         {{#if equals "menu" "favourites"}}
+        %h6.heading.line Favourites
+        {{> filter }}
+        .clearfix
         {{> favourites}}
         {{/if}}
   {{/if}}
@@ -341,7 +347,7 @@
   %article.accomplishment(id="accomplishment-{{_id}}")
     .vote-container.pull-left
       %div
-        %a.href(title="Link" href="/accomplishments/{{_id}}")<
+        %a(title="Link" href="/accomplishments/{{_id}}")<
           <i class="icon-bookmark {{isActive "single" _id}}"></i>
       %div
         %a.vote(data-up="true")<
@@ -360,11 +366,13 @@
             %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
           <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
           %span.score ({{user.score}})
-
-          %em.verb {{verb}}:
-          -#.score.pull-right<
-            %span.dollar.dollar-green
-            %span.value {{user.score}}
+          %span.verb {{verb}}:
+          %nav.icons.pull-right
+            {{#if isMe user}}
+            %li
+              %a(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
+                %i.icon-pencil
+            {{/if}}
       {{else}}
       {{> loading}}
       {{/if}}
@@ -375,10 +383,24 @@
       {{/with}}
 
       {{#if story}}
-      .story
-        %span.icon-side(title="Text")
-          %i.icon-align-left
+      %a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
+        %i.icon-align-left
+      .story.part
         {{#markdown}}{{{story}}}{{/markdown}}
+
+      -#%span.icon-side(title="Tags")
+      -#  %i.icon-tags
+      -#.tags.part
+      -#  %a.tag.label tag1
+      -#  %a.tag.label tag2
+      -#  %a.tag.label tag3
+      {{/if}}
+
+      {{#if numComments}}
+      %a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<
+        %i.icon-comment
+      %a.times.part(href="/accomplishments/{{_id}}/talk")
+        {{numComments}} comments
       {{/if}}
 
   {{#if equals "single" _id}}
@@ -397,7 +419,7 @@
   -#    <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
   -#    %span.score ({{user.score}})
   -#
-  -#    %em.verb {{verb}}:
+  -#    %span.verb {{verb}}:
   -#    -#.score.pull-right<
   -#      %span.dollar.dollar-green
   -#      %span.value {{user.score}}
@@ -454,18 +476,21 @@
 
 %template(name='single')
   {{#if equals "page" "achievements"}}
+  %h6.heading.line Achievement
   {{#with achievement}}
   {{> achievement}}
   {{/with}}
   {{/if}}
 
   {{#if equals "page" "accomplishments"}}
+  %h6.heading.line Accomplishment
   {{#with accomplishment}}
   {{> accomplishment}}
   {{/with}}
   {{/if}}
 
   {{#if equals "page" "comments"}}
+  %h6.heading.line Comment
   {{#with comment}}
   {{> singleComment}}
   {{/with}}
@@ -598,9 +623,10 @@
   %h1 INFO
 
 %template(name="expand")
-  {{#if equals "newAchievement" _id}}
-  %h3.heading.line Create new achievement
-  {{else}}
+  -#{{#if equals "newAchievement" _id}}
+  -#%h3.heading.line Create new achievement
+  -#{{else}}
+
   -#.linebreak
     %nav.nav.nav-tabs 
       <li class="{{isActive "tab" "info"}}">
@@ -618,9 +644,15 @@
       <li class="{{isActive "tab" "accomplish"}}">
       %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
       </li>
+  -#{{/if}}
+
+
+  {{#if equals "tab" "edit"}}
+  %h6.heading.line Edit
+  {{> edit}}
   {{/if}}
 
-
+  {{#unless equals "newAchievement" _id}}
   {{#if equals "tab" "info"}}
   %h6.heading.line Info
   {{> info}}
@@ -631,17 +663,13 @@
   {{> accomplish}}
   {{/if}}
 
-  {{#if equals "tab" "edit"}}
-  %h6.heading.line Edit
-  {{> edit}}
-  {{/if}}
-
   {{#if equals "tab" "talk"}}
   %h6.heading.line Comments
   {{> filter}}
   .clearfix
   {{> comments}}
   {{/if}}
+  {{/unless}}
 
 %template(name='accomplish')
   {{#if session "story"}}
@@ -690,7 +718,7 @@
 
 %template(name="edit")
   {{#if equals "newAchievement" _id}}
-  {{#if show "styleGuide"}}
+  {{#unless session "styleGuide"}}
   %div.alert.alert-block.alert-info
     %a.close(data-dismiss="alert") ×
     %h4.alert-heading Achievement style guide
@@ -705,7 +733,7 @@
       %dt 
         %h5.alert-heading Unique
       %dd Check if the achievement already exists!
-  {{/if}}
+  {{/unless}}
   {{/if}}
 
   .form-horizontal(id="form-{{_id}}")
@@ -818,7 +846,7 @@
   %ul.breadcrumb
     {{#each breadcrumbs}}
     %li
-      <a class="{{isMe user}}" href="{{url}}">{{name}}</a>
+      <a class="{{isMe user}}" href="{{url}}/talk">{{name}}</a>
       %span.divider >
     {{/each}}
 
@@ -844,7 +872,7 @@
           <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
           %span.score ({{user.score}})
 
-          %em.verb {{verb}}:
+          %span.verb {{verb}}:
 
           -#{{#if mention}}
           -#%a.face.profile-pic(href="/{{mention.username}}")
@@ -854,12 +882,14 @@
           -#{{/if}}
 
           %nav.icons.pull-right
+            {{#if isMe user}}
             %li
               %a.edit(title="Edit")<
                 <i class="icon-pencil {{isActive "editComment" _id}}"></i>
+            {{/if}}
             %li
               %a.reply(title="Reply")<
-                <i class="icon-share-alt {{isActive "addComment" _id}}"></i>
+                <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
             -#%li
               %a.remove(title="Remove")<
                 <i class="icon-remove"></i>
@@ -903,7 +933,7 @@
           <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
           %span.score ({{user.score}})
 
-          %em.verb {{verb}}:
+          %span.verb {{verb}}:
 
           -#{{#if mention}}
           -#%a.face.profile-pic(href="/{{mention.username}}")
@@ -948,13 +978,7 @@
     {{> comment}}
     {{/each}}
     {{else}}
-    .body
-      .text
-        .alert.alert-info
-          %strong NOTE:
-          We have to go
-          %a.link.alert-heading(href="/comments/{{_id}}") deeper
-          \...
+    %a.cutoff.highlight(href="/comments/{{_id}}") We have to go deeper
     {{/unless}}
     {{/unless}}
 

@@ -1,3 +1,5 @@
+Session.set 'limit', 'all'
+
 class AppRouter extends Backbone.Router
   routes:
     '': 'default'
@@ -10,7 +12,7 @@ class AppRouter extends Backbone.Router
     'accomplishments/:id': 'accomplishments'
     'accomplishments/:id/:tab': 'accomplishments'
     'comments/:id': 'comments'
-    'comments/:id/:level': 'comments'
+    'comments/:id/:something': 'comments'
     ':user': 'user'
     ':user/:menu': 'user'
 
@@ -21,25 +23,21 @@ class AppRouter extends Backbone.Router
     @hardReset()
     Session.set 'page', 'home'
     Session.set 'sort', 'hot'
-    Session.set 'limit', 'all'
 
   explore: ->
     @hardReset()
     Session.set 'page', 'explore'
     Session.set 'sort', 'best'
-    Session.set 'limit', 'all'
 
   ladder: ->
     @hardReset()
     Session.set 'page', 'ladder'
     Session.set 'sort', 'best'
-    Session.set 'limit', 'all'
 
   user: (user, menu) ->
     @hardReset()
     Session.set 'page', 'profile'
     Session.set 'sort', 'new'
-    Session.set 'limit', 'me'
     Session.set 'username', user
 
     unless menu then menu = 'activity'
@@ -48,7 +46,7 @@ class AppRouter extends Backbone.Router
   achievements: (id, tab, type) ->
     @softReset()
     Session.set 'page', 'achievements'
-    Session.set 'limit', 'all'
+    Session.set 'sort', 'best'
     Session.set 'single', id
 
     unless tab then tab = 'info'
@@ -62,16 +60,16 @@ class AppRouter extends Backbone.Router
   accomplishments: (id, tab) ->
     @softReset()
     Session.set 'page', 'accomplishments'
-    Session.set 'limit', 'all'
+    Session.set 'sort', 'best'
     Session.set 'single', id
 
     unless tab then tab = 'info'
     Session.set 'tab', tab
 
-  comments: (id, level) ->
+  comments: (id, something) ->
     @softReset()
     Session.set 'page', 'comments'
-    Session.set 'limit', 'all'
+    Session.set 'sort', 'best'
     Session.set 'single', id
 
   softReset: ->
@@ -81,24 +79,11 @@ class AppRouter extends Backbone.Router
     Session.set 'parent', null
     Session.set 'level', 0
 
-    #$('.modal').modal 'hide'
-    #Session.set 'add-comment', null
-    #Session.set 'edit-comment', null
-    #Session.set 'topic', 'dashboard'
-    #Session.set 'thread', null
-    #Session.set 'activity', null
-    #Session.set 'addingTag', null
-
   hardReset: ->
     @softReset()
     Session.set 'single', null
     Session.set 'tab', null
     Session.set 'unexpand', null
-
-    #Session.set 'comment-filter', null
-    #Session.set 'activity-filter-1', null
-    #Session.set 'activity-filter-2', null
-    #Session.set 'tagFilter', null
 
   #activityShow: (id) ->
   #  Session.set 'page', 'activities'

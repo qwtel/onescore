@@ -48,6 +48,15 @@
         }
       }
       return '';
+    },
+    numComments: function() {
+      var c;
+      c = Comments.find({
+        topic: this._id
+      });
+      if (c) {
+        return c.count();
+      }
     }
   });
 

@@ -99,9 +99,9 @@ _.extend Template.comment,
   cutoff: ->
     parent = Session.get 'parent'
     if parent
-      return @level > Session.get('level') + 5
-    else
       return @level > Session.get('level') + 4
+    else
+      return @level > Session.get('level') + 3
 
   replies: ->
     sel = Template.comments.select @_id

@@ -1,9 +1,18 @@
+@import '.bourbon/bourbon'
+@import '.bourbonfix'
+
+//@include font-face(SubtleSansRegular, '/fonts/subtlesansregular-webfont')
+
 // Variables 
 $font: 'SubtleSansRegular' 
 
 $red: #f70852
 $green: #4dc206
 $yellow: #f89406
+
+$iconSize: 50px
+$margin: 20px
+$padding: 14px
 
 $bg1: #ebebeb
 $bg2: #f8f8f8
@@ -12,42 +21,11 @@ $fg1: #333
 $fg2: #777
 $fg3: #aaa
 
-$margin: 15px
-$padding: 15px
-
-$iconSize: 50px
-
-@mixin column-shadow
-  -webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.15)
-  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.15)
-
-@mixin well-shadow
-  -webkit-box-shadow: inset 1px 1px 3px 2px rgba(0, 0, 0, 0.1)
-  box-shadow: inset 1px 1px 3px 2px rgba(0, 0, 0, 0.1)
-
-@mixin achievement-shadow($bg, $shadow)
-  background: $shadow
-  background: -moz-linear-gradient(top, $shadow 0px, $bg 5px, $bg 100px)
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0px,$shadow), color-stop(5px,$bg), color-stop(100px,$bg))
-  background: -webkit-linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
-  background: -o-linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
-  background: -ms-linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
-  background: linear-gradient(top, $shadow 0px,$bg 5px,$bg 100px)
-
-@mixin border-radius($x)
-  -webkit-border-radius: $x
-  border-radius: $x
-
-@mixin box-sizing($x) 
-  -webkit-box-sizing: $x
-  -moz-box-sizing: $x
-  box-sizing: $x
-
-@mixin background-size($size) 
-  -webkit-background-size: $size
-  -moz-background-size: $size
-  -o-background-size: $size
-  background-size: $size
+@mixin fold-shadow($bg, $shadow)
+  @include linear-gradient($shadow 0%, $bg 5%, $bg 100%)
+  @include background-size(100% 100px)
+  background-color: $bg
+  background-repeat: no-repeat
 
 ::selection
   background: lighten($green, 30%)
@@ -63,10 +41,7 @@ body
 
 a
   cursor: pointer
-  transition: color 0.2s linear
-  -moz-transition: color 0.21s linear
-  -o-transition: color 0.21s linear
-  -webkit-transition: color 0.2s linear
+  @include transition (color 0.2s linear)
 
 .score
   .value
@@ -76,7 +51,7 @@ a
       weight: normal
 
   .dollar
-    display: inline-block
+    @include inline-block
     width: 35px
     height: 35px
     background: url('/img/onescore_dollar.png') no-repeat
@@ -105,7 +80,7 @@ a
     padding-left: 10px
     padding-right: 10px
     margin-bottom: 6px
-    @include border-radius(14px)
+    border-radius: 14px
 
 .linebreak
   .nav-tabs
@@ -128,8 +103,7 @@ a
 
   .nav > li > a
     border-right: 1px solid rgba(255, 255, 255, 0.25)
-    -webkit-box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)
-    box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)
+    @include box-shadow(inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)) 
 
   .brand
     padding: 0
@@ -155,7 +129,7 @@ a
     @include box-sizing(border-box)
 
 .well
-  box-shadow: none
+  @include box-shadow(none)
   border-color: #ddd
 
   .heading
@@ -174,6 +148,7 @@ a
     filter: alpha(opacity=50)
 
   .nav-tabs > .active > a, .nav-tabs > .active > a:hover
+    background-color: whitesmoke
     font-weight: bold
 
 #content
@@ -199,25 +174,23 @@ a
     margin-left: 35px
 
 .accomplishment
+  .part
+    margin-bottom: $padding/2
+
   .story
     //border-top: 1px solid #ddd
     //padding-top: $padding/2
     //margin-top: $padding/2
     margin-top: $padding
-    margin-bottom: $padding
+
+.breadcrumb li:first-child
+  font-weight: bold
 
 .comments
-  //margin-left: $padding
   .comment
     min-height: 75px
-    //border-left: 1px dashed #ddd
-    //@include border-radius(3px)
-
-    //.vote-container
-    //  margin-left: -$padding
 
     .body
-      //margin-left: 20px
       margin-bottom: $padding
 
       .text
@@ -228,6 +201,16 @@ a
 
   .nested
     margin-left: 2*$padding + 5px
+
+  .cutoff
+    color: gray
+    display: block
+    font-size: 9px
+    border-bottom: 1px dashed #ddd
+    text: 
+      align: right
+      transform: uppercase
+      decoration: none
 
   .text-wrapper
     .comment-text
@@ -268,15 +251,13 @@ $activityPadding: 15px
       padding: $activityPadding
       height: $activityHeight/3*2
       background: rgba(255, 255, 255, 0.75)
-      -webkit-border-radius: 0 0 4px 4px
       border-radius: 0 0 4px 4px
 
 .create
   .well
     background-color: transparent
     border: 2px dashed #ccc
-    -webkit-box-shadow: none
-    box-shadow: none
+    @include box-shadow(none)
     
     .open
       color: #999
@@ -305,7 +286,7 @@ $activityPadding: 15px
 
 .modal-separator
   border-bottom: 1px solid #DDD
-  @include border-radius(0px)
+  border-radius: 0px
 
 #tag-filter
   margin-top: -10px
@@ -313,7 +294,7 @@ $activityPadding: 15px
 
 .tag-list
   .tag, h6.tags
-    display: inline-block
+    @include inline-block
     margin-right: 3px
     
   .active
@@ -361,8 +342,8 @@ $activityPadding: 15px
     text-align: right
 
   .profile-pic
-    margin-right: $margin
-    margin-bottom: $margin
+    margin-right: $padding
+    margin-bottom: $padding
     width: $iconSize 
     height: $iconSize
 
@@ -404,15 +385,12 @@ $activityPadding: 15px
   margin-left: -20px
   border-left: 1px solid #ddd
   border-right: 1px solid #ddd
-  @include achievement-shadow(whiteSmoke, #d9d9d9)
+  @include fold-shadow(whiteSmoke, #ddd)
 
 i
   opacity: 0.5
   filter: alpha(opacity=50)
-  transition: opacity 0.2s linear
-  -moz-transition: opacity 0.21s linear
-  -o-transition: opacity 0.21s linear
-  -webkit-transition: opacity 0.2s linear
+  @include transition(opacity 0.2s linear)
 
 a:hover i, a i.active, button:hover i, button i.active
   opacity: 1
@@ -447,7 +425,7 @@ a:hover i, a i.active, button:hover i, button i.active
     color: gray
 
   .icon
-    @include border-radius(6px)
+    border-radius: 6px
     display: block
     float: left
     width: $iconSize
@@ -508,13 +486,13 @@ a:hover i, a i.active, button:hover i, button i.active
   .value
     background-position: 0 2*$iconSize
 
-.time
+.times
   color: gray
 
 .minimal
   margin-top: $padding/2
   padding: $padding/2
-  .menu
+  .icons
     display: none
     
 .user
@@ -533,7 +511,7 @@ a:hover i, a i.active, button:hover i, button i.active
     //    height: 18px
 
   .face
-    display: inline-block
+    @include inline-block
     width: $iconSize/2
     height: $iconSize/2
 

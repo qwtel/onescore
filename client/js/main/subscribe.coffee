@@ -1,5 +1,3 @@
-Session.set 'styleGuide', true
-
 Meteor.subscribe 'users'
 
 Meteor.subscribe 'comments'

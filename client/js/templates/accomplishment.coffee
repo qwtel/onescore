@@ -36,3 +36,9 @@ _.extend Template.accomplishment,
       if vote and vote.up is state
         return 'active'
     return ''
+
+  numComments: ->
+    c = Comments.find
+      topic: @_id
+    if c
+      return c.count()

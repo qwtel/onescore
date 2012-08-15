@@ -1,7 +1,7 @@
 _.extend Template.edit,
   events:
     'click .close': (e) ->
-      Session.set 'styleGuide', false
+      Session.set 'styleGuide', true
 
     'click .discard': (e) ->
       Session.toggle 'expand', @_id

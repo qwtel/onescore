@@ -9,6 +9,11 @@ _.extend Template.singleComment,
         Meteor.flush()
         window.focusById "edit-#{@_id}"
 
+    'click .reply': (e) ->
+      Session.set 'addComment', 'new'
+      Meteor.flush()
+      window.focusById "add-#{@_id}"
+
     'click .vote': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
@@ -27,6 +32,18 @@ _.extend Template.singleComment,
         e.stopPropagation()
         Session.set 'parent', @_id
         Session.set 'level', @level
+
+     'keyup .edit-text, keydown .edit-text':
+      window.makeOkCancelHandler
+        ok: (text, e) ->
+          if Session.equals 'editComment', @_id
+            Comments.update @_id,
+              $set:
+                text: text
+
+          Session.set 'addComment', null
+          Session.set 'editComment', null
+          e.target.value = ""
 
   topic: ->
     switch @type

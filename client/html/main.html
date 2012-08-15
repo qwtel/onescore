@@ -28,6 +28,7 @@
 </template>
 <template name='header'>
 <a class='brand nav-img pull-left nav-item' href='/home'></a>
+{{#if currentUser}}
 <nav class='nav'>
 {{#each items}}
 <li class="{{isActive "page" url}}">
@@ -38,7 +39,6 @@
 <a class='nav-item' href='/{{currentUser.username}}'>Profile</a>
 </li>
 </nav>
-{{#if currentUser}}
 <a class='profile-pic nav-item nav-img pull-right' href='/{{currentUser.username}}'>
 {{{pic}}}
 </a>
@@ -54,6 +54,7 @@
 <div class='row'>
 <div class='span8'>
 <section class='well'>
+<h6 class='heading line'>Stories</h6>
 {{> filter }}
 <div class='clearfix'></div>
 {{> home }}
@@ -64,13 +65,13 @@
 {{> userWidget }}
 </aside>
 <aside class='well'>
-<h3>FAQ</h3>
+<h6 class='heading line'>FAQ</h6>
 </aside>
 <aside class='well'>
-<h3>Tags</h3>
+<h6 class='heading line'>Tags</h6>
 </aside>
 <aside class='well'>
-<h3>Quest Items</h3>
+<h6 class='heading line'>Quest items</h6>
 </aside>
 </div>
 </div>
@@ -79,14 +80,15 @@
 <div class='row'>
 <div class='span4'>
 <aside class='well hidden-phone'>
-<h3>Tags</h3>
+<h6 class='heading line'>Tags</h6>
 </aside>
 <aside class='well hidden-phone'>
-<h3>Quest Items</h3>
+<h6 class='heading line'>Quest items</h6>
 </aside>
 </div>
 <div class='span8'>
 <section class='well'>
+<h6 class='heading line'>Explore</h6>
 {{> filter}}
 {{> achievements}}
 </section>
@@ -96,18 +98,19 @@
 {{#if equals "page" "ladder"}}
 <div class='row'>
 <div class='span4'>
-<aside class='well hidden-phone'>
-<h3>League</h3>
+<aside class='well'>
+{{> userWidget }}
 </aside>
 <aside class='well hidden-phone'>
-<h3>???</h3>
+<h6 class='heading line'>League</h6>
 </aside>
 <aside class='well hidden-phone'>
-<h3>Quest Items</h3>
+<h6 class='heading line'>Quest items</h6>
 </aside>
 </div>
 <div class='span8'>
 <section class='well'>
+<h6 class='heading line'>Ladder</h6>
 {{> filter }}
 <div class='clearfix'></div>
 <div class='fold'></div>
@@ -128,23 +131,30 @@
 <div class='span4'>
 {{> menu }}
 <aside class='well hidden-phone'>
-<h3>Tags</h3>
+<h6 class='heading line'>Tags</h6>
 </aside>
 <aside class='well hidden-phone'>
-<h3>Quest Items</h3>
+<h6 class='heading line'>Quest items</h6>
 </aside>
 </div>
 <div class='span8'>
 <section class='well'>
-{{> filter }}
 {{#if equals "menu" "activity"}}
+<h6 class='heading line'>Activity</h6>
+{{> filter }}
 <div class='clearfix'></div>
 {{> accomplishments}}
 {{/if}}
 {{#if equals "menu" "questlog"}}
+<h6 class='heading line'>Quest log</h6>
+{{> filter }}
+<div class='clearfix'></div>
 {{> favourites}}
 {{/if}}
 {{#if equals "menu" "favourites"}}
+<h6 class='heading line'>Favourites</h6>
+{{> filter }}
+<div class='clearfix'></div>
 {{> favourites}}
 {{/if}}
 </section>
@@ -311,7 +321,7 @@ Favourites
 <article class='accomplishment' id='accomplishment-{{_id}}'>
 <div class='vote-container pull-left'>
 <div>
-<a class='href' href='/accomplishments/{{_id}}' title='Link'><i class="icon-bookmark {{isActive "single" _id}}"></i></a>
+<a href='/accomplishments/{{_id}}' title='Link'><i class="icon-bookmark {{isActive "single" _id}}"></i></a>
 </div>
 <div>
 <a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
@@ -332,7 +342,16 @@ Favourites
 </a>
 <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
 <span class='score'>({{user.score}})</span>
-<em class='verb'>{{verb}}:</em>
+<span class='verb'>{{verb}}:</span>
+<nav class='icons pull-right'>
+{{#if isMe user}}
+<li>
+<a href='/achievements/{{achievement._id}}/accomplish/text' title='Edit'>
+<i class='icon-pencil'></i>
+</a>
+</li>
+{{/if}}
+</nav>
 </div>
 </div>
 {{else}}
@@ -344,12 +363,16 @@ Favourites
 </div>
 {{/with}}
 {{#if story}}
-<div class='story'>
-<span class='icon-side' title='Text'>
-<i class='icon-align-left'></i>
-</span>
+<a class='icon-side' href='/accomplishments/{{_id}}/text' title='Text'><i class='icon-align-left'></i></a>
+<div class='story part'>
 {{#markdown}}{{{story}}}{{/markdown}}
 </div>
+{{/if}}
+{{#if numComments}}
+<a class='icon-side' href='/accomplishments/{{_id}}/talk' title='Comments'><i class='icon-comment'></i></a>
+<a class='times part' href='/accomplishments/{{_id}}/talk'>
+{{numComments}} comments
+</a>
 {{/if}}
 </div>
 </article>
@@ -383,16 +406,19 @@ Favourites
 </template>
 <template name='single'>
 {{#if equals "page" "achievements"}}
+<h6 class='heading line'>Achievement</h6>
 {{#with achievement}}
 {{> achievement}}
 {{/with}}
 {{/if}}
 {{#if equals "page" "accomplishments"}}
+<h6 class='heading line'>Accomplishment</h6>
 {{#with accomplishment}}
 {{> accomplishment}}
 {{/with}}
 {{/if}}
 {{#if equals "page" "comments"}}
+<h6 class='heading line'>Comment</h6>
 {{#with comment}}
 {{> singleComment}}
 {{/with}}
@@ -523,10 +549,11 @@ Favourites
 <h1>INFO</h1>
 </template>
 <template name='expand'>
-{{#if equals "newAchievement" _id}}
-<h3 class='heading line'>Create new achievement</h3>
-{{else}}
+{{#if equals "tab" "edit"}}
+<h6 class='heading line'>Edit</h6>
+{{> edit}}
 {{/if}}
+{{#unless equals "newAchievement" _id}}
 {{#if equals "tab" "info"}}
 <h6 class='heading line'>Info</h6>
 {{> info}}
@@ -535,16 +562,13 @@ Favourites
 <h6 class='heading line'>Tell your story (optional)</h6>
 {{> accomplish}}
 {{/if}}
-{{#if equals "tab" "edit"}}
-<h6 class='heading line'>Edit</h6>
-{{> edit}}
-{{/if}}
 {{#if equals "tab" "talk"}}
 <h6 class='heading line'>Comments</h6>
 {{> filter}}
 <div class='clearfix'></div>
 {{> comments}}
 {{/if}}
+{{/unless}}
 </template>
 <template name='accomplish'>
 {{#if session "story"}}
@@ -597,7 +621,7 @@ You can style your post using
 </template>
 <template name='edit'>
 {{#if equals "newAchievement" _id}}
-{{#if show "styleGuide"}}
+{{#unless session "styleGuide"}}
 <div class='alert alert-block alert-info'>
 <a class='close' data-dismiss='alert'>×</a>
 <h4 class='alert-heading'>Achievement style guide</h4>
@@ -617,7 +641,7 @@ You can style your post using
 <dd>Check if the achievement already exists!</dd>
 </dl>
 </div>
-{{/if}}
+{{/unless}}
 {{/if}}
 <div class='form-horizontal' id='form-{{_id}}'>
 <fieldset>
@@ -717,7 +741,7 @@ Add a comment
 <ul class='breadcrumb'>
 {{#each breadcrumbs}}
 <li>
-<a class="{{isMe user}}" href="{{url}}">{{name}}</a>
+<a class="{{isMe user}}" href="{{url}}/talk">{{name}}</a>
 <span class='divider'>></span>
 </li>
 {{/each}}
@@ -746,13 +770,15 @@ Add a comment
 </a>
 <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
 <span class='score'>({{user.score}})</span>
-<em class='verb'>{{verb}}:</em>
+<span class='verb'>{{verb}}:</span>
 <nav class='icons pull-right'>
+{{#if isMe user}}
 <li>
 <a class='edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
 </li>
+{{/if}}
 <li>
-<a class='reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" _id}}"></i></a>
+<a class='reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" "new"}}"></i></a>
 </li>
 </nav>
 </div>
@@ -801,7 +827,7 @@ Add a comment
 </a>
 <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
 <span class='score'>({{user.score}})</span>
-<em class='verb'>{{verb}}:</em>
+<span class='verb'>{{verb}}:</span>
 <nav class='icons pull-right'>
 <li>
 <a class='unexpand' title='Expand'>{{#unless unexpand}}
@@ -840,16 +866,7 @@ Add a comment
 {{> comment}}
 {{/each}}
 {{else}}
-<div class='body'>
-<div class='text'>
-<div class='alert alert-info'>
-<strong>NOTE:</strong>
-We have to go
-<a class='link alert-heading' href='/comments/{{_id}}'>deeper</a>
-...
-</div>
-</div>
-</div>
+<a class='cutoff highlight' href='/comments/{{_id}}'>We have to go deeper</a>
 {{/unless}}
 {{/unless}}
 </article>

@@ -4,6 +4,8 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
+  Session.set('limit', 'all');
+
   AppRouter = (function(_super) {
 
     __extends(AppRouter, _super);
@@ -23,7 +25,7 @@
       'accomplishments/:id': 'accomplishments',
       'accomplishments/:id/:tab': 'accomplishments',
       'comments/:id': 'comments',
-      'comments/:id/:level': 'comments',
+      'comments/:id/:something': 'comments',
       ':user': 'user',
       ':user/:menu': 'user'
     };
@@ -35,29 +37,25 @@
     AppRouter.prototype.home = function() {
       this.hardReset();
       Session.set('page', 'home');
-      Session.set('sort', 'hot');
-      return Session.set('limit', 'all');
+      return Session.set('sort', 'hot');
     };
 
     AppRouter.prototype.explore = function() {
       this.hardReset();
       Session.set('page', 'explore');
-      Session.set('sort', 'best');
-      return Session.set('limit', 'all');
+      return Session.set('sort', 'best');
     };
 
     AppRouter.prototype.ladder = function() {
       this.hardReset();
       Session.set('page', 'ladder');
-      Session.set('sort', 'best');
-      return Session.set('limit', 'all');
+      return Session.set('sort', 'best');
     };
 
     AppRouter.prototype.user = function(user, menu) {
       this.hardReset();
       Session.set('page', 'profile');
       Session.set('sort', 'new');
-      Session.set('limit', 'me');
       Session.set('username', user);
       if (!menu) {
         menu = 'activity';
@@ -68,7 +66,7 @@
     AppRouter.prototype.achievements = function(id, tab, type) {
       this.softReset();
       Session.set('page', 'achievements');
-      Session.set('limit', 'all');
+      Session.set('sort', 'best');
       Session.set('single', id);
       if (!tab) {
         tab = 'info';
@@ -84,7 +82,7 @@
     AppRouter.prototype.accomplishments = function(id, tab) {
       this.softReset();
       Session.set('page', 'accomplishments');
-      Session.set('limit', 'all');
+      Session.set('sort', 'best');
       Session.set('single', id);
       if (!tab) {
         tab = 'info';
@@ -92,10 +90,10 @@
       return Session.set('tab', tab);
     };
 
-    AppRouter.prototype.comments = function(id, level) {
+    AppRouter.prototype.comments = function(id, something) {
       this.softReset();
       Session.set('page', 'comments');
-      Session.set('limit', 'all');
+      Session.set('sort', 'best');
       return Session.set('single', id);
     };
 

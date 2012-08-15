@@ -12,6 +12,11 @@
           return window.focusById("edit-" + this._id);
         }
       },
+      'click .reply': function(e) {
+        Session.set('addComment', 'new');
+        Meteor.flush();
+        return window.focusById("add-" + this._id);
+      },
       'click .vote': function(e) {
         var $t, up;
         if (!e.isPropagationStopped()) {
@@ -36,7 +41,21 @@
           Session.set('parent', this._id);
           return Session.set('level', this.level);
         }
-      }
+      },
+      'keyup .edit-text, keydown .edit-text': window.makeOkCancelHandler({
+        ok: function(text, e) {
+          if (Session.equals('editComment', this._id)) {
+            Comments.update(this._id, {
+              $set: {
+                text: text
+              }
+            });
+          }
+          Session.set('addComment', null);
+          Session.set('editComment', null);
+          return e.target.value = "";
+        }
+      })
     },
     topic: function() {
       var collection;

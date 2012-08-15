@@ -4,7 +4,7 @@
   _.extend(Template.edit, {
     events: {
       'click .close': function(e) {
-        return Session.set('styleGuide', false);
+        return Session.set('styleGuide', true);
       },
       'click .discard': function(e) {
         return Session.toggle('expand', this._id);

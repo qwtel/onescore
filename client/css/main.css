@@ -12,10 +12,11 @@ body {
 
 a {
   cursor: pointer;
-  transition: color 0.2s linear;
-  -moz-transition: color 0.21s linear;
-  -o-transition: color 0.21s linear;
-  -webkit-transition: color 0.2s linear; }
+  -webkit-transition: color 0.2s linear;
+  -moz-transition: color 0.2s linear;
+  -ms-transition: color 0.2s linear;
+  -o-transition: color 0.2s linear;
+  transition: color 0.2s linear; }
 
 .score .value {
   font-family: "SubtleSansRegular";
@@ -23,11 +24,16 @@ a {
   font-weight: normal; }
 .score .dollar {
   display: inline-block;
+  vertical-align: baseline;
+  zoom: 1;
+  *display: inline;
+  *vertical-align: auto;
   width: 35px;
   height: 35px;
   background: url("/img/onescore_dollar.png") no-repeat;
   -webkit-background-size: contain;
   -moz-background-size: contain;
+  -ms-background-size: contain;
   -o-background-size: contain;
   background-size: contain; }
 .score .dollar-green {
@@ -39,6 +45,7 @@ a {
   background: url("/img/dummy.png");
   -webkit-background-size: contain;
   -moz-background-size: contain;
+  -ms-background-size: contain;
   -o-background-size: contain;
   background-size: contain; }
 
@@ -53,7 +60,6 @@ a {
   padding-left: 10px;
   padding-right: 10px;
   margin-bottom: 6px;
-  -webkit-border-radius: 14px;
   border-radius: 14px; }
 
 .linebreak .nav-tabs {
@@ -81,6 +87,7 @@ a {
     background: url("/img/logo128.png") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
+    -ms-background-size: cover;
     -o-background-size: cover;
     background-size: cover; }
   .navbar .nav-img {
@@ -100,6 +107,7 @@ a {
     box-sizing: border-box; }
 
 .well {
+  -webkit-box-shadow: none;
   box-shadow: none;
   border-color: #dddddd; }
   .well .heading {
@@ -114,6 +122,7 @@ a {
   opacity: 0.5;
   filter: alpha(opacity=50); }
 .menu .nav-tabs > .active > a, .menu .nav-tabs > .active > a:hover {
+  background-color: whitesmoke;
   font-weight: bold; }
 
 #content {
@@ -126,7 +135,7 @@ a {
   margin-bottom: 0; }
 
 .accomplishment, .comment {
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   border-left: 1px dashed #dddddd; }
   .accomplishment .icon-side, .comment .icon-side {
     float: left;
@@ -136,20 +145,32 @@ a {
   .accomplishment .body, .comment .body {
     margin-left: 35px; }
 
+.accomplishment .part {
+  margin-bottom: 7px; }
 .accomplishment .story {
-  margin-top: 15px;
-  margin-bottom: 15px; }
+  margin-top: 14px; }
+
+.breadcrumb li:first-child {
+  font-weight: bold; }
 
 .comments .comment {
   min-height: 75px; }
   .comments .comment .body {
-    margin-bottom: 15px; }
+    margin-bottom: 14px; }
     .comments .comment .body .text {
       width: 100%; }
 .comments .hover {
   background: #efefef; }
 .comments .nested {
-  margin-left: 35px; }
+  margin-left: 33px; }
+.comments .cutoff {
+  color: gray;
+  display: block;
+  font-size: 9px;
+  border-bottom: 1px dashed #dddddd;
+  text-align: right;
+  text-transform: uppercase;
+  text-decoration: none; }
 .comments .text-wrapper .comment-text {
   margin-bottom: 20px; }
 .comments .text-wrapper .edit-text {
@@ -173,6 +194,7 @@ a {
     border: none;
     -webkit-background-size: cover;
     -moz-background-size: cover;
+    -ms-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     -webkit-box-sizing: border-box;
@@ -186,7 +208,6 @@ a {
       padding: 15px;
       height: 146.667px;
       background: rgba(255, 255, 255, 0.75);
-      -webkit-border-radius: 0 0 4px 4px;
       border-radius: 0 0 4px 4px; }
 
 .create .well {
@@ -222,7 +243,6 @@ a {
 
 .modal-separator {
   border-bottom: 1px solid #dddddd;
-  -webkit-border-radius: 0px;
   border-radius: 0px; }
 
 #tag-filter {
@@ -231,6 +251,10 @@ a {
 
 .tag-list .tag, .tag-list h6.tags {
   display: inline-block;
+  vertical-align: baseline;
+  zoom: 1;
+  *display: inline;
+  *vertical-align: auto;
   margin-right: 3px; }
 .tag-list .active {
   background-color: #0088cc; }
@@ -253,12 +277,12 @@ a {
     color: #333333; }
 
 .expandAchievement {
-  margin-top: 15px; }
+  margin-top: 14px; }
 
 .userWidget, .userBanner {
   min-height: 50px; }
   .userWidget .name, .userBanner .name {
-    margin-left: 65px;
+    margin-left: 64px;
     border-bottom: 1px solid #dddddd;
     padding-bottom: 2px;
     line-height: 80%; }
@@ -274,8 +298,8 @@ a {
     line-height: 100%;
     text-align: right; }
   .userWidget .profile-pic, .userBanner .profile-pic {
-    margin-right: 15px;
-    margin-bottom: 15px;
+    margin-right: 14px;
+    margin-bottom: 14px;
     width: 50px;
     height: 50px; }
   .userWidget .rank, .userBanner .rank {
@@ -294,8 +318,8 @@ a {
     width: 100px;
     height: 100px; }
   .userBanner .name {
-    margin-left: 115px;
-    margin-bottom: 7.5px; }
+    margin-left: 114px;
+    margin-bottom: 7px; }
   .userBanner .about {
     color: gray; }
     .userBanner .about .bio {
@@ -307,32 +331,40 @@ a {
 
 .fold {
   width: 100%;
-  padding: 15px 19px;
+  padding: 14px 19px;
   margin-left: -20px;
   border-left: 1px solid #dddddd;
   border-right: 1px solid #dddddd;
-  background: #d9d9d9;
-  background: -moz-linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0px, #d9d9d9), color-stop(5px, whiteSmoke), color-stop(100px, whiteSmoke));
-  background: -webkit-linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px);
-  background: -o-linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px);
-  background: -ms-linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px);
-  background: linear-gradient(top, #d9d9d9 0px, whiteSmoke 5px, whiteSmoke 100px); }
+  background-color: #dddddd;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(whiteSmoke 5%, #dddddd 0%), color-stop(100%, whiteSmoke));
+  background-image: -webkit-linear-gradient(top, #dddddd 0%, whiteSmoke 5%, whiteSmoke 100%);
+  background-image: -moz-linear-gradient(top, #dddddd 0%, whiteSmoke 5%, whiteSmoke 100%);
+  background-image: -ms-linear-gradient(top, #dddddd 0%, whiteSmoke 5%, whiteSmoke 100%);
+  background-image: -o-linear-gradient(top, #dddddd 0%, whiteSmoke 5%, whiteSmoke 100%);
+  background-image: linear-gradient(top, #dddddd 0%, whiteSmoke 5%, whiteSmoke 100%);
+  -webkit-background-size: 100% 100px;
+  -moz-background-size: 100% 100px;
+  -ms-background-size: 100% 100px;
+  -o-background-size: 100% 100px;
+  background-size: 100% 100px;
+  background-color: whiteSmoke;
+  background-repeat: no-repeat; }
 
 i {
   opacity: 0.5;
   filter: alpha(opacity=50);
-  transition: opacity 0.2s linear;
-  -moz-transition: opacity 0.21s linear;
-  -o-transition: opacity 0.21s linear;
-  -webkit-transition: opacity 0.2s linear; }
+  -webkit-transition: opacity 0.2s linear;
+  -moz-transition: opacity 0.2s linear;
+  -ms-transition: opacity 0.2s linear;
+  -o-transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear; }
 
 a:hover i, a i.active, button:hover i, button i.active {
   opacity: 1;
   filter: alpha(opacity=100); }
 
 .vote-container {
-  width: 35px;
+  width: 33px;
   text-align: center;
   color: gray; }
 
@@ -355,7 +387,6 @@ a:hover i, a i.active, button:hover i, button i.active {
 .achievement a {
   color: gray; }
 .achievement .icon {
-  -webkit-border-radius: 6px;
   border-radius: 6px;
   display: block;
   float: left;
@@ -368,6 +399,7 @@ a:hover i, a i.active, button:hover i, button i.active {
   box-sizing: border-box;
   -webkit-background-size: cover;
   -moz-background-size: cover;
+  -ms-background-size: cover;
   -o-background-size: cover;
   background-size: cover; }
 .achievement .content {
@@ -414,20 +446,24 @@ a:hover i, a i.active, button:hover i, button i.active {
 .completed .value {
   background-position: 0 100px; }
 
-.time {
+.times {
   color: gray; }
 
 .minimal {
-  margin-top: 7.5px;
-  padding: 7.5px; }
-  .minimal .menu {
+  margin-top: 7px;
+  padding: 7px; }
+  .minimal .icons {
     display: none; }
 
 .user {
-  margin-bottom: 7.5px; }
+  margin-bottom: 7px; }
   .user .content {
     color: gray; }
   .user .face {
     display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    *display: inline;
+    *vertical-align: auto;
     width: 25px;
     height: 25px; }
