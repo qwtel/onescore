@@ -48,14 +48,13 @@ _.extend Template.edit,
           data[field] = $t.val()
 
       data.created = true
+      data.value = 0
 
       Achievements.update @_id,
         $set:
           data
 
-      id = window.createNewAchievement()
-      Session.set 'newAchievement', id
-      Session.set 'expand', null
+      Session.set 'newAchievement', null
 
     'click .vote': (e) ->
       unless e.isPropagationStopped()

@@ -19,6 +19,7 @@
       'home': 'home',
       'explore': 'explore',
       'ladder': 'ladder',
+      'achievements/new': 'newAchievement',
       'achievements/:id': 'achievements',
       'achievements/:id/:tab': 'achievements',
       'achievements/:id/:tab/:type': 'achievements',
@@ -61,6 +62,19 @@
         menu = 'activity';
       }
       return Session.set('menu', menu);
+    };
+
+    AppRouter.prototype.newAchievement = function() {
+      var id;
+      this.softReset();
+      Session.set('page', 'achievements');
+      Session.set('tab', 'edit');
+      return id = Meteor.call('newAchievement', function(error, result) {
+        if (!error) {
+          Session.set('single', result);
+          return Session.set('newAchievement', result);
+        }
+      });
     };
 
     AppRouter.prototype.achievements = function(id, tab, type) {

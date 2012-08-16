@@ -1,7 +1,34 @@
 <template name='ladder'>
+<table class='ladder table'>
+<thead>
+<tr>
+<th class='rank'>
+<h6>Rank</h6>
+</th>
+<th>
+<h6>User</h6>
+</th>
+<th class='right'>
+<h6>Score</h6>
+</th>
+</tr>
+</thead>
+<tbody>
 {{#each users}}
+<tr>
+<td class='score'>
+<span class='value'>{{rank}}</span>
+</td>
+<td>
 {{> user}}
+</td>
+<td class='score right'>
+<span class='value'>{{score}}</span>
+</td>
+</tr>
 {{else}}
 {{> loading}}
 {{/each}}
+</tbody>
+</table>
 </template>

@@ -15,7 +15,6 @@
       var entity, id;
       id = Session.get('single');
       entity = Accomplishments.findOne(id);
-      console.log(id, entity);
       if (entity) {
         Session.set('topic', entity._id);
         return entity;
@@ -25,7 +24,6 @@
       var entity, id;
       id = Session.get('single');
       entity = Comments.findOne(id);
-      console.log(id, entity);
       if (entity) {
         Session.set('topic', entity.topic);
         Session.set('parent', entity._id);

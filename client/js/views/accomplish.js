@@ -7,7 +7,9 @@
         var stry;
         stry = $("#editor-" + this._id).val();
         Session.set('expand', null);
-        return Meteor.call('accomplish', this._id, stry);
+        return Meteor.call('accomplish', this._id, stry, function(error, result) {
+          return window.Router.navigate("/accomplishments/" + result, true);
+        });
       },
       'click .uncreate': function(e) {
         return Accomplishments.remove(this._id);

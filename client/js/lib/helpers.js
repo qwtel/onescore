@@ -28,38 +28,6 @@
     }
   ];
 
-  Session.toggle = function(name, value) {
-    if (value != null) {
-      if (Session.equals(name, value)) {
-        return Session.set(name, null);
-      } else {
-        return Session.set(name, value);
-      }
-    } else {
-      return Session.set(name, !Session.get(name));
-    }
-  };
-
-  window.createNewAchievement = function() {
-    var id, newAchievement;
-    if (Meteor.user()) {
-      newAchievement = Achievements.findOne({
-        user: Meteor.user()._id,
-        created: false
-      });
-      if (newAchievement) {
-        id = newAchievement._id;
-      } else {
-        id = Achievements.insert({
-          user: Meteor.user()._id,
-          score: 0,
-          created: false
-        });
-      }
-      return id;
-    }
-  };
-
   window.makeOkCancelHandler = function(options) {
     var cancel, ok;
     ok = options.ok || function() {};
@@ -79,15 +47,8 @@
     };
   };
 
-  window.getThreadId = function(comment) {
-    while (comment.parent !== null) {
-      comment = Comments.findOne(comment.parent);
-    }
-    return comment._id;
-  };
-
   window.focusById = function(id) {
-    return $('#' + id).focus();
+    return $("#" + id).focus();
   };
 
   window.findTags = function(text) {

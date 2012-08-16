@@ -49,6 +49,7 @@ a
       family: $font
       size: 28px
       weight: normal
+    vertical-align: bottom
 
   .dollar
     @include inline-block
@@ -133,7 +134,7 @@ a
   border-color: #ddd
 
   .heading
-    margin-bottom: 20px
+    margin-bottom: $padding
 
 .menu
   .nav-stacked > li > a
@@ -166,6 +167,7 @@ a
 
   .icon-side
     float: left
+    margin-top: 2px
     margin-left: -35px
     width: 35px
     text-align: center
@@ -177,12 +179,6 @@ a
   .part
     margin-bottom: $padding/2
 
-  .story
-    //border-top: 1px solid #ddd
-    //padding-top: $padding/2
-    //margin-top: $padding/2
-    margin-top: $padding
-
 .breadcrumb li:first-child
   font-weight: bold
 
@@ -191,7 +187,7 @@ a
     min-height: 75px
 
     .body
-      margin-bottom: $padding
+      margin-bottom: $margin
 
       .text
         width: 100%
@@ -203,6 +199,7 @@ a
     margin-left: 2*$padding + 5px
 
   .cutoff
+    height: 10px
     color: gray
     display: block
     font-size: 9px
@@ -323,10 +320,10 @@ $activityPadding: 15px
 .userWidget, .userBanner
   min-height: 50px
   .name 
+    line-height: 80%
     margin-left: $iconSize + $padding
     border-bottom: 1px solid #ddd
     padding-bottom: 2px
-    line-height: 80%
     a
       color: inherit
       &:hover
@@ -377,7 +374,12 @@ $activityPadding: 15px
 
 .line
   width: 100%
-  border-bottom: 1px solid #e5e5e5
+  margin-left: -19px
+  padding: 0 19px
+  border-bottom: 1px solid #ddd
+
+  // Make in-line with first menu item
+  margin-top: -3px
 
 .fold
   width: 100%
@@ -486,12 +488,27 @@ a:hover i, a i.active, button:hover i, button i.active
   .value
     background-position: 0 2*$iconSize
 
+.mini
+  min-height: 25px
+  font-size: 13px
+  margin-bottom: 5px
+
+  .title
+    font-weight: bold
+  .icon
+    @include inline-block
+    float: none
+    width: $iconSize/2
+    height: $iconSize/2
+    border-width: 1px
+    border-radius: 3px
+    vertical-align: middle
+
 .times
   color: gray
 
 .minimal
-  margin-top: $padding/2
-  padding: $padding/2
+  margin: $padding 0 
   .icons
     display: none
     
@@ -515,3 +532,11 @@ a:hover i, a i.active, button:hover i, button i.active
     width: $iconSize/2
     height: $iconSize/2
 
+.ladder
+  color: gray
+  .user
+    margin-bottom: 0
+  .rank
+    width: 30px
+  .right
+    text-align: right

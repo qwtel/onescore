@@ -1,10 +1,6 @@
 <template name='achievements'>
 <div class='clearfix'></div>
-{{#if newAchievement}}
-{{#with newAchievement}}
-<a href="/achievements/{{newAchievement._id}}/edit" class="new fold"><i class="icon-certificate"></i> New achievement</a>
-{{/with}}
-{{/if}}
+<a href="/achievements/new" class="new fold"><i class="icon-certificate"></i> New achievement</a>
 {{#if achievements}}
 {{#each achievements}}
 <div class='fold'>

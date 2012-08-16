@@ -25,10 +25,7 @@
         var $t, up;
         if (!e.isPropagationStopped()) {
           e.stopPropagation();
-          $t = $(e.target);
-          if (!$t.hasClass('vote')) {
-            $t = $t.parents('.vote');
-          }
+          $t = $(e.target).closest('.vote');
           up = $t.data('up');
           return Meteor.call('vote', 'comments', this._id, up);
         }
@@ -135,12 +132,12 @@
       switch (sort) {
         case 'hot':
           data = {
-            score: -1
+            hot: -1
           };
           break;
         case 'cool':
           data = {
-            score: 1
+            hot: 1
           };
           break;
         case 'new':
@@ -155,12 +152,12 @@
           break;
         case 'best':
           data = {
-            score: -1
+            best: -1
           };
           break;
-        case 'wort':
+        case 'worst':
           data = {
-            score: 1
+            best: 1
           };
       }
       c = Comments.find(sel, {

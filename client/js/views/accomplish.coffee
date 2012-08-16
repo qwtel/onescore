@@ -3,7 +3,8 @@ _.extend Template.accomplish,
     'click .create': (e) ->
       stry = $("#editor-#{@_id}").val()
       Session.set 'expand', null
-      Meteor.call 'accomplish', @_id, stry
+      Meteor.call 'accomplish', @_id, stry, (error, result) ->
+        window.Router.navigate "/accomplishments/#{result}", true
 
     'click .uncreate': (e) ->
       Accomplishments.remove @_id

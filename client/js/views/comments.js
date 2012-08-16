@@ -10,23 +10,14 @@
       },
       'keyup .new-thread,  keydown .new-thread': window.makeOkCancelHandler({
         ok: function(text, e) {
-          var level, parent;
-          parent = Session.get('parent');
-          if (parent) {
-            level = 1 + Session.get('level');
-          } else {
-            level = 0;
-          }
-          Comments.insert({
-            type: Session.get('page'),
+          var data;
+          data = {
             text: text,
-            date: new Date,
-            topic: Session.get('topic'),
-            parent: parent,
-            user: Meteor.user()._id,
-            score: 0,
-            level: level
-          });
+            parent: Session.get('parent'),
+            type: Session.get('page'),
+            topic: Session.get('topic')
+          };
+          Meteor.call('comment', data);
           Session.set('addComment', null);
           Session.set('editComment', null);
           return e.target.value = "";
@@ -34,18 +25,15 @@
       }),
       'keyup .comment-text, keydown .comment-text': window.makeOkCancelHandler({
         ok: function(text, e) {
+          var data;
           if (Session.get('addComment') !== null) {
-            Comments.insert({
-              type: Session.get('page'),
+            data = {
               text: text,
-              date: new Date,
-              topic: Session.get('topic'),
               parent: this._id,
-              mention: this.user,
-              user: Meteor.user()._id,
-              score: 0,
-              level: this.level + 1
-            });
+              type: Session.get('page'),
+              topic: Session.get('topic')
+            };
+            Meteor.call('comment', data);
           }
           Session.set('addComment', null);
           Session.set('editComment', null);
@@ -54,12 +42,13 @@
       }),
       'keyup .edit-text, keydown .edit-text': window.makeOkCancelHandler({
         ok: function(text, e) {
+          var data;
           if (Session.equals('editComment', this._id)) {
-            Comments.update(this._id, {
-              $set: {
-                text: text
-              }
-            });
+            data = {
+              _id: this._id,
+              text: text
+            };
+            Meteor.call('comment', data);
           }
           Session.set('addComment', null);
           Session.set('editComment', null);
@@ -91,12 +80,12 @@
       switch (sort) {
         case 'hot':
           data = {
-            score: -1
+            hot: -1
           };
           break;
         case 'cool':
           data = {
-            score: 1
+            hot: 1
           };
           break;
         case 'new':
@@ -111,12 +100,12 @@
           break;
         case 'best':
           data = {
-            score: -1
+            best: -1
           };
           break;
-        case 'wort':
+        case 'worst':
           data = {
-            score: 1
+            best: 1
           };
       }
       c = Comments.find(sel, {

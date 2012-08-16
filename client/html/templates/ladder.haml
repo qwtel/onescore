@@ -1,7 +1,23 @@
 %template(name='ladder')
-  {{#each users}}
-  {{> user}}
-  {{else}}
-  {{> loading}}
-  {{/each}}
+  %table.ladder.table
+    %thead 
+      %tr 
+        %th.rank
+          %h6 Rank
+        %th
+          %h6 User
+        %th.right
+          %h6 Score
+    %tbody 
+      {{#each users}}
+      %tr 
+        %td.score
+          %span.value {{rank}}
+        %td
+          {{> user}}
+        %td.score.right
+          %span.value {{score}}
+      {{else}}
+      {{> loading}}
+      {{/each}}
 

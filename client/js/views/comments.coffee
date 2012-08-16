@@ -8,22 +8,13 @@ _.extend Template.comments,
     'keyup .new-thread,  keydown .new-thread':
       window.makeOkCancelHandler
         ok: (text, e) ->
-          parent = Session.get 'parent'
-          if parent
-            level = 1 + Session.get 'level'
-          else
-            level = 0
-
-          Comments.insert
-            type: Session.get 'page'
+          data =
             text: text
-            date: new Date
+            parent: Session.get 'parent'
+            type: Session.get 'page'
             topic: Session.get 'topic'
-            parent: parent
-            #mention: parent
-            user: Meteor.user()._id
-            score: 0
-            level: level
+
+          Meteor.call 'comment', data
 
           Session.set 'addComment', null
           Session.set 'editComment', null
@@ -33,16 +24,13 @@ _.extend Template.comments,
       window.makeOkCancelHandler
         ok: (text, e) ->
           if Session.get('addComment') isnt null
-            Comments.insert
-              type: Session.get 'page'
+            data =
               text: text
-              date: new Date
-              topic: Session.get 'topic'
               parent: @_id
-              mention: @user
-              user: Meteor.user()._id
-              score: 0
-              level: @level+1
+              type: Session.get 'page'
+              topic: Session.get 'topic'
+
+            Meteor.call 'comment', data
 
           Session.set 'addComment', null
           Session.set 'editComment', null
@@ -52,9 +40,11 @@ _.extend Template.comments,
       window.makeOkCancelHandler
         ok: (text, e) ->
           if Session.equals 'editComment', @_id
-            Comments.update @_id,
-              $set:
-                text: text
+            data =
+              _id: @_id
+              text: text
+
+            Meteor.call 'comment', data
 
           Session.set 'addComment', null
           Session.set 'editComment', null
@@ -81,14 +71,14 @@ _.extend Template.comments,
     sort = Session.get 'sort'
 
     switch sort
-      when 'hot' then data = score: -1
-      when 'cool' then data = score: 1
+      when 'hot' then data = hot: -1
+      when 'cool' then data = hot: 1
 
       when 'new' then data = date: -1
       when 'old' then data = date: 1
 
-      when 'best' then data = score: -1
-      when 'wort' then data = score: 1
+      when 'best' then data = best: -1
+      when 'worst' then data = best: 1
 
     c = Comments.find sel,
       sort: data

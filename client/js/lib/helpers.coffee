@@ -6,6 +6,8 @@ window.items = [
     name: 'Ladder'
 ]
 
+# Categories should become tags (with capital letters) and the top 10 tags
+# become 'categories'
 window.categories = [
     name: 'Carrier'
   ,
@@ -19,31 +21,6 @@ window.categories = [
   ,
     name: 'Sports'
 ]
-
-Session.toggle = (name, value) ->
-  if value?
-    if Session.equals name, value
-      Session.set name, null
-    else
-      Session.set name, value
-  else
-    Session.set name, !Session.get(name)
-
-window.createNewAchievement = ->
-  if Meteor.user()
-    newAchievement = Achievements.findOne
-      user: Meteor.user()._id
-      created: false
-
-    if newAchievement
-      id = newAchievement._id
-    else
-      id = Achievements.insert
-        user: Meteor.user()._id
-        score: 0
-        created: false
-
-    return id
 
 window.makeOkCancelHandler = (options) ->
   ok = options.ok || ->
@@ -60,16 +37,11 @@ window.makeOkCancelHandler = (options) ->
       else
         cancel.call this, evt
 
-window.getThreadId = (comment) ->
-  while comment.parent isnt null
-    comment = Comments.findOne comment.parent
-  return comment._id
-
 window.focusById = (id) ->
   #$t = $('#'+id)
   #t = $t.val()
   #$t.focus().val('').val(t)
-  $('#'+id).focus()#.select()
+  $("##{id}").focus()#.select()
 
 window.findTags = (text) ->
   pattern = /// [^&]\B(#(\w\w+)) ///g

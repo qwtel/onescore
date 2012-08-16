@@ -57,7 +57,10 @@
     });
     Achievements.allow({
       insert: self,
-      update: creator
+      update: creator,
+      remove: function() {
+        return true;
+      }
     });
     Titles.allow({
       insert: self,

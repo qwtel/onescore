@@ -3,14 +3,14 @@ _.extend Template.accomplishments,
     sort = Session.get 'sort'
 
     switch sort
-      when 'hot' then data = score: -1
-      when 'cool' then data = score: 1
+      when 'hot' then data = hot: -1
+      when 'cool' then data = hot: 1
 
       when 'new' then data = date: -1
       when 'old' then data = date: 1
 
-      when 'best' then data = score: -1
-      when 'wort' then data = score: 1
+      when 'best' then data = best: -1
+      when 'worst' then data = best: 1
 
     username = Session.get 'username'
     if username

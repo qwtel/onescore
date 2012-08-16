@@ -1,12 +1,13 @@
 %template(name='achievements')
   .clearfix
 
-  {{#if newAchievement}}
-  {{#with newAchievement}}
-  <a href="/achievements/{{newAchievement._id}}/edit" class="new fold"><i class="icon-certificate"></i> New achievement</a>
-  -#{{> achievement}}
-  {{/with}}
-  {{/if}}
+  -#{{#if newAchievement}}
+  -#{{#with newAchievement}}
+  -#<a href="/achievements/{{newAchievement._id}}/edit" class="new fold"><i class="icon-certificate"></i> New achievement</a>
+  -#-#{{> achievement}}
+  -#{{/with}}
+  -#{{/if}}
+  <a href="/achievements/new" class="new fold"><i class="icon-certificate"></i> New achievement</a>
 
   {{#if achievements}}
   {{#each achievements}}

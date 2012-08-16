@@ -8,12 +8,12 @@
       switch (sort) {
         case 'hot':
           data = {
-            score: -1
+            hot: -1
           };
           break;
         case 'cool':
           data = {
-            score: 1
+            hot: 1
           };
           break;
         case 'new':
@@ -28,12 +28,12 @@
           break;
         case 'best':
           data = {
-            score: -1
+            best: -1
           };
           break;
-        case 'wort':
+        case 'worst':
           data = {
-            score: 1
+            best: 1
           };
       }
       username = Session.get('username');

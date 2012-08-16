@@ -6,6 +6,7 @@ class AppRouter extends Backbone.Router
     'home': 'home'
     'explore': 'explore'
     'ladder': 'ladder'
+    'achievements/new': 'newAchievement'
     'achievements/:id': 'achievements'
     'achievements/:id/:tab': 'achievements'
     'achievements/:id/:tab/:type': 'achievements'
@@ -42,6 +43,15 @@ class AppRouter extends Backbone.Router
 
     unless menu then menu = 'activity'
     Session.set 'menu', menu
+
+  newAchievement: ->
+    @softReset()
+    Session.set 'page', 'achievements'
+    Session.set 'tab', 'edit'
+    id = Meteor.call 'newAchievement', (error, result) ->
+      unless error
+        Session.set 'single', result
+        Session.set 'newAchievement', result
 
   achievements: (id, tab, type) ->
     @softReset()

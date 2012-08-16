@@ -45,6 +45,7 @@ Meteor.startup ->
   Achievements.allow
     insert: self
     update: creator
+    remove: -> return true
 
   Titles.allow
     insert: self

@@ -1,11 +1,10 @@
-_.extend Template.singleComment,
+_.extend Template.singleComment, Template.comment,
   events:
     'click .edit': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
         Session.set 'addComment', null
         Session.toggle 'editComment', @_id
-        #Session.set 'thread', window.getThreadId(this)
         Meteor.flush()
         window.focusById "edit-#{@_id}"
 
@@ -17,23 +16,16 @@ _.extend Template.singleComment,
     'click .vote': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
-        $t = $(e.target)
-        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
+        $t = $(e.target).closest '.vote'
         up = $t.data 'up'
         Meteor.call 'vote', 'comments', @_id, up
-
+    
     'click .remove': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
         Comments.remove @_id
 
-    'click .link': (e) ->
-      unless e.isPropagationStopped()
-        e.stopPropagation()
-        Session.set 'parent', @_id
-        Session.set 'level', @level
-
-     'keyup .edit-text, keydown .edit-text':
+    'keyup .edit-text, keydown .edit-text':
       window.makeOkCancelHandler
         ok: (text, e) ->
           if Session.equals 'editComment', @_id
@@ -75,31 +67,3 @@ _.extend Template.singleComment,
           url: "/#{comment.type}/#{comment.topic}"
 
     return breadcrumbs.reverse()
-
-  user: ->
-    return Meteor.users.findOne @user
-
-  mention: ->
-    if @mention
-      return Meteor.users.findOne @mention
-
-  verb: ->
-    if @parent?
-      return 'replied'
-    return 'commented'
-
-  addLineBreaks: (text) ->
-    text = _.escape text
-    return text.replace '\n', '<br>'
-
-  voted: (state) ->
-    state = if state is 'up' then true else false
-
-    if Meteor.user()
-      vote = Votes.findOne
-        user: Meteor.user()._id
-        entity: @_id
-      if vote and vote.up is state
-        return 'active'
-    return ''
-

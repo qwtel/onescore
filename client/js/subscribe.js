@@ -13,11 +13,7 @@
     }
   });
 
-  Meteor.subscribe('achievements', function() {
-    var id;
-    id = window.createNewAchievement();
-    return Session.set('newAchievement', id);
-  });
+  Meteor.subscribe('achievements', function() {});
 
   Meteor.subscribe('votes', function() {});
 

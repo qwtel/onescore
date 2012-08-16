@@ -30,7 +30,7 @@
         return this.tags = tags;
       },
       'click .create': function(e) {
-        var data, id;
+        var data;
         data = {};
         $("#form-" + this._id).find('.lazy').each(function() {
           var $t, field;
@@ -41,12 +41,11 @@
           }
         });
         data.created = true;
+        data.value = 0;
         Achievements.update(this._id, {
           $set: data
         });
-        id = window.createNewAchievement();
-        Session.set('newAchievement', id);
-        return Session.set('expand', null);
+        return Session.set('newAchievement', null);
       },
       'click .vote': function(e) {
         var $t, up;

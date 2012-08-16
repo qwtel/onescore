@@ -8,8 +8,8 @@ Meteor.autosubscribe ->
     Meteor.subscribe 'titles', achievement, ->
 
 Meteor.subscribe 'achievements', ->
-  id = window.createNewAchievement()
-  Session.set 'newAchievement', id
+  #id = window.createNewAchievement()
+  #Session.set 'newAchievement', id
 
 Meteor.subscribe 'votes', ->
 

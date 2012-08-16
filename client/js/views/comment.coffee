@@ -5,7 +5,6 @@ _.extend Template.comment,
         e.stopPropagation()
         Session.toggle 'addComment', @_id
         Session.set 'editComment', null
-        #Session.set 'thread', window.getThreadId(this)
         Meteor.flush()
         window.focusById "reply-#{@_id}"
 
@@ -14,15 +13,13 @@ _.extend Template.comment,
         e.stopPropagation()
         Session.set 'addComment', null
         Session.toggle 'editComment', @_id
-        #Session.set 'thread', window.getThreadId(this)
         Meteor.flush()
         window.focusById "edit-#{@_id}"
 
     'click .vote': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
-        $t = $(e.target)
-        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
+        $t = $(e.target).closest '.vote'
         up = $t.data 'up'
         Meteor.call 'vote', 'comments', @_id, up
 
@@ -35,12 +32,6 @@ _.extend Template.comment,
       unless e.isPropagationStopped()
         e.stopPropagation()
         Session.push 'unexpand', @_id, true
-
-    #'click .link': (e) ->
-    #  unless e.isPropagationStopped()
-    #    e.stopPropagation()
-    #    Session.set 'parent', @_id
-    #    Session.set 'level', @level
 
     'mouseover .highlight': (e) ->
       unless e.isPropagationStopped()
@@ -108,14 +99,14 @@ _.extend Template.comment,
     sort = Session.get 'sort'
 
     switch sort
-      when 'hot' then data = score: -1
-      when 'cool' then data = score: 1
+      when 'hot' then data = hot: -1
+      when 'cool' then data = hot: 1
 
       when 'new' then data = date: -1
       when 'old' then data = date: 1
 
-      when 'best' then data = score: -1
-      when 'wort' then data = score: 1
+      when 'best' then data = best: -1
+      when 'worst' then data = best: 1
 
     c = Comments.find sel,
       sort: data
