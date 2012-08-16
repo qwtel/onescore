@@ -17,13 +17,14 @@
 
     .span4
       %aside.well 
-        {{> userWidget }}
+        {{> userWidget}}
       %aside.well 
-        %h6.heading.line FAQ
-      %aside.well 
-        %h6.heading.line Tags
+        %h6.heading.line Quest Log
+        {{> miniQuestLog}}
       %aside.well 
         %h6.heading.line Quest items
+      %aside.well 
+        %h6.heading.line Tags
   {{/if}}
 
   {{#if equals "page" "explore"}}
@@ -31,6 +32,9 @@
     .span4
       %aside.well.hidden-phone
         %h6.heading.line Tags
+      %aside.well 
+        %h6.heading.line Quest Log
+        {{> miniQuestLog}}
       %aside.well.hidden-phone
         %h6.heading.line Quest items
     .span8

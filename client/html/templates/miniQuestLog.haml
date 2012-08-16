@@ -1,0 +1,15 @@
+%template(name='miniQuestLog')
+  {{#if favourites}}
+  {{#each favourites}}
+  {{#if achievement}}
+  {{#with achievement}}
+  {{> miniAchievement}}
+  {{/with}}
+  {{/if}}
+  {{else}}
+  {{> loading}}
+  {{/each}}
+  {{else}}
+  {{> noContent}}
+  {{/if}}
+
