@@ -44,7 +44,35 @@
           e.stopPropagation();
           return $(e.target).closest('.comment').removeClass('hover');
         }
-      }
+      },
+      'keyup .comment-text, keydown .comment-text': window.makeOkCancelHandler({
+        ok: function(text, e) {
+          var data;
+          data = {
+            text: text,
+            parent: this._id,
+            topic: Session.get('topic'),
+            topicType: Session.get('page')
+          };
+          Meteor.call('comment', data);
+          Session.set('addComment', null);
+          Session.set('editComment', null);
+          return e.target.value = "";
+        }
+      }),
+      'keyup .edit-text, keydown .edit-text': window.makeOkCancelHandler({
+        ok: function(text, e) {
+          var data;
+          data = {
+            _id: this._id,
+            text: text
+          };
+          Meteor.call('comment', data);
+          Session.set('addComment', null);
+          Session.set('editComment', null);
+          return e.target.value = "";
+        }
+      })
     },
     unexpand: function() {
       var field;
@@ -69,9 +97,6 @@
       }
       return 'commented';
     },
-    hidden: function() {
-      return false;
-    },
     nested: function() {
       var parent;
       parent = Session.get('parent');
@@ -88,10 +113,6 @@
           return '';
         }
       }
-    },
-    addLineBreaks: function(text) {
-      text = _.escape(text);
-      return text.replace('\n', '<br>');
     },
     cutoff: function() {
       var parent;

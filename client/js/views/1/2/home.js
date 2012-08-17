@@ -5,11 +5,7 @@
     accomplishments: function() {
       var sort;
       sort = Template.filter.sort();
-      return Accomplishments.find({
-        story: {
-          $exists: true
-        }
-      }, {
+      return Accomplishments.find({}, {
         sort: sort
       });
     }

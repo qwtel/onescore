@@ -12,15 +12,10 @@ _.extend Template.accomplishment, Template.vote,
     return Meteor.users.findOne @user
   
   verb: ->
-    if @story and @story isnt ''
-      return 'posted'
-    else
-      return 'accomplished'
+    return 'accomplished'
 
   numComments: ->
     c = Comments.find
       topic: @_id
     if c
       return c.count()
-
-_.extend Template.accomplishment.events, Template.vote.events

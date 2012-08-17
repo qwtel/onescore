@@ -211,4 +211,9 @@
     return d.fromNow();
   });
 
+  Handlebars.registerHelper('addLineBreaks', function(text) {
+    text = _.escape(text);
+    return text.replace('\n', '<br>');
+  });
+
 }).call(this);

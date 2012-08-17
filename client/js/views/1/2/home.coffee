@@ -2,8 +2,5 @@ _.extend Template.home,
   accomplishments: ->
     sort = Template.filter.sort()
 
-    return Accomplishments.find
-      story: $exists: true
-      #story: $ne: ''
-    ,
+    return Accomplishments.find {},
       sort: sort

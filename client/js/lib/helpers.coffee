@@ -153,3 +153,7 @@ Handlebars.registerHelper 'formatDate', (date) ->
 Handlebars.registerHelper 'timeago', (date) ->
   d = moment(new Date(date))
   d.fromNow()
+
+Handlebars.registerHelper 'addLineBreaks', (text) ->
+  text = _.escape text
+  return text.replace '\n', '<br>'

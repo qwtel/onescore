@@ -1,16 +1,4 @@
 _.extend Template.singleComment, Template.comment,
-  topic: ->
-    switch @type
-      when 'comments'
-        collection = Comments
-      when 'accomplishments'
-        collection = Accomplishments
-      when 'achievements'
-        collection = Achievements
-
-    if collection
-      return collection.findOne @topic
-
   breadcrumbs: ->
     breadcrumbs = []
     parent = Session.get 'parent'
@@ -31,20 +19,7 @@ _.extend Template.singleComment, Template.comment,
     return breadcrumbs.reverse()
 
 _.extend Template.singleComment.events, Template.comment.events,
-  'click .reply': (e) ->
+  'click .replyy': (e) ->
     Session.set 'addComment', 'new'
     Meteor.flush()
     window.focusById "add-#{@_id}"
-
-  'keyup .edit-text, keydown .edit-text':
-    window.makeOkCancelHandler
-      ok: (text, e) ->
-        if Session.equals 'editComment', @_id
-          Comments.update @_id,
-            $set:
-              text: text
-
-        Session.set 'addComment', null
-        Session.set 'editComment', null
-        e.target.value = ""
-

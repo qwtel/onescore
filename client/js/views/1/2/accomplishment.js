@@ -15,11 +15,7 @@
       return Meteor.users.findOne(this.user);
     },
     verb: function() {
-      if (this.story && this.story !== '') {
-        return 'posted';
-      } else {
-        return 'accomplished';
-      }
+      return 'accomplished';
     },
     numComments: function() {
       var c;
@@ -31,7 +27,5 @@
       }
     }
   });
-
-  _.extend(Template.accomplishment.events, Template.vote.events);
 
 }).call(this);

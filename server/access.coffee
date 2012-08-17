@@ -1,34 +1,34 @@
+creator = (userId, entities) ->
+  return _.all entities, (entity) ->
+    return not entity.user or entity.user is userId
+
+self = (userId, doc) ->
+  return userId is doc.user
+
+unique = (Collection, userId, doc) ->
+  if self(userId, doc)
+    duplicate = Collection.findOne
+      entity: doc.entity
+      user: doc.user
+
+     if not duplicate
+       return true
+
+  return false
+
+uniqueVote = (userId, doc) ->
+  return unique Votes, userId, doc
+
+uniqueFav = (userId, doc) ->
+  return unique Favourites, userId, doc
+
+uniqueQuest = (userId, doc) ->
+  return unique Quests, userId, doc
+
+uniqueAcc = (userId, doc) ->
+  return unique Accomplishments, userId, doc
+
 Meteor.startup ->
-  creator = (userId, entities) ->
-    return _.all entities, (entity) ->
-      return not entity.user or entity.user is userId
-
-  self = (userId, doc) ->
-    return userId is doc.user
-
-  unique = (Collection, userId, doc) ->
-    if self(userId, doc)
-      duplicate = Collection.findOne
-        entity: doc.entity
-        user: doc.user
-
-       if not duplicate
-         return true
-
-    return false
-
-  uniqueVote = (userId, doc) ->
-    return unique Votes, userId, doc
-
-  uniqueFav = (userId, doc) ->
-    return unique Favourites, userId, doc
-
-  uniqueQuest = (userId, doc) ->
-    return unique Quests, userId, doc
-
-  uniqueAcc = (userId, doc) ->
-    return unique Accomplishments, userId, doc
-
   ###
   Todos.allow
     insert: -> return true
@@ -37,19 +37,19 @@ Meteor.startup ->
     fetch: ['privateTo']
   ###
 
-  Meteor.users.allow
-    insert: -> return true
-    update: -> return true
-    remove: -> return true
+  #Meteor.users.allow
+  #  insert: -> return true
+  #  update: -> return true
+  #  remove: -> return true
 
   Achievements.allow
     insert: self
     update: creator
-    remove: -> return true
+  # remove: -> return true
 
   Titles.allow
     insert: self
-    update: creator
+  # update: creator
 
   #Votes.allow
   #  insert: uniqueVote
@@ -63,12 +63,12 @@ Meteor.startup ->
   #  insert: uniqueQuest
   #  update: creator
 
-  Accomplishments.allow
-    insert: uniqueAcc
-    update: creator
-    remove: self
+  #Accomplishments.allow
+  #  insert: uniqueAcc
+  #  update: creator
+  #  remove: self
 
-  Comments.allow
-    insert: self
-    update: creator
-    remove: -> return true
+  #Comments.allow
+  #  insert: self
+  #  update: creator
+  #  remove: -> return true

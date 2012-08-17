@@ -193,7 +193,7 @@ a
         width: 100%
 
   .hover
-    background: #efefef
+    background: #f0f0f0
 
   .nested
     margin-left: 2*$padding + 5px
@@ -420,6 +420,7 @@ a:hover i, a i.active, button:hover i, button i.active
     align: center
     decoration: none
   &:hover
+    @include fold-shadow(#f0f0f0, #ccc)
     text-decoration: none
 
 .achievement
@@ -440,7 +441,6 @@ a:hover i, a i.active, button:hover i, button i.active
   .content
     margin-left: $iconSize + 10px
     .title
-      line-height: 80%
       margin-bottom: 5px
     .description
       .tag
@@ -489,7 +489,7 @@ a:hover i, a i.active, button:hover i, button i.active
     background-position: 0 2*$iconSize
 
 .mini
-  min-height: 25px
+  min-height: 20px
   font-size: 13px
   margin-bottom: 5px
 
@@ -498,10 +498,11 @@ a:hover i, a i.active, button:hover i, button i.active
   .icon
     @include inline-block
     float: none
-    width: $iconSize/2
-    height: $iconSize/2
+    width: 20px
+    height: 20px
+    border-radius: 0
+    //border-radius: 3px
     border-width: 1px
-    border-radius: 3px
     vertical-align: middle
 
 .times

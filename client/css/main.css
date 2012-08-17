@@ -160,7 +160,7 @@ a {
     .comments .comment .body .text {
       width: 100%; }
 .comments .hover {
-  background: #efefef; }
+  background: #f0f0f0; }
 .comments .nested {
   margin-left: 33px; }
 .comments .cutoff {
@@ -386,6 +386,20 @@ a:hover i, a i.active, button:hover i, button i.active {
   text-align: center;
   text-decoration: none; }
   .new:hover {
+    background-color: #cccccc;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(#f0f0f0 5%, #cccccc 0%), color-stop(100%, #f0f0f0));
+    background-image: -webkit-linear-gradient(top, #cccccc 0%, #f0f0f0 5%, #f0f0f0 100%);
+    background-image: -moz-linear-gradient(top, #cccccc 0%, #f0f0f0 5%, #f0f0f0 100%);
+    background-image: -ms-linear-gradient(top, #cccccc 0%, #f0f0f0 5%, #f0f0f0 100%);
+    background-image: -o-linear-gradient(top, #cccccc 0%, #f0f0f0 5%, #f0f0f0 100%);
+    background-image: linear-gradient(top, #cccccc 0%, #f0f0f0 5%, #f0f0f0 100%);
+    -webkit-background-size: 100% 100px;
+    -moz-background-size: 100% 100px;
+    -ms-background-size: 100% 100px;
+    -o-background-size: 100% 100px;
+    background-size: 100% 100px;
+    background-color: #f0f0f0;
+    background-repeat: no-repeat;
     text-decoration: none; }
 
 .achievement a {
@@ -409,7 +423,6 @@ a:hover i, a i.active, button:hover i, button i.active {
 .achievement .content {
   margin-left: 60px; }
   .achievement .content .title {
-    line-height: 80%;
     margin-bottom: 5px; }
   .achievement .content .description .tag {
     color: gray; }
@@ -451,7 +464,7 @@ a:hover i, a i.active, button:hover i, button i.active {
   background-position: 0 100px; }
 
 .mini {
-  min-height: 25px;
+  min-height: 20px;
   font-size: 13px;
   margin-bottom: 5px; }
   .mini .title {
@@ -463,10 +476,10 @@ a:hover i, a i.active, button:hover i, button i.active {
     *display: inline;
     *vertical-align: auto;
     float: none;
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
     border-width: 1px;
-    border-radius: 3px;
     vertical-align: middle; }
 
 .times {

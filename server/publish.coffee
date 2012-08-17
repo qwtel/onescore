@@ -11,13 +11,10 @@ Meteor.publish 'titles', (entity) ->
   return Titles.find entity: entity
 
 Meteor.publish 'votes', ->
-  return Votes.find user: @userId()
+  return Votes.find()# user: @userId()
 
 Meteor.publish 'favourites', ->
-  return Favourites.find user: @userId()
-
-#Meteor.publish 'quests', ->
-#  return Quests.find user: @userId()
+  return Favourites.find()# user: @userId()
 
 Meteor.publish 'accomplishments', ->
   return Accomplishments.find()

@@ -36,6 +36,34 @@ _.extend Template.comment, Template.vote,
         e.stopPropagation()
         $(e.target).closest('.comment').removeClass 'hover'
 
+    'keyup .comment-text, keydown .comment-text':
+      window.makeOkCancelHandler
+        ok: (text, e) ->
+          data =
+            text: text
+            parent: @_id
+            topic: Session.get 'topic'
+            topicType: Session.get 'page'
+
+          Meteor.call 'comment', data
+
+          Session.set 'addComment', null
+          Session.set 'editComment', null
+          e.target.value = ""
+
+    'keyup .edit-text, keydown .edit-text':
+      window.makeOkCancelHandler
+        ok: (text, e) ->
+          data =
+            _id: @_id
+            text: text
+
+          Meteor.call 'comment', data
+
+          Session.set 'addComment', null
+          Session.set 'editComment', null
+          e.target.value = ""
+
   unexpand: ->
     Session.get 'redraw'
     field = Session.get 'unexpand'
@@ -55,9 +83,6 @@ _.extend Template.comment, Template.vote,
       return 'replied'
     return 'commented'
 
-  hidden: ->
-    return false
-
   nested: ->
     parent = Session.get 'parent'
     if parent
@@ -65,10 +90,6 @@ _.extend Template.comment, Template.vote,
     else
       return if @level > Session.get('level') then 'nested' else ''
   
-  addLineBreaks: (text) ->
-    text = _.escape text
-    return text.replace '\n', '<br>'
-
   cutoff: ->
     parent = Session.get 'parent'
     if parent

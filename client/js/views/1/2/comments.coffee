@@ -20,36 +20,6 @@ _.extend Template.comments,
           Session.set 'editComment', null
           e.target.value = ""
 
-    'keyup .comment-text, keydown .comment-text':
-      window.makeOkCancelHandler
-        ok: (text, e) ->
-          if Session.get 'addComment' isnt null
-            data =
-              text: text
-              parent: @_id
-              topic: Session.get 'topic'
-              topicType: Session.get 'page'
-
-            Meteor.call 'comment', data
-
-          Session.set 'addComment', null
-          Session.set 'editComment', null
-          e.target.value = ""
-
-     'keyup .edit-text, keydown .edit-text':
-      window.makeOkCancelHandler
-        ok: (text, e) ->
-          if Session.equals 'editComment', @_id
-            data =
-              _id: @_id
-              text: text
-
-            Meteor.call 'comment', data
-
-          Session.set 'addComment', null
-          Session.set 'editComment', null
-          e.target.value = ""
-
   select: (id) ->
     sel =
       topic: Session.get 'topic'
@@ -75,3 +45,4 @@ _.extend Template.comments,
 
   user: ->
     return Meteor.users.findOne @user
+

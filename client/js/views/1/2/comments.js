@@ -22,38 +22,6 @@
           Session.set('editComment', null);
           return e.target.value = "";
         }
-      }),
-      'keyup .comment-text, keydown .comment-text': window.makeOkCancelHandler({
-        ok: function(text, e) {
-          var data;
-          if (Session.get('addComment' !== null)) {
-            data = {
-              text: text,
-              parent: this._id,
-              topic: Session.get('topic'),
-              topicType: Session.get('page')
-            };
-            Meteor.call('comment', data);
-          }
-          Session.set('addComment', null);
-          Session.set('editComment', null);
-          return e.target.value = "";
-        }
-      }),
-      'keyup .edit-text, keydown .edit-text': window.makeOkCancelHandler({
-        ok: function(text, e) {
-          var data;
-          if (Session.equals('editComment', this._id)) {
-            data = {
-              _id: this._id,
-              text: text
-            };
-            Meteor.call('comment', data);
-          }
-          Session.set('addComment', null);
-          Session.set('editComment', null);
-          return e.target.value = "";
-        }
       })
     },
     select: function(id) {

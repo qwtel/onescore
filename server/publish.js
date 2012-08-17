@@ -20,15 +20,11 @@
   });
 
   Meteor.publish('votes', function() {
-    return Votes.find({
-      user: this.userId()
-    });
+    return Votes.find();
   });
 
   Meteor.publish('favourites', function() {
-    return Favourites.find({
-      user: this.userId()
-    });
+    return Favourites.find();
   });
 
   Meteor.publish('accomplishments', function() {
