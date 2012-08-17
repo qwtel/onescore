@@ -1,4 +1,4 @@
-_.extend Template.comment,
+_.extend Template.comment, Template.vote,
   events:
     'click .reply': (e) ->
       unless e.isPropagationStopped()
@@ -15,13 +15,6 @@ _.extend Template.comment,
         Session.toggle 'editComment', @_id
         Meteor.flush()
         window.focusById "edit-#{@_id}"
-
-    'click .vote': (e) ->
-      unless e.isPropagationStopped()
-        e.stopPropagation()
-        $t = $(e.target).closest '.vote'
-        up = $t.data 'up'
-        Meteor.call 'vote', 'comments', @_id, up
 
     'click .remove': (e) ->
       unless e.isPropagationStopped()
@@ -76,17 +69,6 @@ _.extend Template.comment,
     text = _.escape text
     return text.replace '\n', '<br>'
 
-  voted: (state) ->
-    state = if state is 'up' then true else false
-
-    if Meteor.user()
-      vote = Votes.findOne
-        user: Meteor.user()._id
-        entity: @_id
-      if vote and vote.up is state
-        return 'active'
-    return ''
-
   cutoff: ->
     parent = Session.get 'parent'
     if parent
@@ -96,18 +78,9 @@ _.extend Template.comment,
 
   replies: ->
     sel = Template.comments.select @_id
-    sort = Session.get 'sort'
+    sort = Template.filter.sort()
 
-    switch sort
-      when 'hot' then data = hot: -1
-      when 'cool' then data = hot: 1
+    Comments.find sel,
+      sort: sort
 
-      when 'new' then data = date: -1
-      when 'old' then data = date: 1
-
-      when 'best' then data = best: -1
-      when 'worst' then data = best: 1
-
-    c = Comments.find sel,
-      sort: data
-    return c
+_.extend Template.comment.events, Template.vote.events

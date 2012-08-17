@@ -1,4 +1,4 @@
-_.extend Template.edit,
+_.extend Template.edit, Template.vote,
   events:
     'click .close': (e) ->
       Session.set 'styleGuide', true
@@ -10,8 +10,9 @@ _.extend Template.edit,
       title = $("#title-#{@_id}").val()
 
       Titles.insert
-        entity: @_id
         title: title
+        type: 'title'
+        entity: @_id
         user: Meteor.user()._id
         score: 0
 
@@ -24,10 +25,6 @@ _.extend Template.edit,
     
       @description = description
       @tags = tags
-
-      ## HACK: force redraw
-      #Session.set 'tab', 'info'
-      #Session.set 'tab', 'edit'
 
       #_.each @tags, (x) ->
       #  unless _.contains tags, x
@@ -56,14 +53,6 @@ _.extend Template.edit,
 
       Session.set 'newAchievement', null
 
-    'click .vote': (e) ->
-      unless e.isPropagationStopped()
-        $t = $(e.target)
-        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
-        up = $t.data 'up'
-        Meteor.call 'vote', 'titles', @_id, up
-        e.stopPropagation()
-
   selected: (category) ->
     if category
       return if category is @name then 'selected' else ''
@@ -91,12 +80,4 @@ _.extend Template.edit,
       user: Meteor.user()._id
     return titles.count()
 
-  voted: (state) ->
-    state = if state is "up" then true else false
-
-    vote = Votes.findOne
-      user: Meteor.user()._id
-      entity: @_id
-    if vote and vote.up is state
-      return 'active'
-    return ''
+_.extend Template.edit.events, Template.vote.events

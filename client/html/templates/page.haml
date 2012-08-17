@@ -32,7 +32,7 @@
     .span4
       %aside.well.hidden-phone
         %h6.heading.line Tags
-      %aside.well 
+      %aside.well.hidden-phone
         %h6.heading.line Quest Log
         {{> miniQuestLog}}
       %aside.well.hidden-phone
@@ -87,7 +87,7 @@
         %h6.heading.line Quest log
         {{> filter }}
         .clearfix
-        {{> favourites}}
+        {{> questLog}}
         {{/if}}
 
         {{#if equals "menu" "favourites"}}

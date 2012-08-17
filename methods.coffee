@@ -2,10 +2,16 @@ table = {}
 Meteor.startup ->
   # HACK: is there a better way?
   table =
-    titles: Titles
     achievements: Achievements
+    achievement: Achievements
     accomplishments: Accomplishments
+    accomplishment: Accomplishments
+    titles: Titles
+    title: Titles
+    votes: Votes
+    vote: Votes
     comments: Comments
+    comment: Comments
 
 Meteor.methods
   basic: ->
@@ -29,6 +35,7 @@ Meteor.methods
         _.extend data,
           created: false
 
+        data.type = 'achievement'
         id = Achievements.insert data
 
       return id
@@ -55,28 +62,25 @@ Meteor.methods
           mention: null
           level: 0
       
+      data.type = 'comment'
       Comments.insert data
 
-  vote: (collection, entity, up) ->
-    data =
-      entity: entity
-      collection: collection
-      up: up
-
+  vote: (data) ->
     basic = Meteor.call 'basic'
     _.extend data, basic
     
     vote = Votes.findOne
       user: @userId()
-      entity: entity
+      entity: data.entity
     
     if vote
       Votes.update vote._id,
         $set: data
     else
+      data.type = 'votes'
       Votes.insert data
 
-    calculateScore table[collection], entity
+    calculateScore table[data.entityType], data.entity
 
   accomplish: (id, stry) ->
     acc = Accomplishments.findOne
@@ -96,7 +100,8 @@ Meteor.methods
       basic = Meteor.call 'basic'
       _.extend data, basic
 
-      id =Accomplishments.insert data
+      data.type = 'accomplishment'
+      id = Accomplishments.insert data
 
       a = Achievements.findOne id
       if a

@@ -14,8 +14,8 @@
           data = {
             text: text,
             parent: Session.get('parent'),
-            type: Session.get('page'),
-            topic: Session.get('topic')
+            topic: Session.get('topic'),
+            topicType: Session.get('page')
           };
           Meteor.call('comment', data);
           Session.set('addComment', null);
@@ -26,12 +26,12 @@
       'keyup .comment-text, keydown .comment-text': window.makeOkCancelHandler({
         ok: function(text, e) {
           var data;
-          if (Session.get('addComment') !== null) {
+          if (Session.get('addComment' !== null)) {
             data = {
               text: text,
               parent: this._id,
-              type: Session.get('page'),
-              topic: Session.get('topic')
+              topic: Session.get('topic'),
+              topicType: Session.get('page')
             };
             Meteor.call('comment', data);
           }
@@ -74,44 +74,12 @@
       return sel;
     },
     comments: function() {
-      var c, data, sel, sort;
+      var sel, sort;
       sel = Template.comments.select();
-      sort = Session.get('sort');
-      switch (sort) {
-        case 'hot':
-          data = {
-            hot: -1
-          };
-          break;
-        case 'cool':
-          data = {
-            hot: 1
-          };
-          break;
-        case 'new':
-          data = {
-            date: -1
-          };
-          break;
-        case 'old':
-          data = {
-            date: 1
-          };
-          break;
-        case 'best':
-          data = {
-            best: -1
-          };
-          break;
-        case 'worst':
-          data = {
-            best: 1
-          };
-      }
-      c = Comments.find(sel, {
-        sort: data
+      sort = Template.filter.sort();
+      return Comments.find(sel, {
+        sort: sort
       });
-      return c;
     },
     user: function() {
       return Meteor.users.findOne(this.user);

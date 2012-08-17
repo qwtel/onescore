@@ -1,15 +1,12 @@
-_.extend Template.miniQuestLog, Template.favourites,
-  achievement: ->
-    sel = {}
-    sel._id = @entity
+_.extend Template.miniQuestLog, Template.questLog,
+  favourites: ->
+    sort = Template.filter.sort()
 
-    if Session.get('category')?
-      sel.category = Session.get 'category'
+    user = Meteor.user()
+    if user
+      Favourites.find
+        user: user._id
+        active: true
+      ,
+        sort: sort
 
-    acc = Accomplishments.findOne
-      user: Meteor.user()._id
-      entity: @entity
-    if acc
-      return false
-
-    return Achievements.findOne sel

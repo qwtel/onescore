@@ -65,6 +65,38 @@
         }
       }
     });
+    /*
+      Titles.find().observe
+        added: (entity) ->
+          Titles.update entity._id,
+            $set:
+              type: 'title'
+    
+      Achievements.find().observe
+        added: (entity) ->
+          Achievements.update entity._id,
+            $set:
+              type: 'achievement'
+    
+      Accomplishments.find().observe
+        added: (entity) ->
+          Accomplishments.update entity._id,
+            $set:
+              type: 'accomplishment'
+    
+      Votes.find().observe
+        added: (entity) ->
+          Votes.update entity._id,
+            $set:
+              type: 'vote'
+    
+      Comments.find().observe
+        added: (entity) ->
+          Comments.update entity._id,
+            $set:
+              type: 'comment'
+    */
+
   });
 
 }).call(this);

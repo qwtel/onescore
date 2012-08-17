@@ -1,12 +1,12 @@
-_.extend Template.achievement,
+_.extend Template.achievement, Template.vote,
   events:
-    'click .vote': (e) ->
-      unless e.isPropagationStopped()
-        $t = $(e.target)
-        unless $t.hasClass 'vote' then $t = $t.parents '.vote'
-        up = $t.data 'up'
-        Meteor.call 'vote', 'achievements', @_id, up
-        e.stopPropagation()
+    #'click .vote': (e) ->
+    #  unless e.isPropagationStopped()
+    #    $t = $(e.target)
+    #    unless $t.hasClass 'vote' then $t = $t.parents '.vote'
+    #    up = $t.data 'up'
+    #    Meteor.call 'vote', 'achievements', @_id, up
+    #    e.stopPropagation()
 
     'click .expand': (e) ->
       unless e.isPropagationStopped()
@@ -38,16 +38,16 @@ _.extend Template.achievement,
         return 'active'
     return ''
 
-  voted: (state) ->
-    state = if state is 'up' then true else false
-
-    if Meteor.user()
-      vote = Votes.findOne
-        user: Meteor.user()._id
-        entity: @_id
-      if vote and vote.up is state
-        return 'active'
-    return ''
+  #voted: (state) ->
+  #  state = if state is 'up' then true else false
+  #
+  #  if Meteor.user()
+  #    vote = Votes.findOne
+  #      user: Meteor.user()._id
+  #      entity: @_id
+  #    if vote and vote.up is state
+  #      return 'active'
+  #  return ''
 
   accepted: (id) ->
     fav = Favourites.findOne
@@ -87,3 +87,5 @@ _.extend Template.achievement,
         return true
       else
         return false
+
+_.extend Template.achievement.events, Template.vote.events

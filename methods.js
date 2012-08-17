@@ -6,10 +6,16 @@
 
   Meteor.startup(function() {
     return table = {
-      titles: Titles,
       achievements: Achievements,
+      achievement: Achievements,
       accomplishments: Accomplishments,
-      comments: Comments
+      accomplishment: Accomplishments,
+      titles: Titles,
+      title: Titles,
+      votes: Votes,
+      vote: Votes,
+      comments: Comments,
+      comment: Comments
     };
   });
 
@@ -38,6 +44,7 @@
           _.extend(data, {
             created: false
           });
+          data.type = 'achievement';
           id = Achievements.insert(data);
         }
         return id;
@@ -69,30 +76,27 @@
             level: 0
           });
         }
+        data.type = 'comment';
         return Comments.insert(data);
       }
     },
-    vote: function(collection, entity, up) {
-      var basic, data, vote;
-      data = {
-        entity: entity,
-        collection: collection,
-        up: up
-      };
+    vote: function(data) {
+      var basic, vote;
       basic = Meteor.call('basic');
       _.extend(data, basic);
       vote = Votes.findOne({
         user: this.userId(),
-        entity: entity
+        entity: data.entity
       });
       if (vote) {
         Votes.update(vote._id, {
           $set: data
         });
       } else {
+        data.type = 'votes';
         Votes.insert(data);
       }
-      return calculateScore(table[collection], entity);
+      return calculateScore(table[data.entityType], data.entity);
     },
     accomplish: function(id, stry) {
       var a, acc, basic, data;
@@ -114,6 +118,7 @@
         };
         basic = Meteor.call('basic');
         _.extend(data, basic);
+        data.type = 'accomplishment';
         id = Accomplishments.insert(data);
         a = Achievements.findOne(id);
         if (a) {

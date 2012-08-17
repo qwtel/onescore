@@ -1,0 +1,20 @@
+%template(name='questLog')
+  .clearfix
+
+  {{#if favourites}}
+  {{#each favourites}}
+  {{#if achievement}}
+  .fold
+    {{#with achievement}}
+    {{> achievement}}
+    {{/with}}
+  {{/if}}
+  {{else}}
+  .fold
+    {{> loading}}
+  {{/each}}
+  {{else}}
+  .fold
+    {{> noContent}}
+  {{/if}}
+

@@ -1,0 +1,22 @@
+<template name='questLog'>
+<div class='clearfix'></div>
+{{#if favourites}}
+{{#each favourites}}
+{{#if achievement}}
+<div class='fold'>
+{{#with achievement}}
+{{> achievement}}
+{{/with}}
+</div>
+{{/if}}
+{{else}}
+<div class='fold'>
+{{> loading}}
+</div>
+{{/each}}
+{{else}}
+<div class='fold'>
+{{> noContent}}
+</div>
+{{/if}}
+</template>

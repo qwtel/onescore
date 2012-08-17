@@ -11,8 +11,8 @@ _.extend Template.comments,
           data =
             text: text
             parent: Session.get 'parent'
-            type: Session.get 'page'
             topic: Session.get 'topic'
+            topicType: Session.get 'page'
 
           Meteor.call 'comment', data
 
@@ -23,12 +23,12 @@ _.extend Template.comments,
     'keyup .comment-text, keydown .comment-text':
       window.makeOkCancelHandler
         ok: (text, e) ->
-          if Session.get('addComment') isnt null
+          if Session.get 'addComment' isnt null
             data =
               text: text
               parent: @_id
-              type: Session.get 'page'
               topic: Session.get 'topic'
+              topicType: Session.get 'page'
 
             Meteor.call 'comment', data
 
@@ -68,21 +68,10 @@ _.extend Template.comments,
 
   comments: ->
     sel = Template.comments.select()
-    sort = Session.get 'sort'
+    sort = Template.filter.sort()
 
-    switch sort
-      when 'hot' then data = hot: -1
-      when 'cool' then data = hot: 1
-
-      when 'new' then data = date: -1
-      when 'old' then data = date: 1
-
-      when 'best' then data = best: -1
-      when 'worst' then data = best: 1
-
-    c = Comments.find sel,
-      sort: data
-    return c
+    Comments.find sel,
+      sort: sort
 
   user: ->
     return Meteor.users.findOne @user
