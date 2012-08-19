@@ -28,4 +28,6 @@
     }
   });
 
+  _.extend(Template.accomplishment.events, Template.vote.events);
+
 }).call(this);

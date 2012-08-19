@@ -5,20 +5,23 @@
     events: {
       'click .create': function(e) {
         var stry;
-        stry = $("#editor-" + this._id).val();
-        Session.set('expand', null);
-        return Meteor.call('accomplish', this._id, stry, function(error, result) {
-          return window.Router.navigate("/accomplishments/" + result, true);
-        });
+        if (!e.isPropagationStopped()) {
+          e.stopPropagation();
+          stry = $("#editor-" + this._id).val();
+          Meteor.call('accomplish', this._id, stry, function(error, result) {
+            return window.Router.navigate("/accomplishments/" + result, true);
+          });
+          return Session.set('modal', this._id);
+        }
       },
       'click .uncreate': function(e) {
         return Accomplishments.remove(this._id);
       },
-      'click button.editor': function(e) {
+      'click a.editor': function(e) {
         $('.editor').hide();
         return $('.preview').show();
       },
-      'click button.preview': function(e) {
+      'click a.preview': function(e) {
         $('.editor').show();
         return $('.preview').hide();
       }

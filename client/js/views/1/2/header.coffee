@@ -17,3 +17,10 @@ _.extend Template.header,
       unless item.url
         item.url = item.name.toLowerCase()
     return window.items
+
+  numNotifications: ->
+    if Meteor.user()
+      Notifications.find(
+        receivers: Meteor.user()._id
+        seen: $ne: Meteor.user()._id
+      ).count()

@@ -24,6 +24,7 @@
         } else {
           return Favourites.insert({
             user: Meteor.user()._id,
+            type: 'favourite',
             entity: this._id,
             active: true
           });

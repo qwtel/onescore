@@ -1,0 +1,15 @@
+<template name='notification'>
+<div class='user'>
+<div class='content'>
+<a class='face profile-pic' href='/{{user.username}}'>
+<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+did
+<a href='/{{entityType}}s/{{entity}}'>{{entityType}}</a>
+on your
+<a href='/{{targetType}}s/{{target}}'>{{targetType}}</a>
+- {{timeago date}}
+</div>
+</div>
+</template>

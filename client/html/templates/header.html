@@ -1,5 +1,8 @@
 <template name='header'>
-<a class='brand nav-img pull-left nav-item' href='/home'></a>
+<a class='brand nav-img pull-left nav-item' href='/notifications'></a>
+{{#if numNotifications}}
+<a class='label notify' href='/notifications'>{{numNotifications}}</a>
+{{/if}}
 {{#if currentUser}}
 <nav class='nav'>
 {{#each items}}

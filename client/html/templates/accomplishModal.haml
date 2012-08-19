@@ -1,0 +1,13 @@
+%template(name='accomplishModal')
+  {{#if achievement}}
+  %header.modal-header
+    %button.close(type="button" data-dismiss="modal") ×
+    %h6 Achievement unlocked
+
+  .modal-body
+    {{#with achievement}}
+    {{> embedAchievement}}
+    {{/with}}
+
+  {{callback}}
+  {{/if}}

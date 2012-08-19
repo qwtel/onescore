@@ -30,7 +30,7 @@
 
   _.extend(Template.singleComment.events, Template.comment.events, {
     'click .replyy': function(e) {
-      Session.set('addComment', 'new');
+      Session.toggle('addComment', 'new');
       Meteor.flush();
       return window.focusById("add-" + this._id);
     }

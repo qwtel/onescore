@@ -21,4 +21,6 @@
 
   Meteor.subscribe('accomplishments', function() {});
 
+  Meteor.subscribe('notifications', function() {});
+
 }).call(this);

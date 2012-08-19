@@ -3,11 +3,13 @@
     .navbar-inner
       %header.container
         {{> header }}
-    -#.progress
-      .bar(style="width: 60%")
+      .progress
+        .bar(style="width: 60%")
 
   {{#if currentUser}}
   #content.container
     {{> page }}
   {{/if}}
 
+  #modal.modal.hide.fade.hidden-phone
+    {{> accomplishModal}}

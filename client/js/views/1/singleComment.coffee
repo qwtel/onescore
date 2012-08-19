@@ -20,6 +20,6 @@ _.extend Template.singleComment, Template.comment,
 
 _.extend Template.singleComment.events, Template.comment.events,
   'click .replyy': (e) ->
-    Session.set 'addComment', 'new'
+    Session.toggle 'addComment', 'new'
     Meteor.flush()
     window.focusById "add-#{@_id}"

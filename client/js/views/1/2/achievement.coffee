@@ -17,6 +17,7 @@ _.extend Template.achievement, Template.vote,
       else
         Favourites.insert
           user: Meteor.user()._id
+          type: 'favourite'
           entity: @_id
           active: true
 

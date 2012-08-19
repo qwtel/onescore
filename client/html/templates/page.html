@@ -151,4 +151,29 @@
 </div>
 </div>
 {{/if}}
+{{#if equals "page" "notifications"}}
+<div class='row'>
+<div class='span8'>
+<section class='well'>
+<h6 class='heading line'>Notifications</h6>
+{{> notifications}}
+</section>
+</div>
+<div class='span4'>
+<aside class='well'>
+{{> userWidget}}
+</aside>
+<aside class='well'>
+<h6 class='heading line'>Quest log</h6>
+{{> miniQuestLog}}
+</aside>
+<aside class='well'>
+<h6 class='heading line'>Quest items</h6>
+</aside>
+<aside class='well'>
+<h6 class='heading line'>Tags</h6>
+</aside>
+</div>
+</div>
+{{/if}}
 </template>

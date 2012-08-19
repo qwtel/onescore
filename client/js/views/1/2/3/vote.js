@@ -6,6 +6,7 @@
       'click .vote': function(e) {
         var $t, data, up;
         if (!e.isPropagationStopped()) {
+          e.stopPropagation();
           $t = $(e.target).closest('.vote');
           up = $t.data('up');
           data = {
@@ -13,8 +14,7 @@
             entityType: this.type,
             up: up
           };
-          Meteor.call('vote', data);
-          return e.stopPropagation();
+          return Meteor.call('vote', data);
         }
       }
     },

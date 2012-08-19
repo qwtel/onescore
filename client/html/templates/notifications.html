@@ -1,0 +1,15 @@
+<template name='notifications'>
+<table class='notifications ladder table'>
+<tbody>
+{{#each notifications}}
+<tr>
+<td>
+{{> notification}}
+</td>
+</tr>
+{{else}}
+{{> loading}}
+{{/each}}
+</tbody>
+</table>
+</template>

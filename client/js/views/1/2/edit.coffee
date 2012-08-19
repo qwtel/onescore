@@ -45,7 +45,6 @@ _.extend Template.edit, Template.vote,
           data[field] = $t.val()
 
       data.created = true
-      data.value = 0
 
       Achievements.update @_id,
         $set:

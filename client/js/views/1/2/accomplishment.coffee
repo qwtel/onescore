@@ -19,3 +19,5 @@ _.extend Template.accomplishment, Template.vote,
       topic: @_id
     if c
       return c.count()
+
+_.extend Template.accomplishment.events, Template.vote.events

@@ -30,6 +30,9 @@
             %li
               %a(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
                 %i.icon-pencil
+            %li
+              %a(href="/accomplishments/{{_id}}/talk" title="Reply")
+                %i.icon-share-alt
             {{/if}}
       {{else}}
       {{> loading}}
@@ -37,7 +40,7 @@
 
       {{#with achievement}}
       .minimal
-        {{> achievement}}
+        {{> embedAchievement}}
       {{/with}}
 
       {{#if story}}

@@ -2,6 +2,8 @@ Template.vote =
   events:
     'click .vote': (e) ->
       unless e.isPropagationStopped()
+        e.stopPropagation()
+
         $t = $(e.target).closest '.vote'
         up = $t.data 'up'
         
@@ -11,8 +13,6 @@ Template.vote =
           up: up
 
         Meteor.call 'vote', data
-
-        e.stopPropagation()
 
   voted: (state) ->
     state = if state is 'up' then true else false

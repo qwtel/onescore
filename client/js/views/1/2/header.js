@@ -30,6 +30,16 @@
         }
       }
       return window.items;
+    },
+    numNotifications: function() {
+      if (Meteor.user()) {
+        return Notifications.find({
+          receivers: Meteor.user()._id,
+          seen: {
+            $ne: Meteor.user()._id
+          }
+        }).count();
+      }
     }
   });
 

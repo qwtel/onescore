@@ -1,0 +1,29 @@
+%template(name='embedAchievement')
+  %article.achievement(class="{{color}}")
+    %a.value.pull-right(href="/achievements/{{_id}}/accomplish")
+      %span.points
+        {{#if hasScore}}
+        {{value}}
+        {{else}}
+        %img(src="/grayLoading.gif")/
+        {{/if}}
+    %a.icon.pull-left(href="/achievements/{{_id}}")
+
+    .content
+      %header.head
+        %h4.title
+          {{#if title}}
+          %a(href="/achievements/{{_id}}") {{title}}
+          {{else}}
+          %a(href="/achievements/{{_id}}" style="font-weight: normal") &lt;No title suggested&gt;
+          {{/if}}
+          %a.fav(title="Add to favourites")<
+            <i class="icon-star {{faved}}"></i>
+
+      .description
+        {{#if description}}
+        %span {{{wrapTags description}}}
+        {{else}}
+        %span.tag &lt;No content&gt;
+        {{/if}}
+    .clearfix

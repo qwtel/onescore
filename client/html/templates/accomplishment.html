@@ -32,6 +32,11 @@
 <i class='icon-pencil'></i>
 </a>
 </li>
+<li>
+<a href='/accomplishments/{{_id}}/talk' title='Reply'>
+<i class='icon-share-alt'></i>
+</a>
+</li>
 {{/if}}
 </nav>
 </div>
@@ -41,7 +46,7 @@
 {{/if}}
 {{#with achievement}}
 <div class='minimal'>
-{{> achievement}}
+{{> embedAchievement}}
 </div>
 {{/with}}
 {{#if story}}

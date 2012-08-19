@@ -1,5 +1,9 @@
 %template(name='header')
-  %a.brand.nav-img.pull-left.nav-item(href="/home")
+  %a.brand.nav-img.pull-left.nav-item(href="/notifications")
+  {{#if numNotifications}}
+  %a.label.notify(href="/notifications") {{numNotifications}}
+  {{/if}}
+
   {{#if currentUser}}
   %nav.nav
     -#%li.dropdown

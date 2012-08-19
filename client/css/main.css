@@ -72,40 +72,54 @@ a {
 .linebreak .nav-tabs > .active > a, .linebreak .nav-tabs > .active > a:hover {
   background: whitesmoke; }
 
-.navbar {
-  z-index: 1060;
-  text-shadow: none; }
-  .navbar nav {
-    font-weight: bold; }
-  .navbar .nav > li > a {
-    border-right: 1px solid rgba(255, 255, 255, 0.25);
-    -webkit-box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05);
-    box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05); }
-  .navbar .brand {
-    padding: 0;
-    margin: 0;
-    margin-right: 5px;
-    background: url("/img/logo128.png") no-repeat;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -ms-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover; }
-  .navbar .nav-img {
-    width: 30px;
-    height: 30px;
-    margin-top: 4px; }
-  .navbar .score {
-    padding: 8px 10px 0px; }
-    .navbar .score .dollar {
-      height: 21px;
-      width: 21px; }
-  .navbar .profile-pic {
-    display: block;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
+.navbar .progress {
+  border-radius: 0;
+  height: 4px;
+  background: #ebebeb;
+  border-top: 1px solid rgba(0, 0, 0, 0.25); }
+  .navbar .progress .bar {
+    background: #4dc206;
+    height: 4px; }
+.navbar .container {
+  position: relative; }
+  .navbar .container .notify {
+    position: absolute;
+    top: 3px;
+    left: 23px;
+    z-index: 1040;
+    background-color: #3b5998;
+    background: #4dc206; }
+.navbar nav {
+  font-weight: bold; }
+.navbar .nav > li > a {
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  -webkit-box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05); }
+.navbar .brand {
+  padding: 0;
+  margin: 0;
+  margin-right: 5px;
+  background: url("/img/logo128.png") no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; }
+.navbar .nav-img {
+  width: 30px;
+  height: 30px;
+  margin-top: 4px; }
+.navbar .score {
+  padding: 8px 10px 0px; }
+  .navbar .score .dollar {
+    height: 21px;
+    width: 21px; }
+.navbar .profile-pic {
+  display: block;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .well {
   -webkit-box-shadow: none;
@@ -127,7 +141,7 @@ a {
   font-weight: bold; }
 
 #content {
-  margin-top: 60px; }
+  margin-top: 65px; }
 
 .fold:last-child {
   padding-bottom: 0; }
@@ -228,19 +242,15 @@ a {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-.activity-modal {
-  position: absolute;
-  top: 20px;
-  margin-top: 0;
-  margin-bottom: 20px; }
-  .activity-modal .modal-body {
-    height: auto;
-    max-height: none; }
+.modal .modal-header {
+  padding-bottom: 0; }
+  .modal .modal-header .close {
+    margin-top: 0; }
 
-.modal-backdrop {
+.modal-backdrop.fade.in {
   background: black;
-  opacity: 0.5;
-  filter: alpha(opacity=50); }
+  opacity: 0.33;
+  filter: alpha(opacity=33); }
 
 .modal-separator {
   border-bottom: 1px solid #dddddd;
@@ -511,3 +521,6 @@ a:hover i, a i.active, button:hover i, button i.active {
     width: 30px; }
   .ladder .right {
     text-align: right; }
+
+.notifications tr:first-child > td {
+  border-top: none; }

@@ -13,12 +13,12 @@
 
   %footer.form-actions
     {{#if accomplishment}}
-    %button.btn.btn-large.create(style="margin-left: -20px") Save
+    %a.btn.btn-large.create(style="margin-left: -20px") Save
     {{else}}
-    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    %a.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
     {{/if}}
-    %button.btn.btn-large.editor Preview
-    %button.btn.btn-large.preview.hide Edit
+    %a.btn.btn-large.editor Preview
+    %a.btn.btn-large.preview.hide Edit
   {{callback}}
   {{/if}}
 
@@ -37,9 +37,9 @@
         %i.icon-headphones
   %footer.form-actions
     {{#if accomplishment}}
-    %button.btn.btn-warning.btn-large.uncreate(style="margin-left: -20px") Unaccomplish
+    %a.btn.btn-warning.btn-large.uncreate(style="margin-left: -20px") Unaccomplish
     {{else}}
-    %button.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    %a.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
     {{/if}}
   {{/if}}
 

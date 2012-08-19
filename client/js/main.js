@@ -19,6 +19,7 @@
       'home': 'home',
       'explore': 'explore',
       'ladder': 'ladder',
+      'notifications': 'notifications',
       'achievements/new': 'newAchievement',
       'achievements/:id': 'achievements',
       'achievements/:id/:tab': 'achievements',
@@ -53,6 +54,12 @@
       return Session.set('sort', 'best');
     };
 
+    AppRouter.prototype.notifications = function() {
+      this.hardReset();
+      Session.set('page', 'notifications');
+      return Session.set('sort', 'new');
+    };
+
     AppRouter.prototype.user = function(user, menu) {
       this.hardReset();
       Session.set('page', 'profile');
@@ -80,7 +87,6 @@
     AppRouter.prototype.achievements = function(id, tab, type) {
       this.softReset();
       Session.set('page', 'achievements');
-      Session.set('sort', 'best');
       Session.set('single', id);
       if (!tab) {
         tab = 'info';
@@ -96,12 +102,7 @@
     AppRouter.prototype.accomplishments = function(id, tab) {
       this.softReset();
       Session.set('page', 'accomplishments');
-      Session.set('sort', 'best');
-      Session.set('single', id);
-      if (!tab) {
-        tab = 'info';
-      }
-      return Session.set('tab', tab);
+      return Session.set('single', id);
     };
 
     AppRouter.prototype.comments = function(id, something) {

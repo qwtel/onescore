@@ -6,6 +6,7 @@ class AppRouter extends Backbone.Router
     'home': 'home'
     'explore': 'explore'
     'ladder': 'ladder'
+    'notifications': 'notifications'
     'achievements/new': 'newAchievement'
     'achievements/:id': 'achievements'
     'achievements/:id/:tab': 'achievements'
@@ -35,6 +36,11 @@ class AppRouter extends Backbone.Router
     Session.set 'page', 'ladder'
     Session.set 'sort', 'best'
 
+  notifications: ->
+    @hardReset()
+    Session.set 'page', 'notifications'
+    Session.set 'sort', 'new'
+
   user: (user, menu) ->
     @hardReset()
     Session.set 'page', 'profile'
@@ -56,7 +62,6 @@ class AppRouter extends Backbone.Router
   achievements: (id, tab, type) ->
     @softReset()
     Session.set 'page', 'achievements'
-    Session.set 'sort', 'best'
     Session.set 'single', id
 
     unless tab then tab = 'info'
@@ -70,11 +75,7 @@ class AppRouter extends Backbone.Router
   accomplishments: (id, tab) ->
     @softReset()
     Session.set 'page', 'accomplishments'
-    Session.set 'sort', 'best'
     Session.set 'single', id
-
-    unless tab then tab = 'info'
-    Session.set 'tab', tab
 
   comments: (id, something) ->
     @softReset()

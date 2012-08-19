@@ -4,6 +4,9 @@
 <header class='container'>
 {{> header }}
 </header>
+<div class='progress'>
+<div class='bar' style='width: 60%'></div>
+</div>
 </div>
 </div>
 {{#if currentUser}}
@@ -11,4 +14,7 @@
 {{> page }}
 </div>
 {{/if}}
+<div class='modal hide fade hidden-phone' id='modal'>
+{{> accomplishModal}}
+</div>
 </template>

@@ -125,3 +125,22 @@
       .well
         %h3 Y U NO MAKE BETTER?
   {{/if}}
+
+  {{#if equals "page" "notifications"}}
+  .row
+    .span8
+      %section.well
+        %h6.heading.line Notifications
+        {{> notifications}}
+
+    .span4
+      %aside.well 
+        {{> userWidget}}
+      %aside.well 
+        %h6.heading.line Quest log
+        {{> miniQuestLog}}
+      %aside.well 
+        %h6.heading.line Quest items
+      %aside.well 
+        %h6.heading.line Tags
+  {{/if}}

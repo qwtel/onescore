@@ -1,0 +1,11 @@
+%template(name='notification')
+  .user
+    .content
+      %a.face.profile-pic(href="/{{user.username}}")
+        %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
+      <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+      did
+      %a(href="/{{entityType}}s/{{entity}}") {{entityType}} 
+      on your
+      %a(href="/{{targetType}}s/{{target}}") {{targetType}}
+      \- {{timeago date}}

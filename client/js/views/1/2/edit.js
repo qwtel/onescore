@@ -42,7 +42,6 @@
           }
         });
         data.created = true;
-        data.value = 0;
         Achievements.update(this._id, {
           $set: data
         });

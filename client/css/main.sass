@@ -96,9 +96,29 @@ a
     background: whitesmoke
 
 .navbar
-  z-index: 1060
-  text-shadow: none
+  //z-index: 1060
+  //text-shadow: none
+  .progress
+    border-radius: 0
+    height: 4px
+    background: #ebebeb
+    border-top: 1px solid rgba(0, 0, 0, 0.25)
 
+    .bar
+      background: $green
+      height: 4px
+
+  .container
+    position: relative
+
+    .notify
+      position: absolute
+      top: 3px
+      left: 23px
+      z-index: 1040
+      background-color: #3B5998 
+      background: $green
+    
   nav
     font-weight: bold
 
@@ -153,7 +173,7 @@ a
     font-weight: bold
 
 #content
-  margin-top: 60px
+  margin-top: 65px
 
 .fold:last-child
   padding-bottom: 0
@@ -266,20 +286,26 @@ $activityPadding: 15px
   width: 100%
   @include box-sizing(border-box)
 
-.activity-modal
-  position: absolute
-  top: 20px
-  margin-top: 0
-  margin-bottom: 20px
+//#modal
+//  top: 60px
+//  margin-top: 0
+//  margin-bottom: 20px
+//
+//  .modal-body
+//    height: auto
+//    max-height: none
+//
 
-  .modal-body
-    height: auto
-    max-height: none
+.modal
+  .modal-header
+    padding-bottom: 0
+    .close
+      margin-top: 0
 
-.modal-backdrop
+.modal-backdrop.fade.in
   background: #000
-  opacity: 0.5
-  filter: alpha(opacity=50)
+  opacity: 0.33
+  filter: alpha(opacity=33)
 
 .modal-separator
   border-bottom: 1px solid #DDD
@@ -541,3 +567,6 @@ a:hover i, a i.active, button:hover i, button i.active
     width: 30px
   .right
     text-align: right
+
+.notifications tr:first-child > td
+  border-top: none

@@ -12,12 +12,12 @@ You can style your post using
 <div class='preview hide' id='preview-{{_id}}'></div>
 <footer class='form-actions'>
 {{#if accomplishment}}
-<button class='btn btn-large create' style='margin-left: -20px'>Save</button>
+<a class='btn btn-large create' style='margin-left: -20px'>Save</a>
 {{else}}
-<button class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</button>
+<a class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</a>
 {{/if}}
-<button class='btn btn-large editor'>Preview</button>
-<button class='btn btn-large preview hide'>Edit</button>
+<a class='btn btn-large editor'>Preview</a>
+<a class='btn btn-large preview hide'>Edit</a>
 </footer>
 {{callback}}
 {{/if}}
@@ -40,9 +40,9 @@ You can style your post using
 </div>
 <footer class='form-actions'>
 {{#if accomplishment}}
-<button class='btn btn-warning btn-large uncreate' style='margin-left: -20px'>Unaccomplish</button>
+<a class='btn btn-warning btn-large uncreate' style='margin-left: -20px'>Unaccomplish</a>
 {{else}}
-<button class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</button>
+<a class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</a>
 {{/if}}
 </footer>
 {{/if}}

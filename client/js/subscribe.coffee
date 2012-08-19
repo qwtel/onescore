@@ -16,3 +16,5 @@ Meteor.subscribe 'votes', ->
 Meteor.subscribe 'favourites', ->
 
 Meteor.subscribe 'accomplishments', ->
+
+Meteor.subscribe 'notifications', ->

@@ -1,19 +1,23 @@
 _.extend Template.accomplish,
   events:
     'click .create': (e) ->
-      stry = $("#editor-#{@_id}").val()
-      Session.set 'expand', null
-      Meteor.call 'accomplish', @_id, stry, (error, result) ->
-        window.Router.navigate "/accomplishments/#{result}", true
+      unless e.isPropagationStopped()
+        e.stopPropagation()
+
+        stry = $("#editor-#{@_id}").val()
+        Meteor.call 'accomplish', @_id, stry, (error, result) ->
+          window.Router.navigate "/accomplishments/#{result}", true
+
+        Session.set 'modal', @_id
 
     'click .uncreate': (e) ->
       Accomplishments.remove @_id
 
-    'click button.editor': (e) ->
+    'click a.editor': (e) ->
       $('.editor').hide()
       $('.preview').show()
 
-    'click button.preview': (e) ->
+    'click a.preview': (e) ->
       $('.editor').show()
       $('.preview').hide()
 
