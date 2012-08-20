@@ -8,6 +8,7 @@
       entity = Achievements.findOne(id);
       if (entity) {
         Session.set('topic', entity._id);
+        Session.set('topicType', entity.type);
         return entity;
       }
     },
@@ -17,18 +18,20 @@
       entity = Accomplishments.findOne(id);
       if (entity) {
         Session.set('topic', entity._id);
+        Session.set('topicType', entity.type);
         return entity;
       }
     },
     comment: function() {
-      var entity, id;
+      var comment, id;
       id = Session.get('single');
-      entity = Comments.findOne(id);
-      if (entity) {
-        Session.set('topic', entity.topic);
-        Session.set('parent', entity._id);
-        Session.set('level', entity.level);
-        return entity;
+      comment = Comments.findOne(id);
+      if (comment) {
+        Session.set('topic', comment.topic);
+        Session.set('topicType', comment.topicType);
+        Session.set('parent', comment._id);
+        Session.set('level', comment.level);
+        return comment;
       }
     }
   });

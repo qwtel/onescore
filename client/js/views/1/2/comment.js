@@ -52,7 +52,7 @@
             text: text,
             parent: this._id,
             topic: Session.get('topic'),
-            topicType: Session.get('page')
+            topicType: Session.get('topicType')
           };
           Meteor.call('comment', data);
           Session.set('addComment', null);

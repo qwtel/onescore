@@ -11,10 +11,19 @@ class AppRouter extends Backbone.Router
     'achievements/:id': 'achievements'
     'achievements/:id/:tab': 'achievements'
     'achievements/:id/:tab/:type': 'achievements'
+    'achievement/:id': 'achievements'
+    'achievement/:id/:tab': 'achievements'
+    'achievement/:id/:tab/:type': 'achievements'
     'accomplishments/:id': 'accomplishments'
     'accomplishments/:id/:tab': 'accomplishments'
+    'accomplishment/:id': 'accomplishments'
+    'accomplishment/:id/:tab': 'accomplishments'
     'comments/:id': 'comments'
     'comments/:id/:something': 'comments'
+    'comment/:id': 'comments'
+    'comment/:id/:something': 'comments'
+    'titles/:id': 'home'
+    'votes/:id': 'home'
     ':user': 'user'
     ':user/:menu': 'user'
 
@@ -75,6 +84,7 @@ class AppRouter extends Backbone.Router
   accomplishments: (id, tab) ->
     @softReset()
     Session.set 'page', 'accomplishments'
+    Session.set 'sort', 'all'
     Session.set 'single', id
 
   comments: (id, something) ->

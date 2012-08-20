@@ -2,6 +2,11 @@
 (function() {
 
   _.extend(Template.userBanner, {
+    events: {
+      'click .refresh': function(e) {
+        return Meteor.call('updateUserScoreComplete');
+      }
+    },
     user: function() {
       var username;
       username = Session.get('username');

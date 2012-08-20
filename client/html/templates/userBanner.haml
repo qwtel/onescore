@@ -1,5 +1,7 @@
 %template(name='userBanner')
   .userBanner
+    %a.refresh.pull-right
+      %i.icon-refresh
     %a.profile-pic.pull-left(href='/{{session "username"}}')
       {{{pic}}}
     %h2.name {{session "username"}}

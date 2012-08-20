@@ -1,4 +1,8 @@
 _.extend Template.userBanner,
+  events:
+    'click .refresh': (e) ->
+      Meteor.call 'updateUserScoreComplete'
+
   user: ->
     username = Session.get 'username'
     if username

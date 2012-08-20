@@ -43,7 +43,7 @@ _.extend Template.comment, Template.vote,
             text: text
             parent: @_id
             topic: Session.get 'topic'
-            topicType: Session.get 'page'
+            topicType: Session.get 'topicType'
 
           Meteor.call 'comment', data
 
