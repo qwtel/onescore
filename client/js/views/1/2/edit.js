@@ -10,15 +10,20 @@
         return Session.toggle('expand', this._id);
       },
       'click .suggest': function(e) {
-        var title;
+        var data, id, title;
         title = $("#title-" + this._id).val();
-        return Titles.insert({
+        data = {
           title: title,
           type: 'title',
           entity: this._id,
           user: Meteor.user()._id,
           score: 0
+        };
+        id = Titles.insert(data);
+        _.extend(data, {
+          _id: id
         });
+        return Meteor.call('assignBestTitle', data);
       },
       'change .category': function(e) {
         return this.category = $("#category-" + this._id).val();

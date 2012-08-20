@@ -9,12 +9,18 @@ _.extend Template.edit, Template.vote,
     'click .suggest': (e) ->
       title = $("#title-#{@_id}").val()
 
-      Titles.insert
+      data =
         title: title
         type: 'title'
         entity: @_id
         user: Meteor.user()._id
         score: 0
+
+      id = Titles.insert data
+
+      _.extend data, _id: id
+
+      Meteor.call 'assignBestTitle', data
 
     'change .category': (e) ->
       @category = $("#category-#{@_id}").val()

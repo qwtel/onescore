@@ -4,7 +4,8 @@
       %header.container
         {{> header }}
       .progress
-        .bar(style="width: 60%")
+        .bar(style="width: {{progress}}%")
+        %span.label.hide {{progressText}}
 
   {{#if currentUser}}
   #content.container
