@@ -11,6 +11,13 @@
       \.
   .preview.hide(id="preview-{{_id}}")
 
+  -#%div.control-group 
+    %label.control-label Tags
+    %div.controls                 
+      {{#with tags}}
+      {{> tags}}
+      {{/with}}
+
   %footer.form-actions
     {{#if accomplishment}}
     %a.btn.btn-large.create(style="margin-left: -20px") Save

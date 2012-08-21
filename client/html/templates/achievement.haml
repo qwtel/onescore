@@ -1,5 +1,5 @@
 %template(name='achievement')
-  %article.achievement(class="{{color}}")
+  %article.achievement(id="{{_id}}" class="{{color}}")
     %a.value.pull-right(href="/achievements/{{_id}}/accomplish")
       %span.points
         {{#if hasScore}}

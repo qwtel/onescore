@@ -1,0 +1,14 @@
+<template name='tags'>
+<div class='tag-list'>
+{{#each tags}}
+<span class='tag label active' data-tag='{{tag}}'>
+{{tag}}
+</span>
+{{/each}}
+{{#if addingTag}}
+<input class='edittag-input label input-mini' id='addingTag-{{_id}}' type='text' />
+{{else}}
+<a class='add tag label' title='Add a tag'>+ tag</a>
+{{/if}}
+</div>
+</template>

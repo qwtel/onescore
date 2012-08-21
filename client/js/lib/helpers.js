@@ -52,12 +52,14 @@
   };
 
   window.findTags = function(text) {
-    var match, pattern, tags;
+    var match, pattern, tag, tags;
     pattern = /[^&]\B(#(\w\w+))/g;
     text = _.escape(text);
     tags = [];
     while (match = pattern.exec(text)) {
-      tags.push(match[2]);
+      tag = match[2];
+      tag = tag.replace(/\s/g, '');
+      tags.push(tag);
     }
     return tags;
   };

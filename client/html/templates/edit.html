@@ -72,12 +72,17 @@ You can include #tags here.
 <label class='control-label' for='category-{{_id}}'>Category</label>
 <div class='controls'>
 <select class='category lazy' data-field='category' id='category-{{_id}}'>
-<option></option>
 {{#each categories}}
 <option value="{{name}}" {{selected ../category}}>{{name}}</option>
 {{/each}}
 </select>
 <p class='help-block'>If it doesn't fit in anywhere, choose 'Random'</p>
+</div>
+</div>
+<div class='control-group'>
+<label class='control-label'>Tags</label>
+<div class='controls'>
+{{> tags}}
 </div>
 </div>
 <footer class='form-actions'>

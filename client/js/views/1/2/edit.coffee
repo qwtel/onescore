@@ -24,23 +24,13 @@ _.extend Template.edit, Template.vote,
 
     'change .category': (e) ->
       @category = $("#category-#{@_id}").val()
+      Session.toggle 'redraw'
 
     'change .description': (e) ->
-      description = $("#description-#{@_id}").val()
-      tags = window.findTags description
+      @description = $("#description-#{@_id}").val()
+      @tags = _.union @tags, window.findTags(@description)
+      Session.toggle 'redraw'
     
-      @description = description
-      @tags = tags
-
-      #_.each @tags, (x) ->
-      #  unless _.contains tags, x
-      #    tags.push x
-    
-      #Achievements.update @_id,
-      #  $set:
-      #    description: description
-      #    tags: tags
-
     'click .create': (e) ->
       data = {}
       
@@ -50,6 +40,7 @@ _.extend Template.edit, Template.vote,
         if field?
           data[field] = $t.val()
 
+      data.tags = @tags
       data.created = true
 
       Achievements.update @_id,

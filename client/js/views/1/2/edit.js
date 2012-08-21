@@ -26,14 +26,13 @@
         return Meteor.call('assignBestTitle', data);
       },
       'change .category': function(e) {
-        return this.category = $("#category-" + this._id).val();
+        this.category = $("#category-" + this._id).val();
+        return Session.toggle('redraw');
       },
       'change .description': function(e) {
-        var description, tags;
-        description = $("#description-" + this._id).val();
-        tags = window.findTags(description);
-        this.description = description;
-        return this.tags = tags;
+        this.description = $("#description-" + this._id).val();
+        this.tags = _.union(this.tags, window.findTags(this.description));
+        return Session.toggle('redraw');
       },
       'click .create': function(e) {
         var data;
@@ -46,6 +45,7 @@
             return data[field] = $t.val();
           }
         });
+        data.tags = this.tags;
         data.created = true;
         Achievements.update(this._id, {
           $set: data

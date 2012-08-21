@@ -78,32 +78,6 @@ HINT: You can include #tags here.
 </div>
 {{/with}}
 </template>
-<template name='tags'>
-<div class='tag-list'>
-{{#each tags}}
-<span class='tag label active' data-tag='{{tag}}'>
-{{tag}}
-<a class='remove' id='{{../_id}}' title='Remove this tag'>×</a>
-</span>
-{{/each}}
-{{#if addingTag}}
-<input class='edittag-input label input-mini' id='edittag-{{_id}}' type='text' />
-{{else}}
-<a class='add tag label' title='Add a tag'>+ tag</a>
-{{/if}}
-</div>
-</template>
-<template name='tagFilter'>
-<div class='tag-list' id='tag-filter'>
-<h6 class='tags'>Tags:</h6>
-{{#each tags}}
-<a class="tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
-{{tag}}
-<span class='count'>({{count}})</span>
-</a>
-{{/each}}
-</div>
-</template>
 <template name='accomplishActivityModal'>
 {{#with activity}}
 <div class='modal-header'>

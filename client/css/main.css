@@ -294,18 +294,16 @@ a {
   .tag-list .remove:hover {
     text-decoration: none; }
 
-.edittag-input {
-  height: 16px;
+.tag-list .edittag-input {
   padding: 0 3px;
-  margin-bottom: 0px !important;
-  color: #333333;
+  margin-bottom: 0px;
+  font-size: 11px;
+  color: gray;
   text-shadow: inherit;
   background: none;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
-  .edittag-input:hover {
-    color: #333333; }
 
 .expandAchievement {
   margin-top: 14px; }

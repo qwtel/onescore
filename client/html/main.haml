@@ -77,29 +77,29 @@
     %a.create-activity.btn.btn-success Save
   {{/with}}
 
-%template(name='tags')
-  .tag-list
-    {{#each tags}}
-    %span.tag.label.active(data-tag="{{tag}}")
-      {{tag}}
-      %a.remove(id="{{../_id}}" title="Remove this tag") ×
-    {{/each}}
-
-    {{#if addingTag}}
-    %input.edittag-input.label.input-mini(id="edittag-{{_id}}" type="text")/
-    {{else}}
-    %a.add.tag.label(title="Add a tag") + tag
-    {{/if}}
-
-%template(name='tagFilter')
-  #tag-filter.tag-list
-    %h6.tags Tags: 
-    {{#each tags}}
-    <a class="tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
-    {{tag}}
-    %span.count ({{count}})
-    </a>
-    {{/each}}
+-#%template(name='tags')
+-#  .tag-list
+-#    {{#each tags}}
+-#    %span.tag.label.active(data-tag="{{tag}}")
+-#      {{tag}}
+-#      %a.remove(id="{{../_id}}" title="Remove this tag") ×
+-#    {{/each}}
+-#
+-#    {{#if addingTag}}
+-#    %input.edittag-input.label.input-mini(id="edittag-{{_id}}" type="text")/
+-#    {{else}}
+-#    %a.add.tag.label(title="Add a tag") + tag
+-#    {{/if}}
+-#
+-#%template(name='tagFilter')
+-#  #tag-filter.tag-list
+-#    %h6.tags Tags: 
+-#    {{#each tags}}
+-#    <a class="tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
+-#    {{tag}}
+-#    %span.count ({{count}})
+-#    </a>
+-#    {{/each}}
 
 %template(name='accomplishActivityModal')
   {{#with activity}}

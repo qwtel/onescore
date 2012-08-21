@@ -4,11 +4,16 @@
   _.extend(Template.accomplish, {
     events: {
       'click .create': function(e) {
-        var stry;
+        var data, story;
         if (!e.isPropagationStopped()) {
           e.stopPropagation();
-          stry = $("#editor-" + this._id).val();
-          Meteor.call('accomplish', this._id, stry, function(error, result) {
+          story = $("#editor-" + this._id).val();
+          data = {
+            entity: this._id,
+            entityType: 'achievement',
+            story: story
+          };
+          Meteor.call('accomplish', data, function(error, result) {
             return window.Router.navigate("/accomplishments/" + result, true);
           });
           return Session.set('modal', this._id);

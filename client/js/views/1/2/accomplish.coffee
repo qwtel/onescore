@@ -4,8 +4,13 @@ _.extend Template.accomplish,
       unless e.isPropagationStopped()
         e.stopPropagation()
 
-        stry = $("#editor-#{@_id}").val()
-        Meteor.call 'accomplish', @_id, stry, (error, result) ->
+        story = $("#editor-#{@_id}").val()
+        data =
+          entity: @_id
+          entityType: 'achievement'
+          story: story
+
+        Meteor.call 'accomplish', data, (error, result) ->
           window.Router.navigate "/accomplishments/#{result}", true
 
         Session.set 'modal', @_id
@@ -22,7 +27,7 @@ _.extend Template.accomplish,
       $('.preview').hide()
 
   accomplishment: ->
-    return Accomplishments.findOne
+    Accomplishments.findOne
       user: Meteor.user()._id
       entity: @_id
 
