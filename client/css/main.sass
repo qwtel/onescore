@@ -39,6 +39,9 @@ body
   overflow-y: scroll
   overflow-x: hidden
 
+  @media (max-width: 480px)
+    background: whitesmoke
+
 a
   cursor: pointer
   @include transition (color 0.2s linear)
@@ -170,6 +173,10 @@ a
 
   .heading
     margin-bottom: $padding
+
+  @media (max-width: 480px)
+    background: none
+    border: none
 
 .menu
   .nav-stacked > li > a
@@ -423,9 +430,7 @@ $activityPadding: 15px
 .fold
   width: 100%
   padding: $padding 19px
-  margin-left: -20px
-  border-left: 1px solid #ddd
-  border-right: 1px solid #ddd
+  margin-left: -19px
   @include fold-shadow(whiteSmoke, #ddd)
 
 i

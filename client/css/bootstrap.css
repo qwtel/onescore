@@ -1369,66 +1369,66 @@ input[type="checkbox"][readonly] {
 .control-group.success > label,
 .control-group.success .help-block,
 .control-group.success .help-inline {
-  color: #4dc206;
+  color: #468847;
 }
 .control-group.success .checkbox,
 .control-group.success .radio,
 .control-group.success input,
 .control-group.success select,
 .control-group.success textarea {
-  color: #4dc206;
-  border-color: #4dc206;
+  color: #468847;
+  border-color: #468847;
 }
 .control-group.success .checkbox:focus,
 .control-group.success .radio:focus,
 .control-group.success input:focus,
 .control-group.success select:focus,
 .control-group.success textarea:focus {
-  border-color: #399104;
-  -webkit-box-shadow: 0 0 6px #7ff935;
-  -moz-box-shadow: 0 0 6px #7ff935;
-  box-shadow: 0 0 6px #7ff935;
-  -webkit-box-shadow: 0 0 6px #7ff935;
-  -moz-box-shadow: 0 0 6px #7ff935;
-  box-shadow: 0 0 6px #7ff935;
+  border-color: #356635;
+  -webkit-box-shadow: 0 0 6px #7aba7b;
+  -moz-box-shadow: 0 0 6px #7aba7b;
+  box-shadow: 0 0 6px #7aba7b;
+  -webkit-box-shadow: 0 0 6px #7aba7b;
+  -moz-box-shadow: 0 0 6px #7aba7b;
+  box-shadow: 0 0 6px #7aba7b;
 }
 .control-group.success .input-prepend .add-on,
 .control-group.success .input-append .add-on {
-  color: #4dc206;
-  background-color: #ddfdca;
-  border-color: #4dc206;
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #468847;
 }
 .control-group.success > label,
 .control-group.success .help-block,
 .control-group.success .help-inline {
-  color: #4dc206;
+  color: #468847;
 }
 .control-group.success .checkbox,
 .control-group.success .radio,
 .control-group.success input,
 .control-group.success select,
 .control-group.success textarea {
-  color: #4dc206;
-  border-color: #4dc206;
+  color: #468847;
+  border-color: #468847;
 }
 .control-group.success .checkbox:focus,
 .control-group.success .radio:focus,
 .control-group.success input:focus,
 .control-group.success select:focus,
 .control-group.success textarea:focus {
-  border-color: #399104;
-  -webkit-box-shadow: 0 0 6px #7ff935;
-  -moz-box-shadow: 0 0 6px #7ff935;
-  box-shadow: 0 0 6px #7ff935;
-  -webkit-box-shadow: 0 0 6px #7ff935;
-  -moz-box-shadow: 0 0 6px #7ff935;
-  box-shadow: 0 0 6px #7ff935;
+  border-color: #356635;
+  -webkit-box-shadow: 0 0 6px #7aba7b;
+  -moz-box-shadow: 0 0 6px #7aba7b;
+  box-shadow: 0 0 6px #7aba7b;
+  -webkit-box-shadow: 0 0 6px #7aba7b;
+  -moz-box-shadow: 0 0 6px #7aba7b;
+  box-shadow: 0 0 6px #7aba7b;
 }
 .control-group.success .input-prepend .add-on,
 .control-group.success .input-append .add-on {
-  color: #4dc206;
-  background-color: #ddfdca;
-  border-color: #4dc206;
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #468847;
 }
 input:focus:required:invalid,
 textarea:focus:required:invalid,
@@ -3973,9 +3973,9 @@ input[type="submit"].btn.btn-mini {
   line-height: 18px;
 }
 .alert-success {
-  background-color: #ddfdca;
-  border-color: #dafdb1;
-  color: #4dc206;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
 }
 .alert-danger,
 .alert-error {
@@ -5554,11 +5554,11 @@ a.badge:hover {
 }
 .label-success,
 .badge-success {
-  background-color: #4dc206;
+  background-color: #468847;
 }
 .label-success[href],
 .badge-success[href] {
-  background-color: #399104;
+  background-color: #356635;
 }
 .label-info,
 .badge-info {
@@ -6132,6 +6132,10 @@ a.badge:hover {
   }
 }
 @media (max-width: 480px) {
+  body {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
   .nav-collapse {
     -webkit-transform: translate3d(0, 0, 0);
   }
@@ -6178,13 +6182,14 @@ a.badge:hover {
     position: static;
   }
 }
+@media (min-width: 480px) and (max-width: 767px) {
+  body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
 @media (max-width: 767px) {
   /*
-    // Padding to set content in a bit
-    body {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
     // Negative indent the now static "fixed" navbar
     .navbar-fixed-top,
     .navbar-fixed-bottom {

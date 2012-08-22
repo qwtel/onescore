@@ -9,6 +9,9 @@
 body {
   overflow-y: scroll;
   overflow-x: hidden; }
+  @media (max-width: 480px) {
+    body {
+      background: whitesmoke; } }
 
 a {
   cursor: pointer;
@@ -147,6 +150,10 @@ a {
   border-color: #dddddd; }
   .well .heading {
     margin-bottom: 14px; }
+  @media (max-width: 480px) {
+    .well {
+      background: none;
+      border: none; } }
 
 .menu .nav-stacked > li > a {
   font-size: 14px;
@@ -361,9 +368,7 @@ a {
 .fold {
   width: 100%;
   padding: 14px 19px;
-  margin-left: -20px;
-  border-left: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
+  margin-left: -19px;
   background-color: #dddddd;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(whiteSmoke 5%, #dddddd 0%), color-stop(100%, whiteSmoke));
   background-image: -webkit-linear-gradient(top, #dddddd 0%, whiteSmoke 5%, whiteSmoke 100%);
