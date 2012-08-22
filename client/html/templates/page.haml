@@ -22,9 +22,10 @@
         %h6.heading.line Quest Log
         {{> miniQuestLog}}
       %aside.well 
-        %h6.heading.line Quest items
-      %aside.well 
         %h6.heading.line Tags
+        {{> tagFilter}}
+      %aside.well 
+        %h6.heading.line Quest items
   {{/if}}
 
   {{#if equals "page" "explore"}}
@@ -32,6 +33,7 @@
     .span4
       %aside.well.hidden-phone
         %h6.heading.line Tags
+        {{> tagFilter}}
       %aside.well.hidden-phone
         %h6.heading.line Quest Log
         {{> miniQuestLog}}
@@ -72,6 +74,7 @@
       {{> menu }}
       %aside.well.hidden-phone 
         %h6.heading.line Tags
+        {{> tagFilter}}
       %aside.well.hidden-phone 
         %h6.heading.line Quest items
     .span8
@@ -141,6 +144,4 @@
         {{> miniQuestLog}}
       %aside.well 
         %h6.heading.line Quest items
-      %aside.well 
-        %h6.heading.line Tags
   {{/if}}

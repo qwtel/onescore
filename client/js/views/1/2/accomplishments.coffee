@@ -1,4 +1,10 @@
 _.extend Template.accomplishments,
+  select: ->
+    sel = {}
+    if Session.get('tagFilter')?
+      sel.tags = Session.get 'tagFilter'
+    return sel
+
   accomplishments: ->
     sort = Template.filter.sort()
 
@@ -8,7 +14,9 @@ _.extend Template.accomplishments,
         username: username
 
       if user
-        return Accomplishments.find
+        sel = Template.accomplishments.select()
+        _.extend sel,
           user: user._id
-        ,
+
+        return Accomplishments.find sel,
           sort: sort

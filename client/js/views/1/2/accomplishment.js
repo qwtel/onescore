@@ -2,6 +2,13 @@
 (function() {
 
   _.extend(Template.accomplishment, Template.vote, {
+    events: {
+      'click .add-tag': function(e) {
+        Session.set('addingTag', this._id);
+        Meteor.flush();
+        return focusById('addingTag-' + this._id);
+      }
+    },
     achievement: function() {
       var sel;
       sel = {};

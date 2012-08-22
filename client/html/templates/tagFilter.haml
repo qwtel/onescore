@@ -1,0 +1,9 @@
+%template(name='tagFilter')
+  .tag-filter.tag-list
+    {{#each tags}}
+    <a class=" tag label {{isActive "tagFilter" tag}}" data-tag="{{tag}}">
+    {{tag}}
+    %span.count ({{count}})
+    </a>
+    {{/each}}
+

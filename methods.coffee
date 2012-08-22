@@ -14,6 +14,19 @@ Meteor.startup ->
     comment: Comments
 
 Meteor.methods
+  assignBestTitle: (title) ->
+    achievementId = title.entity
+    best = Titles.findOne
+      entity: achievementId
+    ,
+      sort:
+        score: -1
+
+    if best
+      Achievements.update achievementId,
+        $set:
+          title: best.title
+
   basic: ->
     data =
       user: @userId()
@@ -21,6 +34,7 @@ Meteor.methods
       score: 0
       hot: 0
       best: 0
+      value: 0
 
   newAchievement: ->
     unless @is_simulation
@@ -48,7 +62,9 @@ Meteor.methods
 
     else
       basic = Meteor.call 'basic'
-      _.extend data, basic
+      _.extend data, basic,
+        entity: data.topic
+        entityType: data.topicType
 
       parent = Comments.findOne data.parent
       if parent
@@ -77,40 +93,38 @@ Meteor.methods
       Votes.update vote._id,
         $set: data
     else
-      data.type = 'votes'
+      data.type = 'vote'
       Votes.insert data
 
     calculateScore table[data.entityType], data.entity
 
-  accomplish: (id, stry) ->
+  accomplish: (data) ->
     acc = Accomplishments.findOne
       user: @userId()
-      entity: id
+      entity: data.entity
 
     if acc
       Accomplishments.update acc._id,
         $set:
-          story: stry
-      id = acc._id
-    else
-      data =
-        entity: id
-        story: stry
+          story: data.story
+          tags: data.tags
 
+      accomplishId = acc._id
+    else
       basic = Meteor.call 'basic'
       _.extend data, basic
 
       data.type = 'accomplishment'
-      id = Accomplishments.insert data
+      accomplishId = Accomplishments.insert data
 
-      a = Achievements.findOne id
-      if a
+      achievement = Achievements.findOne data.entity
+      if achievement
         Meteor.users.update @userId(),
           $inc:
-            score: a.value
+            score: achievement.value
 
-    return id
-
+    return accomplishId
+ 
   # HACK: this will cause problems at num achievements > some constant
   updateUserScoreComplete: ->
     accs = Accomplishments.find
@@ -124,12 +138,13 @@ Meteor.methods
 
     a = a.fetch()
     s = _.pluck a, 'value'
-    score = {}
-    score.naive = _.reduce s, (memo, num) ->
+    score = _.reduce s, (memo, num) ->
       return memo + num
     , 0
 
-    updateScore Meteor.users, @userId(), score
+    Meteor.users.update @userId(),
+      $set:
+        score: score
 
 countVotes = (id, up) ->
   Votes.find(

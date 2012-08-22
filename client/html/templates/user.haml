@@ -4,6 +4,7 @@
       %a.face.profile-pic(href="/{{user.username}}")
         %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
       <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+      %span.level ({{level}})
       -#.score.pull-right<
         %span.dollar.dollar-green
         %span.value {{score}}

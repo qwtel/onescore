@@ -22,7 +22,7 @@
 <img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
 </a>
 <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-<span class='score'>({{user.score}})</span>
+<span class='score'>({{user.level}})</span>
 <span class='verb'>{{verb}} -</span>
 <time class='times'>{{timeago date}}</time>
 <nav class='icons pull-right'>
@@ -55,11 +55,19 @@
 {{#markdown}}{{{story}}}{{/markdown}}
 </div>
 {{/if}}
+{{#if equals "single" _id}}
+<a class='icon-side add-tag' title='Add a tag'><i class='icon-tags'></i></a>
+<div class='part'>
+{{> tags}}
+</div>
+{{/if}}
 {{#if numComments}}
 <a class='icon-side' href='/accomplishments/{{_id}}/talk' title='Comments'><i class='icon-comment'></i></a>
+<div class='part'>
 <a class='times part' href='/accomplishments/{{_id}}/talk'>
 {{numComments}} comments
 </a>
+</div>
 {{/if}}
 </div>
 </article>

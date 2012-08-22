@@ -5,14 +5,23 @@
     events: {
       'change .sort': function(e) {
         var $t;
-        $t = $(e.target).closest('.sort');
+        $t = $(e.currentTarget);
         return Session.set('sort', $t.find(':selected').val());
       },
       'click .tab': function(e) {
         var $t;
-        $t = $(e.target).closest('.tab');
+        $t = $(e.currentTarget);
         return Session.set('limit', $t.data('tab'));
-      }
+      },
+      'keyup .search-query,  keydown .search-query': makeOkCancelHandler({
+        ok: function(text, e) {
+          var tags;
+          tags = window.findTags(text);
+          if (tags[0]) {
+            return Session.set('tagFilter', tags[0]);
+          }
+        }
+      })
     },
     sort: function() {
       var data, sort;
@@ -50,7 +59,14 @@
       }
       return data;
     },
-    limit: function() {}
+    limit: function() {},
+    query: function() {
+      var tag;
+      tag = Session.get('tagFilter');
+      if (tag) {
+        return "#" + tag;
+      }
+    }
   });
 
 }).call(this);

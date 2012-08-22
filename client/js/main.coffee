@@ -34,11 +34,13 @@ class AppRouter extends Backbone.Router
     @hardReset()
     Session.set 'page', 'home'
     Session.set 'sort', 'hot'
+    Session.set 'type', 'accomplishment'
 
   explore: ->
     @hardReset()
     Session.set 'page', 'explore'
     Session.set 'sort', 'best'
+    Session.set 'type', 'achievement'
 
   ladder: ->
     @hardReset()
@@ -58,6 +60,12 @@ class AppRouter extends Backbone.Router
 
     unless menu then menu = 'activity'
     Session.set 'menu', menu
+
+    # HACK: to enable the tag filter
+    if menu is 'questlog'
+      Session.set 'type', 'achievement'
+    else
+      Session.set 'type', 'accomplishment'
 
   newAchievement: ->
     @softReset()
@@ -95,6 +103,7 @@ class AppRouter extends Backbone.Router
 
   softReset: ->
     $(document).scrollTop 0
+    Session.set 'tagFilter', null
     Session.set 'expand', null
     Session.set 'story', null
     Session.set 'parent', null
@@ -106,25 +115,23 @@ class AppRouter extends Backbone.Router
     Session.set 'tab', null
     Session.set 'unexpand', null
 
-  #activityShow: (id) ->
-  #  Session.set 'page', 'activities'
-  #  Session.set 'activity', id
-  #  Session.set 'topic', id
-  #  Meteor.flush()
-  #  window.positionActivityModal $('.accomplish-modal'), id
-  #
-  #activityNew: ->
-  #  Session.set 'page', 'activities'
-  #  Session.set 'activity', null
-  #  Meteor.flush()
-  #  window.positionActivityModal $('.create-modal')
-  #
-  #activityEdit: (id) ->
-  #  Session.set 'page', 'activities'
-  #  Session.set 'activity', id
-  #  Meteor.flush()
-  #  window.positionActivityModal $('.create-modal'), id
-
+window.table = {}
 window.Router = new AppRouter
 Meteor.startup ->
+  # HACK: is there a better way?
+  window.table =
+    achievements: Achievements
+    achievement: Achievements
+    explore: Achievements
+    accomplishments: Accomplishments
+    accomplishment: Accomplishments
+    home: Accomplishments
+    profile: Accomplishments
+    titles: Titles
+    title: Titles
+    votes: Votes
+    vote: Votes
+    comments: Comments
+    comment: Comments
+
   Backbone.history.start pushState: true

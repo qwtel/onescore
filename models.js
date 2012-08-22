@@ -14,3 +14,5 @@
     Favourites = new Meteor.Collection('favourites');
     Quests = new Meteor.Collection('quests');
     Accomplishments = new Meteor.Collection('accomplishments');
+
+    Notifications = new Meteor.Collection('notifications');

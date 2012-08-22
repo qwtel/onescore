@@ -7,6 +7,7 @@
     %h2.name {{session "username"}}
     {{#if user}}
     {{#with user}}
+    %span.level {{user.level}}
     .pull-right
       %h6 Score
       %h3.score.pull-right<

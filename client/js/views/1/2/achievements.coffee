@@ -6,6 +6,9 @@ _.extend Template.achievements,
     if Session.get('category')?
       sel.category = Session.get 'category'
 
+    if Session.get('tagFilter')?
+      sel.tags = Session.get 'tagFilter'
+
     return sel
 
   achievements: ->

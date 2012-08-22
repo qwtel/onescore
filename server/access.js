@@ -50,6 +50,17 @@
         remove: canModify
         fetch: ['privateTo']
     */
+    Notifications.allow({
+      insert: function() {
+        return true;
+      },
+      update: function() {
+        return true;
+      },
+      remove: function() {
+        return true;
+      }
+    });
     Achievements.allow({
       insert: self,
       update: creator
@@ -57,9 +68,16 @@
     Titles.allow({
       insert: self
     });
-    return Favourites.allow({
+    Favourites.allow({
       insert: uniqueFav,
       update: creator
+    });
+    return Accomplishments.allow({
+      insert: uniqueAcc,
+      update: function() {
+        return true;
+      },
+      remove: self
     });
   });
 

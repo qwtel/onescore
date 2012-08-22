@@ -276,19 +276,16 @@ a {
   border-bottom: 1px solid #dddddd;
   border-radius: 0px; }
 
-#tag-filter {
-  margin-top: -10px;
-  margin-bottom: 20px; }
-
-.tag-list .tag, .tag-list h6.tags {
+.tag-list .label {
   display: inline-block;
   vertical-align: baseline;
   zoom: 1;
   *display: inline;
   *vertical-align: auto;
-  margin-right: 3px; }
+  margin-right: 3px;
+  margin-bottom: 3px; }
 .tag-list .active {
-  background-color: #0088cc; }
+  background-color: #4dc206; }
 .tag-list .remove {
   color: inherit; }
   .tag-list .remove:hover {
@@ -450,8 +447,6 @@ a:hover i, a i.active, button:hover i, button i.active {
   background-size: cover; }
 .achievement .content {
   margin-left: 60px; }
-  .achievement .content .title {
-    margin-bottom: 5px; }
   .achievement .content .description .tag {
     color: gray; }
 .achievement .value {

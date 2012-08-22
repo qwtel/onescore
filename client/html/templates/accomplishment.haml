@@ -20,7 +20,7 @@
           %a.face.profile-pic(href="/{{user.username}}")
             %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
           <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-          %span.score ({{user.score}})
+          %span.score ({{user.level}})
 
           %span.verb {{verb}} -
           %time.times {{timeago date}}
@@ -57,11 +57,19 @@
       -#  %a.tag.label tag3
       {{/if}}
 
+      {{#if equals "single" _id}}
+      %a.icon-side.add-tag(title="Add a tag")<
+        %i.icon-tags
+      .part
+        {{> tags}}
+      {{/if}}
+
       {{#if numComments}}
       %a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<
         %i.icon-comment
-      %a.times.part(href="/accomplishments/{{_id}}/talk")
-        {{numComments}} comments
+      .part
+        %a.times.part(href="/accomplishments/{{_id}}/talk")
+          {{numComments}} comments
       {{/if}}
 
   {{#if equals "single" _id}}

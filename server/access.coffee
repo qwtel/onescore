@@ -42,6 +42,11 @@ Meteor.startup ->
   #  update: -> return true
   #  remove: -> return true
 
+  Notifications.allow
+    insert: -> return true
+    update: -> return true
+    remove: -> return true
+
   Achievements.allow
     insert: self
     update: creator
@@ -63,10 +68,10 @@ Meteor.startup ->
   #  insert: uniqueQuest
   #  update: creator
 
-  #Accomplishments.allow
-  #  insert: uniqueAcc
-  #  update: creator
-  #  remove: self
+  Accomplishments.allow
+    insert: uniqueAcc
+    update: -> return true
+    remove: self
 
   #Comments.allow
   #  insert: self

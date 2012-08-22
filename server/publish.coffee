@@ -18,3 +18,8 @@ Meteor.publish 'favourites', ->
 
 Meteor.publish 'accomplishments', ->
   return Accomplishments.find()
+
+Meteor.publish 'notifications', ->
+  return Notifications.find {},
+    sort: date: -1
+    limit: 20

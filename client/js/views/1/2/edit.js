@@ -31,6 +31,9 @@
       },
       'change .description': function(e) {
         this.description = $("#description-" + this._id).val();
+        if (!this.tags) {
+          this.tags = [];
+        }
         this.tags = _.union(this.tags, window.findTags(this.description));
         return Session.toggle('redraw');
       },
@@ -45,12 +48,16 @@
             return data[field] = $t.val();
           }
         });
+        if (!this.tags) {
+          this.tags = [];
+        }
         data.tags = this.tags;
         data.created = true;
         Achievements.update(this._id, {
           $set: data
         });
-        return Session.set('newAchievement', null);
+        Session.set('newAchievement', null);
+        return window.Router.navigate("achievements/" + this._id, true);
       }
     },
     selected: function(category) {

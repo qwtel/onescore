@@ -1,4 +1,10 @@
 _.extend Template.accomplishment, Template.vote,
+  events:
+    'click .add-tag': (e) ->
+      Session.set 'addingTag', @_id
+      Meteor.flush()
+      focusById('addingTag-'+@_id)
+
   achievement: ->
     sel = {}
     sel._id = @entity

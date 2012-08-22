@@ -15,17 +15,40 @@
           }
           text = text.replace(/\s/g, '');
           this.tags = _.union(this.tags, [text]);
+          window.table[this.type].update(this._id, {
+            $set: {
+              tags: this.tags
+            }
+          });
           return Session.set('addingTag', null);
         },
         cancel: Session.set('addingTag', null)
-      })
+      }),
+      'click .remove': function(e) {
+        e.stopPropagation();
+        return window.table[this.entityType].update(this.entity, {
+          $pull: {
+            tags: this.tag
+          }
+        });
+      }
+    },
+    tagObjects: function() {
+      var tagObjects,
+        _this = this;
+      tagObjects = [];
+      _.each(this.tags, function(tag) {
+        return tagObjects.push({
+          tag: tag,
+          entity: _this._id,
+          entityType: _this.type
+        });
+      });
+      return tagObjects;
     },
     addingTag: function() {
       Session.get('redraw');
       return Session.equals('addingTag', this._id);
-    },
-    tag: function() {
-      return this;
     }
   });
 

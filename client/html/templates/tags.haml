@@ -1,14 +1,16 @@
 %template(name='tags')
   .tag-list
-    {{#each tags}}
-    %span.tag.label.active(data-tag="{{tag}}")
-      {{tag}}
-      -#%a.remove(id="{{../_id}}" title="Remove this tag") ×
+    {{#each tagObjects}}
+    <span class="tag label {{isActive "tagFilter" tag}}">
+    {{tag}}
+    %a.remove(title="Remove this tag") ×
+    </span>
     {{/each}}
 
     {{#if addingTag}}
     %input.edittag-input.label.input-mini(id="addingTag-{{_id}}" type="text")
     {{else}}
-    %a.add.tag.label(title="Add a tag") + tag
+    %a.add.label(title="Add a tag")
+      %i.icon-tag.icon-white
     {{/if}}
 

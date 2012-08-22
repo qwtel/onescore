@@ -3,9 +3,10 @@
 
   _.extend(Template.home, {
     accomplishments: function() {
-      var sort;
+      var sel, sort;
       sort = Template.filter.sort();
-      return Accomplishments.find({}, {
+      sel = Template.accomplishments.select();
+      return Accomplishments.find(sel, {
         sort: sort
       });
     }

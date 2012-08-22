@@ -54,6 +54,7 @@
   window.findTags = function(text) {
     var match, pattern, tag, tags;
     pattern = /[^&]\B(#(\w\w+))/g;
+    text = ' ' + text;
     text = _.escape(text);
     tags = [];
     while (match = pattern.exec(text)) {
@@ -68,6 +69,7 @@
     var pattern;
     if (text) {
       pattern = /[^&]\B(#(\w\w+))/g;
+      text = ' ' + text;
       text = _.escape(text);
       return text.replace(pattern, ' <a class="tag" data-tag="$2">$1</a>');
     }

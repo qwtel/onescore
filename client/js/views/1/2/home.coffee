@@ -1,6 +1,6 @@
 _.extend Template.home,
   accomplishments: ->
     sort = Template.filter.sort()
-
-    return Accomplishments.find {},
+    sel = Template.accomplishments.select()
+    return Accomplishments.find sel,
       sort: sort

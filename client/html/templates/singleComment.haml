@@ -27,7 +27,7 @@
           %a.face.profile-pic(href="/{{user.username}}")
             %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
           <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-          %span.score ({{user.score}})
+          %span.score ({{user.level}})
 
           %span.verb {{verb}} - 
           %time.times {{timeago date}}

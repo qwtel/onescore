@@ -9,6 +9,9 @@
       if (Session.get('category') != null) {
         sel.category = Session.get('category');
       }
+      if (Session.get('tagFilter') != null) {
+        sel.tags = Session.get('tagFilter');
+      }
       return sel;
     },
     achievements: function() {

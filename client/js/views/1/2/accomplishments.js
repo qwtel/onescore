@@ -2,8 +2,16 @@
 (function() {
 
   _.extend(Template.accomplishments, {
+    select: function() {
+      var sel;
+      sel = {};
+      if (Session.get('tagFilter') != null) {
+        sel.tags = Session.get('tagFilter');
+      }
+      return sel;
+    },
     accomplishments: function() {
-      var sort, user, username;
+      var sel, sort, user, username;
       sort = Template.filter.sort();
       username = Session.get('username');
       if (username) {
@@ -11,9 +19,11 @@
           username: username
         });
         if (user) {
-          return Accomplishments.find({
+          sel = Template.accomplishments.select();
+          _.extend(sel, {
             user: user._id
-          }, {
+          });
+          return Accomplishments.find(sel, {
             sort: sort
           });
         }

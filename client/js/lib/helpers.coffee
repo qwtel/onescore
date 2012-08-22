@@ -45,6 +45,7 @@ window.focusById = (id) ->
 
 window.findTags = (text) ->
   pattern = /// [^&]\B(#(\w\w+)) ///g
+  text = ' '+text
   text = _.escape text
 
   tags = []
@@ -58,6 +59,7 @@ window.findTags = (text) ->
 window.wrapTags = (text) ->
   if text
     pattern = /// [^&]\B(#(\w\w+)) ///g
+    text = ' '+text
     text = _.escape text
     return text.replace pattern, ' <a class="tag" data-tag="$2">$1</a>'
   return ''

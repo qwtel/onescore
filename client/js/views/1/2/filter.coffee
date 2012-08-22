@@ -1,12 +1,19 @@
 _.extend Template.filter,
   events:
     'change .sort': (e) ->
-      $t = $(e.target).closest '.sort'
+      $t = $(e.currentTarget)
       Session.set 'sort', $t.find(':selected').val()
 
     'click .tab': (e) ->
-      $t = $(e.target).closest '.tab'
+      $t = $(e.currentTarget)
       Session.set 'limit', $t.data 'tab'
+
+    'keyup .search-query,  keydown .search-query':
+      makeOkCancelHandler
+        ok: (text, e) ->
+          tags = window.findTags text
+          if tags[0]
+            Session.set 'tagFilter', tags[0]
 
   sort: ->
     sort = Session.get 'sort'
@@ -25,3 +32,8 @@ _.extend Template.filter,
 
   limit: ->
     return
+
+  query: ->
+    tag = Session.get 'tagFilter'
+    if tag
+      return "##{tag}"

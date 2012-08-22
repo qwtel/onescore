@@ -28,6 +28,10 @@ _.extend Template.edit, Template.vote,
 
     'change .description': (e) ->
       @description = $("#description-#{@_id}").val()
+
+      unless @tags
+        @tags = []
+
       @tags = _.union @tags, window.findTags(@description)
       Session.toggle 'redraw'
     
@@ -40,6 +44,9 @@ _.extend Template.edit, Template.vote,
         if field?
           data[field] = $t.val()
 
+      unless @tags
+        @tags = []
+
       data.tags = @tags
       data.created = true
 
@@ -48,6 +55,7 @@ _.extend Template.edit, Template.vote,
           data
 
       Session.set 'newAchievement', null
+      window.Router.navigate "achievements/#{@_id}", true
 
   selected: (category) ->
     if category

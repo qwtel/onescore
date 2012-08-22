@@ -326,17 +326,14 @@ $activityPadding: 15px
   border-bottom: 1px solid #DDD
   border-radius: 0px
 
-#tag-filter
-  margin-top: -10px
-  margin-bottom: 20px
-
 .tag-list
-  .tag, h6.tags
+  .label
     @include inline-block
     margin-right: 3px
+    margin-bottom: 3px
     
   .active
-    background-color: #08c
+    background-color: $green
 
   .remove
     color: inherit
@@ -352,6 +349,9 @@ $activityPadding: 15px
     text-shadow: inherit
     background: none
     @include box-sizing(border-box)
+
+.tag-filter
+  .tag
 
 .expandAchievement
   margin-top: $padding
@@ -480,7 +480,6 @@ a:hover i, a i.active, button:hover i, button i.active
   .content
     margin-left: $iconSize + 10px
     .title
-      margin-bottom: 5px
     .description
       .tag
         color: gray

@@ -48,13 +48,15 @@
     AppRouter.prototype.home = function() {
       this.hardReset();
       Session.set('page', 'home');
-      return Session.set('sort', 'hot');
+      Session.set('sort', 'hot');
+      return Session.set('type', 'accomplishment');
     };
 
     AppRouter.prototype.explore = function() {
       this.hardReset();
       Session.set('page', 'explore');
-      return Session.set('sort', 'best');
+      Session.set('sort', 'best');
+      return Session.set('type', 'achievement');
     };
 
     AppRouter.prototype.ladder = function() {
@@ -77,7 +79,12 @@
       if (!menu) {
         menu = 'activity';
       }
-      return Session.set('menu', menu);
+      Session.set('menu', menu);
+      if (menu === 'questlog') {
+        return Session.set('type', 'achievement');
+      } else {
+        return Session.set('type', 'accomplishment');
+      }
     };
 
     AppRouter.prototype.newAchievement = function() {
@@ -124,6 +131,7 @@
 
     AppRouter.prototype.softReset = function() {
       $(document).scrollTop(0);
+      Session.set('tagFilter', null);
       Session.set('expand', null);
       Session.set('story', null);
       Session.set('parent', null);
@@ -141,9 +149,26 @@
 
   })(Backbone.Router);
 
+  window.table = {};
+
   window.Router = new AppRouter;
 
   Meteor.startup(function() {
+    window.table = {
+      achievements: Achievements,
+      achievement: Achievements,
+      explore: Achievements,
+      accomplishments: Accomplishments,
+      accomplishment: Accomplishments,
+      home: Accomplishments,
+      profile: Accomplishments,
+      titles: Titles,
+      title: Titles,
+      votes: Votes,
+      vote: Votes,
+      comments: Comments,
+      comment: Comments
+    };
     return Backbone.history.start({
       pushState: true
     });

@@ -20,6 +20,24 @@
   });
 
   Meteor.methods({
+    assignBestTitle: function(title) {
+      var achievementId, best;
+      achievementId = title.entity;
+      best = Titles.findOne({
+        entity: achievementId
+      }, {
+        sort: {
+          score: -1
+        }
+      });
+      if (best) {
+        return Achievements.update(achievementId, {
+          $set: {
+            title: best.title
+          }
+        });
+      }
+    },
     basic: function() {
       var data;
       return data = {
@@ -27,7 +45,8 @@
         date: new Date(),
         score: 0,
         hot: 0,
-        best: 0
+        best: 0,
+        value: 0
       };
     },
     newAchievement: function() {
@@ -61,7 +80,10 @@
         });
       } else {
         basic = Meteor.call('basic');
-        _.extend(data, basic);
+        _.extend(data, basic, {
+          entity: data.topic,
+          entityType: data.topicType
+        });
         parent = Comments.findOne(data.parent);
         if (parent) {
           _.extend(data, {
@@ -93,43 +115,40 @@
           $set: data
         });
       } else {
-        data.type = 'votes';
+        data.type = 'vote';
         Votes.insert(data);
       }
       return calculateScore(table[data.entityType], data.entity);
     },
-    accomplish: function(id, stry) {
-      var a, acc, basic, data;
+    accomplish: function(data) {
+      var acc, accomplishId, achievement, basic;
       acc = Accomplishments.findOne({
         user: this.userId(),
-        entity: id
+        entity: data.entity
       });
       if (acc) {
         Accomplishments.update(acc._id, {
           $set: {
-            story: stry
+            story: data.story,
+            tags: data.tags
           }
         });
-        id = acc._id;
+        accomplishId = acc._id;
       } else {
-        data = {
-          entity: id,
-          story: stry
-        };
         basic = Meteor.call('basic');
         _.extend(data, basic);
         data.type = 'accomplishment';
-        id = Accomplishments.insert(data);
-        a = Achievements.findOne(id);
-        if (a) {
+        accomplishId = Accomplishments.insert(data);
+        achievement = Achievements.findOne(data.entity);
+        if (achievement) {
           Meteor.users.update(this.userId(), {
             $inc: {
-              score: a.value
+              score: achievement.value
             }
           });
         }
       }
-      return id;
+      return accomplishId;
     },
     updateUserScoreComplete: function() {
       var a, accs, entities, s, score;
@@ -145,11 +164,14 @@
       });
       a = a.fetch();
       s = _.pluck(a, 'value');
-      score = {};
-      score.naive = _.reduce(s, function(memo, num) {
+      score = _.reduce(s, function(memo, num) {
         return memo + num;
       }, 0);
-      return updateScore(Meteor.users, this.userId(), score);
+      return Meteor.users.update(this.userId(), {
+        $set: {
+          score: score
+        }
+      });
     }
   });
 

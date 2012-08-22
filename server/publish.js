@@ -31,4 +31,13 @@
     return Accomplishments.find();
   });
 
+  Meteor.publish('notifications', function() {
+    return Notifications.find({}, {
+      sort: {
+        date: -1
+      },
+      limit: 20
+    });
+  });
+
 }).call(this);
