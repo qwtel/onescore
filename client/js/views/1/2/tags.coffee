@@ -17,7 +17,7 @@ _.extend Template.tags,
           text = text.replace(///\s///g,'')
           @tags = _.union @tags, [text]
 
-          window.table[@type].update @_id,
+          window.Collections[@type].update @_id,
             $set:
               tags: @tags
 
@@ -28,7 +28,7 @@ _.extend Template.tags,
 
     'click .remove': (e) ->
       e.stopPropagation()
-      window.table[@entityType].update @entity,
+      window.Collections[@entityType].update @entity,
         $pull:
           tags: @tag
 
@@ -40,6 +40,11 @@ _.extend Template.tags,
         entity: @_id
         entityType: @type
     return tagObjects
+
+  isActive: (name, value) ->
+    Session.get '_'+name
+    field = Session.get name
+    return if _.contains field, value then 'active' else ''
 
   addingTag: ->
     Session.get 'redraw'

@@ -33,11 +33,14 @@
       if (id) {
         sel.parent = id;
       }
-      if (Session.equals('limit', 'me')) {
-        sel.user = Meteor.user()._id;
-      }
-      if (Session.equals('limit', 'friends')) {
-        sel.user = 'hugo';
+      switch (Session.get('limit')) {
+        case 'me':
+          sel.user = Meteor.user()._id;
+          break;
+        case 'friends':
+          sel.user = {
+            $in: [Meteor.user()._id]
+          };
       }
       return sel;
     },

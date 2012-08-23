@@ -115,23 +115,6 @@ class AppRouter extends Backbone.Router
     Session.set 'tab', null
     Session.set 'unexpand', null
 
-window.table = {}
 window.Router = new AppRouter
 Meteor.startup ->
-  # HACK: is there a better way?
-  window.table =
-    achievements: Achievements
-    achievement: Achievements
-    explore: Achievements
-    accomplishments: Accomplishments
-    accomplishment: Accomplishments
-    home: Accomplishments
-    profile: Accomplishments
-    titles: Titles
-    title: Titles
-    votes: Votes
-    vote: Votes
-    comments: Comments
-    comment: Comments
-
   Backbone.history.start pushState: true

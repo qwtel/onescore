@@ -452,7 +452,7 @@ a:hover i, a i.active, button:hover i, button i.active {
   background-size: cover; }
 .achievement .content {
   margin-left: 60px; }
-  .achievement .content .description .tag {
+  .achievement .content .description {
     color: gray; }
 .achievement .value {
   display: block;

@@ -123,19 +123,48 @@
     }
   };
 
-  Session.push = function(name, key, value) {
+  Session.embed = function(name, key, value) {
     var field;
     field = Session.get(name);
     if (!field) {
       field = {};
-      Session.set(name, field);
     }
     if (field[key] === value) {
       field[key] = null;
     } else {
       field[key] = value;
     }
-    return Session.toggle('redraw', true);
+    return Session.set(name, field);
+  };
+
+  Session.push = function(name, value) {
+    var field;
+    field = Session.get(name);
+    if (!field) {
+      field = [];
+    }
+    if (_.contains(field, value)) {
+      field = _.without(field, value);
+    } else {
+      field.push(value);
+    }
+    if (_.size(field) > 0) {
+      Session.set(name, field);
+    } else {
+      Session.set(name, null);
+    }
+    return Session.toggle('_' + name, true);
+  };
+
+  Session.union = function(name, values) {
+    var field;
+    field = Session.get(name);
+    if (!field) {
+      field = [];
+    }
+    field = _.union(field, values);
+    Session.set(name, field);
+    return Session.toggle('_' + name, true);
   };
 
   Handlebars.registerHelper('session', function(name) {
@@ -151,7 +180,15 @@
   });
 
   Handlebars.registerHelper('isActive', function(name, value) {
-    if (Session.equals(name, value)) {
+    var field, state;
+    field = Session.get(name);
+    if (field instanceof Array || field instanceof Object) {
+      Session.get('_' + name);
+      state = _.contains(field, value);
+    } else {
+      state = Session.equals(name, value);
+    }
+    if (state === true) {
       return 'active';
     } else {
       return '';

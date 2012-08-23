@@ -4,13 +4,13 @@
   _.extend(Template.tagFilter, {
     events: {
       'click .tag': function(e) {
-        return Session.toggle('tagFilter', this.tag);
+        return Session.push('tagFilter', this.tag);
       }
     },
     tags: function() {
       var collection, page, tagInfos;
       page = Session.get('page');
-      collection = window.table[page];
+      collection = window.Collections[page];
       if (collection) {
         tagInfos = [];
         collection.find().forEach(function(entity) {

@@ -16,10 +16,17 @@
       'keyup .search-query,  keydown .search-query': makeOkCancelHandler({
         ok: function(text, e) {
           var tags;
+          $(e.currentTarget).blur();
           tags = window.findTags(text);
-          if (tags[0]) {
-            return Session.set('tagFilter', tags[0]);
+          if (tags && _.size(tags) > 0) {
+            return Session.set('tagFilter', tags);
+          } else {
+            return Session.set('tagFilter', null);
           }
+        },
+        cancel: function(e) {
+          $(e.currentTarget).blur();
+          return Session.set('tagFilter', null);
         }
       })
     },
@@ -61,10 +68,12 @@
     },
     limit: function() {},
     query: function() {
-      var tag;
-      tag = Session.get('tagFilter');
-      if (tag) {
-        return "#" + tag;
+      var tags;
+      Session.get('_tagFilter');
+      tags = Session.get('tagFilter');
+      if (tags && _.size(tags) > 0) {
+        tags = tags.join(' #');
+        return '#' + tags;
       }
     }
   });

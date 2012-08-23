@@ -30,7 +30,8 @@
       'click .unexpand': function(e) {
         if (!e.isPropagationStopped()) {
           e.stopPropagation();
-          return Session.push('unexpand', this._id, true);
+          Session.embed('unexpand', this._id, true);
+          return Session.toggle('redraw');
         }
       },
       'mouseover .highlight': function(e) {
@@ -83,14 +84,6 @@
       }
       return false;
     },
-    user: function() {
-      return Meteor.users.findOne(this.user);
-    },
-    mention: function() {
-      if (this.mention) {
-        return Meteor.users.findOne(this.mention);
-      }
-    },
     verb: function() {
       if (this.parent != null) {
         return 'replied';
@@ -121,6 +114,14 @@
         return this.level > Session.get('level') + 4;
       } else {
         return this.level > Session.get('level') + 3;
+      }
+    },
+    user: function() {
+      return Meteor.users.findOne(this.user);
+    },
+    mention: function() {
+      if (this.mention) {
+        return Meteor.users.findOne(this.mention);
       }
     },
     replies: function() {

@@ -149,26 +149,9 @@
 
   })(Backbone.Router);
 
-  window.table = {};
-
   window.Router = new AppRouter;
 
   Meteor.startup(function() {
-    window.table = {
-      achievements: Achievements,
-      achievement: Achievements,
-      explore: Achievements,
-      accomplishments: Accomplishments,
-      accomplishment: Accomplishments,
-      home: Accomplishments,
-      profile: Accomplishments,
-      titles: Titles,
-      title: Titles,
-      votes: Votes,
-      vote: Votes,
-      comments: Comments,
-      comment: Comments
-    };
     return Backbone.history.start({
       pushState: true
     });

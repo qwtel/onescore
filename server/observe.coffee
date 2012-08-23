@@ -40,21 +40,7 @@ nextLevel = (level) ->
     when 5 then next = 1225
   return next
 
-table = {}
 Meteor.startup ->
-  # HACK: is there a better way?
-  table =
-    achievements: Achievements
-    achievement: Achievements
-    accomplishments: Accomplishments
-    accomplishment: Accomplishments
-    titles: Titles
-    title: Titles
-    votes: Votes
-    vote: Votes
-    comments: Comments
-    comment: Comments
-
   # Assign global ranks
   users = Meteor.users.find {},
     sort: score: -1
@@ -106,12 +92,12 @@ Meteor.startup ->
   
   Votes.find().observe
     added: (vote) ->
-      target = table[vote.entityType].findOne vote.entity
+      target = Collections[vote.entityType].findOne vote.entity
       notify vote, target
   
   Comments.find().observe
     added: (comment) ->
-      target = table[comment.topicType].findOne comment.topic
+      target = Collections[comment.topicType].findOne comment.topic
       notify comment, target
 
   #Achievements.find().observe

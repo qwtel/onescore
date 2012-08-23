@@ -15,7 +15,7 @@
           }
           text = text.replace(/\s/g, '');
           this.tags = _.union(this.tags, [text]);
-          window.table[this.type].update(this._id, {
+          window.Collections[this.type].update(this._id, {
             $set: {
               tags: this.tags
             }
@@ -26,7 +26,7 @@
       }),
       'click .remove': function(e) {
         e.stopPropagation();
-        return window.table[this.entityType].update(this.entity, {
+        return window.Collections[this.entityType].update(this.entity, {
           $pull: {
             tags: this.tag
           }
@@ -45,6 +45,16 @@
         });
       });
       return tagObjects;
+    },
+    isActive: function(name, value) {
+      var field;
+      Session.get('_' + name);
+      field = Session.get(name);
+      if (_.contains(field, value)) {
+        return 'active';
+      } else {
+        return '';
+      }
     },
     addingTag: function() {
       Session.get('redraw');

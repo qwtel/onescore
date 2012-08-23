@@ -6,7 +6,19 @@
       var sel;
       sel = {};
       if (Session.get('tagFilter') != null) {
-        sel.tags = Session.get('tagFilter');
+        Session.get('_tagFilter');
+        sel.tags = {
+          $all: Session.get('tagFilter')
+        };
+      }
+      switch (Session.get('limit')) {
+        case 'me':
+          sel.user = Meteor.user()._id;
+          break;
+        case 'friends':
+          sel.user = {
+            $in: [Meteor.user()._id]
+          };
       }
       return sel;
     },

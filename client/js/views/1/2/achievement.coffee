@@ -5,6 +5,10 @@ _.extend Template.achievement, Template.vote,
         Session.toggle 'expand', @_id
         e.stopPropagation()
 
+    'click .tag': (e) ->
+      tag = $(e.currentTarget).data 'tag'
+      Session.push 'tagFilter', tag
+
     'click .fav': (e) ->
       fav = Favourites.findOne
         user: Meteor.user()._id

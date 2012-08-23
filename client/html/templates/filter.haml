@@ -1,6 +1,6 @@
 %template(name='filter')
   .filter.linebreak
-    %input.input-medium.search-query.pull-right(type="text" placeholder="Search" value="{{query}}")/
+    %input#filter.input-medium.search-query.pull-right(type="text" placeholder="Search" value="{{query}}")/
 
     %nav.nav.nav-tabs 
       <li class="{{isActive "limit" "all"}}">
@@ -11,9 +11,9 @@
       -#%a.tab(data-tab="city") City
       -#</li>
 
-      <li class="{{isActive "limit" "friends"}}">
-      %a.tab(data-tab="friends") Friends
-      </li>
+      -#<li class="{{isActive "limit" "friends"}}">
+      -#%a.tab(data-tab="friends") Friends
+      -#</li>
 
       <li class="{{isActive "limit" "me"}}">
       %a.tab(data-tab="me") Me

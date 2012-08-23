@@ -1,18 +1,3 @@
-table = {}
-Meteor.startup ->
-  # HACK: is there a better way?
-  table =
-    achievements: Achievements
-    achievement: Achievements
-    accomplishments: Accomplishments
-    accomplishment: Accomplishments
-    titles: Titles
-    title: Titles
-    votes: Votes
-    vote: Votes
-    comments: Comments
-    comment: Comments
-
 Meteor.methods
   assignBestTitle: (title) ->
     achievementId = title.entity
@@ -96,7 +81,7 @@ Meteor.methods
       data.type = 'vote'
       Votes.insert data
 
-    calculateScore table[data.entityType], data.entity
+    calculateScore Collections[data.entityType], data.entity
 
   accomplish: (data) ->
     acc = Accomplishments.findOne

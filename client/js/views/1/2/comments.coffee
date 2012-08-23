@@ -28,11 +28,11 @@ _.extend Template.comments,
     if id
       sel.parent = id
 
-    if Session.equals 'limit', 'me'
-      sel.user = Meteor.user()._id
-
-    if Session.equals 'limit', 'friends'
-      sel.user = 'hugo'
+    switch Session.get('limit')
+      when 'me'
+        sel.user = Meteor.user()._id
+      when 'friends'
+        sel.user = $in: [Meteor.user()._id]
 
     return sel
 

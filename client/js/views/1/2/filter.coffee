@@ -11,9 +11,15 @@ _.extend Template.filter,
     'keyup .search-query,  keydown .search-query':
       makeOkCancelHandler
         ok: (text, e) ->
+          $(e.currentTarget).blur()
           tags = window.findTags text
-          if tags[0]
-            Session.set 'tagFilter', tags[0]
+          if tags and _.size(tags) > 0
+            Session.set 'tagFilter', tags
+          else
+            Session.set 'tagFilter', null
+        cancel: (e) ->
+          $(e.currentTarget).blur()
+          Session.set 'tagFilter', null
 
   sort: ->
     sort = Session.get 'sort'
@@ -34,6 +40,8 @@ _.extend Template.filter,
     return
 
   query: ->
-    tag = Session.get 'tagFilter'
-    if tag
-      return "##{tag}"
+    Session.get '_tagFilter'
+    tags = Session.get 'tagFilter'
+    if tags and _.size(tags) > 0
+      tags = tags.join ' #'
+      return '#'+tags

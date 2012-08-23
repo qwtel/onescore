@@ -24,7 +24,8 @@ _.extend Template.comment, Template.vote,
     'click .unexpand': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
-        Session.push 'unexpand', @_id, true
+        Session.embed 'unexpand', @_id, true
+        Session.toggle 'redraw'
 
     'mouseover .highlight': (e) ->
       unless e.isPropagationStopped()
@@ -44,6 +45,9 @@ _.extend Template.comment, Template.vote,
             parent: @_id
             topic: Session.get 'topic'
             topicType: Session.get 'topicType'
+
+          #comment = new Comment(data)
+          #comment.save()
 
           Meteor.call 'comment', data
 
@@ -71,13 +75,6 @@ _.extend Template.comment, Template.vote,
       return field[@_id]
     return false
 
-  user: ->
-    return Meteor.users.findOne @user
-
-  mention: ->
-    if @mention
-      return Meteor.users.findOne @mention
-
   verb: ->
     if @parent?
       return 'replied'
@@ -96,6 +93,14 @@ _.extend Template.comment, Template.vote,
       return @level > Session.get('level') + 4
     else
       return @level > Session.get('level') + 3
+
+
+  user: ->
+    return Meteor.users.findOne @user
+
+  mention: ->
+    if @mention
+      return Meteor.users.findOne @mention
 
   replies: ->
     sel = Template.comments.select @_id

@@ -9,6 +9,11 @@
           return e.stopPropagation();
         }
       },
+      'click .tag': function(e) {
+        var tag;
+        tag = $(e.currentTarget).data('tag');
+        return Session.push('tagFilter', tag);
+      },
       'click .fav': function(e) {
         var fav;
         fav = Favourites.findOne({

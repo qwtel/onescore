@@ -98,18 +98,44 @@ Session.toggle = (name, value) ->
   else
     Session.set name, !Session.get(name)
 
-Session.push = (name, key, value) ->
+Session.embed = (name, key, value) ->
   field = Session.get name
   unless field
     field = {}
-    Session.set name, field
 
   if field[key] is value
     field[key] = null
   else
     field[key] = value
 
-  Session.toggle 'redraw', true
+  Session.set name, field
+
+Session.push = (name, value) ->
+  field = Session.get name
+  unless field
+    field = []
+
+  if _.contains field, value
+    field = _.without field, value
+  else
+    field.push value
+
+  if _.size(field) > 0
+    Session.set name, field
+  else
+    Session.set name, null
+  
+  Session.toggle '_'+name, true
+
+Session.union = (name, values) ->
+  field = Session.get name
+  unless field
+    field = []
+
+  field = _.union field, values
+
+  Session.set name, field
+  Session.toggle '_'+name, true
 
 Handlebars.registerHelper 'session', (name) ->
   return Session.get name
@@ -121,7 +147,15 @@ Handlebars.registerHelper 'equals', (name, value) ->
   return Session.equals name, value
 
 Handlebars.registerHelper 'isActive', (name, value) ->
-  return if Session.equals(name, value) then 'active' else ''
+  field = Session.get name
+
+  if field instanceof Array or field instanceof Object
+    Session.get '_'+name
+    state =  _.contains field, value
+  else
+    state = Session.equals name, value
+
+  return if state is true then 'active' else ''
 
 Handlebars.registerHelper 'belongsTo', (user) ->
   return Meteor.user()._id is user._id

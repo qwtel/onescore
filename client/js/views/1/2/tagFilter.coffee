@@ -1,11 +1,11 @@
 _.extend Template.tagFilter,
   events:
     'click .tag': (e) ->
-      Session.toggle 'tagFilter', @tag
+      Session.push 'tagFilter', @tag
 
   tags: ->
     page = Session.get 'page'
-    collection = window.table[page]
+    collection = window.Collections[page]
 
     if collection
       tagInfos = []

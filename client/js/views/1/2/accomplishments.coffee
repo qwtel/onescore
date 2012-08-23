@@ -2,12 +2,19 @@ _.extend Template.accomplishments,
   select: ->
     sel = {}
     if Session.get('tagFilter')?
-      sel.tags = Session.get 'tagFilter'
+      Session.get '_tagFilter'
+      sel.tags = $all: Session.get 'tagFilter'
+
+    switch Session.get('limit')
+      when 'me'
+        sel.user = Meteor.user()._id
+      when 'friends'
+        sel.user = $in: [Meteor.user()._id]
+
     return sel
 
   accomplishments: ->
     sort = Template.filter.sort()
-
     username = Session.get 'username'
     if username
       user =  Meteor.users.findOne
