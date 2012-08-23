@@ -43,14 +43,14 @@
 <a href='/achievements/{{_id}}/accomplish' title='Accomplish'><i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i></a>
 </li>
 </nav>
-<h4 class='title'>
+<h5 class='title'>
 {{#if title}}
 <a href='/achievements/{{_id}}'>{{title}}</a>
 {{else}}
 <a href='/achievements/{{_id}}' style='font-weight: normal'>&lt;No title suggested&gt;</a>
 {{/if}}
 <a class='fav' title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
-</h4>
+</h5>
 </header>
 <div class='description'>
 {{#if description}}

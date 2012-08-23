@@ -39,7 +39,7 @@
       {{/if}}
 
       {{#with achievement}}
-      .minimal
+      .embed.well.well-small
         {{> embedAchievement}}
       {{/with}}
 
@@ -74,7 +74,7 @@
 
   {{#if equals "single" _id}}
   .fold
-  %h6.heading.line Comments
+  %h5.heading.line Comments
   {{> filter}}
   .clearfix
   {{> comments}}

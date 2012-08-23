@@ -4,17 +4,15 @@
       %i.icon-refresh
     %a.profile-pic.pull-left(href='/{{session "username"}}')
       {{{pic}}}
-    %h2.name {{session "username"}}
+    %h3.name {{session "username"}}
     {{#if user}}
     {{#with user}}
     -#%span.level {{user.level}}
     .pull-right
-      %h6 Score
       %h3.score.pull-right<
         -#%span.dollar.dollar-green
         %span {{score}}
     .about
-      %h6 About
       %em.bio {{bio}}
       .loc {{location}}
     {{/with}}

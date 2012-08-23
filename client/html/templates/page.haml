@@ -10,7 +10,7 @@
   .row
     .span8
       %section.well
-        %h6.heading.line Stories
+        %h5.heading.line Stories
         {{> filter }}
         .clearfix
         {{> home }}
@@ -19,29 +19,29 @@
       %aside.well 
         {{> userWidget}}
       %aside.well 
-        %h6.heading.line Quest Log
+        %h5.heading.line Quest Log
         {{> miniQuestLog}}
       %aside.well 
-        %h6.heading.line Tags
+        %h5.heading.line Tags
         {{> tagFilter}}
       %aside.well 
-        %h6.heading.line Quest items
+        %h5.heading.line Quest items
   {{/if}}
 
   {{#if equals "page" "explore"}}
   .row
     .span4
       %aside.well.hidden-phone
-        %h6.heading.line Tags
+        %h5.heading.line Tags
         {{> tagFilter}}
       %aside.well.hidden-phone
-        %h6.heading.line Quest Log
+        %h5.heading.line Quest Log
         {{> miniQuestLog}}
       %aside.well.hidden-phone
-        %h6.heading.line Quest items
+        %h5.heading.line Quest items
     .span8
       %section.well 
-        %h6.heading.line Explore
+        %h5.heading.line Explore
         {{> filter}}
         {{> achievements}}
   {{/if}}
@@ -52,12 +52,12 @@
       %aside.well.hidden-phone
         {{> userWidget }}
       %aside.well.hidden-phone 
-        %h6.heading.line League
+        %h5.heading.line League
       %aside.well.hidden-phone 
-        %h6.heading.line Quest items
+        %h5.heading.line Quest items
     .span8
       %section.well 
-        %h6.heading.line Ladder
+        %h5.heading.line Ladder
         {{> filter }}
         .clearfix
         .fold
@@ -73,28 +73,28 @@
     .span4
       {{> menu }}
       %aside.well.hidden-phone 
-        %h6.heading.line Tags
+        %h5.heading.line Tags
         {{> tagFilter}}
       %aside.well.hidden-phone 
-        %h6.heading.line Quest items
+        %h5.heading.line Quest items
     .span8
       %section.well 
         {{#if equals "menu" "activity"}}
-        %h6.heading.line Activity
+        %h5.heading.line Activity
         {{> filter }}
         .clearfix
         {{> accomplishments}}
         {{/if}}
 
         {{#if equals "menu" "questlog"}}
-        %h6.heading.line Quest log
+        %h5.heading.line Quest log
         {{> filter }}
         .clearfix
         {{> questLog}}
         {{/if}}
 
         {{#if equals "menu" "favourites"}}
-        %h6.heading.line Favourites
+        %h5.heading.line Favourites
         {{> filter }}
         .clearfix
         {{> favourites}}
@@ -133,15 +133,15 @@
   .row
     .span8
       %section.well
-        %h6.heading.line Notifications
+        %h5.heading.line Notifications
         {{> notifications}}
 
     .span4
       %aside.well 
         {{> userWidget}}
       %aside.well 
-        %h6.heading.line Quest log
+        %h5.heading.line Quest log
         {{> miniQuestLog}}
       %aside.well 
-        %h6.heading.line Quest items
+        %h5.heading.line Quest items
   {{/if}}

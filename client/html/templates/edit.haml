@@ -3,17 +3,17 @@
   {{#unless session "styleGuide"}}
   %div.alert.alert-block.alert-info
     %a.close(data-dismiss="alert") ×
-    %h4.alert-heading Achievement style guide
+    %h4 Achievement style guide
     %p Achievements should have the following properties:
     %dl 
       %dt 
-        %h5.alert-heading Atomic
+        %h5 Atomic
       %dd Achievements should not be composed.
       %dt 
-        %h5.alert-heading Universal
+        %h5 Universal
       %dd Achievements should be easy to agree on.
       %dt 
-        %h5.alert-heading Unique
+        %h5 Unique
       %dd Check if the achievement already exists!
   {{/unless}}
   {{/if}}
@@ -26,12 +26,12 @@
           .input-append<
             %input.span3.title(type="text" id="title-{{_id}}" data-field="title")/
             %button.btn.suggest(type="button")> Suggest
-          %p.help-block.heading
+          %p.help-block.muted
             %strong NOTE:
             You don't have to suggest a title.
 
           {{#if hasTitles}}
-          %table.table.table-condensed
+          %table.table.table-condensed(style="margin-top:20px")
             %thead 
               %tr 
                 %th Vote
@@ -53,7 +53,7 @@
         %label.control-label(for="description-{{_id}}") Description
         %div.controls 
           %textarea.input-xlarge.description.lazy(id="description-{{_id}}" data-field="description" rows="4") {{description}}
-          %p.help-block 
+          %p.help-block.muted
             What has to be done to complete this achievement?
             %br/
             %strong HINT:
@@ -73,7 +73,7 @@
             {{#each categories}}
             <option value="{{name}}" {{selected ../category}}>{{name}}</option>
             {{/each}}
-          %p.help-block If it doesn't fit in anywhere, choose 'Random'
+          %p.help-block.muted If it doesn't fit in anywhere, choose 'Random'
 
       %div.control-group 
         %label.control-label Tags

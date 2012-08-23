@@ -1,11 +1,11 @@
 %template(name='body')
-  .navbar.navbar-fixed-top
+  .navbar.navbar-fixed-top.navbar-inverse
     .navbar-inner
       %header.container
         {{> header }}
-      .progress
-        .bar(style="width: {{progress}}%")
-        %span.label.hide {{progressText}}
+    .progress
+      .bar(style="width: {{progress}}%")
+    %span.label.hide {{progressText}}
 
   {{#if currentUser}}
   #content.container

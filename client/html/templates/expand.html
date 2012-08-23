@@ -1,19 +1,19 @@
 <template name='expand'>
 {{#if equals "tab" "edit"}}
-<h6 class='heading line'>Edit</h6>
+<h5 class='heading line'>Edit</h5>
 {{> edit}}
 {{/if}}
 {{#unless equals "newAchievement" _id}}
 {{#if equals "tab" "info"}}
-<h6 class='heading line'>Info</h6>
+<h5 class='heading line'>Info</h5>
 {{> info}}
 {{/if}}
 {{#if equals "tab" "accomplish"}}
-<h6 class='heading line'>Tell your story (optional)</h6>
+<h5 class='heading line'>Tell your story (optional)</h5>
 {{> accomplish}}
 {{/if}}
 {{#if equals "tab" "talk"}}
-<h6 class='heading line'>Comments</h6>
+<h5 class='heading line'>Comments</h5>
 {{> filter}}
 <div class='clearfix'></div>
 {{> comments}}

@@ -46,8 +46,8 @@ a
   cursor: pointer
   @include transition (color 0.2s linear)
 
-h6
-  text-transform: uppercase
+h1, h2, h3, h4, h5, h6
+  margin: 0
 
 .score
   .value
@@ -80,14 +80,14 @@ h6
     display: inline
 
 .filter
-  .sort
-    margin: 0 8px 11px 2px
+  //.sort
+  //  margin: 0 8px 11px 2px
 
-  .search-query
-    padding-left: 10px
-    padding-right: 10px
-    margin-bottom: 6px
-    border-radius: 14px
+  //.search-query
+  //  padding-left: 10px
+  //  padding-right: 10px
+  //  margin-bottom: 6px
+  //  border-radius: 14px
 
 .linebreak
   .nav-tabs
@@ -104,14 +104,15 @@ h6
 .navbar
   //z-index: 1060
   //text-shadow: none
+  text-align: center
   .progress
     margin: 0
     border-radius: 0
     height: 4px
     background: #ebebeb
     border-top: 1px solid rgba(0, 0, 0, 0.25)
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25)
     overflow: visible
-    text-align: center
     @include transition(height 0.2s linear)
     
     .bar
@@ -119,10 +120,10 @@ h6
       height: 4px
       @include transition(height 0.2s linear)
 
-    .label
-      position: relative
-      top: -11px
-      background-color: $green
+  .label
+    position: relative
+    top: -11px
+    background-color: $green
 
   .container
     position: relative
@@ -139,12 +140,12 @@ h6
   //  font-weight: bold
 
   .nav > li
-    width: 40px
+    width: 44px
     text-align: center
 
-  .nav > li > a
-    border-right: 1px solid rgba(255, 255, 255, 0.25)
-    @include box-shadow(inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)) 
+  //.nav > li > a
+  //  border-right: 1px solid rgba(255, 255, 255, 0.25)
+  //  @include box-shadow(inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)) 
 
   .brand
     padding: 0
@@ -179,9 +180,20 @@ h6
   border-color: #ddd
 
   .heading
+    text-transform: uppercase
+    font-size: 12px
+    color: #999
     margin-bottom: $padding
 
+  .breadcrumb
+    background-color: #f0f0f0
+
+    li:first-child
+      font-weight: bold
+
   @media (max-width: 480px)
+    width: 100%
+    margin-left: -19px
     background: none
     border: none
 
@@ -212,7 +224,6 @@ h6
 
 .accomplishment, .comment
   margin-bottom: 2*$padding
-  border-left: 1px dashed #ddd
 
   .icon-side
     float: left
@@ -228,11 +239,9 @@ h6
   .part
     margin-bottom: $padding/2
 
-.breadcrumb li:first-child
-  font-weight: bold
-
 .comments
   .comment
+    border-left: 1px dashed #ddd
     min-height: 75px
 
     .body
@@ -432,7 +441,7 @@ $activityPadding: 15px
   border-bottom: 1px solid #ddd
 
   // Make in-line with first menu item
-  margin-top: -3px
+  margin-top: -5px
 
 .fold
   width: 100%
@@ -502,8 +511,8 @@ a:hover i, a i.active, button:hover i, button i.active
 
   .value
     display: block
-    font-size: 200%
-    line-height: 185%
+    font-size: 24px
+    line-height: 48px
     color: #fff
     text-align: center
     text-decoration: none
@@ -548,7 +557,9 @@ a:hover i, a i.active, button:hover i, button i.active
   margin-bottom: 5px
 
   .title
-    font-weight: bold
+    display: inline
+    font-size: 13px
+    //font-weight: bold
   .icon
     @include inline-block
     float: none
@@ -562,7 +573,7 @@ a:hover i, a i.active, button:hover i, button i.active
 .times
   color: gray
 
-.minimal
+.embed
   margin: $padding 0 
   .icons
     display: none

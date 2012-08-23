@@ -21,8 +21,8 @@ a {
   -o-transition: color 0.2s linear;
   transition: color 0.2s linear; }
 
-h6 {
-  text-transform: uppercase; }
+h1, h2, h3, h4, h5, h6 {
+  margin: 0; }
 
 .score .value {
   font-family: "SubtleSansRegular";
@@ -61,14 +61,6 @@ h6 {
   .loading img {
     display: inline; }
 
-.filter .sort {
-  margin: 0 8px 11px 2px; }
-.filter .search-query {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 6px;
-  border-radius: 14px; }
-
 .linebreak .nav-tabs {
   width: 100%;
   padding: 0 20px;
@@ -78,72 +70,70 @@ h6 {
 .linebreak .nav-tabs > .active > a, .linebreak .nav-tabs > .active > a:hover {
   background: whitesmoke; }
 
-.navbar .progress {
-  margin: 0;
-  border-radius: 0;
-  height: 4px;
-  background: #ebebeb;
-  border-top: 1px solid rgba(0, 0, 0, 0.25);
-  overflow: visible;
-  text-align: center;
-  -webkit-transition: height 0.2s linear;
-  -moz-transition: height 0.2s linear;
-  -ms-transition: height 0.2s linear;
-  -o-transition: height 0.2s linear;
-  transition: height 0.2s linear; }
-  .navbar .progress .bar {
-    background: #4dc206;
+.navbar {
+  text-align: center; }
+  .navbar .progress {
+    margin: 0;
+    border-radius: 0;
     height: 4px;
+    background: #ebebeb;
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    overflow: visible;
     -webkit-transition: height 0.2s linear;
     -moz-transition: height 0.2s linear;
     -ms-transition: height 0.2s linear;
     -o-transition: height 0.2s linear;
     transition: height 0.2s linear; }
-  .navbar .progress .label {
+    .navbar .progress .bar {
+      background: #4dc206;
+      height: 4px;
+      -webkit-transition: height 0.2s linear;
+      -moz-transition: height 0.2s linear;
+      -ms-transition: height 0.2s linear;
+      -o-transition: height 0.2s linear;
+      transition: height 0.2s linear; }
+  .navbar .label {
     position: relative;
     top: -11px;
     background-color: #4dc206; }
-.navbar .container {
-  position: relative; }
-  .navbar .container .notify {
-    position: absolute;
-    top: 3px;
-    left: 23px;
-    z-index: 1040;
-    background-color: #3b5998;
-    background: #4dc206; }
-.navbar .nav > li {
-  width: 40px;
-  text-align: center; }
-.navbar .nav > li > a {
-  border-right: 1px solid rgba(255, 255, 255, 0.25);
-  -webkit-box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05);
-  box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05); }
-.navbar .brand {
-  padding: 0;
-  margin: 0;
-  margin-right: 5px;
-  background: url("/img/logo128.png") no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -ms-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover; }
-.navbar .nav-img {
-  width: 30px;
-  height: 30px;
-  margin-top: 4px; }
-.navbar .score {
-  padding: 8px 10px 0px; }
-  .navbar .score .dollar {
-    height: 21px;
-    width: 21px; }
-.navbar .profile-pic {
-  display: block;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  .navbar .container {
+    position: relative; }
+    .navbar .container .notify {
+      position: absolute;
+      top: 3px;
+      left: 23px;
+      z-index: 1040;
+      background-color: #3b5998;
+      background: #4dc206; }
+  .navbar .nav > li {
+    width: 44px;
+    text-align: center; }
+  .navbar .brand {
+    padding: 0;
+    margin: 0;
+    margin-right: 5px;
+    background: url("/img/logo128.png") no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; }
+  .navbar .nav-img {
+    width: 30px;
+    height: 30px;
+    margin-top: 4px; }
+  .navbar .score {
+    padding: 8px 10px 0px; }
+    .navbar .score .dollar {
+      height: 21px;
+      width: 21px; }
+  .navbar .profile-pic {
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
 
 .navbar:hover .progress .label {
   display: inline; }
@@ -153,9 +143,18 @@ h6 {
   box-shadow: none;
   border-color: #dddddd; }
   .well .heading {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #999999;
     margin-bottom: 14px; }
+  .well .breadcrumb {
+    background-color: #f0f0f0; }
+    .well .breadcrumb li:first-child {
+      font-weight: bold; }
   @media (max-width: 480px) {
     .well {
+      width: 100%;
+      margin-left: -19px;
       background: none;
       border: none; } }
 
@@ -181,8 +180,7 @@ h6 {
   margin-bottom: 0; }
 
 .accomplishment, .comment {
-  margin-bottom: 28px;
-  border-left: 1px dashed #dddddd; }
+  margin-bottom: 28px; }
   .accomplishment .icon-side, .comment .icon-side {
     float: left;
     margin-top: 2px;
@@ -195,10 +193,8 @@ h6 {
 .accomplishment .part {
   margin-bottom: 7px; }
 
-.breadcrumb li:first-child {
-  font-weight: bold; }
-
 .comments .comment {
+  border-left: 1px dashed #dddddd;
   min-height: 75px; }
   .comments .comment .body {
     margin-bottom: 20px; }
@@ -367,7 +363,7 @@ h6 {
   margin-left: -19px;
   padding: 0 19px;
   border-bottom: 1px solid #dddddd;
-  margin-top: -3px; }
+  margin-top: -5px; }
 
 .fold {
   width: 100%;
@@ -449,8 +445,8 @@ a:hover i, a i.active, button:hover i, button i.active {
     color: gray; }
 .achievement .value {
   display: block;
-  font-size: 200%;
-  line-height: 185%;
+  font-size: 24px;
+  line-height: 48px;
   color: white;
   text-align: center;
   text-decoration: none;
@@ -489,7 +485,8 @@ a:hover i, a i.active, button:hover i, button i.active {
   font-size: 13px;
   margin-bottom: 5px; }
   .mini .title {
-    font-weight: bold; }
+    display: inline;
+    font-size: 13px; }
   .mini .icon {
     display: inline-block;
     vertical-align: baseline;
@@ -506,9 +503,9 @@ a:hover i, a i.active, button:hover i, button i.active {
 .times {
   color: gray; }
 
-.minimal {
+.embed {
   margin: 14px 0; }
-  .minimal .icons {
+  .embed .icons {
     display: none; }
 
 .user {

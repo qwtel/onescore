@@ -24,23 +24,23 @@
 
 
   {{#if equals "tab" "edit"}}
-  %h6.heading.line Edit
+  %h5.heading.line Edit
   {{> edit}}
   {{/if}}
 
   {{#unless equals "newAchievement" _id}}
   {{#if equals "tab" "info"}}
-  %h6.heading.line Info
+  %h5.heading.line Info
   {{> info}}
   {{/if}}
 
   {{#if equals "tab" "accomplish"}}
-  %h6.heading.line Tell your story (optional)
+  %h5.heading.line Tell your story (optional)
   {{> accomplish}}
   {{/if}}
 
   {{#if equals "tab" "talk"}}
-  %h6.heading.line Comments
+  %h5.heading.line Comments
   {{> filter}}
   .clearfix
   {{> comments}}
