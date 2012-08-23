@@ -1,9 +1,11 @@
 <template name='comments'>
 {{#unless equals "addComment" "new"}}
-<a class='fold new'>
+<div class='fold advice new'>
+<a>
 <i class='icon-comment'></i>
 Add a comment
 </a>
+</div>
 {{else}}
 <div class='fold'>
 <textarea class='new-thread ta100' id='add-{{_id}}' placeholder='Add a comment' rows='4'></textarea>

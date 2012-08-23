@@ -19,9 +19,5 @@ _.extend Template.achievements,
     return sel
 
   achievements: ->
-    sel = Template.achievements.select()
     sort = Template.filter.sort()
-
-    a = Achievements.find sel,
-      sort: sort
-    return a
+    Achievements.find {}, sort: sort

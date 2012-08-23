@@ -1,11 +1,3 @@
-window.items = [
-    name: 'Home'
-  ,
-    name: 'Explore'
-  ,
-    name: 'Ladder'
-]
-
 # Categories should become tags (with capital letters) and the top 10 tags
 # become 'categories'
 window.categories = [

@@ -13,10 +13,34 @@ _.extend Template.header,
         return "<img src='https://graph.facebook.com/#{fbid}/picture'/>"
 
   items: ->
-    for item in window.items
+    items = [
+        name: 'Home'
+        icon: 'home'
+      ,
+        name: 'Explore'
+        icon: 'road'
+      ,
+        name: 'Ladder'
+        icon: 'globe'
+      ,
+        name: 'Profile'
+        icon: 'user'
+        url: Meteor.user().username
+      ,
+        name: 'Quest Log'
+        icon: 'book'
+        url: Meteor.user().username+'/questlog'
+      ,
+        name: 'New achievement'
+        icon: 'certificate'
+        url: 'achievements/new'
+    ]
+
+    for item in items
       unless item.url
         item.url = item.name.toLowerCase()
-    return window.items
+
+    return items
 
   numNotifications: ->
     if Meteor.user()

@@ -8,9 +8,10 @@
   -#.clearfix
 
   {{#unless equals "addComment" "new"}}
-  %a.fold.new
-    %i.icon-comment
-    Add a comment
+  .fold.advice.new
+    %a
+      %i.icon-comment
+      Add a comment
   {{else}}
   .fold
     %textarea.new-thread.ta100(id="add-{{_id}}" rows="4" placeholder="Add a comment")

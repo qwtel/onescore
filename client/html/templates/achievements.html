@@ -1,6 +1,11 @@
 <template name='achievements'>
 <div class='clearfix'></div>
-<a href="/achievements/new" class="new fold"><i class="icon-certificate"></i> New achievement</a>
+<div class='fold advice new'>
+<a href='/achievements/new'>
+<i class='icon-certificate'></i>
+New achievement
+</a>
+</div>
 {{#if achievements}}
 {{#each achievements}}
 <div class='fold'>
@@ -16,4 +21,10 @@
 {{> noContent}}
 </div>
 {{/if}}
+<div class='fold advice more'>
+<a>
+<i class='icon-road'></i>
+Load more...
+</a>
+</div>
 </template>

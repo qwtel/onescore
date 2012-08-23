@@ -21,6 +21,30 @@ _.extend Template.filter,
           $(e.currentTarget).blur()
           Session.set 'tagFilter', null
 
+  query: ->
+    Session.get '_tagFilter'
+    tags = Session.get 'tagFilter'
+    if tags and _.size(tags) > 0
+      tags = tags.join ' #'
+      return '#'+tags
+
+  select: ->
+    sel = {}
+    if Session.get('category')?
+      sel.category = Session.get 'category'
+
+    if Session.get('tagFilter')?
+      Session.get '_tagFilter'
+      sel.tags = $all: Session.get 'tagFilter'
+
+    switch Session.get('limit')
+      when 'me'
+        sel.user = Meteor.user()._id
+      when 'friends'
+        sel.user = $in: [Meteor.user()._id]
+
+    return sel
+
   sort: ->
     sort = Session.get 'sort'
 
@@ -36,12 +60,3 @@ _.extend Template.filter,
 
     return data
 
-  limit: ->
-    return
-
-  query: ->
-    Session.get '_tagFilter'
-    tags = Session.get 'tagFilter'
-    if tags and _.size(tags) > 0
-      tags = tags.join ' #'
-      return '#'+tags

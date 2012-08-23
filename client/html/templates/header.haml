@@ -22,13 +22,17 @@
 
     {{#each items}}
     <li class="{{isActive "page" url}}">
-    %a.nav-item(href="/{{url}}") {{name}}
+    -#%a.nav-item(href="/{{url}}") {{name}}
+    %a(href="/{{url}}" title="{{name}}")
+      <i class="icon-white icon-{{icon}}"></i>
     </li>
     {{/each}}
 
-    <li class="{{isActive "page" "profile"}}">
-    %a.nav-item(href="/{{currentUser.username}}") Profile
-    </li>
+    -#<li class="{{isActive "page" "profile"}}">
+    -#-#%a.nav-item(href="/{{currentUser.username}}") Profile
+    -#%a.nav-item(href="/{{currentUser.username}}")
+    -#  %i.icon-user
+    -#</li>
 
   %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
     {{{pic}}}

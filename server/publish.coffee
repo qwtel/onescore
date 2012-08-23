@@ -23,3 +23,11 @@ Meteor.publish 'notifications', ->
   return Notifications.find {},
     sort: date: -1
     limit: 20
+
+Meteor.publish 'explore', (sel, sort, page) ->
+  return Achievements.find sel,
+    sort: sort
+    skip: 20*page
+    limit: 20
+
+Meteor.publish 'activities', (sel, sort, page) ->

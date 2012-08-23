@@ -7,7 +7,11 @@
   -#-#{{> achievement}}
   -#{{/with}}
   -#{{/if}}
-  <a href="/achievements/new" class="new fold"><i class="icon-certificate"></i> New achievement</a>
+
+  .fold.advice.new
+    %a(href="/achievements/new")
+      %i.icon-certificate
+      New achievement
 
   {{#if achievements}}
   {{#each achievements}}
@@ -22,3 +26,7 @@
     {{> noContent}}
   {{/if}}
 
+  .fold.advice.more
+    %a
+      %i.icon-road
+      Load more...

@@ -7,12 +7,11 @@
 <nav class='nav'>
 {{#each items}}
 <li class="{{isActive "page" url}}">
-<a class='nav-item' href='/{{url}}'>{{name}}</a>
+<a href='/{{url}}' title='{{name}}'>
+<i class="icon-white icon-{{icon}}"></i>
+</a>
 </li>
 {{/each}}
-<li class="{{isActive "page" "profile"}}">
-<a class='nav-item' href='/{{currentUser.username}}'>Profile</a>
-</li>
 </nav>
 <a class='profile-pic nav-item nav-img pull-right' href='/{{currentUser.username}}'>
 {{{pic}}}
