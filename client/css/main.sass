@@ -46,6 +46,9 @@ a
   cursor: pointer
   @include transition (color 0.2s linear)
 
+  &:hover
+    text-decoration: none
+
 h1, h2, h3, h4, h5, h6
   margin: 0
 
@@ -101,10 +104,18 @@ h1, h2, h3, h4, h5, h6
   .nav-tabs > .active > a, .nav-tabs > .active > a:hover
     background: whitesmoke
 
+.popover
+  z-index: 1070
 .navbar
   //z-index: 1060
   //text-shadow: none
   text-align: center
+
+  .passive
+    cursor: default
+    opacity: 0.75
+    filter: alpha(opacity=75)
+
   .progress
     margin: 0
     border-radius: 0
@@ -122,7 +133,7 @@ h1, h2, h3, h4, h5, h6
 
   .label
     position: relative
-    top: -11px
+    top: -14px
     background-color: $green
 
   .container
@@ -143,9 +154,9 @@ h1, h2, h3, h4, h5, h6
     width: 44px
     text-align: center
 
-  //.nav > li > a
-  //  border-right: 1px solid rgba(255, 255, 255, 0.25)
-  //  @include box-shadow(inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)) 
+  .nav > li > a
+    border-right: 1px solid rgba(255, 255, 255, 0.25)
+    @include box-shadow(inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05)) 
 
   .brand
     padding: 0
@@ -171,9 +182,8 @@ h1, h2, h3, h4, h5, h6
     @include box-sizing(border-box)
 
 .navbar:hover
-  .progress
-    .label
-      display: inline
+  .label
+    display: inline
 
 .well
   @include box-shadow(none)

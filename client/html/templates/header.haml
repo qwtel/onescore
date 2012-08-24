@@ -21,11 +21,9 @@
         {{/each}}
 
     {{#each items}}
-    <li class="{{isActive "page" url}}">
-    -#%a.nav-item(href="/{{url}}") {{name}}
-    %a(href="/{{url}}" title="{{name}}")
-      <i class="icon-white icon-{{icon}}"></i>
-    </li>
+    %li(class="{{active}} {{isPassive}}")
+      %a.spell(href="/{{url}}" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldown}}</div>")
+        %i.icon-white(class="icon-{{icon}}")
     {{/each}}
 
     -#<li class="{{isActive "page" "profile"}}">
@@ -38,9 +36,10 @@
     {{{pic}}}
   .score.pull-right.hidden-phone<
     -#%span.dollar
-    %span.value {{currentUser.score}}
+    %span.value {{currentUser.level}}
   {{else}}
   .login.pull-right
     {{> loginButtons}}
   {{/if}}
 
+  {{callback}}

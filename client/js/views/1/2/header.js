@@ -9,6 +9,17 @@ _.extend(Template.header, {
       return Session.set('category', category);
     }
   },
+  callback: function() {
+    var _this = this;
+    Meteor.setTimeout(function() {
+      $('.popover').remove();
+      return $('.spell').popover({
+        placement: 'bottom',
+        trigger: 'hover'
+      });
+    }, 0);
+    return '';
+  },
   pic: function() {
     var fbid, user;
     user = Meteor.user();
@@ -20,38 +31,98 @@ _.extend(Template.header, {
     }
   },
   items: function() {
-    var item, items, _i, _len;
+    var items;
     items = [
       {
         name: 'Home',
-        icon: 'home'
+        url: 'home',
+        icon: 'home',
+        description: 'View success stories of other players',
+        active: window.isActive('page', 'home')
       }, {
         name: 'Explore',
-        icon: 'road'
+        url: 'explore',
+        icon: 'globe',
+        description: 'Allows you to find achievements',
+        active: window.isActive('page', 'explore')
       }, {
         name: 'Ladder',
-        icon: 'globe'
+        url: 'ladder',
+        icon: 'th-list',
+        description: 'Compete with other players based on your score',
+        active: window.isActive('page', 'ladder')
       }, {
         name: 'Profile',
+        url: Meteor.user().username,
         icon: 'user',
-        url: Meteor.user().username
+        description: 'Check out your recent activity',
+        active: Session.equals('page', 'profile') && !Session.equals('menu', 'questlog') ? 'active' : ''
       }, {
         name: 'Quest Log',
         icon: 'book',
-        url: Meteor.user().username + '/questlog'
+        url: Meteor.user().username + '/questlog',
+        description: 'Keept track of achievements you want to complete',
+        active: Session.equals('page', 'profile') && Session.equals('menu', 'questlog') ? 'active' : ''
       }, {
         name: 'New achievement',
         icon: 'certificate',
-        url: 'achievements/new'
+        url: 'achievements/new',
+        description: 'Create a new achievement',
+        cooldown: '30 seconds cooldown',
+        active: Session.equals('page', 'achievements') && Session.get('newAchievement') !== null ? 'active' : ''
+      }, {
+        /*
+                name: 'Inventory'
+                icon: 'glass'
+                url: '#'
+                description: 'Manage your quest items'
+              ,
+        */
+
+        name: 'Accept (passive)',
+        icon: 'star',
+        url: '#',
+        passive: true,
+        description: 'Allows you to add achievements to your quest log',
+        cooldown: '1 second cooldown'
+      }, {
+        name: 'Vote (passive)',
+        icon: 'arrow-up',
+        url: '#',
+        passive: true,
+        description: 'Allows you to vote for content',
+        cooldown: '1 second cooldown'
+      }, {
+        name: 'Comment (passive)',
+        icon: 'comment',
+        url: '#',
+        passive: true,
+        description: 'Allows you to comment on content',
+        cooldown: '5 seconds cooldown'
+      }, {
+        name: 'Accomplish (passive)',
+        icon: 'certificate',
+        url: '#',
+        passive: true,
+        description: 'Gives you the ability to accomplish achievements',
+        cooldown: '30 seconds cooldown'
+      }, {
+        name: 'Tag (passive)',
+        icon: 'tag',
+        url: '#',
+        passive: true,
+        description: 'Allows you to tag content',
+        cooldown: '1 second cooldown'
       }
     ];
-    for (_i = 0, _len = items.length; _i < _len; _i++) {
-      item = items[_i];
-      if (!item.url) {
-        item.url = item.name.toLowerCase();
-      }
-    }
     return items;
+  },
+  isPassive: function() {
+    if (this.passive) {
+      return 'passive';
+    } else {
+      return '';
+    }
   },
   numNotifications: function() {
     if (Meteor.user()) {

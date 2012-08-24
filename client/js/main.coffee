@@ -104,6 +104,8 @@ class AppRouter extends Backbone.Router
   softReset: ->
     $(document).scrollTop 0
     Session.set 'tagFilter', null
+    Session.set 'menu', null
+    Session.set 'newAchievement', null
     Session.set 'expand', null
     Session.set 'story', null
     Session.set 'parent', null

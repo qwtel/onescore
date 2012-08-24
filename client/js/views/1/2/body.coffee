@@ -7,6 +7,10 @@ _.extend Template.body,
         href = $t.attr 'href'
         if href then window.Router.navigate href, true
 
+    #'mouseover i[rel="tooltip"]': (e) ->
+    #  console.log 'test'
+    #  $(e.currentTarget).tooltip()
+
   nextLevel: (level) ->
     # HACK: this should be some exponential formula.
     # HACK: this should be part of a user model.

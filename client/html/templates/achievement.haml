@@ -10,12 +10,12 @@
     .vote-container.pull-right
       %div
         %a.vote(data-up="true")<
-          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+          <i class="icon-arrow-up {{voted "up"}}" rel="tooltip" title="Vote up"></i>
       %div
         %span.count {{score}}
       %div
         %a.vote(data-up="false")<
-          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+          <i class="icon-arrow-down {{voted "down"}}" rel="tooltip" title="Vote down"></i>
 
     %a.icon.pull-left(href="/achievements/{{_id}}")
 

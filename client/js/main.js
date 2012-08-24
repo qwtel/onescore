@@ -131,6 +131,8 @@ AppRouter = (function(_super) {
   AppRouter.prototype.softReset = function() {
     $(document).scrollTop(0);
     Session.set('tagFilter', null);
+    Session.set('menu', null);
+    Session.set('newAchievement', null);
     Session.set('expand', null);
     Session.set('story', null);
     Session.set('parent', null);

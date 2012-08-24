@@ -168,7 +168,7 @@ Handlebars.registerHelper('equals', function(name, value) {
   return Session.equals(name, value);
 });
 
-Handlebars.registerHelper('isActive', function(name, value) {
+window.isActive = function(name, value) {
   var field, state;
   field = Session.get(name);
   if (field instanceof Array || field instanceof Object) {
@@ -182,7 +182,9 @@ Handlebars.registerHelper('isActive', function(name, value) {
   } else {
     return '';
   }
-});
+};
+
+Handlebars.registerHelper('isActive', window.isActive);
 
 Handlebars.registerHelper('belongsTo', function(user) {
   return Meteor.user()._id === user._id;

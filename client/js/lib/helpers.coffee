@@ -138,7 +138,7 @@ Handlebars.registerHelper 'show', (name) ->
 Handlebars.registerHelper 'equals', (name, value) ->
   return Session.equals name, value
 
-Handlebars.registerHelper 'isActive', (name, value) ->
+window.isActive = (name, value) ->
   field = Session.get name
 
   if field instanceof Array or field instanceof Object
@@ -148,6 +148,8 @@ Handlebars.registerHelper 'isActive', (name, value) ->
     state = Session.equals name, value
 
   return if state is true then 'active' else ''
+                                       
+Handlebars.registerHelper 'isActive', window.isActive
 
 Handlebars.registerHelper 'belongsTo', (user) ->
   return Meteor.user()._id is user._id

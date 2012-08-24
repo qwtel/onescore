@@ -20,6 +20,8 @@ a {
   -ms-transition: color 0.2s linear;
   -o-transition: color 0.2s linear;
   transition: color 0.2s linear; }
+  a:hover {
+    text-decoration: none; }
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0; }
@@ -70,8 +72,15 @@ h1, h2, h3, h4, h5, h6 {
 .linebreak .nav-tabs > .active > a, .linebreak .nav-tabs > .active > a:hover {
   background: whitesmoke; }
 
+.popover {
+  z-index: 1070; }
+
 .navbar {
   text-align: center; }
+  .navbar .passive {
+    cursor: default;
+    opacity: 0.75;
+    filter: alpha(opacity=75); }
   .navbar .progress {
     margin: 0;
     border-radius: 0;
@@ -95,7 +104,7 @@ h1, h2, h3, h4, h5, h6 {
       transition: height 0.2s linear; }
   .navbar .label {
     position: relative;
-    top: -11px;
+    top: -14px;
     background-color: #4dc206; }
   .navbar .container {
     position: relative; }
@@ -109,6 +118,10 @@ h1, h2, h3, h4, h5, h6 {
   .navbar .nav > li {
     width: 44px;
     text-align: center; }
+  .navbar .nav > li > a {
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+    -webkit-box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: inset -1px 0px 0px 0px rgba(0, 0, 0, 0.05); }
   .navbar .brand {
     padding: 0;
     margin: 0;
@@ -135,7 +148,7 @@ h1, h2, h3, h4, h5, h6 {
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
 
-.navbar:hover .progress .label {
+.navbar:hover .label {
   display: inline; }
 
 .well {
