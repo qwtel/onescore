@@ -22,6 +22,15 @@ fetchUserInformation = (user) ->
       access_token: user.services.facebook.accessToken
 
   Meteor.http.get url, options, (error, res) =>
+    #console.log res
+    #friends = Meteor.users.find(
+    #  'services.facebook.id':
+    #    $in:
+    #      res.data.friends
+    #  ,
+    #    fields: ['_id']
+    #).fetch()
+
     Meteor.users.update user._id,
       $set:
         username: res.data.username

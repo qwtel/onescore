@@ -6,12 +6,14 @@
 {{#if currentUser}}
 <nav class='nav'>
 {{#each items}}
-<li class='{{active}} {{isPassive}}'>
+<li class='divider-vertical'></li>
+<li class='spell-item {{active}} {{isPassive}}'>
 <a class='spell' data-content="{{description}}&lt;div class='muted'&gt;{{cooldown}}&lt;/div&gt;" data-original-title='{{name}}' href='/{{url}}' rel='popover' title='{{name}}'>
 <i class='icon-white icon-{{icon}}'></i>
 </a>
 </li>
 {{/each}}
+<li class='divider-vertical'></li>
 </nav>
 <a class='profile-pic nav-item nav-img pull-right' href='/{{currentUser.username}}'>
 {{{pic}}}
