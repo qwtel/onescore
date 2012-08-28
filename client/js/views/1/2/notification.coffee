@@ -14,6 +14,9 @@ _.extend Template.notification,
   comment: ->
     @entityType is 'comment'
 
+  reply: ->
+    @targetType is 'comment'
+
   your: ->
     c = Collections[@targetType].findOne @target
     if c and c.user is Meteor.user()._id

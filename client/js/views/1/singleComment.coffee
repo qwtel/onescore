@@ -1,4 +1,10 @@
 _.extend Template.singleComment, Template.comment,
+  events:
+    'click .replyy': (e) ->
+      Session.toggle 'addComment', 'new'
+      Meteor.flush()
+      window.focusById "add-#{@_id}"
+
   breadcrumbs: ->
     breadcrumbs = []
     parent = Session.get 'parent'
@@ -17,9 +23,3 @@ _.extend Template.singleComment, Template.comment,
           url: "/#{comment.topicType}/#{comment.topic}"
 
     return breadcrumbs.reverse()
-
-_.extend Template.singleComment.events, Template.comment.events,
-  'click .replyy': (e) ->
-    Session.toggle 'addComment', 'new'
-    Meteor.flush()
-    window.focusById "add-#{@_id}"

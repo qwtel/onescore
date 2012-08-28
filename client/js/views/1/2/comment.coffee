@@ -1,4 +1,4 @@
-_.extend Template.comment, Template.vote,
+_.extend Template.comment,
   events:
     'click .reply': (e) ->
       unless e.isPropagationStopped()
@@ -32,7 +32,7 @@ _.extend Template.comment, Template.vote,
         e.stopPropagation()
         $(e.target).closest('.comment').addClass 'hover'
 
-    'mouseleave .highlight': (e) ->
+    'mouseout .highlight': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
         $(e.target).closest('.comment').removeClass 'hover'
@@ -108,5 +108,3 @@ _.extend Template.comment, Template.vote,
 
     Comments.find sel,
       sort: sort
-
-_.extend Template.comment.events, Template.vote.events

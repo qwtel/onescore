@@ -12,49 +12,25 @@
       %div
         %a(title="Link" href="/comments/{{_id}}")<
           <i class="icon-bookmark {{isActive "single" _id}}"></i>
-      %div
-        %a.vote(data-up="true")<
-          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-      %div
-        %span.count {{score}}
-      %div
-        %a.vote(data-up="false")<
-          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+      {{> voteContainer}}
+
     .body
       {{#if user}}
-      .user
-        .content
-          %a.face.profile-pic(href="/{{user.username}}")
-            %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
-          <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-          %span.score ({{user.level}})
-
-          %span.verb {{verb}} - 
-          %time.times {{timeago date}}
-
-          -#{{#if mention}}
-          -#%a.face.profile-pic(href="/{{mention.username}}")
-          -#  <img src="https://graph.facebook.com/{{mention.services.facebook.id}}/picture"/> 
-          -#<a class="name {{isMe mention}}" href="/{{mention.username}}">{{mention.username}}</a>
-          -#%span.score ({{mention.score}})
-          -#{{/if}}
-
-          %nav.icons.pull-right
-            {{#if isMe user}}
-            %li
-              %a.edit(title="Edit")<
-                <i class="icon-pencil {{isActive "editComment" _id}}"></i>
-            {{/if}}
-            %li
-              %a.replyy(title="Reply")<
-                <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
-            -#%li
-              %a.remove(title="Remove")<
-                <i class="icon-remove"></i>
-          -#%time.time <{{formatDate date}}>
-      {{else}}
-      {{> loading}}
+      %nav.icons.pull-right
+        {{#if isMe user}}
+        %li
+          %a.edit(title="Edit")<
+            <i class="icon-pencil {{isActive "editComment" _id}}"></i>
+        {{/if}}
+        %li
+          %a.replyy(title="Reply")<
+            <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
+        -#%li
+          %a.remove(title="Remove")<
+            <i class="icon-remove"></i>
+      {{> userActivity}}
       {{/if}}
+
       .text
         {{#if equals "editComment" _id}}
         .text-wrapper

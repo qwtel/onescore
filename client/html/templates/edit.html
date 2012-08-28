@@ -44,9 +44,7 @@ You don't have to suggest a title.
 {{#each titles}}
 <tr>
 <td>
-<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
-<span>{{score}}</span>
-<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
+{{> voteContainer}}
 </td>
 <td>{{title}}</td>
 </tr>

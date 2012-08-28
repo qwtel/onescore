@@ -4,38 +4,20 @@
       %div
         %a(title="Link" href="/accomplishments/{{_id}}")<
           <i class="icon-bookmark {{isActive "single" _id}}"></i>
-      %div
-        %a.vote(data-up="true")<
-          <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-      %div
-        %span.count {{score}}
-      %div
-        %a.vote(data-up="false")<
-          <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+      {{> voteContainer}}
+
     .body
-      -#{{> user}}
       {{#if user}}
-      .user
-        .content
-          %a.face.profile-pic(href="/{{user.username}}")
-            %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
-          <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-          %span.score ({{user.level}})
-
-          %span.verb {{verb}} -
-          %time.times {{timeago date}}
-
-          %nav.icons.pull-right
-            {{#if isMe user}}
-            %li
-              %a(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
-                %i.icon-pencil
-            %li
-              %a(href="/accomplishments/{{_id}}/talk" title="Reply")
-                %i.icon-share-alt
-            {{/if}}
-      {{else}}
-      {{> loading}}
+      %nav.icons.pull-right
+        {{#if isMe user}}
+        %li
+          %a(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
+            %i.icon-pencil
+        %li
+          %a(href="/accomplishments/{{_id}}/talk" title="Reply")
+            %i.icon-share-alt
+        {{/if}}
+      {{> userActivity}}
       {{/if}}
 
       {{#with achievement}}

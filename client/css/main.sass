@@ -106,6 +106,7 @@ h1, h2, h3, h4, h5, h6
 
 .popover
   z-index: 1070
+
 .navbar
   //z-index: 1060
   //text-shadow: none
@@ -145,13 +146,14 @@ h1, h2, h3, h4, h5, h6
       top: 3px
       left: 23px
       z-index: 1040
-      background-color: #3B5998 
       background: $green
+      color: #fff
    
   //nav
   //  font-weight: bold
 
   .nav > .spell-item
+    position: relative
     width: 44px
     text-align: center
 
@@ -623,3 +625,7 @@ a:hover i, a i.active, button:hover i, button i.active
 
 .notifications tr:first-child > td
   border-top: none
+
+table
+  .vote-row
+    display: inline

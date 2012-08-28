@@ -1,13 +1,13 @@
-_.extend Template.achievement, Template.vote,
+_.extend Template.achievement,
   events:
     'click .expand': (e) ->
       unless e.isPropagationStopped()
         Session.toggle 'expand', @_id
         e.stopPropagation()
 
-    'click .tag': (e) ->
-      tag = $(e.currentTarget).data 'tag'
-      Session.push 'tagFilter', tag
+    #'click .tag': (e) ->
+    #  tag = $(e.currentTarget).data 'tag'
+    #  Session.push 'tagFilter', tag
 
     'click .fav': (e) ->
       fav = Favourites.findOne
@@ -86,5 +86,3 @@ _.extend Template.achievement, Template.vote,
     if this and @score?
       return true
     return false
-
-_.extend Template.achievement.events, Template.vote.events

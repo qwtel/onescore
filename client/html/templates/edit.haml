@@ -40,11 +40,12 @@
               {{#each titles}}
               %tr 
                 %td
-                  %a.vote(data-up="true")<
-                    <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-                  %span {{score}}
-                  %a.vote(data-up="false")<
-                    <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+                  {{> voteContainer}}
+                  -#%a.vote(data-up="true")<
+                  -#  <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+                  -#%span {{score}}
+                  -#%a.vote(data-up="false")<
+                  -#  <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
                 %td {{title}}
               {{/each}}
           {{/if}}

@@ -4,26 +4,10 @@
 <div>
 <a class='link highlight' href='/comments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
 </div>
-<div>
-<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i></a>
-</div>
-<div>
-<span class='count'>{{score}}</span>
-</div>
-<div>
-<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i></a>
-</div>
+{{> voteContainer}}
 </div>
 <div class='body'>
-<div class='user'>
-<div class='content'>
-<a class='face profile-pic' href='/{{user.username}}'>
-<img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
-</a>
-<a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-<span class='score'>({{user.level}})</span>
-<span class='verb'>{{verb}} -</span>
-<time class='times'>{{timeago date}}</time>
+{{#if user}}
 <nav class='icons pull-right'>
 <li>
 <a class='unexpand' title='Expand'>{{#unless unexpand}}
@@ -32,15 +16,17 @@
 <i class="icon-chevron-down active"></i>
 {{/unless}}</a>
 </li>
+{{#if isMe user}}
 <li>
 <a class='edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
 </li>
+{{/if}}
 <li>
 <a class='reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" _id}}"></i></a>
 </li>
 </nav>
-</div>
-</div>
+{{> userActivity}}
+{{/if}}
 <div class='text'>
 {{#if equals "editComment" _id}}
 <div class='text-wrapper'>

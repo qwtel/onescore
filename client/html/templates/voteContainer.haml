@@ -1,0 +1,9 @@
+%template(name='voteContainer')
+  .vote-row
+    %a.vote(data-up="true")<
+      <i class="icon-arrow-up {{voted "up"}}" rel="tooltip" title="Vote up"></i>
+  .vote-row
+    %span.count {{score}}
+  .vote-row
+    %a.vote(data-up="false")<
+      <i class="icon-arrow-down {{voted "down"}}" rel="tooltip" title="Vote down"></i>

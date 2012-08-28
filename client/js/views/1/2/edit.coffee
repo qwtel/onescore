@@ -1,4 +1,4 @@
-_.extend Template.edit, Template.vote,
+_.extend Template.edit,
   events:
     'click .close': (e) ->
       Session.set 'styleGuide', true
@@ -83,5 +83,3 @@ _.extend Template.edit, Template.vote,
       entity: id
       user: Meteor.user()._id
     return titles.count()
-
-_.extend Template.edit.events, Template.vote.events

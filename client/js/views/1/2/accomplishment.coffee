@@ -1,4 +1,4 @@
-_.extend Template.accomplishment, Template.vote,
+_.extend Template.accomplishment,
   events:
     'click .add-tag': (e) ->
       Session.set 'addingTag', @_id
@@ -14,17 +14,9 @@ _.extend Template.accomplishment, Template.vote,
   
     Achievements.findOne sel
 
-  user: ->
-    return Meteor.users.findOne @user
-  
-  verb: ->
-    return 'accomplished'
-
   numComments: ->
     return @comments
-    c = Comments.find
-      topic: @_id
-    if c
-      return c.count()
-
-_.extend Template.accomplishment.events, Template.vote.events
+    #c = Comments.find
+    #  topic: @_id
+    #if c
+    #  return c.count()

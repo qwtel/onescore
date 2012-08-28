@@ -192,7 +192,10 @@ Handlebars.registerHelper('belongsTo', function(user) {
 
 Handlebars.registerHelper('isMe', function(user) {
   if (user) {
-    if (Meteor.user()._id === user._id) {
+    if (user instanceof Object) {
+      user = user._id;
+    }
+    if (Meteor.user()._id === user) {
       return 'my';
     } else {
       return '';

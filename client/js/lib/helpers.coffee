@@ -156,7 +156,9 @@ Handlebars.registerHelper 'belongsTo', (user) ->
 
 Handlebars.registerHelper 'isMe', (user) ->
   if user
-    return if Meteor.user()._id is user._id then 'my' else ''
+    if user instanceof Object
+      user = user._id
+    return if Meteor.user()._id is user then 'my' else ''
 
 Handlebars.registerHelper 'userIn', (field) ->
   if field?

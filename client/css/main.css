@@ -114,9 +114,10 @@ h1, h2, h3, h4, h5, h6 {
       top: 3px;
       left: 23px;
       z-index: 1040;
-      background-color: #3b5998;
-      background: #4dc206; }
+      background: #4dc206;
+      color: white; }
   .navbar .nav > .spell-item {
+    position: relative;
     width: 44px;
     text-align: center; }
   .navbar .nav > .divider-vertical {
@@ -544,3 +545,6 @@ a:hover i, a i.active, button:hover i, button i.active {
 
 .notifications tr:first-child > td {
   border-top: none; }
+
+table .vote-row {
+  display: inline; }

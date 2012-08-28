@@ -30,6 +30,13 @@ _.extend Template.header,
         description: 'View success stories of other players'
         active: window.isActive 'page', 'home'
       ,
+        name: 'Notifications'
+        icon: 'envelope'
+        url: 'notifications'
+        description: 'See how other users interact with your content'
+        active: window.isActive 'page', 'notifications'
+        counter: true
+      ,
         name: 'Explore'
         url: 'explore'
         icon: 'globe'

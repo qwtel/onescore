@@ -1,0 +1,16 @@
+<template name='userActivity'>
+<div class='user'>
+<div class='content'>
+{{#with user}}
+<a class='face profile-pic' href='/{{username}}'>
+<img src='https://graph.facebook.com/{{services.facebook.id}}/picture' />
+</a>
+<a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
+<span class='level'>({{level}})</span>
+{{/with}}
+<span class='verb'>{{verb}}</span>
+-
+<time class='times'>{{timeago date}}</time>
+</div>
+</div>
+</template>

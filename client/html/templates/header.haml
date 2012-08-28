@@ -25,6 +25,11 @@
     %li.spell-item(class="{{active}} {{isPassive}}")
       %a.spell(href="/{{url}}" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldown}}</div>")
         %i.icon-white(class="icon-{{icon}}")
+      -#{{#if counter}}
+      -#{{#if numNotifications}}
+      -#%span.label.notify.hidden-phone(href="/notifications") {{numNotifications}}
+      -#{{/if}}
+      -#{{/if}}
     {{/each}}
     %li.divider-vertical
 

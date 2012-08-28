@@ -7,7 +7,11 @@
 <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
 {{#if comment}}
 <a href='/comments/{{entity}}'>
+{{#if reply}}
+replied
+{{else}}
 commented
+{{/if}}
 </a>
 on {{your}}
 {{/if}}

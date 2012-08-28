@@ -16,6 +16,9 @@ _.extend(Template.notification, {
   comment: function() {
     return this.entityType === 'comment';
   },
+  reply: function() {
+    return this.targetType === 'comment';
+  },
   your: function() {
     var c;
     c = Collections[this.targetType].findOne(this.target);

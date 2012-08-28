@@ -10,15 +10,7 @@
 </span>
 </a>
 <div class='vote-container pull-right'>
-<div>
-<a class='vote' data-up='true'><i class="icon-arrow-up {{voted "up"}}" rel="tooltip" title="Vote up"></i></a>
-</div>
-<div>
-<span class='count'>{{score}}</span>
-</div>
-<div>
-<a class='vote' data-up='false'><i class="icon-arrow-down {{voted "down"}}" rel="tooltip" title="Vote down"></i></a>
-</div>
+{{> voteContainer}}
 </div>
 <a class='icon pull-left' href='/achievements/{{_id}}'></a>
 <div class='content'>
