@@ -2,13 +2,13 @@
 <div class='clearfix'></div>
 {{#if favourites}}
 {{#each favourites}}
-{{#if achievement}}
 <div class='fold'>
+{{#if achievement}}
 {{#with achievement}}
 {{> achievement}}
 {{/with}}
-</div>
 {{/if}}
+</div>
 {{else}}
 <div class='fold'>
 {{> loading}}

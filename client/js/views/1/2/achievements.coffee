@@ -1,4 +1,10 @@
 _.extend Template.achievements,
+  events:
+    'click .more': (e) ->
+      skip = Session.get 'skip'
+      skip++
+      Session.set 'skip', skip
+
   select: ->
     sel = {}
     sel.created = true
@@ -20,4 +26,6 @@ _.extend Template.achievements,
 
   achievements: ->
     sort = Template.filter.sort()
-    Achievements.find {}, sort: sort
+    sel = Template.filter.select()
+    sel.created = true
+    Achievements.find sel, sort: sort

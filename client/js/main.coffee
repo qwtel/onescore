@@ -1,6 +1,7 @@
 Session.set 'limit', 'all'
 
 class AppRouter extends Backbone.Router
+  # NOTE: Some 'pseudo-routs' added to deal with 'dead links'
   routes:
     '': 'default'
     'home': 'home'
@@ -116,6 +117,7 @@ class AppRouter extends Backbone.Router
     Session.set 'single', null
     Session.set 'tab', null
     Session.set 'unexpand', null
+    Session.set 'skip', 0
 
 window.Router = new AppRouter
 Meteor.startup ->

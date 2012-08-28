@@ -32,19 +32,35 @@ Meteor.publish('accomplishments', function() {
 
 Meteor.publish('notifications', function() {
   return Notifications.find({}, {
+    receivers: this.userId(),
     sort: {
       date: -1
     },
-    limit: 20
+    limit: 10
   });
 });
 
-Meteor.publish('explore', function(sel, sort, page) {
-  return Achievements.find(sel, {
+Meteor.publish('explore', function(sel, sort, batch) {
+  var achievements;
+  achievements = Achievements.find(sel, {
     sort: sort,
-    skip: 20 * page,
-    limit: 20
+    limit: 5 * (batch + 1)
   });
+  return achievements;
 });
 
-Meteor.publish('activities', function(sel, sort, page) {});
+Meteor.publish('quests', function(user) {
+  var favs;
+  if (!user) {
+    user = this.userId();
+  }
+  return favs = Favourites.find({
+    user: user,
+    active: true
+  }, {
+    sort: {
+      date: -1
+    },
+    limit: 100
+  });
+});

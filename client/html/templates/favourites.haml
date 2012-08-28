@@ -5,9 +5,11 @@
   {{#each favourites}}
   {{#if achievement}}
   .fold
+    {{#if achievement}}
     {{#with achievement}}
     {{> achievement}}
     {{/with}}
+    {{/if}}
   {{/if}}
   {{else}}
   .fold

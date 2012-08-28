@@ -143,7 +143,8 @@ AppRouter = (function(_super) {
     this.softReset();
     Session.set('single', null);
     Session.set('tab', null);
-    return Session.set('unexpand', null);
+    Session.set('unexpand', null);
+    return Session.set('skip', 0);
   };
 
   return AppRouter;

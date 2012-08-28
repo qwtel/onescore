@@ -34,7 +34,7 @@ _.extend Template.achievement, Template.vote,
       if fav
         return 'active'
     return ''
-
+  
   accepted: (id) ->
     fav = Favourites.findOne
       user: Meteor.user()._id
@@ -42,31 +42,46 @@ _.extend Template.achievement, Template.vote,
       active: true
     if fav
       return true
-
+  
   completed: (id) ->
     acc = Accomplishments.findOne
       user: Meteor.user()._id
       entity: id
     if acc
       return true
-
+  
   color: ->
+    #if this
+    #  if Session.equals 'newAchievement', @_id
+    #    return ''
+    #
+    #  if @completed
+    #    return 'completed'
+    #
+    #  else if @faved
+    #    return 'accepted'
+    #
+    #  else
+    #    return 'uncompleted'
+    #
+    #return ''
+
     if this
       if Session.equals 'newAchievement', @_id
         return ''
-
+    
     if Meteor.user()
       if Template.achievement.completed @_id
         return 'completed'
-
+    
       if Template.achievement.accepted @_id
         return 'accepted'
-
+    
       else if Achievements.find().count() > 0
         return 'uncompleted'
-
+    
       return ''
-
+  
   hasScore: ->
     if this and @score?
       return true

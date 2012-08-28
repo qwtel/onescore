@@ -15,10 +15,4 @@ _.extend Template.favourites,
           sort: sort
 
   achievement: ->
-    sel = {}
-    sel._id = @entity
-
-    if Session.get('category')?
-      sel.category = Session.get 'category'
-
-    return Achievements.findOne sel
+    Achievements.findOne @entity

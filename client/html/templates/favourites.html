@@ -4,9 +4,11 @@
 {{#each favourites}}
 {{#if achievement}}
 <div class='fold'>
+{{#if achievement}}
 {{#with achievement}}
 {{> achievement}}
 {{/with}}
+{{/if}}
 </div>
 {{/if}}
 {{else}}

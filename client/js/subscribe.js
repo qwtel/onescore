@@ -21,12 +21,3 @@ Meteor.autosubscribe(function() {
     return Meteor.subscribe('titles', id);
   }
 });
-
-Meteor.autosubscribe(function() {
-  var page, sel, sort;
-  sel = Template.filter.select();
-  sort = Template.filter.sort();
-  page = 0;
-  sel.created = true;
-  return Meteor.subscribe('explore', sel, sort, page);
-});

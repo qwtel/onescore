@@ -8,10 +8,10 @@ _.extend Template.accomplishment, Template.vote,
   achievement: ->
     sel = {}
     sel._id = @entity
-
+  
     if Session.get('category')?
       sel.category = Session.get 'category'
-
+  
     Achievements.findOne sel
 
   user: ->
