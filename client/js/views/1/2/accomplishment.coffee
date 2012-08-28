@@ -21,6 +21,7 @@ _.extend Template.accomplishment, Template.vote,
     return 'accomplished'
 
   numComments: ->
+    return @comments
     c = Comments.find
       topic: @_id
     if c

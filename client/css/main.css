@@ -78,9 +78,10 @@ h1, h2, h3, h4, h5, h6 {
 .navbar {
   text-align: center; }
   .navbar .passive {
-    cursor: default;
     opacity: 0.75;
     filter: alpha(opacity=75); }
+    .navbar .passive a {
+      cursor: default; }
   .navbar .progress {
     margin: 0;
     border-radius: 0;

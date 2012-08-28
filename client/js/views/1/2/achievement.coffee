@@ -68,10 +68,8 @@ _.extend Template.achievement, Template.vote,
       return ''
 
   hasScore: ->
-    if this
-      if @score?
-        return true
-      else
-        return false
+    if this and @score?
+      return true
+    return false
 
 _.extend Template.achievement.events, Template.vote.events

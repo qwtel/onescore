@@ -4,8 +4,31 @@
       %a.face.profile-pic(href="/{{user.username}}")
         %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
       <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-      did
-      %a(href="/{{entityType}}s/{{entity}}") {{entityType}} 
-      on
+
+      {{#if comment}}
+      %a(href="/comments/{{entity}}")
+        commented
+      on {{your}}
+      {{/if}}
+
+      {{#if title}}
+      suggested a title for {{your}}
+      {{/if}}
+
+      {{#if vote}}
+      voted for {{your}}
+      {{/if}}
+
+      {{#if accomplishment}}
+      %a(href="accomplishments/{{entity}}")
+        accomplished
+      {{your}}
+      {{/if}}
+
+      -#{{entity}}
+      -#%a(href="/{{entityType}}s/{{entity}}") {{entityType}} 
+      -#{{on}}
+      -#{{target}}
       %a(href="/{{targetType}}s/{{target}}") {{targetType}}
+
       \- {{timeago date}}

@@ -5,9 +5,24 @@
 <img src='https://graph.facebook.com/{{user.services.facebook.id}}/picture' />
 </a>
 <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-did
-<a href='/{{entityType}}s/{{entity}}'>{{entityType}}</a>
-on
+{{#if comment}}
+<a href='/comments/{{entity}}'>
+commented
+</a>
+on {{your}}
+{{/if}}
+{{#if title}}
+suggested a title for {{your}}
+{{/if}}
+{{#if vote}}
+voted for {{your}}
+{{/if}}
+{{#if accomplishment}}
+<a href='accomplishments/{{entity}}'>
+accomplished
+</a>
+{{your}}
+{{/if}}
 <a href='/{{targetType}}s/{{target}}'>{{targetType}}</a>
 - {{timeago date}}
 </div>

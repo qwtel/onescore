@@ -59,7 +59,7 @@ _.extend(Template.header, {
         active: Session.equals('page', 'profile') && !Session.equals('menu', 'questlog') ? 'active' : ''
       }, {
         name: 'Quest Log',
-        icon: 'book',
+        icon: 'glass',
         url: Meteor.user().username + '/questlog',
         description: 'Keept track of achievements you want to complete',
         active: Session.equals('page', 'profile') && Session.equals('menu', 'questlog') ? 'active' : ''

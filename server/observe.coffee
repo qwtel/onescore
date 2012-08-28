@@ -2,8 +2,8 @@ notify = (entity, target) ->
   if entity and target
 
     receivers = [target.user]
-    if entity.mention
-      receivers.push entity.mention
+    #if entity.mention
+    #  receivers.push entity.mention
 
     Notifications.insert
       date: new Date()
@@ -99,6 +99,19 @@ Meteor.startup ->
     added: (comment) ->
       target = Collections[comment.topicType].findOne comment.topic
       notify comment, target
+
+      if comment.parent?
+        parent = Comments.findOne comment.parent
+        notify comment, parent
+
+      Collections[comment.topicType].update comment.topic,
+        $inc:
+          comments: 1
+
+    removed: (comment) ->
+      Collections[comment.topicType].update comment.topic,
+        $inc:
+          comments: -1
 
   #Achievements.find().observe
   #  added: (entity) ->

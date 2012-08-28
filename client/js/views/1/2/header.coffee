@@ -50,7 +50,7 @@ _.extend Template.header,
           not Session.equals('menu', 'questlog') then 'active' else ''
       ,
         name: 'Quest Log'
-        icon: 'book'
+        icon: 'glass'
         url: Meteor.user().username+'/questlog'
         description: 'Keept track of achievements you want to complete'
         active: if Session.equals('page', 'profile') and

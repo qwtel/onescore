@@ -20,6 +20,7 @@ Meteor.methods
       hot: 0
       best: 0
       value: 0
+      comments: 0
 
   newAchievement: ->
     unless @is_simulation

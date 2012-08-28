@@ -4,7 +4,7 @@
       %i.icon-refresh
     %a.profile-pic.pull-left(href='/{{session "username"}}')
       {{{pic}}}
-    %h3.name {{session "username"}}
+    %h3.name.muted {{session "username"}}
     {{#if user}}
     {{#with user}}
     -#%span.level {{user.level}}
