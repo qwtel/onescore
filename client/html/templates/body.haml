@@ -2,16 +2,12 @@
   .navbar.navbar-fixed-top.navbar-inverse
     .navbar-inner
       %header.container
-        {{> header }}
-    .progress
-      .bar(style="width: {{progress}}%")
-    {{#if progressText}}
-    %span.label {{progressText}}
-    {{/if}}
+        {{> header}}
+    {{> progress}}
 
   {{#if currentUser}}
   #content.container
-    {{> page }}
+    {{> page}}
   {{/if}}
 
   #modal.modal.hide.fade.hidden-phone

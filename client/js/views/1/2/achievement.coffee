@@ -51,21 +51,6 @@ _.extend Template.achievement,
       return true
   
   color: ->
-    #if this
-    #  if Session.equals 'newAchievement', @_id
-    #    return ''
-    #
-    #  if @completed
-    #    return 'completed'
-    #
-    #  else if @faved
-    #    return 'accepted'
-    #
-    #  else
-    #    return 'uncompleted'
-    #
-    #return ''
-
     if this
       if Session.equals 'newAchievement', @_id
         return ''

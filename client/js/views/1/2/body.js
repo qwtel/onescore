@@ -34,21 +34,5 @@ _.extend(Template.body, {
         next = 1225;
     }
     return next;
-  },
-  progress: function() {
-    var next, user;
-    user = Meteor.user();
-    if (user && !user.loading) {
-      next = Template.body.nextLevel(user.level);
-      return 100 * user.score / next;
-    }
-  },
-  progressText: function() {
-    var next, user;
-    user = Meteor.user();
-    if (user && !user.loading) {
-      next = Template.body.nextLevel(user.level);
-      return "" + user.score + "/" + next;
-    }
   }
 });

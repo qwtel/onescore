@@ -9,7 +9,7 @@
           %a.btn.btn-primary.btn-large Learn more
   .row
     .span8
-      %section.well
+      %section.well.home
         %h5.heading.line Stories
         {{> filter }}
         .clearfix
@@ -24,7 +24,7 @@
       %aside.well 
         %h5.heading.line Tags
         {{> tagFilter}}
-      %aside.well 
+      -#%aside.well 
         %h5.heading.line Quest items
   {{/if}}
 
@@ -37,7 +37,7 @@
       %aside.well.hidden-phone
         %h5.heading.line Quest Log
         {{> miniQuestLog}}
-      %aside.well.hidden-phone
+      -#%aside.well.hidden-phone
         %h5.heading.line Quest items
     .span8
       %section.well 
@@ -51,12 +51,12 @@
     .span4
       %aside.well.hidden-phone
         {{> userWidget }}
-      %aside.well.hidden-phone 
+      -#%aside.well.hidden-phone 
         %h5.heading.line League
-      %aside.well.hidden-phone 
+      -#%aside.well.hidden-phone 
         %h5.heading.line Quest items
     .span8
-      %section.well 
+      %section.well.ladder
         %h5.heading.line Ladder
         {{> filter }}
         .clearfix
@@ -72,13 +72,13 @@
   .row
     .span4
       {{> menu }}
-      %aside.well.hidden-phone 
+      %aside.well.hidden-phone
         %h5.heading.line Tags
         {{> tagFilter}}
-      %aside.well.hidden-phone 
+      -#%aside.well.hidden-phone 
         %h5.heading.line Quest items
     .span8
-      %section.well 
+      %section.well.profile 
         {{#if equals "menu" "activity"}}
         %h5.heading.line Activity
         {{> filter }}
@@ -132,9 +132,12 @@
   {{#if equals "page" "notifications"}}
   .row
     .span8
-      %section.well
+      %section.well.notifications
         %h5.heading.line Notifications
-        {{> notifications}}
+        {{> filter}}
+        .clearfix
+        .fold
+          {{> notifications}}
 
     .span4
       %aside.well 
@@ -142,6 +145,6 @@
       %aside.well 
         %h5.heading.line Quest log
         {{> miniQuestLog}}
-      %aside.well 
+      -#%aside.well 
         %h5.heading.line Quest items
   {{/if}}

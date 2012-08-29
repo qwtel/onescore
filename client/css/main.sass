@@ -235,9 +235,6 @@ h1, h2, h3, h4, h5, h6
 .fold:last-child
   padding-bottom: 0
 
-.alert:last-child
-  margin-bottom: 0
-
 .accomplishment, .comment
   margin-bottom: 2*$padding
 
@@ -622,6 +619,17 @@ a:hover i, a i.active, button:hover i, button i.active
     width: 30px
   .right
     text-align: right
+
+.filter .nav
+  min-height: 35px
+
+.notifications, .ladder
+  .filter .sort
+    display: none
+
+//.home, .profile
+//  .filter .nav li
+//    display: none
 
 .notifications tr:first-child > td
   border-top: none

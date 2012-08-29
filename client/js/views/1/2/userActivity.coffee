@@ -3,7 +3,6 @@ _.extend Template.userActivity,
     return Meteor.users.findOne @user
   
   verb: ->
-    console.log this
     if @type is 'accomplishment' then verb = 'accomplished'
     if @type is 'comment'
       if @parent?

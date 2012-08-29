@@ -19,11 +19,12 @@ Meteor.publish 'favourites', ->
 Meteor.publish 'accomplishments', ->
   return Accomplishments.find()
 
-Meteor.publish 'notifications', ->
-  return Notifications.find {},
+Meteor.publish 'notifications', (batch) ->
+  Notifications.find
     receivers: @userId()
+  ,
     sort: date: -1
-    limit: 10
+    limit: 15*(batch+1)
 
 Meteor.publish 'explore', (sel, sort, batch) ->
   achievements = Achievements.find sel,

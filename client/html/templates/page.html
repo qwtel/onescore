@@ -2,7 +2,7 @@
 {{#if equals "page" "home"}}
 <div class='row'>
 <div class='span8'>
-<section class='well'>
+<section class='well home'>
 <h5 class='heading line'>Stories</h5>
 {{> filter }}
 <div class='clearfix'></div>
@@ -21,9 +21,6 @@
 <h5 class='heading line'>Tags</h5>
 {{> tagFilter}}
 </aside>
-<aside class='well'>
-<h5 class='heading line'>Quest items</h5>
-</aside>
 </div>
 </div>
 {{/if}}
@@ -37,9 +34,6 @@
 <aside class='well hidden-phone'>
 <h5 class='heading line'>Quest Log</h5>
 {{> miniQuestLog}}
-</aside>
-<aside class='well hidden-phone'>
-<h5 class='heading line'>Quest items</h5>
 </aside>
 </div>
 <div class='span8'>
@@ -57,15 +51,9 @@
 <aside class='well hidden-phone'>
 {{> userWidget }}
 </aside>
-<aside class='well hidden-phone'>
-<h5 class='heading line'>League</h5>
-</aside>
-<aside class='well hidden-phone'>
-<h5 class='heading line'>Quest items</h5>
-</aside>
 </div>
 <div class='span8'>
-<section class='well'>
+<section class='well ladder'>
 <h5 class='heading line'>Ladder</h5>
 {{> filter }}
 <div class='clearfix'></div>
@@ -90,12 +78,9 @@
 <h5 class='heading line'>Tags</h5>
 {{> tagFilter}}
 </aside>
-<aside class='well hidden-phone'>
-<h5 class='heading line'>Quest items</h5>
-</aside>
 </div>
 <div class='span8'>
-<section class='well'>
+<section class='well profile'>
 {{#if equals "menu" "activity"}}
 <h5 class='heading line'>Activity</h5>
 {{> filter }}
@@ -157,9 +142,13 @@
 {{#if equals "page" "notifications"}}
 <div class='row'>
 <div class='span8'>
-<section class='well'>
+<section class='well notifications'>
 <h5 class='heading line'>Notifications</h5>
+{{> filter}}
+<div class='clearfix'></div>
+<div class='fold'>
 {{> notifications}}
+</div>
 </section>
 </div>
 <div class='span4'>
@@ -169,9 +158,6 @@
 <aside class='well'>
 <h5 class='heading line'>Quest log</h5>
 {{> miniQuestLog}}
-</aside>
-<aside class='well'>
-<h5 class='heading line'>Quest items</h5>
 </aside>
 </div>
 </div>

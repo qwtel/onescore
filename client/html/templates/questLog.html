@@ -2,13 +2,13 @@
 <div class='clearfix'></div>
 {{#if favourites}}
 {{#each favourites}}
-<div class='fold'>
 {{#if achievement}}
+<div class='fold'>
 {{#with achievement}}
 {{> achievement}}
 {{/with}}
-{{/if}}
 </div>
+{{/if}}
 {{else}}
 <div class='fold'>
 {{> loading}}
@@ -19,4 +19,5 @@
 {{> noContent}}
 </div>
 {{/if}}
+{{> loadMore}}
 </template>

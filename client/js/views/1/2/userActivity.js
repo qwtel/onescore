@@ -6,7 +6,6 @@ _.extend(Template.userActivity, {
   },
   verb: function() {
     var verb;
-    console.log(this);
     if (this.type === 'accomplishment') {
       verb = 'accomplished';
     }

@@ -2,19 +2,14 @@
 <div class='navbar navbar-fixed-top navbar-inverse'>
 <div class='navbar-inner'>
 <header class='container'>
-{{> header }}
+{{> header}}
 </header>
 </div>
-<div class='progress'>
-<div class='bar' style='width: {{progress}}%'></div>
-</div>
-{{#if progressText}}
-<span class='label'>{{progressText}}</span>
-{{/if}}
+{{> progress}}
 </div>
 {{#if currentUser}}
 <div class='container' id='content'>
-{{> page }}
+{{> page}}
 </div>
 {{/if}}
 <div class='modal hide fade hidden-phone' id='modal'>

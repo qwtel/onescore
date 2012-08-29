@@ -1,4 +1,11 @@
 %template(name='achievements')
+  -#.btn-group.pull-right(data-toggle="buttons-checkbox")
+    %button.btn.active(type="button" title="Show completed achievements")
+      %i.icon-certificate
+    %button.btn.active(type="button" title="Show quests")
+      %i.icon-star
+    %button.btn.active(type="button" title="Show uncompleted achievements") 
+      %i.icon-globe
   .clearfix
 
   -#{{#if newAchievement}}
@@ -26,7 +33,4 @@
     {{> noContent}}
   {{/if}}
 
-  .fold.advice.more
-    %a
-      %i.icon-road
-      Load more...
+  {{> loadMore}}

@@ -30,13 +30,14 @@ Meteor.publish('accomplishments', function() {
   return Accomplishments.find();
 });
 
-Meteor.publish('notifications', function() {
-  return Notifications.find({}, {
-    receivers: this.userId(),
+Meteor.publish('notifications', function(batch) {
+  return Notifications.find({
+    receivers: this.userId()
+  }, {
     sort: {
       date: -1
     },
-    limit: 10
+    limit: 15 * (batch + 1)
   });
 });
 

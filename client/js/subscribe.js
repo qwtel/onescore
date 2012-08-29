@@ -12,7 +12,11 @@ Meteor.subscribe('achievements');
 
 Meteor.subscribe('accomplishments');
 
-Meteor.subscribe('notifications');
+Meteor.autosubscribe(function() {
+  var batch;
+  batch = Session.get('skip');
+  return Meteor.subscribe('notifications', batch);
+});
 
 Meteor.autosubscribe(function() {
   var id;
