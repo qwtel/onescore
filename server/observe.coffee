@@ -1,20 +1,3 @@
-notify = (entity, target) ->
-  if entity and target
-
-    receivers = [target.user]
-    #if entity.mention
-    #  receivers.push entity.mention
-
-    Notifications.insert
-      date: new Date()
-      type: 'notification'
-      user: entity.user
-      entity: entity._id
-      entityType: entity.type
-      target: target._id
-      targetType: target.type
-      receivers: receivers
-
 fetchUserInformation = (user) ->
   url = "https://graph.facebook.com/#{user.services.facebook.id}"
   options =
@@ -22,6 +5,12 @@ fetchUserInformation = (user) ->
       access_token: user.services.facebook.accessToken
 
   Meteor.http.get url, options, (error, res) =>
+    Meteor.users.update user._id,
+      $set:
+        username: res.data.username
+        bio: res.data.bio
+        location: res.data.location.name
+
     #console.log res
     #friends = Meteor.users.find(
     #  'services.facebook.id':
@@ -30,12 +19,6 @@ fetchUserInformation = (user) ->
     #  ,
     #    fields: ['_id']
     #).fetch()
-
-    Meteor.users.update user._id,
-      $set:
-        username: res.data.username
-        bio: res.data.bio
-        location: res.data.location.name
 
 nextLevel = (level) ->
   # HACK: this should be some exponential formula.
@@ -64,17 +47,18 @@ Meteor.startup ->
   users.observe
     # fetch facebook data when a new user is added
     added: (user, beforeIndex) ->
-      fetchUserInformation user
+      unless user.username?
+        Meteor.users.update user._id,
+          $set:
+            level: 1
+            score: 0
+            rank: beforeIndex + 1
 
-      Meteor.users.update user._id,
-        $set:
-          level: 1
-          score: 0
-          rank: beforeIndex + 1
+      fetchUserInformation user
 
     changed: (user) ->
       next = nextLevel user.level
-      if user.score > next
+      if user.score >= next
         Meteor.users.update user._id,
           $inc:
             level: 1
@@ -90,37 +74,37 @@ Meteor.startup ->
     changed: (title) ->
       Meteor.call 'assignBestTitle', title
 
-    added: (title) ->
-      achievement = Achievements.findOne title.entity
-      notify title, achievement
+    #added: (title) ->
+    #  achievement = Achievements.findOne title.entity
+    #  notify title, achievement
 
-  Accomplishments.find().observe
-    added: (accomplishment) ->
-      achievement = Achievements.findOne accomplishment.entity
-      notify accomplishment, achievement
+  #Accomplishments.find().observe
+  #  added: (accomplishment) ->
+  #    achievement = Achievements.findOne accomplishment.entity
+  #    notify accomplishment, achievement
   
-  Votes.find().observe
-    added: (vote) ->
-      target = Collections[vote.entityType].findOne vote.entity
-      notify vote, target
+  #Votes.find().observe
+  #  added: (vote) ->
+  #    target = Collections[vote.entityType].findOne vote.entity
+  #    notify vote, target
   
-  Comments.find().observe
-    added: (comment) ->
-      target = Collections[comment.topicType].findOne comment.topic
-      notify comment, target
-
-      if comment.parent?
-        parent = Comments.findOne comment.parent
-        notify comment, parent
-
-      Collections[comment.topicType].update comment.topic,
-        $inc:
-          comments: 1
-
-    removed: (comment) ->
-      Collections[comment.topicType].update comment.topic,
-        $inc:
-          comments: -1
+  #Comments.find().observe
+  #  added: (comment) ->
+  #    target = Collections[comment.topicType].findOne comment.topic
+  #    notify comment, target
+  #
+  #    if comment.parent?
+  #      parent = Comments.findOne comment.parent
+  #      notify comment, parent
+  #
+  #    Collections[comment.topicType].update comment.topic,
+  #      $inc:
+  #        comments: 1
+  #
+  #  removed: (comment) ->
+  #    Collections[comment.topicType].update comment.topic,
+  #      $inc:
+  #        comments: -1
 
   #Achievements.find().observe
   #  added: (entity) ->

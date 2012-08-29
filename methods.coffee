@@ -22,6 +22,18 @@ Meteor.methods
       value: 0
       comments: 0
 
+  suggestTitle: (data) ->
+    basic = Meteor.call 'basic'
+    _.extend data, basic,
+      type: 'title'
+    id = Titles.insert data
+
+    title = Titles.findOne id
+    achievement = Achievements.findOne title.entity
+    notify title, achievement
+
+    Meteor.call 'assignBestTitle', title
+
   newAchievement: ->
     unless @is_simulation
       newAchievement = Achievements.findOne
@@ -65,7 +77,19 @@ Meteor.methods
           level: 0
       
       data.type = 'comment'
-      Comments.insert data
+      id = Comments.insert data
+
+      comment = Comments.findOne id
+      target = Collections[comment.topicType].findOne comment.topic
+      notify comment, target
+  
+      if comment.parent?
+        parent = Comments.findOne comment.parent
+        notify comment, parent
+  
+      Collections[comment.topicType].update comment.topic,
+        $inc:
+          comments: 1
 
   vote: (data) ->
     basic = Meteor.call 'basic'
@@ -80,7 +104,11 @@ Meteor.methods
         $set: data
     else
       data.type = 'vote'
-      Votes.insert data
+      id = Votes.insert data
+
+      vote = Votes.findOne id
+      target = Collections[vote.entityType].findOne vote.entity
+      notify vote, target
 
     calculateScore Collections[data.entityType], data.entity
 
@@ -103,11 +131,15 @@ Meteor.methods
       data.type = 'accomplishment'
       accomplishId = Accomplishments.insert data
 
+      # update user score
       achievement = Achievements.findOne data.entity
-      if achievement
-        Meteor.users.update @userId(),
-          $inc:
-            score: achievement.value
+      Meteor.users.update @userId(),
+        $inc:
+          score: achievement.value
+
+      # send notificatións
+      accomplishment = Accomplishments.findOne accomplishId
+      notify accomplishment, achievement
 
     return accomplishId
  
@@ -145,6 +177,23 @@ updateScore = (collection, id, score) ->
       best: score.wilson
       hot: score.hot
       value: Math.round 10*score.wilson
+
+notify = (entity, target) ->
+  if entity and target
+
+    receivers = [target.user]
+    #if entity.mention
+    #  receivers.push entity.mention
+
+    Notifications.insert
+      date: new Date()
+      type: 'notification'
+      user: entity.user
+      entity: entity._id
+      entityType: entity.type
+      target: target._id
+      targetType: target.type
+      receivers: receivers
 
 calculateScore = (collection, id) ->
   up = countVotes id, true

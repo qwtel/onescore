@@ -9,20 +9,13 @@ _.extend(Template.edit, {
       return Session.toggle('expand', this._id);
     },
     'click .suggest': function(e) {
-      var data, id, title;
+      var data, title;
       title = $("#title-" + this._id).val();
       data = {
         title: title,
-        type: 'title',
-        entity: this._id,
-        user: Meteor.user()._id,
-        score: 0
+        entity: this._id
       };
-      id = Titles.insert(data);
-      _.extend(data, {
-        _id: id
-      });
-      return Meteor.call('assignBestTitle', data);
+      return Meteor.call('suggestTitle', data);
     },
     'change .category': function(e) {
       this.category = $("#category-" + this._id).val();

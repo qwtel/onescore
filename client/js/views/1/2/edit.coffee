@@ -11,16 +11,9 @@ _.extend Template.edit,
 
       data =
         title: title
-        type: 'title'
         entity: @_id
-        user: Meteor.user()._id
-        score: 0
 
-      id = Titles.insert data
-
-      _.extend data, _id: id
-
-      Meteor.call 'assignBestTitle', data
+      Meteor.call 'suggestTitle', data
 
     'change .category': (e) ->
       @category = $("#category-#{@_id}").val()
