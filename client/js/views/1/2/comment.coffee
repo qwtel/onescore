@@ -46,9 +46,6 @@ _.extend Template.comment,
             topic: Session.get 'topic'
             topicType: Session.get 'topicType'
 
-          #comment = new Comment(data)
-          #comment.save()
-
           Meteor.call 'comment', data
 
           Session.set 'addComment', null

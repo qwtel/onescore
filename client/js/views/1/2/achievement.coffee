@@ -5,25 +5,15 @@ _.extend Template.achievement,
         Session.toggle 'expand', @_id
         e.stopPropagation()
 
+    'click .fav': (e) ->
+      data =
+        entity: @_id
+
+      Meteor.call 'favourite', data
+
     #'click .tag': (e) ->
     #  tag = $(e.currentTarget).data 'tag'
     #  Session.push 'tagFilter', tag
-
-    'click .fav': (e) ->
-      fav = Favourites.findOne
-        user: Meteor.user()._id
-        entity: @_id
-
-      if fav
-        Favourites.update fav._id,
-          $set:
-            active: !fav.active
-      else
-        Favourites.insert
-          user: Meteor.user()._id
-          type: 'favourite'
-          entity: @_id
-          active: true
 
   faved: ->
     if Meteor.user()

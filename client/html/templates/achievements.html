@@ -1,4 +1,12 @@
 <template name='achievements'>
+<div class='btn-group pull-right'>
+<button class="btn {{isActive "btn-completed" "true"}}" type="button" data-filter="completed" title="Toggle completed achievements">
+<i class='icon-certificate'></i>
+</button>
+<button class="btn {{isActive "btn-accepted" "true"}}" type="button" data-filter="accepted" title="Toggle favourites">
+<i class='icon-star'></i>
+</button>
+</div>
 <div class='clearfix'></div>
 <div class='fold advice new'>
 <a href='/achievements/new'>

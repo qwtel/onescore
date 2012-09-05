@@ -9,25 +9,11 @@ _.extend(Template.achievement, {
       }
     },
     'click .fav': function(e) {
-      var fav;
-      fav = Favourites.findOne({
-        user: Meteor.user()._id,
+      var data;
+      data = {
         entity: this._id
-      });
-      if (fav) {
-        return Favourites.update(fav._id, {
-          $set: {
-            active: !fav.active
-          }
-        });
-      } else {
-        return Favourites.insert({
-          user: Meteor.user()._id,
-          type: 'favourite',
-          entity: this._id,
-          active: true
-        });
-      }
+      };
+      return Meteor.call('favourite', data);
     }
   },
   faved: function() {

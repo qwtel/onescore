@@ -40,28 +40,3 @@ Meteor.publish('notifications', function(batch) {
     limit: 15 * (batch + 1)
   });
 });
-
-Meteor.publish('explore', function(sel, sort, batch) {
-  var achievements;
-  achievements = Achievements.find(sel, {
-    sort: sort,
-    limit: 5 * (batch + 1)
-  });
-  return achievements;
-});
-
-Meteor.publish('quests', function(user) {
-  var favs;
-  if (!user) {
-    user = this.userId();
-  }
-  return favs = Favourites.find({
-    user: user,
-    active: true
-  }, {
-    sort: {
-      date: -1
-    },
-    limit: 100
-  });
-});

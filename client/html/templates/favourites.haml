@@ -3,14 +3,8 @@
 
   {{#if favourites}}
   {{#each favourites}}
-  {{#if achievement}}
   .fold
-    {{#if achievement}}
-    {{#with achievement}}
-    {{> achievement}}
-    {{/with}}
-    {{/if}}
-  {{/if}}
+    {{#with achievement}} {{> achievement}} {{/with}}
   {{else}}
   .fold
     {{> loading}}

@@ -1,11 +1,17 @@
 %template(name='achievements')
-  -#.btn-group.pull-right(data-toggle="buttons-checkbox")
-    %button.btn.active(type="button" title="Show completed achievements")
+  .btn-group.pull-right
+    -#%button.btn(type="button" data-filter="completed" title="Hide completed achievements")
       %i.icon-certificate
-    %button.btn.active(type="button" title="Show quests")
+    -#%button.btn(type="button" data-filter="accepted" title="Hide quests")
       %i.icon-star
-    %button.btn.active(type="button" title="Show uncompleted achievements") 
+    -#%button.btn(type="button" data-filter="uncompleted" title="Hide uncompleted achievements") 
       %i.icon-globe
+    <button class="btn {{isActive "btn-completed" "true"}}" type="button" data-filter="completed" title="Toggle completed achievements">
+    %i.icon-certificate
+    </button>
+    <button class="btn {{isActive "btn-accepted" "true"}}" type="button" data-filter="accepted" title="Toggle favourites">
+    %i.icon-star
+    </button>
   .clearfix
 
   -#{{#if newAchievement}}

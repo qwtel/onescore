@@ -23,3 +23,6 @@ _.extend Collections,
   'vote': Votes
   'comments': Comments
   'comment': Comments
+
+Scratchpad = new Meteor.Collection null
+Collections['scratchpad'] = Scratchpad

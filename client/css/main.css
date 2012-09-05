@@ -186,9 +186,6 @@ h1, h2, h3, h4, h5, h6 {
 #content {
   margin-top: 65px; }
 
-.fold:last-child {
-  padding-bottom: 0; }
-
 .accomplishment, .comment {
   margin-bottom: 28px; }
   .accomplishment .icon-side, .comment .icon-side {
@@ -393,6 +390,11 @@ h1, h2, h3, h4, h5, h6 {
   background-size: 100% 100px;
   background-color: whiteSmoke;
   background-repeat: no-repeat; }
+  .fold .alert {
+    margin-bottom: 0; }
+
+.fold:last-child {
+  padding-bottom: 0; }
 
 i {
   opacity: 0.5;

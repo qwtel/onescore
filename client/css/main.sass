@@ -232,9 +232,6 @@ h1, h2, h3, h4, h5, h6
 #content
   margin-top: 65px
 
-.fold:last-child
-  padding-bottom: 0
-
 .accomplishment, .comment
   margin-bottom: 2*$padding
 
@@ -461,6 +458,12 @@ $activityPadding: 15px
   padding: $padding 19px
   margin-left: -19px
   @include fold-shadow(whiteSmoke, #ddd)
+
+  .alert
+    margin-bottom: 0
+
+.fold:last-child
+  padding-bottom: 0
 
 i
   opacity: 0.5

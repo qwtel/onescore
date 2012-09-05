@@ -26,13 +26,13 @@ Meteor.publish 'notifications', (batch) ->
     sort: date: -1
     limit: 15*(batch+1)
 
-Meteor.publish 'explore', (sel, sort, batch) ->
-  achievements = Achievements.find sel,
-    sort: sort
-    limit: 5*(batch+1)
-
-  return achievements
-
+#Meteor.publish 'explore', (sel, sort, batch) ->
+#  achievements = Achievements.find sel,
+#    sort: sort
+#    limit: 5*(batch+1)
+#
+#  return achievements
+#
   #achievements = achievements.fetch()
   #_.each achievements, (achievement) =>
   #
@@ -59,17 +59,17 @@ Meteor.publish 'explore', (sel, sort, batch) ->
 #    skip: 20*page
 #    limit: 20
 
-Meteor.publish 'quests', (user) ->
-  unless user
-    user = @userId()
-  
-  favs = Favourites.find
-    user: user
-    active: true
-  ,
-    sort: date: -1
-    limit: 100
-  
+#Meteor.publish 'quests', (user) ->
+#  unless user
+#    user = @userId()
+#  
+#  favs = Favourites.find
+#    user: user
+#    active: true
+#  ,
+#    sort: date: -1
+#    limit: 100
+#  
   #favs.observe
   #  added: (fav) =>
   #    achievement = Achievements.findOne fav.entity

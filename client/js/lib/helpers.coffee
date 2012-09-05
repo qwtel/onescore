@@ -139,6 +139,9 @@ Handlebars.registerHelper 'equals', (name, value) ->
   return Session.equals name, value
 
 window.isActive = (name, value) ->
+  if value is 'true' then value = true
+  if value is 'false' then value = false
+
   field = Session.get name
 
   if field instanceof Array or field instanceof Object

@@ -12,7 +12,13 @@ _.extend(Template.favourites, {
       if (user) {
         return Favourites.find({
           user: user._id,
-          active: true
+          active: true,
+          $where: function() {
+            return !Accomplishments.findOne({
+              user: user._id,
+              entity: this.entity
+            });
+          }
         }, {
           sort: sort
         });

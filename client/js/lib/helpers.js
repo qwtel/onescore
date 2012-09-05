@@ -170,6 +170,12 @@ Handlebars.registerHelper('equals', function(name, value) {
 
 window.isActive = function(name, value) {
   var field, state;
+  if (value === 'true') {
+    value = true;
+  }
+  if (value === 'false') {
+    value = false;
+  }
   field = Session.get(name);
   if (field instanceof Array || field instanceof Object) {
     Session.get('_' + name);

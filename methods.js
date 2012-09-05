@@ -32,6 +32,27 @@ Meteor.methods({
       comments: 0
     };
   },
+  favourite: function(data) {
+    var fav;
+    fav = Favourites.findOne({
+      user: this.userId(),
+      entity: data.entity
+    });
+    if (fav) {
+      return Favourites.update(fav._id, {
+        $set: {
+          active: !fav.active
+        }
+      });
+    } else {
+      return Favourites.insert({
+        type: 'favourite',
+        user: this.userId(),
+        entity: data.entity,
+        active: true
+      });
+    }
+  },
   suggestTitle: function(data) {
     var achievement, basic, id, title;
     basic = Meteor.call('basic');
@@ -161,27 +182,26 @@ Meteor.methods({
     return accomplishId;
   },
   updateUserScoreComplete: function() {
-    var a, accs, entities, s, score;
-    accs = Accomplishments.find({
-      user: this.userId()
-    });
-    accs = accs.fetch();
-    entities = _.pluck(accs, 'entity');
-    a = Achievements.find({
-      _id: {
-        $in: entities
-      }
-    });
-    a = a.fetch();
-    s = _.pluck(a, 'value');
-    score = _.reduce(s, function(memo, num) {
-      return memo + num;
-    }, 0);
-    return Meteor.users.update(this.userId(), {
-      $set: {
-        score: score
-      }
-    });
+    var a, s, score;
+    if (!this.is_simulation) {
+      a = Achievements.find({
+        $where: "          return db.accomplishments.findOne({            user: '" + (this.userId()) + "',            entity: this._id          }) "
+      }, {
+        fields: {
+          value: 1
+        }
+      });
+      a = a.fetch();
+      s = _.pluck(a, 'value');
+      score = _.reduce(s, function(memo, num) {
+        return memo + num;
+      }, 0);
+      return Meteor.users.update(this.userId(), {
+        $set: {
+          score: score
+        }
+      });
+    }
   }
 });
 

@@ -22,6 +22,22 @@ Meteor.methods
       value: 0
       comments: 0
 
+  favourite: (data) ->
+    fav = Favourites.findOne
+      user: @userId()
+      entity: data.entity
+    
+    if fav
+      Favourites.update fav._id,
+        $set:
+          active: !fav.active
+    else
+      Favourites.insert
+        type: 'favourite'
+        user: @userId()
+        entity: data.entity
+        active: true
+
   suggestTitle: (data) ->
     basic = Meteor.call 'basic'
     _.extend data, basic,
@@ -145,24 +161,45 @@ Meteor.methods
  
   # HACK: this will cause problems at num achievements > some constant
   updateUserScoreComplete: ->
-    accs = Accomplishments.find
-      user: @userId()
+    unless @is_simulation
+      a = Achievements.find
+        $where: "
+          return db.accomplishments.findOne({
+            user: '#{@userId()}',
+            entity: this._id
+          }) "
+      ,
+        fields:
+          value: 1
 
-    accs = accs.fetch()
-    entities = _.pluck accs, 'entity'
+      a = a.fetch()
+      s = _.pluck a, 'value'
+      score = _.reduce s, (memo, num) ->
+        return memo + num
+      , 0
+      
+      Meteor.users.update @userId(),
+        $set:
+          score: score
 
-    a = Achievements.find
-      _id: $in: entities
-
-    a = a.fetch()
-    s = _.pluck a, 'value'
-    score = _.reduce s, (memo, num) ->
-      return memo + num
-    , 0
-
-    Meteor.users.update @userId(),
-      $set:
-        score: score
+    #accs = Accomplishments.find
+    #  user: @userId()
+    #
+    #accs = accs.fetch()
+    #entities = _.pluck accs, 'entity'
+    #
+    #a = Achievements.find
+    #  _id: $in: entities
+    #
+    #a = a.fetch()
+    #s = _.pluck a, 'value'
+    #score = _.reduce s, (memo, num) ->
+    #  return memo + num
+    #, 0
+    #
+    #Meteor.users.update @userId(),
+    #  $set:
+    #    score: score
 
 countVotes = (id, up) ->
   Votes.find(

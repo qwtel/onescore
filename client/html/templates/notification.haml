@@ -1,9 +1,12 @@
 %template(name='notification')
   .user
     .content
-      %a.face.profile-pic(href="/{{user.username}}")
-        %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
-      <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
+      {{#with user}}
+      %a.face.profile-pic(href="/{{username}}")
+        %img(src="https://graph.facebook.com/{{services.facebook.id}}/picture")/
+      <a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
+      %span.level ({{level}})
+      {{/with}}
 
       {{#if comment}}
       %a(href="/comments/{{entity}}")

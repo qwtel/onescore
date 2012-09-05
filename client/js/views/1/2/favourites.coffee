@@ -11,6 +11,10 @@ _.extend Template.favourites,
         return Favourites.find
           user: user._id
           active: true
+          $where: ->
+            not Accomplishments.findOne
+              user: user._id
+              entity: @entity
         ,
           sort: sort
 
