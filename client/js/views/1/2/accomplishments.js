@@ -23,7 +23,6 @@ _.extend(Template.accomplishments, {
   },
   accomplishments: function() {
     var sel, sort, user, username;
-    sort = Template.filter.sort();
     username = Session.get('username');
     if (username) {
       user = Meteor.users.findOne({
@@ -34,6 +33,7 @@ _.extend(Template.accomplishments, {
         _.extend(sel, {
           user: user._id
         });
+        sort = Template.filter.sort();
         return Accomplishments.find(sel, {
           sort: sort
         });

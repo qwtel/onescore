@@ -11,10 +11,6 @@ _.extend Template.achievement,
 
       Meteor.call 'favourite', data
 
-    #'click .tag': (e) ->
-    #  tag = $(e.currentTarget).data 'tag'
-    #  Session.push 'tagFilter', tag
-
   faved: ->
     if Meteor.user()
       fav = Favourites.findOne
@@ -42,22 +38,14 @@ _.extend Template.achievement,
   
   color: ->
     if this
-      if Session.equals 'newAchievement', @_id
-        return ''
-    
-    if Meteor.user()
-      if Template.achievement.completed @_id
-        return 'completed'
-    
-      if Template.achievement.accepted @_id
-        return 'accepted'
-    
-      else if Achievements.find().count() > 0
-        return 'uncompleted'
-    
-      return ''
-  
-  hasScore: ->
-    if this and @score?
-      return true
-    return false
+      if Meteor.user()
+        if Template.achievement.completed @_id
+          return 'completed'
+        if Template.achievement.accepted @_id
+          return 'accepted'
+        else if Achievements.find().count() > 0
+          return 'uncompleted'
+    return ''
+
+  value: ->
+    if @value is 0 then '0' else @value

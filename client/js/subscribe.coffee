@@ -10,6 +10,8 @@ Meteor.subscribe 'favourites'
 
 Meteor.subscribe 'accomplishments'
 
+Meteor.subscribe 'titles'
+
 Meteor.autosubscribe ->
   sel = Template.filter.select()
   sort = Template.filter.sort()
@@ -20,10 +22,10 @@ Meteor.autosubscribe ->
   batch = Session.get 'skip'
   Meteor.subscribe 'notifications', batch
 
-Meteor.autosubscribe ->
-  id = Session.get 'single'
-  if id and Session.equals('page', 'achievements')
-    Meteor.subscribe 'titles', id
+#Meteor.autosubscribe ->
+#  id = Session.get 'single'
+#  if id and Session.equals('page', 'achievements')
+#    Meteor.subscribe 'titles', id
 
 #Meteor.subscribe 'quests'
 #Meteor.autosubscribe ->
@@ -31,5 +33,4 @@ Meteor.autosubscribe ->
 #  sort = Template.filter.sort()
 #  batch = Session.get 'skip'
 #
-#  sel.created = true
 #  Meteor.subscribe 'explore', sel, sort, batch

@@ -1,10 +1,32 @@
-<template name='edit'>
+<template name='newAchievement'>
+{{#with newAchievement}}
+{{#unless session "styleGuide"}}
+<div class='alert alert-block alert-info'>
+<a class='close' data-dismiss='alert'>×</a>
+<h4>Achievement style guide</h4>
+<p>Achievements should have the following properties:</p>
+<dl>
+<dt>
+<h5>Atomic</h5>
+</dt>
+<dd>Achievements should not be composed.</dd>
+<dt>
+<h5>Universal</h5>
+</dt>
+<dd>Achievements should be easy to agree on.</dd>
+<dt>
+<h5>Unique</h5>
+</dt>
+<dd>Check if the achievement already exists!</dd>
+</dl>
+</div>
+{{/unless}}
 <div class='form-horizontal' id='form-{{_id}}'>
 <fieldset>
 <div class='control-group'>
 <label class='control-label' for='title-{{_id}}'>Title</label>
 <div class='controls'>
-<div class='input-append'><input class='span3 title' data-field='title' id='title-{{_id}}' type='text' /><button class='btn suggest' type='button'>Suggest</button></div>
+<input class='span3 title lazy' data-field='title' id='title-{{_id}}' type='text' value='{{title}}' />
 <p class='help-block muted'>
 <strong>NOTE:</strong>
 You don't have to suggest a title.
@@ -65,4 +87,5 @@ You can include #tags here.
 </footer>
 </fieldset>
 </div>
+{{/with}}
 </template>

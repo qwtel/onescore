@@ -1,8 +1,5 @@
 _.extend Template.edit,
   events:
-    'click .close': (e) ->
-      Session.set 'styleGuide', true
-
     'click .discard': (e) ->
       Session.toggle 'expand', @_id
 
@@ -15,17 +12,16 @@ _.extend Template.edit,
 
       Meteor.call 'suggestTitle', data
 
-    'change .category': (e) ->
-      @category = $("#category-#{@_id}").val()
-      Session.toggle 'redraw'
+    #'change .category': (e) ->
+    #  @category = $("#category-#{@_id}").val()
+    #  #Session.toggle 'redraw'
 
     'change .description': (e) ->
       @description = $("#description-#{@_id}").val()
 
-      unless @tags
-        @tags = []
-
+      unless @tags then @tags = []
       @tags = _.union @tags, window.findTags(@description)
+
       Session.toggle 'redraw'
     
     'click .create': (e) ->
@@ -37,17 +33,10 @@ _.extend Template.edit,
         if field?
           data[field] = $t.val()
 
-      unless @tags
-        @tags = []
-
+      unless @tags then @tags = []
       data.tags = @tags
-      data.created = true
 
-      Achievements.update @_id,
-        $set:
-          data
-
-      Session.set 'newAchievement', null
+      Achievements.update @_id, $set: data
       window.Router.navigate "achievements/#{@_id}", true
 
   selected: (category) ->
@@ -59,20 +48,14 @@ _.extend Template.edit,
       return if 'Random' is @name then 'selected' else ''
 
   titles: ->
-    id = Session.get 'single'
     titles = Titles.find
-      entity: id
+      entity: @_id
       user: Meteor.user()._id
     ,
       sort:
         score: -1
 
-    return titles
-  
-  # NOTE: Empty cursor gets not interpreted as "falsy" value by handlebars
-  hasTitles: ->
-    id = Session.get 'single'
-    titles = Titles.find
-      entity: id
-      user: Meteor.user()._id
-    return titles.count()
+    if titles.count() is 0
+      return false
+    else
+      return titles

@@ -4,20 +4,27 @@ _.extend(Template.notification, {
   user: function() {
     return Meteor.users.findOne(this.user);
   },
+  isTitle: function(type) {
+    return type === 'title';
+  },
   title: function() {
-    return this.entityType === 'title';
+    var t;
+    t = Titles.findOne(this.target);
+    if (t) {
+      return t.title;
+    }
   },
-  vote: function() {
-    return this.entityType === 'vote';
+  vote: function(type) {
+    return type === 'vote';
   },
-  accomplishment: function() {
-    return this.entityType === 'accomplishment';
+  accomplishment: function(type) {
+    return type === 'accomplishment';
   },
-  comment: function() {
-    return this.entityType === 'comment';
+  comment: function(type) {
+    return type === 'comment';
   },
-  reply: function() {
-    return this.targetType === 'comment';
+  reply: function(type) {
+    return type === 'comment';
   },
   your: function() {
     var c;

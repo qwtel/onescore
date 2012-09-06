@@ -2,9 +2,6 @@
 
 _.extend(Template.edit, {
   events: {
-    'click .close': function(e) {
-      return Session.set('styleGuide', true);
-    },
     'click .discard': function(e) {
       return Session.toggle('expand', this._id);
     },
@@ -16,10 +13,6 @@ _.extend(Template.edit, {
         entity: this._id
       };
       return Meteor.call('suggestTitle', data);
-    },
-    'change .category': function(e) {
-      this.category = $("#category-" + this._id).val();
-      return Session.toggle('redraw');
     },
     'change .description': function(e) {
       this.description = $("#description-" + this._id).val();
@@ -44,11 +37,9 @@ _.extend(Template.edit, {
         this.tags = [];
       }
       data.tags = this.tags;
-      data.created = true;
       Achievements.update(this._id, {
         $set: data
       });
-      Session.set('newAchievement', null);
       return window.Router.navigate("achievements/" + this._id, true);
     }
   },
@@ -74,25 +65,19 @@ _.extend(Template.edit, {
     }
   },
   titles: function() {
-    var id, titles;
-    id = Session.get('single');
+    var titles;
     titles = Titles.find({
-      entity: id,
+      entity: this._id,
       user: Meteor.user()._id
     }, {
       sort: {
         score: -1
       }
     });
-    return titles;
-  },
-  hasTitles: function() {
-    var id, titles;
-    id = Session.get('single');
-    titles = Titles.find({
-      entity: id,
-      user: Meteor.user()._id
-    });
-    return titles.count();
+    if (titles.count() === 0) {
+      return false;
+    } else {
+      return titles;
+    }
   }
 });

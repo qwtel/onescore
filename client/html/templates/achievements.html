@@ -14,20 +14,14 @@
 New achievement
 </a>
 </div>
-{{#if achievements}}
 {{#each achievements}}
 <div class='fold'>
 {{> achievement}}
 </div>
 {{else}}
 <div class='fold'>
-{{> loading}}
-</div>
-{{/each}}
-{{else}}
-<div class='fold'>
 {{> noContent}}
 </div>
-{{/if}}
+{{/each}}
 {{> loadMore}}
 </template>

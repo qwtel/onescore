@@ -8,9 +8,9 @@
       %span.level ({{level}})
       {{/with}}
 
-      {{#if comment}}
+      {{#if comment entityType}}
       %a(href="/comments/{{entity}}")
-        {{#if reply}}
+        {{#if reply targetType}}
         replied
         {{else}}
         commented
@@ -18,16 +18,16 @@
       on {{your}}
       {{/if}}
 
-      {{#if title}}
+      {{#if isTitle entityType}}
       suggested a title for {{your}}
       {{/if}}
 
-      {{#if vote}}
+      {{#if vote entityType}}
       voted for {{your}}
       {{/if}}
 
-      {{#if accomplishment}}
-      %a(href="accomplishments/{{entity}}")
+      {{#if accomplishment entityType}}
+      %a(href="/accomplishments/{{entity}}")
         accomplished
       {{your}}
       {{/if}}
@@ -36,6 +36,10 @@
       -#%a(href="/{{entityType}}s/{{entity}}") {{entityType}} 
       -#{{on}}
       -#{{target}}
+      {{#if isTitle targetType}}
+      your title '{{title}}'
+      {{else}}
       %a(href="/{{targetType}}s/{{target}}") {{targetType}}
+      {{/if}}
 
       \- {{timeago date}}

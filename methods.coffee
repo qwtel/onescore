@@ -50,24 +50,6 @@ Meteor.methods
 
     Meteor.call 'assignBestTitle', title
 
-  newAchievement: ->
-    unless @is_simulation
-      newAchievement = Achievements.findOne
-        user: @userId()
-        created: false
-
-      if newAchievement
-        id = newAchievement._id
-      else
-        data = Meteor.call 'basic'
-        _.extend data,
-          created: false
-
-        data.type = 'achievement'
-        id = Achievements.insert data
-
-      return id
-
   comment: (data) ->
     comment = Comments.findOne data._id
     if comment and comment.user is @userId()
@@ -103,9 +85,7 @@ Meteor.methods
         parent = Comments.findOne comment.parent
         notify comment, parent
   
-      Collections[comment.topicType].update comment.topic,
-        $inc:
-          comments: 1
+      Collections[comment.topicType].update comment.topic, $inc: comments: 1
 
   vote: (data) ->
     basic = Meteor.call 'basic'
@@ -116,8 +96,7 @@ Meteor.methods
       entity: data.entity
     
     if vote
-      Votes.update vote._id,
-        $set: data
+      Votes.update vote._id, $set: data
     else
       data.type = 'vote'
       id = Votes.insert data
@@ -217,10 +196,7 @@ updateScore = (collection, id, score) ->
 
 notify = (entity, target) ->
   if entity and target
-
     receivers = [target.user]
-    #if entity.mention
-    #  receivers.push entity.mention
 
     Notifications.insert
       date: new Date()

@@ -68,8 +68,7 @@ _.extend Template.header,
         url: 'achievements/new'
         description: 'Create a new achievement'
         cooldown: '30 seconds cooldown'
-        active: if Session.equals('page', 'achievements') and
-          Session.get('newAchievement') isnt null then 'active' else ''
+        active: window.isActive 'page', 'newAchievement'
       ,
         ###
         name: 'Inventory'

@@ -1,8 +1,4 @@
 %template(name="expand")
-  -#{{#if equals "newAchievement" _id}}
-  -#%h3.heading.line Create new achievement
-  -#{{else}}
-
   -#.linebreak
     %nav.nav.nav-tabs 
       <li class="{{isActive "tab" "info"}}">
@@ -20,15 +16,12 @@
       <li class="{{isActive "tab" "accomplish"}}">
       %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
       </li>
-  -#{{/if}}
-
 
   {{#if equals "tab" "edit"}}
   %h5.heading.line Edit
   {{> edit}}
   {{/if}}
 
-  {{#unless equals "newAchievement" _id}}
   {{#if equals "tab" "info"}}
   %h5.heading.line Info
   {{> info}}
@@ -45,5 +38,3 @@
   .clearfix
   {{> comments}}
   {{/if}}
-  {{/unless}}
-

@@ -70,12 +70,8 @@ class AppRouter extends Backbone.Router
 
   newAchievement: ->
     @softReset()
-    Session.set 'page', 'achievements'
-    Session.set 'tab', 'edit'
-    id = Meteor.call 'newAchievement', (error, result) ->
-      unless error
-        Session.set 'single', result
-        Session.set 'newAchievement', result
+    Session.set 'page', 'newAchievement'
+    Session.set 'single', 'result'
 
   achievements: (id, tab, type) ->
     @softReset()

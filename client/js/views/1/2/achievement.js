@@ -53,26 +53,24 @@ _.extend(Template.achievement, {
   },
   color: function() {
     if (this) {
-      if (Session.equals('newAchievement', this._id)) {
-        return '';
+      if (Meteor.user()) {
+        if (Template.achievement.completed(this._id)) {
+          return 'completed';
+        }
+        if (Template.achievement.accepted(this._id)) {
+          return 'accepted';
+        } else if (Achievements.find().count() > 0) {
+          return 'uncompleted';
+        }
       }
     }
-    if (Meteor.user()) {
-      if (Template.achievement.completed(this._id)) {
-        return 'completed';
-      }
-      if (Template.achievement.accepted(this._id)) {
-        return 'accepted';
-      } else if (Achievements.find().count() > 0) {
-        return 'uncompleted';
-      }
-      return '';
-    }
+    return '';
   },
-  hasScore: function() {
-    if (this && (this.score != null)) {
-      return true;
+  value: function() {
+    if (this.value === 0) {
+      return '0';
+    } else {
+      return this.value;
     }
-    return false;
   }
 });

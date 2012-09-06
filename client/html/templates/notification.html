@@ -8,9 +8,9 @@
 <a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
 <span class='level'>({{level}})</span>
 {{/with}}
-{{#if comment}}
+{{#if comment entityType}}
 <a href='/comments/{{entity}}'>
-{{#if reply}}
+{{#if reply targetType}}
 replied
 {{else}}
 commented
@@ -18,19 +18,23 @@ commented
 </a>
 on {{your}}
 {{/if}}
-{{#if title}}
+{{#if isTitle entityType}}
 suggested a title for {{your}}
 {{/if}}
-{{#if vote}}
+{{#if vote entityType}}
 voted for {{your}}
 {{/if}}
-{{#if accomplishment}}
-<a href='accomplishments/{{entity}}'>
+{{#if accomplishment entityType}}
+<a href='/accomplishments/{{entity}}'>
 accomplished
 </a>
 {{your}}
 {{/if}}
+{{#if isTitle targetType}}
+your title '{{title}}'
+{{else}}
 <a href='/{{targetType}}s/{{target}}'>{{targetType}}</a>
+{{/if}}
 - {{timeago date}}
 </div>
 </div>

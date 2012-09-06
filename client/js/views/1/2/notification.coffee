@@ -2,20 +2,24 @@ _.extend Template.notification,
   user: ->
     Meteor.users.findOne @user
 
+  isTitle: (type) ->
+    type is 'title'
+
   title: ->
-    @entityType is 'title'
+    t = Titles.findOne @target
+    if t then t.title
 
-  vote: ->
-    @entityType is 'vote'
+  vote: (type) ->
+    type is 'vote'
 
-  accomplishment: ->
-    @entityType is 'accomplishment'
+  accomplishment: (type) ->
+    type is 'accomplishment'
 
-  comment: ->
-    @entityType is 'comment'
+  comment: (type) ->
+    type is 'comment'
 
-  reply: ->
-    @targetType is 'comment'
+  reply: (type) ->
+    type is 'comment'
 
   your: ->
     c = Collections[@targetType].findOne @target

@@ -1,12 +1,9 @@
 _.extend Template.tags,
   events:
-    #'click .tag': (e) ->
-    #  Session.toggle 'tagFilter', @tag
-
     'click .add': (e) ->
       Session.set 'addingTag', @_id
       Meteor.flush()
-      focusById('addingTag-'+@_id)
+      focusById 'addingTag-'+@_id
 
     'keyup .edittag-input,  keydown .edittag-input':
       makeOkCancelHandler
@@ -17,7 +14,8 @@ _.extend Template.tags,
           text = text.replace(///\s///g,'')
           @tags = _.union @tags, [text]
 
-          window.Collections[@type].update @_id,
+          collection = @collection or @type
+          window.Collections[collection].update @_id,
             $set:
               tags: @tags
 

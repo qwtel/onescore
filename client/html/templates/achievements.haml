@@ -14,29 +14,16 @@
     </button>
   .clearfix
 
-  -#{{#if newAchievement}}
-  -#{{#with newAchievement}}
-  -#<a href="/achievements/{{newAchievement._id}}/edit" class="new fold"><i class="icon-certificate"></i> New achievement</a>
-  -#-#{{> achievement}}
-  -#{{/with}}
-  -#{{/if}}
-
   .fold.advice.new
     %a(href="/achievements/new")
       %i.icon-certificate
       New achievement
 
-  {{#if achievements}}
   {{#each achievements}}
   .fold
     {{> achievement}}
   {{else}}
   .fold
-    {{> loading}}
-  {{/each}}
-  {{else}}
-  .fold
     {{> noContent}}
-  {{/if}}
-
+  {{/each}}
   {{> loadMore}}

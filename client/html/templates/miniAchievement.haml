@@ -7,11 +7,3 @@
       {{else}}
       %a(href="/achievements/{{_id}}/accomplish" style="font-weight: normal") &lt;No title suggested&gt;
       {{/if}}
-
-    -#.score.pull-right
-      %a.value(href="/achievements/{{_id}}/accomplish")
-        {{#if hasScore}}
-        {{value}}
-        {{/if}}
-      -#%a(href="/achievements/{{_id}}/accomplish")
-        %i.icon-certificate

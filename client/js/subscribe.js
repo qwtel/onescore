@@ -10,6 +10,8 @@ Meteor.subscribe('favourites');
 
 Meteor.subscribe('accomplishments');
 
+Meteor.subscribe('titles');
+
 Meteor.autosubscribe(function() {
   var batch, sel, sort;
   sel = Template.filter.select();
@@ -22,12 +24,4 @@ Meteor.autosubscribe(function() {
   var batch;
   batch = Session.get('skip');
   return Meteor.subscribe('notifications', batch);
-});
-
-Meteor.autosubscribe(function() {
-  var id;
-  id = Session.get('single');
-  if (id && Session.equals('page', 'achievements')) {
-    return Meteor.subscribe('titles', id);
-  }
 });

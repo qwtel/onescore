@@ -2,9 +2,7 @@
 <article class='achievement {{color}}' id='{{_id}}'>
 <a class='value pull-right' href='/achievements/{{_id}}/accomplish'>
 <span class='points'>
-{{#if hasScore}}
-{{value}}
-{{else}}
+{{#if value}} {{value}} {{else}}
 <img src='/grayLoading.gif' />
 {{/if}}
 </span>

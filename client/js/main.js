@@ -87,16 +87,9 @@ AppRouter = (function(_super) {
   };
 
   AppRouter.prototype.newAchievement = function() {
-    var id;
     this.softReset();
-    Session.set('page', 'achievements');
-    Session.set('tab', 'edit');
-    return id = Meteor.call('newAchievement', function(error, result) {
-      if (!error) {
-        Session.set('single', result);
-        return Session.set('newAchievement', result);
-      }
-    });
+    Session.set('page', 'newAchievement');
+    return Session.set('single', 'result');
   };
 
   AppRouter.prototype.achievements = function(id, tab, type) {

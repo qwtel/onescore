@@ -5,15 +5,13 @@ _.extend(Template.achievements, {
     'click .btn': function(e) {
       var filter;
       filter = $(e.currentTarget).data('filter');
-      console.log(filter);
       return Session.toggle("btn-" + filter, true);
     }
   },
   achievements: function() {
-    var achievements, sel, sort;
+    var sel, sort;
     sort = Template.filter.sort();
     sel = Template.filter.select();
-    sel.created = true;
     sel.$where = function() {
       var a, f;
       a = Accomplishments.findOne({
@@ -35,12 +33,8 @@ _.extend(Template.achievements, {
         return true;
       }
     };
-    achievements = Achievements.find(sel, {
+    return Achievements.find(sel, {
       sort: sort
     });
-    if (achievements.count() === 0) {
-      return false;
-    }
-    return achievements;
   }
 });

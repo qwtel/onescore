@@ -16,7 +16,3 @@ _.extend Template.accomplishment,
 
   numComments: ->
     return @comments
-    #c = Comments.find
-    #  topic: @_id
-    #if c
-    #  return c.count()

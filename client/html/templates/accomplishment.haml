@@ -26,25 +26,16 @@
       {{/with}}
 
       {{#if story}}
-      %a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
+      -#%a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
         %i.icon-align-left
       .story.part
         {{#markdown}}{{{story}}}{{/markdown}}
-
-      -#%span.icon-side(title="Tags")
-      -#  %i.icon-tags
-      -#.tags.part
-      -#  %a.tag.label tag1
-      -#  %a.tag.label tag2
-      -#  %a.tag.label tag3
       {{/if}}
 
-      {{#if equals "single" _id}}
       %a.icon-side.add-tag(title="Add a tag")<
         %i.icon-tags
       .part
         {{> tags}}
-      {{/if}}
 
       {{#if numComments}}
       %a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<

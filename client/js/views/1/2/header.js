@@ -76,7 +76,7 @@ _.extend(Template.header, {
         url: 'achievements/new',
         description: 'Create a new achievement',
         cooldown: '30 seconds cooldown',
-        active: Session.equals('page', 'achievements') && Session.get('newAchievement') !== null ? 'active' : ''
+        active: window.isActive('page', 'newAchievement')
       }, {
         /*
                 name: 'Inventory'

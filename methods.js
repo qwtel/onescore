@@ -65,26 +65,6 @@ Meteor.methods({
     notify(title, achievement);
     return Meteor.call('assignBestTitle', title);
   },
-  newAchievement: function() {
-    var data, id, newAchievement;
-    if (!this.is_simulation) {
-      newAchievement = Achievements.findOne({
-        user: this.userId(),
-        created: false
-      });
-      if (newAchievement) {
-        id = newAchievement._id;
-      } else {
-        data = Meteor.call('basic');
-        _.extend(data, {
-          created: false
-        });
-        data.type = 'achievement';
-        id = Achievements.insert(data);
-      }
-      return id;
-    }
-  },
   comment: function(data) {
     var basic, comment, id, parent, target;
     comment = Comments.findOne(data._id);
