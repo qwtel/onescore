@@ -3,12 +3,14 @@ _.extend Template.userActivity,
     return Meteor.users.findOne @user
   
   verb: ->
-    if @type is 'accomplishment' then verb = 'accomplished'
-    if @type is 'comment'
-      if @parent?
-        verb = 'replied'
-      else
-        verb = 'commented'
+    switch @type
+      when 'accomplishment'
+        verb = 'accomplished'
+      when 'comment'
+        if @parent?
+          verb = 'replied'
+        else
+          verb = 'commented'
 
     return verb
 

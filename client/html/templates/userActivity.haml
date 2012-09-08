@@ -1,13 +1,5 @@
 %template(name='userActivity')
-  .user
-    .content
-      {{#with user}}
-      %a.face.profile-pic(href="/{{username}}")
-        %img(src="https://graph.facebook.com/{{services.facebook.id}}/picture")/
-      <a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
-      %span.level ({{level}})
-      {{/with}}
-
-      %span.verb {{verb}}
-      \-
-      %time.times {{timeago date}}
+  {{> user}}
+  %span.verb {{verb}}
+  \-
+  %time.times {{timeago date}}

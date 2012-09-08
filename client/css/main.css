@@ -198,8 +198,9 @@ h1, h2, h3, h4, h5, h6 {
   .accomplishment .body, .comment .body {
     margin-left: 35px; }
 
-.accomplishment .part {
+.part {
   margin-bottom: 7px; }
+
 .accomplishment .story {
   margin-bottom: 20px; }
 
@@ -525,22 +526,19 @@ a:hover i, a i.active, button:hover i, button i.active {
     display: none; }
 
 .user {
-  margin-bottom: 7px; }
-  .user .content {
-    color: gray; }
+  margin-bottom: 7px;
+  color: gray; }
   .user .face {
     display: inline-block;
     vertical-align: baseline;
     zoom: 1;
     *display: inline;
     *vertical-align: auto;
-    width: 25px;
-    height: 25px; }
+    width: 20px;
+    height: 20px; }
 
 .ladder {
   color: gray; }
-  .ladder .user {
-    margin-bottom: 0; }
   .ladder .rank {
     width: 30px; }
   .ladder .right {
@@ -555,5 +553,13 @@ a:hover i, a i.active, button:hover i, button i.active {
 .notifications tr:first-child > td {
   border-top: none; }
 
-table .vote-row {
+.vote-inline .vote-row {
   display: inline; }
+
+.titles .title-suggestion {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 7px;
+  color: #f70852; }
+.titles tr:first-child .title-suggestion {
+  color: #4dc206; }

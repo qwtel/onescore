@@ -2,6 +2,10 @@
 
 _.extend(Template.user, {
   user: function() {
-    return this;
+    if (_.isObject(this.user)) {
+      return this.user;
+    } else {
+      return Meteor.users.findOne(this.user);
+    }
   }
 });

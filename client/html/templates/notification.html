@@ -1,13 +1,5 @@
 <template name='notification'>
-<div class='user'>
-<div class='content'>
-{{#with user}}
-<a class='face profile-pic' href='/{{username}}'>
-<img src='https://graph.facebook.com/{{services.facebook.id}}/picture' />
-</a>
-<a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
-<span class='level'>({{level}})</span>
-{{/with}}
+{{> user}}
 {{#if comment entityType}}
 <a href='/comments/{{entity}}'>
 {{#if reply targetType}}
@@ -36,6 +28,4 @@ your title '{{title}}'
 <a href='/{{targetType}}s/{{target}}'>{{targetType}}</a>
 {{/if}}
 - {{timeago date}}
-</div>
-</div>
 </template>

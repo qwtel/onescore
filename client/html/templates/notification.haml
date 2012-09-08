@@ -1,45 +1,37 @@
 %template(name='notification')
-  .user
-    .content
-      {{#with user}}
-      %a.face.profile-pic(href="/{{username}}")
-        %img(src="https://graph.facebook.com/{{services.facebook.id}}/picture")/
-      <a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
-      %span.level ({{level}})
-      {{/with}}
+  {{> user}}
+  {{#if comment entityType}}
+  %a(href="/comments/{{entity}}")
+    {{#if reply targetType}}
+    replied
+    {{else}}
+    commented
+    {{/if}}
+  on {{your}}
+  {{/if}}
 
-      {{#if comment entityType}}
-      %a(href="/comments/{{entity}}")
-        {{#if reply targetType}}
-        replied
-        {{else}}
-        commented
-        {{/if}}
-      on {{your}}
-      {{/if}}
+  {{#if isTitle entityType}}
+  suggested a title for {{your}}
+  {{/if}}
 
-      {{#if isTitle entityType}}
-      suggested a title for {{your}}
-      {{/if}}
+  {{#if vote entityType}}
+  voted for {{your}}
+  {{/if}}
 
-      {{#if vote entityType}}
-      voted for {{your}}
-      {{/if}}
+  {{#if accomplishment entityType}}
+  %a(href="/accomplishments/{{entity}}")
+    accomplished
+  {{your}}
+  {{/if}}
 
-      {{#if accomplishment entityType}}
-      %a(href="/accomplishments/{{entity}}")
-        accomplished
-      {{your}}
-      {{/if}}
+  -#{{entity}}
+  -#%a(href="/{{entityType}}s/{{entity}}") {{entityType}} 
+  -#{{on}}
+  -#{{target}}
+  {{#if isTitle targetType}}
+  your title '{{title}}'
+  {{else}}
+  %a(href="/{{targetType}}s/{{target}}") {{targetType}}
+  {{/if}}
 
-      -#{{entity}}
-      -#%a(href="/{{entityType}}s/{{entity}}") {{entityType}} 
-      -#{{on}}
-      -#{{target}}
-      {{#if isTitle targetType}}
-      your title '{{title}}'
-      {{else}}
-      %a(href="/{{targetType}}s/{{target}}") {{targetType}}
-      {{/if}}
-
-      \- {{timeago date}}
+  \- {{timeago date}}

@@ -1,15 +1,30 @@
 %template(name="titles")
+  -#%div.controls 
+    .input-append<
+      %input.span3.title(type="text" id="title-{{_id}}" data-field="title")/
+      %button.btn.suggest(type="button")> Suggest
+    %p.help-block.muted
+      %strong NOTE:
+      You don't have to suggest a title.
+
   {{#if titles}}
-  %table.table.table-condensed
+  %table.table.titles
     %thead 
       %tr 
         %th.muted Vote
         %th.muted Title
+        %th.muted User
     %tbody 
       {{#each titles}}
-      %tr 
-        %td
+      %tr
+        %td.vote-inline
           {{> voteContainer}}
-        %td {{title}}
+        %td.title-suggestion
+          {{title}}
+        %td
+          {{> user}}
       {{/each}}
+  {{else}}
+  {{> noContent}}
   {{/if}}
+  {{> loadMore}}

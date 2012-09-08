@@ -1,22 +1,31 @@
 <template name='titles'>
 {{#if titles}}
-<table class='table table-condensed'>
+<table class='table titles'>
 <thead>
 <tr>
 <th class='muted'>Vote</th>
 <th class='muted'>Title</th>
+<th class='muted'>User</th>
 </tr>
 </thead>
 <tbody>
 {{#each titles}}
 <tr>
-<td>
+<td class='vote-inline'>
 {{> voteContainer}}
 </td>
-<td>{{title}}</td>
+<td class='title-suggestion'>
+{{title}}
+</td>
+<td>
+{{> user}}
+</td>
 </tr>
 {{/each}}
 </tbody>
 </table>
+{{else}}
+{{> noContent}}
 {{/if}}
+{{> loadMore}}
 </template>

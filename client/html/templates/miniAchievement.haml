@@ -1,6 +1,6 @@
 %template(name='miniAchievement')
-  %article.achievement.mini(class="{{color}}" title="{{description}}")<>
-    %a.icon(href="/achievements/{{_id}}/accomplish")
+  .achievement.mini(class="{{color}}" title="{{description}}")<>
+    -#%a.icon(href="/achievements/{{_id}}/accomplish")
     %h5.title<>
       {{#if title}}
       %a(href="/achievements/{{_id}}/accomplish") {{title}}

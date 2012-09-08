@@ -6,15 +6,16 @@ _.extend(Template.userActivity, {
   },
   verb: function() {
     var verb;
-    if (this.type === 'accomplishment') {
-      verb = 'accomplished';
-    }
-    if (this.type === 'comment') {
-      if (this.parent != null) {
-        verb = 'replied';
-      } else {
-        verb = 'commented';
-      }
+    switch (this.type) {
+      case 'accomplishment':
+        verb = 'accomplished';
+        break;
+      case 'comment':
+        if (this.parent != null) {
+          verb = 'replied';
+        } else {
+          verb = 'commented';
+        }
     }
     return verb;
   }

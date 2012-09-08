@@ -54,8 +54,8 @@ Meteor.startup ->
           rank: newRank
 
   Titles.find().observe
-    # assing 'best' title to its achievement
     changed: (title) ->
+      # assing 'best' title to its achievement
       Meteor.call 'assignBestTitle', title
 
   Achievements.find().observe

@@ -1,6 +1,11 @@
 _.extend Template.user,
   user: ->
-    return this
+    if _.isObject @user
+      return @user
+    else
+      return Meteor.users.findOne @user
+  #user: ->
+  #  return this
 
   #events:
   #  'click .edit': (e) ->

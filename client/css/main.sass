@@ -246,9 +246,10 @@ h1, h2, h3, h4, h5, h6
   .body
     margin-left: 35px
 
+.part
+  margin-bottom: $padding/2
+
 .accomplishment
-  .part
-    margin-bottom: $padding/2
   .story
     margin-bottom: $margin
 
@@ -520,7 +521,6 @@ a:hover i, a i.active, button:hover i, button i.active
 
   .content
     margin-left: $iconSize + 10px
-    .title
     .description
       color: gray
 
@@ -598,28 +598,14 @@ a:hover i, a i.active, button:hover i, button i.active
     
 .user
   margin-bottom: $padding/2
-
-  .content
-    color: gray
-    //font:
-    //  size: 14px
-
-    //.score
-    //  .value
-    //    font-size: 18px
-    //  .dollar
-    //    width: 18px
-    //    height: 18px
-
+  color: gray
   .face
     @include inline-block
-    width: $iconSize/2
-    height: $iconSize/2
+    width: 20px
+    height: 20px
 
 .ladder
   color: gray
-  .user
-    margin-bottom: 0
   .rank
     width: 30px
   .right
@@ -639,6 +625,18 @@ a:hover i, a i.active, button:hover i, button i.active
 .notifications tr:first-child > td
   border-top: none
 
-table
+.vote-inline
   .vote-row
     display: inline
+
+.titles
+  .title-suggestion
+    font-size: 14px
+    font-weight: bold
+    margin-bottom: $padding/2
+    color: $red
+
+  tr:first-child
+    .title-suggestion
+      color: $green
+
