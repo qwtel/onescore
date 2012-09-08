@@ -21,7 +21,10 @@
     {{/if}}
 
     .clearfix
-    %h5.muted Level
-    %span {{currentUser.level}}
-    %h5.muted Rank
-    %span {{currentUser.rank}}
+    .row-fluid
+      .span6
+        %h5.muted Level
+        %span {{currentUser.level}}
+      .span6
+        %h5.muted Rank
+        %span {{currentUser.rank}}

@@ -1,0 +1,22 @@
+<template name='miniTitles'>
+{{#if titles}}
+<table class='table table-condensed'>
+<thead>
+<tr>
+<th class='muted'>Vote</th>
+<th class='muted'>Title</th>
+</tr>
+</thead>
+<tbody>
+{{#each titles}}
+<tr>
+<td>
+{{> voteContainer}}
+</td>
+<td>{{title}}</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+{{/if}}
+</template>

@@ -144,7 +144,7 @@ window.isActive = (name, value) ->
 
   field = Session.get name
 
-  if field instanceof Array or field instanceof Object
+  if _.isArray(field) or _.isObject(field)
     Session.get '_'+name
     state =  _.contains field, value
   else

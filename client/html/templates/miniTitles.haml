@@ -1,0 +1,15 @@
+%template(name="miniTitles")
+  {{#if titles}}
+  %table.table.table-condensed
+    %thead 
+      %tr 
+        %th.muted Vote
+        %th.muted Title
+    %tbody 
+      {{#each titles}}
+      %tr 
+        %td
+          {{> voteContainer}}
+        %td {{title}}
+      {{/each}}
+  {{/if}}

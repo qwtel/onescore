@@ -87,9 +87,9 @@ _.extend Template.comment,
   cutoff: ->
     parent = Session.get 'parent'
     if parent
-      return @level > Session.get('level') + 4
+      return @level > Session.get('level') + 2
     else
-      return @level > Session.get('level') + 3
+      return @level > Session.get('level') + 1
 
 
   user: ->

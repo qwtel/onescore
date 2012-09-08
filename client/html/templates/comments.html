@@ -11,13 +11,15 @@ Add a comment
 <textarea class='new-thread ta100' id='add-{{_id}}' placeholder='Add a comment' rows='4'></textarea>
 </div>
 {{/unless}}
-<div class='fold'></div>
 {{#if comments}}
 <div class='comments'>
 {{#each comments}}
+<div class='fold'></div>
 {{> comment}}
 {{else}}
+<div class='fold'>
 {{> noContent}}
+</div>
 {{/each}}
 </div>
 {{else}}

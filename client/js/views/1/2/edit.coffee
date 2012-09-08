@@ -47,15 +47,9 @@ _.extend Template.edit,
     else
       return if 'Random' is @name then 'selected' else ''
 
-  titles: ->
-    titles = Titles.find
+  revisions: ->
+    Revisions.find
       entity: @_id
-      user: Meteor.user()._id
     ,
       sort:
-        score: -1
-
-    if titles.count() is 0
-      return false
-    else
-      return titles
+        date: -1

@@ -22,25 +22,19 @@
               {{else}}
               <i class="icon-chevron-down"></i>
               {{/if}}
-          {{/unless}}
-          -#%li.accomplish
-            %a(title="Accomplish this achievement")<
-              <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "expand" _id}}{{/if}}"></i>
-          -#%li.quest
-            %a(title="Add to quest log")<
-              <i class="icon-book {{quest}}"></i>
-          -#%li.fav
-            %a(title="Add to favourites")<
-              <i class="icon-star {{faved}}"></i>
           %li
             %a(title="Edit" href="/achievements/{{_id}}/edit")<
-              <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i>
+              %i.icon-pencil
+              -# <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i>
           %li
             %a(title="Comment" href="/achievements/{{_id}}/talk")<
-              <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i>
+              %i.icon-comment
+              -# <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i>
           %li
             %a(title="Accomplish" href="/achievements/{{_id}}/accomplish")<
-              <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i>
+              %i.icon-certificate
+              -# <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i>
+          {{/unless}}
 
         %h5.title
           {{#if title}}

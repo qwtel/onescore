@@ -73,7 +73,7 @@ class AppRouter extends Backbone.Router
     Session.set 'page', 'newAchievement'
     Session.set 'single', 'result'
 
-  achievements: (id, tab, type) ->
+  achievements: (id, tab, tabtab) ->
     @softReset()
     Session.set 'page', 'achievements'
     Session.set 'single', id
@@ -81,16 +81,21 @@ class AppRouter extends Backbone.Router
     unless tab then tab = 'info'
     Session.set 'tab', tab
 
-    if type
-      Session.set 'story', type
-    else
-      Session.set 'story', null
+    switch tab
+      when 'accomplish'
+        unless tabtab then tabtab = null
+        Session.set 'story', tabtab
+      when 'edit' 
+        unless tabtab then tabtab = 'basic'
+        Session.set 'tabtab', tabtab
 
   accomplishments: (id, tab) ->
     @softReset()
     Session.set 'page', 'accomplishments'
-    Session.set 'sort', 'all'
     Session.set 'single', id
+
+    unless tab then tab = 'info'
+    Session.set 'tab', tab
 
   comments: (id, something) ->
     @softReset()

@@ -235,7 +235,7 @@ h1, h2, h3, h4, h5, h6
   margin-top: 65px
 
 .accomplishment, .comment
-  margin-bottom: 2*$padding
+  margin-bottom: $margin
 
   .icon-side
     float: left
@@ -249,15 +249,18 @@ h1, h2, h3, h4, h5, h6
 .accomplishment
   .part
     margin-bottom: $padding/2
+  .story
+    margin-bottom: $margin
+
+.comment
+  min-height: 75px
 
 .comments
-  .comment
+  .nested
     border-left: 1px dashed #ddd
-    min-height: 75px
-
+  .comment
     .body
       margin-bottom: $margin
-
       .text
         width: 100%
 
@@ -458,13 +461,10 @@ $activityPadding: 15px
   width: 100%
   padding: $padding 19px
   margin-left: -19px
-  @include fold-shadow(whiteSmoke, #ddd)
+  @include fold-shadow(whiteSmoke, #ccc)
 
   .alert
     margin-bottom: 0
-
-.fold:last-child
-  padding-bottom: 0
 
 i
   opacity: 0.5

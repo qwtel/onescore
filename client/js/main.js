@@ -92,7 +92,7 @@ AppRouter = (function(_super) {
     return Session.set('single', 'result');
   };
 
-  AppRouter.prototype.achievements = function(id, tab, type) {
+  AppRouter.prototype.achievements = function(id, tab, tabtab) {
     this.softReset();
     Session.set('page', 'achievements');
     Session.set('single', id);
@@ -100,18 +100,28 @@ AppRouter = (function(_super) {
       tab = 'info';
     }
     Session.set('tab', tab);
-    if (type) {
-      return Session.set('story', type);
-    } else {
-      return Session.set('story', null);
+    switch (tab) {
+      case 'accomplish':
+        if (!tabtab) {
+          tabtab = null;
+        }
+        return Session.set('story', tabtab);
+      case 'edit':
+        if (!tabtab) {
+          tabtab = 'basic';
+        }
+        return Session.set('tabtab', tabtab);
     }
   };
 
   AppRouter.prototype.accomplishments = function(id, tab) {
     this.softReset();
     Session.set('page', 'accomplishments');
-    Session.set('sort', 'all');
-    return Session.set('single', id);
+    Session.set('single', id);
+    if (!tab) {
+      tab = 'info';
+    }
+    return Session.set('tab', tab);
   };
 
   AppRouter.prototype.comments = function(id, something) {

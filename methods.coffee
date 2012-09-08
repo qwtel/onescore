@@ -116,7 +116,7 @@ Meteor.methods
       Accomplishments.update acc._id,
         $set:
           story: data.story
-          tags: data.tags
+          tags: _.union acc.tags, data.tags
 
       accomplishId = acc._id
     else
@@ -160,25 +160,6 @@ Meteor.methods
       Meteor.users.update @userId(),
         $set:
           score: score
-
-    #accs = Accomplishments.find
-    #  user: @userId()
-    #
-    #accs = accs.fetch()
-    #entities = _.pluck accs, 'entity'
-    #
-    #a = Achievements.find
-    #  _id: $in: entities
-    #
-    #a = a.fetch()
-    #s = _.pluck a, 'value'
-    #score = _.reduce s, (memo, num) ->
-    #  return memo + num
-    #, 0
-    #
-    #Meteor.users.update @userId(),
-    #  $set:
-    #    score: score
 
 countVotes = (id, up) ->
   Votes.find(

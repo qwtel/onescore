@@ -20,6 +20,6 @@ _.extend Template.singleComment, Template.comment,
         breadcrumbs.push
           name: 'Topic'
           user: null
-          url: "/#{comment.topicType}/#{comment.topic}"
+          url: "/#{comment.topicType}/#{comment.topic}/talk"
 
     return breadcrumbs.reverse()

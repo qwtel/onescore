@@ -1,24 +1,91 @@
 <template name='single'>
 {{#if equals "page" "achievements"}}
-<h5 class='heading line'>Achievement</h5>
 {{#with achievement}}
+<div class='span8'>
+<section class='well'>
+<h5 class='heading line'>Achievement</h5>
 {{> achievement}}
+</section>
+</div>
+<div class='span4 menu'>
+<nav class='nav nav-tabs nav-stacked'>
+<li class="{{isActive "tab" "info"}}">
+<a class='tab' data-tab='info' href='/achievements/{{_id}}/info'>
+<i class='icon-bookmark'></i>
+Info
+</a>
+</li>
+<li class="{{isActive "tab" "edit"}}">
+<a class='tab' data-tab='edit' href='/achievements/{{_id}}/edit'>
+<i class='icon-pencil'></i>
+Edit
+</a>
+</li>
+<li class="{{isActive "tab" "talk"}}">
+<a class='tab' data-tab='talk' href='/achievements/{{_id}}/talk'>
+<i class='icon-comment'></i>
+Comments
+</a>
+</li>
+<li class="{{isActive "tab" "accomplish"}}">
+<a class='tab' data-tab='accomplish' href='/achievements/{{_id}}/accomplish'>
+<i class='icon-certificate'></i>
+Accomplish
+</a>
+</li>
+</nav>
+</div>
 {{/with}}
 {{/if}}
 {{#if equals "page" "accomplishments"}}
-<h5 class='heading line'>Accomplishment</h5>
 {{#with accomplishment}}
+<div class='span8'>
+<section class='well'>
+{{#if equals "tab" "info"}}
+<h5 class='heading line'>Accomplishment</h5>
 {{> accomplishment}}
+{{/if}}
+{{#if equals "tab" "talk"}}
+<h5 class='heading line'>Comments</h5>
+{{> filter}}
+<div class='clearfix'></div>
+{{> comments}}
+{{/if}}
+</section>
+</div>
+<div class='span4 menu'>
+<nav class='nav nav-tabs nav-stacked'>
+<li class="{{isActive "tab" "info"}}">
+<a class='tab' data-tab='info' href='/accomplishments/{{_id}}/info'>
+<i class='icon-bookmark'></i>
+Info
+</a>
+</li>
+<li class="{{isActive "tab" "talk"}}">
+<a class='tab' data-tab='talk' href='/accomplishments/{{_id}}/talk'>
+<i class='icon-comment'></i>
+Comments
+</a>
+</li>
+</nav>
+</div>
 {{/with}}
 {{/if}}
 {{#if equals "page" "comments"}}
-<h5 class='heading line'>Comment</h5>
+<div class='span8'>
+<section class='well'>
 {{#with comment}}
 {{> singleComment}}
 {{/with}}
+</section>
+</div>
 {{/if}}
 {{#if equals "page" "newAchievement"}}
+<div class='span8'>
+<section class='well'>
 <h5 class='heading line'>New achievement</h5>
 {{> newAchievement}}
+</section>
+</div>
 {{/if}}
 </template>

@@ -22,6 +22,11 @@ Meteor.autosubscribe ->
   batch = Session.get 'skip'
   Meteor.subscribe 'notifications', batch
 
+Meteor.autosubscribe ->
+  id = Session.get 'single'
+  batch = Session.get 'skip'
+  Meteor.subscribe 'revisions', id, batch
+
 #Meteor.autosubscribe ->
 #  id = Session.get 'single'
 #  if id and Session.equals('page', 'achievements')

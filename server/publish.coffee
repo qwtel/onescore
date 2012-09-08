@@ -26,6 +26,13 @@ Meteor.publish 'notifications', (batch) ->
     sort: date: -1
     limit: 15*(batch+1)
 
+Meteor.publish 'revisions', (document, batch) ->
+  Revisions.find
+    entity: document
+  ,
+    sort: date: -1
+    limit: 15*(batch+1)
+
 #Meteor.publish 'explore', (sel, sort, batch) ->
 #  achievements = Achievements.find sel,
 #    sort: sort

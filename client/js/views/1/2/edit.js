@@ -64,20 +64,13 @@ _.extend(Template.edit, {
       }
     }
   },
-  titles: function() {
-    var titles;
-    titles = Titles.find({
-      entity: this._id,
-      user: Meteor.user()._id
+  revisions: function() {
+    return Revisions.find({
+      entity: this._id
     }, {
       sort: {
-        score: -1
+        date: -1
       }
     });
-    if (titles.count() === 0) {
-      return false;
-    } else {
-      return titles;
-    }
   }
 });

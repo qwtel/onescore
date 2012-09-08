@@ -22,16 +22,16 @@
 <i class="icon-chevron-down"></i>
 {{/if}}</a>
 </li>
+<li>
+<a href='/achievements/{{_id}}/edit' title='Edit'><i class='icon-pencil'></i></a>
+</li>
+<li>
+<a href='/achievements/{{_id}}/talk' title='Comment'><i class='icon-comment'></i></a>
+</li>
+<li>
+<a href='/achievements/{{_id}}/accomplish' title='Accomplish'><i class='icon-certificate'></i></a>
+</li>
 {{/unless}}
-<li>
-<a href='/achievements/{{_id}}/edit' title='Edit'><i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i></a>
-</li>
-<li>
-<a href='/achievements/{{_id}}/talk' title='Comment'><i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i></a>
-</li>
-<li>
-<a href='/achievements/{{_id}}/accomplish' title='Accomplish'><i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i></a>
-</li>
 </nav>
 <h5 class='title'>
 {{#if title}}

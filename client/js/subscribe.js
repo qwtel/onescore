@@ -25,3 +25,10 @@ Meteor.autosubscribe(function() {
   batch = Session.get('skip');
   return Meteor.subscribe('notifications', batch);
 });
+
+Meteor.autosubscribe(function() {
+  var batch, id;
+  id = Session.get('single');
+  batch = Session.get('skip');
+  return Meteor.subscribe('revisions', id, batch);
+});

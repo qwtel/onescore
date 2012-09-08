@@ -38,3 +38,14 @@ Meteor.publish('notifications', function(batch) {
     limit: 15 * (batch + 1)
   });
 });
+
+Meteor.publish('revisions', function(document, batch) {
+  return Revisions.find({
+    entity: document
+  }, {
+    sort: {
+      date: -1
+    },
+    limit: 15 * (batch + 1)
+  });
+});

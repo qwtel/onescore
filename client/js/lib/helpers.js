@@ -177,7 +177,7 @@ window.isActive = function(name, value) {
     value = false;
   }
   field = Session.get(name);
-  if (field instanceof Array || field instanceof Object) {
+  if (_.isArray(field) || _.isObject(field)) {
     Session.get('_' + name);
     state = _.contains(field, value);
   } else {

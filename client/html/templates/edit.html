@@ -1,4 +1,21 @@
 <template name='edit'>
+<div class='linebreak'>
+<nav class='nav nav-tabs'>
+<li class="{{isActive "tabtab" "basic"}}">
+<a href='/achievements/{{_id}}/edit/basic'>Basic</a>
+</li>
+<li class="{{isActive "tabtab" "title"}}">
+<a href='/achievements/{{_id}}/edit/title'>Title</a>
+</li>
+<li class="{{isActive "tabtab" "image"}}">
+<a href='/achievements/{{_id}}/edit/image'>Image</a>
+</li>
+<li class="{{isActive "tabtab" "revisions"}}">
+<a href='/achievements/{{_id}}/edit/revisions'>Revisions</a>
+</li>
+</nav>
+</div>
+{{#if equals "tabtab" "basic"}}
 <div class='form-horizontal' id='form-{{_id}}'>
 <fieldset>
 <div class='control-group'>
@@ -9,26 +26,9 @@
 <strong>NOTE:</strong>
 You don't have to suggest a title.
 </p>
-{{#if titles}}
-<table class='table table-condensed' style='margin-top:20px'>
-<thead>
-<tr>
-<th>Vote</th>
-<th>Title</th>
-</tr>
-</thead>
-<tbody>
-{{#each titles}}
-<tr>
-<td>
-{{> voteContainer}}
-</td>
-<td>{{title}}</td>
-</tr>
-{{/each}}
-</tbody>
-</table>
-{{/if}}
+<div class='titles' style='margin-top: 15px'>
+{{> miniTitles}}
+</div>
 </div>
 </div>
 <div class='control-group'>
@@ -65,4 +65,15 @@ You can include #tags here.
 </footer>
 </fieldset>
 </div>
+{{/if}}
+{{#if equals "tabtab" "revisions"}}
+{{#each revisions}}
+<div>
+{{date}}
+</div>
+{{/each}}
+{{/if}}
+{{#if equals "tabtab" "title"}}
+{{> titles}}
+{{/if}}
 </template>

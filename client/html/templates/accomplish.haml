@@ -1,9 +1,35 @@
 %template(name='accomplish')
+  .linebreak
+    %nav.nav.nav-tabs 
+      <li class="{{isActive "story" "text"}}">
+      %a(href="/achievements/{{_id}}/accomplish/text")
+        %i.icon-align-left
+        Text
+      </li>
+
+      <li class="{{isActive "story" "picture"}}">
+      %a(href="/achievements/{{_id}}/accomplish/picture")
+        %i.icon-picture
+        Picture
+      </li>
+
+      <li class="{{isActive "story" "video"}}">
+      %a(href="/achievements/{{_id}}/accomplish/video")
+        %i.icon-film
+        Video
+      </li>
+
+      <li class="{{isActive "story" "link"}}">
+      %a(href="/achievements/{{_id}}/accomplish/link")
+        %i.icon-bookmark
+        Link
+      </li>
+
   {{#if session "story"}}
   {{#if equals "story" "text"}}
   .editor
     %div(id="toolbar-{{_id}}")
-    %textarea.ta100(id="editor-{{_id}}" rows="15") {{story}}
+    %textarea.ta100(id="editor-{{_id}}" rows="10") {{story}}
     %span.help-block<
       %strong HINT:
       You can style your post using
@@ -30,7 +56,7 @@
   {{/if}}
 
   {{else}}
-  .btn-toolbar
+  -#.btn-toolbar
     .btn-group
       %a(href="/achievements/{{_id}}/accomplish/text" class="btn btn-large" title="Text")
         %i.icon-align-left
@@ -42,11 +68,11 @@
         %i.icon-bookmark
       -#%button.btn(title="Audio") 
         %i.icon-headphones
-  %footer.form-actions
-    {{#if accomplishment}}
-    %a.btn.btn-danger.btn-large.uncreate(style="margin-left: -20px") Unaccomplish
-    {{else}}
-    %a.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
-    {{/if}}
+
+  {{#if accomplishment}}
+  %a.btn.btn-danger.btn-large.uncreate Unaccomplish
+  {{else}}
+  %a.btn.btn-success.btn-large.create Accomplish
+  {{/if}}
   {{/if}}
 

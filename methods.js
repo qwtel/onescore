@@ -141,7 +141,7 @@ Meteor.methods({
       Accomplishments.update(acc._id, {
         $set: {
           story: data.story,
-          tags: data.tags
+          tags: _.union(acc.tags, data.tags)
         }
       });
       accomplishId = acc._id;

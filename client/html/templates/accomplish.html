@@ -1,9 +1,37 @@
 <template name='accomplish'>
+<div class='linebreak'>
+<nav class='nav nav-tabs'>
+<li class="{{isActive "story" "text"}}">
+<a href='/achievements/{{_id}}/accomplish/text'>
+<i class='icon-align-left'></i>
+Text
+</a>
+</li>
+<li class="{{isActive "story" "picture"}}">
+<a href='/achievements/{{_id}}/accomplish/picture'>
+<i class='icon-picture'></i>
+Picture
+</a>
+</li>
+<li class="{{isActive "story" "video"}}">
+<a href='/achievements/{{_id}}/accomplish/video'>
+<i class='icon-film'></i>
+Video
+</a>
+</li>
+<li class="{{isActive "story" "link"}}">
+<a href='/achievements/{{_id}}/accomplish/link'>
+<i class='icon-bookmark'></i>
+Link
+</a>
+</li>
+</nav>
+</div>
 {{#if session "story"}}
 {{#if equals "story" "text"}}
 <div class='editor'>
 <div id='toolbar-{{_id}}'></div>
-<textarea class='ta100' id='editor-{{_id}}' rows='15'>{{story}}</textarea>
+<textarea class='ta100' id='editor-{{_id}}' rows='10'>{{story}}</textarea>
 <span class='help-block'><strong>HINT:</strong>
 You can style your post using
 <a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
@@ -22,28 +50,10 @@ You can style your post using
 {{callback}}
 {{/if}}
 {{else}}
-<div class='btn-toolbar'>
-<div class='btn-group'>
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/text' title='Text'>
-<i class='icon-align-left'></i>
-</a>
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/picture' title='Picture'>
-<i class='icon-picture'></i>
-</a>
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/video' title='Video'>
-<i class='icon-film'></i>
-</a>
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/link' title='Link'>
-<i class='icon-bookmark'></i>
-</a>
-</div>
-</div>
-<footer class='form-actions'>
 {{#if accomplishment}}
-<a class='btn btn-danger btn-large uncreate' style='margin-left: -20px'>Unaccomplish</a>
+<a class='btn btn-danger btn-large uncreate'>Unaccomplish</a>
 {{else}}
-<a class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</a>
+<a class='btn btn-success btn-large create'>Accomplish</a>
 {{/if}}
-</footer>
 {{/if}}
 </template>

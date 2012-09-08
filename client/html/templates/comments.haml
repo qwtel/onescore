@@ -17,13 +17,14 @@
     %textarea.new-thread.ta100(id="add-{{_id}}" rows="4" placeholder="Add a comment")
   {{/unless}}
 
-  .fold
   {{#if comments}}
   .comments
     {{#each comments}}
+    .fold
     {{> comment}}
     {{else}}
-    {{> noContent}}
+    .fold
+      {{> noContent}}
     {{/each}}
   {{else}}
   {{> loading}}

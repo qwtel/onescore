@@ -11,18 +11,9 @@ fetchUserInformation = (user) ->
         bio: res.data.bio
         location: res.data.location.name
 
-    #console.log res
-    #friends = Meteor.users.find(
-    #  'services.facebook.id':
-    #    $in:
-    #      res.data.friends
-    #  ,
-    #    fields: ['_id']
-    #).fetch()
-
+# HACK: this should be some exponential formula.
+# HACK: this should be part of a user model.
 nextLevel = (level) ->
-  # HACK: this should be some exponential formula.
-  # HACK: this should be part of a user model.
   next = 0
   switch level
     when 1 then next = 10
@@ -37,15 +28,7 @@ Meteor.startup ->
   users = Meteor.users.find {},
     sort: score: -1
 
-  #rank = 1
-  #users.forEach (user) ->
-  #  Meteor.users.update user._id,
-  #    $set:
-  #      rank: rank
-  #  rank++
-
   users.observe
-    # fetch facebook data when a new user is added
     added: (user, beforeIndex) ->
       unless user.username?
         Meteor.users.update user._id,
@@ -54,6 +37,7 @@ Meteor.startup ->
             score: 0
             rank: beforeIndex + 1
 
+      # fetch facebook data when a new user is added
       fetchUserInformation user
 
     changed: (user) ->
@@ -74,39 +58,46 @@ Meteor.startup ->
     changed: (title) ->
       Meteor.call 'assignBestTitle', title
 
-    #added: (title) ->
-    #  achievement = Achievements.findOne title.entity
-    #  notify title, achievement
+  Achievements.find().observe
+    changed: (newDocument, atIndex, oldDocument) ->
+      keys = ['description', 'category', 'tags']
+      diff = computeDifference newDocument, oldDocument, keys 
 
-  #Accomplishments.find().observe
-  #  added: (accomplishment) ->
-  #    achievement = Achievements.findOne accomplishment.entity
-  #    notify accomplishment, achievement
-  
-  #Votes.find().observe
-  #  added: (vote) ->
-  #    target = Collections[vote.entityType].findOne vote.entity
-  #    notify vote, target
-  
-  #Comments.find().observe
-  #  added: (comment) ->
-  #    target = Collections[comment.topicType].findOne comment.topic
-  #    notify comment, target
-  #
-  #    if comment.parent?
-  #      parent = Comments.findOne comment.parent
-  #      notify comment, parent
-  #
-  #    Collections[comment.topicType].update comment.topic,
-  #      $inc:
-  #        comments: 1
-  #
-  #  removed: (comment) ->
-  #    Collections[comment.topicType].update comment.topic,
-  #      $inc:
-  #        comments: -1
+      _.extend diff,
+        entity: newDocument._id
+        entityType: newDocument.type
+        date: new Date()
 
-  #Achievements.find().observe
-  #  added: (entity) ->
-  #  changed: (achievement) ->
+      Revisions.insert diff
 
+  Accomplishments.find().observe
+    changed: (newDocument, atIndex, oldDocument) ->
+      keys = ['story', 'tags']
+      diff = computeDifference newDocument, oldDocument, keys
+
+      _.extend diff,
+        entity: newDocument._id
+        entityType: newDocument.type
+        date: new Date()
+
+      Revisions.insert diff
+
+symetricDifference = (a, b) ->
+  union = _.union a, b
+  intersection = _.intersection a, b
+  _.difference union, intersection
+
+computeDifference = (newDocument, oldDocument, keys) ->
+  diff = {}
+  _.each keys, (key) ->
+    if _.isArray newDocument[key]
+      sym = symetricDifference newDocument[key], oldDocument[key] 
+      if _.size(sym) > 0 then diff[key] = sym
+
+    else if _.isObject newDocument[key]
+      throw new Error "#{key} is an Object, should recurse, but not implemented"
+
+    else if newDocument[key] isnt oldDocument[key]
+      diff[key] = oldDocument[key]
+
+  return diff

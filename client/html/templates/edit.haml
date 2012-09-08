@@ -1,4 +1,23 @@
 %template(name="edit")
+  .linebreak
+    %nav.nav.nav-tabs
+      <li class="{{isActive "tabtab" "basic"}}">
+      %a(href="/achievements/{{_id}}/edit/basic") Basic
+      </li>
+
+      <li class="{{isActive "tabtab" "title"}}">
+      %a(href="/achievements/{{_id}}/edit/title") Title
+      </li>
+
+      <li class="{{isActive "tabtab" "image"}}">
+      %a(href="/achievements/{{_id}}/edit/image") Image
+      </li>
+
+      <li class="{{isActive "tabtab" "revisions"}}">
+      %a(href="/achievements/{{_id}}/edit/revisions") Revisions
+      </li>
+
+  {{#if equals "tabtab" "basic"}}
   .form-horizontal(id="form-{{_id}}")
     %fieldset 
       %div.control-group
@@ -10,26 +29,8 @@
           %p.help-block.muted
             %strong NOTE:
             You don't have to suggest a title.
-
-          {{#if titles}}
-          %table.table.table-condensed(style="margin-top:20px")
-            %thead 
-              %tr 
-                %th Vote
-                %th Title
-            %tbody 
-              {{#each titles}}
-              %tr 
-                %td
-                  {{> voteContainer}}
-                  -#%a.vote(data-up="true")<
-                  -#  <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
-                  -#%span {{score}}
-                  -#%a.vote(data-up="false")<
-                  -#  <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
-                %td {{title}}
-              {{/each}}
-          {{/if}}
+          .titles(style="margin-top: 15px")
+            {{> miniTitles}}
 
       %div.control-group 
         %label.control-label(for="description-{{_id}}") Description
@@ -73,5 +74,15 @@
           %input.input-file(id="fileInput" type="file")/
       %footer.form-actions
         %button.btn.btn-large.create Save
+  {{/if}}
 
+  {{#if equals "tabtab" "revisions"}}
+  {{#each revisions}}
+  %div
+    {{date}}
+  {{/each}}
+  {{/if}}
 
+  {{#if equals "tabtab" "title"}}
+  {{> titles}}
+  {{/if}}

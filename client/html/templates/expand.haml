@@ -1,21 +1,17 @@
 %template(name="expand")
-  -#.linebreak
-    %nav.nav.nav-tabs 
-      <li class="{{isActive "tab" "info"}}">
-      %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
-      </li>
-      <li class="{{isActive "tab" "edit"}}">
-      %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit") Edit
-      </li>
-      <li class="{{isActive "tab" "talk"}}">
-      %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk") Comments
-      </li>
-      -#<li class="{{isActive "tab" "rev"}}">
-      -#%a.tab(data-tab="rev") Revisions
-      -#</li>
-      <li class="{{isActive "tab" "accomplish"}}">
-      %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
-      </li>
+  -# %nav.nav.nav-pills 
+    <li class="{{isActive "tab" "info"}}">
+    %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
+    </li>
+    <li class="{{isActive "tab" "edit"}}">
+    %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit") Edit
+    </li>
+    <li class="{{isActive "tab" "talk"}}">
+    %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk") Comments
+    </li>
+    <li class="{{isActive "tab" "accomplish"}}">
+    %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
+    </li>
 
   {{#if equals "tab" "edit"}}
   %h5.heading.line Edit
@@ -28,7 +24,7 @@
   {{/if}}
 
   {{#if equals "tab" "accomplish"}}
-  %h5.heading.line Tell your story (optional)
+  %h5.heading.line Accomplish
   {{> accomplish}}
   {{/if}}
 

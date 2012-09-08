@@ -1,26 +1,78 @@
 %template(name='single')
   {{#if equals "page" "achievements"}}
-  %h5.heading.line Achievement
   {{#with achievement}}
-  {{> achievement}}
+  .span8
+    %section.well 
+      %h5.heading.line Achievement
+      {{> achievement}}
+  .span4.menu
+    %nav.nav.nav-tabs.nav-stacked
+      <li class="{{isActive "tab" "info"}}">
+      %a.tab(data-tab="info" href="/achievements/{{_id}}/info")
+        %i.icon-bookmark
+        Info
+      </li>
+      <li class="{{isActive "tab" "edit"}}">
+      %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit")
+        %i.icon-pencil
+        Edit
+      </li>
+      <li class="{{isActive "tab" "talk"}}">
+      %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk")
+        %i.icon-comment
+        Comments
+      </li>
+      <li class="{{isActive "tab" "accomplish"}}">
+      %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish")
+        %i.icon-certificate
+        Accomplish
+      </li>
   {{/with}}
   {{/if}}
 
   {{#if equals "page" "accomplishments"}}
-  %h5.heading.line Accomplishment
   {{#with accomplishment}}
-  {{> accomplishment}}
+  .span8
+    %section.well 
+      {{#if equals "tab" "info"}}
+      %h5.heading.line Accomplishment
+      {{> accomplishment}}
+      {{/if}}
+
+      {{#if equals "tab" "talk"}}
+      %h5.heading.line Comments
+      {{> filter}}
+      .clearfix
+      {{> comments}}
+      {{/if}}
+
+  .span4.menu
+    %nav.nav.nav-tabs.nav-stacked
+      <li class="{{isActive "tab" "info"}}">
+      %a.tab(data-tab="info" href="/accomplishments/{{_id}}/info")
+        %i.icon-bookmark
+        Info
+      </li>
+      <li class="{{isActive "tab" "talk"}}">
+      %a.tab(data-tab="talk" href="/accomplishments/{{_id}}/talk")
+        %i.icon-comment
+        Comments
+      </li>
   {{/with}}
   {{/if}}
 
   {{#if equals "page" "comments"}}
-  %h5.heading.line Comment
-  {{#with comment}}
-  {{> singleComment}}
-  {{/with}}
+  .span8
+    %section.well 
+      -#%h5.heading.line Comment
+      {{#with comment}}
+      {{> singleComment}}
+      {{/with}}
   {{/if}}
 
   {{#if equals "page" "newAchievement"}}
-  %h5.heading.line New achievement
-  {{> newAchievement}}
+  .span8
+    %section.well 
+      %h5.heading.line New achievement
+      {{> newAchievement}}
   {{/if}}
