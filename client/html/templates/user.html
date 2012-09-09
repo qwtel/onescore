@@ -1,11 +1,9 @@
 <template name='user'>
 <span class='user'>
-{{#with user}}
 <a class='face profile-pic' href='/{{username}}'>
 <img src='https://graph.facebook.com/{{services.facebook.id}}/picture' />
 </a>
 <a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
 <span class='level'>({{level}})</span>
-{{/with}}
 </span>
 </template>

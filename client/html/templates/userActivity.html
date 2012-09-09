@@ -1,6 +1,5 @@
 <template name='userActivity'>
-{{> user}}
-<span class='verb'>{{verb}}</span>
--
+{{#with user}} {{> user}} {{/with}}
+<span class='verb times'>{{verb}} -</span>
 <time class='times'>{{timeago date}}</time>
 </template>

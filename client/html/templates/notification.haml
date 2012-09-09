@@ -1,5 +1,5 @@
 %template(name='notification')
-  {{> user}}
+  {{#with user}} {{> user}} {{/with}}
   {{#if comment entityType}}
   %a(href="/comments/{{entity}}")
     {{#if reply targetType}}

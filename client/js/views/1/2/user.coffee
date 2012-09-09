@@ -1,9 +1,4 @@
-_.extend Template.user,
-  user: ->
-    if _.isObject @user
-      return @user
-    else
-      return Meteor.users.findOne @user
+_.extend Template.user
   #user: ->
   #  return this
 

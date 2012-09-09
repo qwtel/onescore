@@ -1,8 +1,6 @@
 %template(name='user')
   %span.user
-    {{#with user}}
     %a.face.profile-pic(href="/{{username}}")
       %img(src="https://graph.facebook.com/{{services.facebook.id}}/picture")/
     <a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
     %span.level ({{level}})
-    {{/with}}

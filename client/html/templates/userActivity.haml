@@ -1,5 +1,5 @@
 %template(name='userActivity')
-  {{> user}}
-  %span.verb {{verb}}
-  \-
+  {{#with user}} {{> user}} {{/with}}
+
+  %span.verb.times {{verb}} -
   %time.times {{timeago date}}
