@@ -204,28 +204,19 @@ h1, h2, h3, h4, h5, h6 {
 .accomplishment .story {
   margin-bottom: 20px; }
 
-.comment {
+.comment .body {
   min-height: 75px; }
 
-.comments .nested {
+.comments .comment {
   border-left: 1px dashed #dddddd; }
-.comments .comment .body {
-  margin-bottom: 20px; }
-  .comments .comment .body .text {
+  .comments .comment .text {
     width: 100%; }
 .comments .hover {
   background: #f0f0f0; }
 .comments .nested {
   margin-left: 33px; }
 .comments .cutoff {
-  height: 10px;
-  color: gray;
-  display: block;
-  font-size: 9px;
-  border-bottom: 1px dashed #dddddd;
-  text-align: right;
-  text-transform: uppercase;
-  text-decoration: none; }
+  border-bottom: 1px dashed #dddddd; }
 .comments .text-wrapper .comment-text {
   margin-bottom: 20px; }
 .comments .text-wrapper .edit-text {
@@ -526,7 +517,6 @@ a:hover i, a i.active, button:hover i, button i.active {
     display: none; }
 
 .user {
-  margin-bottom: 7px;
   color: gray; }
   .user .face {
     display: inline-block;

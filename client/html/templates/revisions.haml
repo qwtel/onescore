@@ -1,0 +1,43 @@
+%template(name="revisions")
+  {{#if revisions}}
+  %table.table.titles
+    %thead 
+      %tr 
+        %th.muted Difference
+        %th.muted Time
+        %th.muted Restore
+    %tbody 
+      {{#each revisions}}
+      %tr
+        %td
+          {{#with diff}}
+          {{#if description}}
+          %div
+            %strong Description:
+            %div {{description}}
+          {{/if}}
+
+          {{#if category}}
+          %div
+            %strong Category:
+            %span {{category}}
+          {{/if}}
+
+          {{#if tags}}
+          %div
+            %strong Tags:
+            {{#each tagItems}}
+            %span.tag.label {{tag}}
+            {{/each}}
+          {{/if}}
+          {{/with}}
+        %td
+          {{timeago date}}
+        %td
+          %button.restore.btn.btn-mini.pull-right Restore
+      {{/each}}
+  {{else}}
+  .fold
+    {{> noContent}}
+  {{/if}}
+  {{> loadMore}}

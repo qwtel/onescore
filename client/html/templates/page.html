@@ -23,8 +23,7 @@
 </aside>
 </div>
 </div>
-{{/if}}
-{{#if equals "page" "explore"}}
+{{else}} {{#if equals "page" "explore"}}
 <div class='row'>
 <div class='span4'>
 <aside class='well hidden-phone'>
@@ -44,8 +43,7 @@
 </section>
 </div>
 </div>
-{{/if}}
-{{#if equals "page" "ladder"}}
+{{else}} {{#if equals "page" "ladder"}}
 <div class='row'>
 <div class='span4'>
 <aside class='well hidden-phone'>
@@ -62,8 +60,7 @@
 </section>
 </div>
 </div>
-{{/if}}
-{{#if equals "page" "profile"}}
+{{else}} {{#if equals "page" "profile"}}
 <div class='row'>
 <div class='span12'>
 <section class='well'>
@@ -102,40 +99,7 @@
 </section>
 </div>
 </div>
-{{/if}}
-{{#if session "single"}}
-<div class='row'>
-{{> single}}
-</div>
-{{/if}}
-{{#if equals "page" "activities"}}
-<div class='row'>
-<div class='span12'>
-<div class='well'>
-{{> activities }}
-</div>
-</div>
-</div>
-{{/if}}
-{{#if equals "page" "slides"}}
-<div class='row'>
-<div class='span12'>
-<div class='well'>
-{{> slideshows }}
-</div>
-</div>
-</div>
-{{/if}}
-{{#if equals "page" "feedback"}}
-<div class='row'>
-<div class='span12'>
-<div class='well'>
-<h3>Y U NO MAKE BETTER?</h3>
-</div>
-</div>
-</div>
-{{/if}}
-{{#if equals "page" "notifications"}}
+{{else}} {{#if equals "page" "notifications"}}
 <div class='row'>
 <div class='span8'>
 <section class='well notifications'>
@@ -157,5 +121,14 @@
 </aside>
 </div>
 </div>
+{{else}} {{#if session "single"}}
+<div class='row'>
+{{> single}}
+</div>
+{{/if}}
+{{/if}}
+{{/if}}
+{{/if}}
+{{/if}}
 {{/if}}
 </template>

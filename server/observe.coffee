@@ -63,24 +63,28 @@ Meteor.startup ->
       keys = ['description', 'category', 'tags']
       diff = computeDifference newDocument, oldDocument, keys 
 
-      _.extend diff,
-        entity: newDocument._id
-        entityType: newDocument.type
-        date: new Date()
+      if _.size(diff) > 0
+        data =
+          entity: newDocument._id
+          entityType: newDocument.type
+          date: new Date().getTime()
+          diff: diff
 
-      Revisions.insert diff
+        Revisions.insert data
 
   Accomplishments.find().observe
     changed: (newDocument, atIndex, oldDocument) ->
       keys = ['story', 'tags']
       diff = computeDifference newDocument, oldDocument, keys
 
-      _.extend diff,
-        entity: newDocument._id
-        entityType: newDocument.type
-        date: new Date()
+      if _.size(diff) > 0
+        data =
+          entity: newDocument._id
+          entityType: newDocument.type
+          date: new Date().getTime()
+          diff: diff
 
-      Revisions.insert diff
+      Revisions.insert data
 
 symetricDifference = (a, b) ->
   union = _.union a, b
@@ -91,8 +95,16 @@ computeDifference = (newDocument, oldDocument, keys) ->
   diff = {}
   _.each keys, (key) ->
     if _.isArray newDocument[key]
-      sym = symetricDifference newDocument[key], oldDocument[key] 
-      if _.size(sym) > 0 then diff[key] = sym
+      added = _.difference newDocument[key], oldDocument[key] 
+      removed = _.difference oldDocument[key], newDocument[key] 
+
+      if _.size(added) > 0
+        diff[key] or (diff[key] = {})
+        diff[key]['added'] = added
+
+      if _.size(removed) > 0
+        diff[key] or (diff[key] = {})
+        diff[key]['removed'] = removed
 
     else if _.isObject newDocument[key]
       throw new Error "#{key} is an Object, should recurse, but not implemented"

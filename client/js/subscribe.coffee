@@ -6,17 +6,17 @@ Meteor.subscribe 'votes'
 
 Meteor.subscribe 'favourites'
 
-#Meteor.subscribe 'achievements'
+Meteor.subscribe 'achievements'
 
 Meteor.subscribe 'accomplishments'
 
 Meteor.subscribe 'titles'
 
 Meteor.autosubscribe ->
-  sel = Template.filter.select()
-  sort = Template.filter.sort()
-  batch = Session.get 'skip'
-  Meteor.subscribe 'achievements', sel, sort, batch
+  #sel = Template.filter.select()
+  #sort = Template.filter.sort()
+  #batch = Session.get 'skip'
+  #Meteor.subscribe 'achievements', sel, sort, batch
 
 Meteor.autosubscribe ->
   batch = Session.get 'skip'

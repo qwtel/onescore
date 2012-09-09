@@ -1,21 +1,10 @@
 %template(name="edit")
   .linebreak
     %nav.nav.nav-tabs
-      <li class="{{isActive "tabtab" "basic"}}">
-      %a(href="/achievements/{{_id}}/edit/basic") Basic
-      </li>
-
-      <li class="{{isActive "tabtab" "title"}}">
-      %a(href="/achievements/{{_id}}/edit/title") Title
-      </li>
-
-      <li class="{{isActive "tabtab" "image"}}">
-      %a(href="/achievements/{{_id}}/edit/image") Image
-      </li>
-
-      <li class="{{isActive "tabtab" "revisions"}}">
-      %a(href="/achievements/{{_id}}/edit/revisions") Revisions
-      </li>
+      {{#each items}}
+      %li(class="{{active}}")
+        %a(href="{{url}}") {{name}}
+      {{/each}}
 
   {{#if equals "tabtab" "basic"}}
   .form-horizontal(id="form-{{_id}}")
@@ -77,12 +66,16 @@
   {{/if}}
 
   {{#if equals "tabtab" "revisions"}}
-  {{#each revisions}}
-  %div
-    {{date}}
-  {{/each}}
+  {{> revisions}}
+
+  {{else}} {{#if equals "tabtab" "title"}}
+  {{> titles}}
+
+  {{else}} {{#if equals "tabtab" "items"}}
+  -# placeholder items
+
+  {{/if}}
+  {{/if}}
   {{/if}}
 
-  {{#if equals "tabtab" "title"}}
-  {{> titles}}
-  {{/if}}
+

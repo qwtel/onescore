@@ -89,28 +89,34 @@ Meteor.startup(function() {
   });
   Achievements.find().observe({
     changed: function(newDocument, atIndex, oldDocument) {
-      var diff, keys;
+      var data, diff, keys;
       keys = ['description', 'category', 'tags'];
       diff = computeDifference(newDocument, oldDocument, keys);
-      _.extend(diff, {
-        entity: newDocument._id,
-        entityType: newDocument.type,
-        date: new Date()
-      });
-      return Revisions.insert(diff);
+      if (_.size(diff) > 0) {
+        data = {
+          entity: newDocument._id,
+          entityType: newDocument.type,
+          date: new Date().getTime(),
+          diff: diff
+        };
+        return Revisions.insert(data);
+      }
     }
   });
   return Accomplishments.find().observe({
     changed: function(newDocument, atIndex, oldDocument) {
-      var diff, keys;
+      var data, diff, keys;
       keys = ['story', 'tags'];
       diff = computeDifference(newDocument, oldDocument, keys);
-      _.extend(diff, {
-        entity: newDocument._id,
-        entityType: newDocument.type,
-        date: new Date()
-      });
-      return Revisions.insert(diff);
+      if (_.size(diff) > 0) {
+        data = {
+          entity: newDocument._id,
+          entityType: newDocument.type,
+          date: new Date().getTime(),
+          diff: diff
+        };
+      }
+      return Revisions.insert(data);
     }
   });
 });
@@ -126,11 +132,17 @@ computeDifference = function(newDocument, oldDocument, keys) {
   var diff;
   diff = {};
   _.each(keys, function(key) {
-    var sym;
+    var added, removed;
     if (_.isArray(newDocument[key])) {
-      sym = symetricDifference(newDocument[key], oldDocument[key]);
-      if (_.size(sym) > 0) {
-        return diff[key] = sym;
+      added = _.difference(newDocument[key], oldDocument[key]);
+      removed = _.difference(oldDocument[key], newDocument[key]);
+      if (_.size(added) > 0) {
+        diff[key] || (diff[key] = {});
+        diff[key]['added'] = added;
+      }
+      if (_.size(removed) > 0) {
+        diff[key] || (diff[key] = {});
+        return diff[key]['removed'] = removed;
       }
     } else if (_.isObject(newDocument[key])) {
       throw new Error("" + key + " is an Object, should recurse, but not implemented");

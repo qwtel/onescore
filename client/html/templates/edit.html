@@ -1,18 +1,11 @@
 <template name='edit'>
 <div class='linebreak'>
 <nav class='nav nav-tabs'>
-<li class="{{isActive "tabtab" "basic"}}">
-<a href='/achievements/{{_id}}/edit/basic'>Basic</a>
+{{#each items}}
+<li class='{{active}}'>
+<a href='{{url}}'>{{name}}</a>
 </li>
-<li class="{{isActive "tabtab" "title"}}">
-<a href='/achievements/{{_id}}/edit/title'>Title</a>
-</li>
-<li class="{{isActive "tabtab" "image"}}">
-<a href='/achievements/{{_id}}/edit/image'>Image</a>
-</li>
-<li class="{{isActive "tabtab" "revisions"}}">
-<a href='/achievements/{{_id}}/edit/revisions'>Revisions</a>
-</li>
+{{/each}}
 </nav>
 </div>
 {{#if equals "tabtab" "basic"}}
@@ -67,13 +60,11 @@ You can include #tags here.
 </div>
 {{/if}}
 {{#if equals "tabtab" "revisions"}}
-{{#each revisions}}
-<div>
-{{date}}
-</div>
-{{/each}}
-{{/if}}
-{{#if equals "tabtab" "title"}}
+{{> revisions}}
+{{else}} {{#if equals "tabtab" "title"}}
 {{> titles}}
+{{else}} {{#if equals "tabtab" "items"}}
+{{/if}}
+{{/if}}
 {{/if}}
 </template>

@@ -1,36 +1,25 @@
 %template(name="expand")
-  -# %nav.nav.nav-pills 
-    <li class="{{isActive "tab" "info"}}">
-    %a.tab(data-tab="info" href="/achievements/{{_id}}/info") Info
-    </li>
-    <li class="{{isActive "tab" "edit"}}">
-    %a.tab(data-tab="edit" href="/achievements/{{_id}}/edit") Edit
-    </li>
-    <li class="{{isActive "tab" "talk"}}">
-    %a.tab(data-tab="talk" href="/achievements/{{_id}}/talk") Comments
-    </li>
-    <li class="{{isActive "tab" "accomplish"}}">
-    %a.tab(data-tab="accomplish" href="/achievements/{{_id}}/accomplish") Accomplish
-    </li>
-
   {{#if equals "tab" "edit"}}
   %h5.heading.line Edit
   {{> edit}}
-  {{/if}}
+  {{else}}
 
   {{#if equals "tab" "info"}}
   %h5.heading.line Info
   {{> info}}
-  {{/if}}
+  {{else}}
 
   {{#if equals "tab" "accomplish"}}
   %h5.heading.line Accomplish
   {{> accomplish}}
-  {{/if}}
+  {{else}}
 
   {{#if equals "tab" "talk"}}
   %h5.heading.line Comments
   {{> filter}}
   .clearfix
   {{> comments}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
   {{/if}}

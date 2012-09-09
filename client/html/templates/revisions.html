@@ -1,0 +1,54 @@
+<template name='revisions'>
+{{#if revisions}}
+<table class='table titles'>
+<thead>
+<tr>
+<th class='muted'>Difference</th>
+<th class='muted'>Time</th>
+<th class='muted'>Restore</th>
+</tr>
+</thead>
+<tbody>
+{{#each revisions}}
+<tr>
+<td>
+{{#with diff}}
+{{#if description}}
+<div>
+<strong>Description:</strong>
+<div>{{description}}</div>
+</div>
+{{/if}}
+{{#if category}}
+<div>
+<strong>Category:</strong>
+<span>{{category}}</span>
+</div>
+{{/if}}
+{{#if tags}}
+<div>
+<strong>Tags:</strong>
+{{#each tagItems}}
+<span class='tag label'>{{tag}}</span>
+{{/each}}
+</div>
+{{/if}}
+{{/with}}
+</td>
+<td>
+{{timeago date}}
+</td>
+<td>
+<button class='restore btn btn-mini pull-right'>Restore</button>
+</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
+{{else}}
+<div class='fold'>
+{{> noContent}}
+</div>
+{{/if}}
+{{> loadMore}}
+</template>

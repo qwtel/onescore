@@ -1,4 +1,40 @@
+patch = (entity, diff, keys) ->
+  _.each keys, (key) ->
+    if _.isArray entity[key]
+      if diff[key].removed
+        entity[key] = _.union entity[key], diff[key].removed
+      if diff[key].added
+        entity[key] = _.difference entity[key], diff[key].added
+
+    else if _.isObject entity[key]
+      throw new Error "#{key} is an Object, should recurse, but not implemented"
+
+    else if diff[key]
+      entity[key] = diff[key]
+
+  return entity
+
 Meteor.methods
+  restore: (targetState) ->
+    entity = Collections[targetState.entityType].findOne targetState.entity
+
+    revisions = Revisions.find
+      entity: targetState.entity
+      date: $gte: targetState.date
+    ,
+      sort:
+        date: -1
+
+    revisions = revisions.fetch()
+    _.each revisions, (revision) ->
+      diff = revision.diff
+      keys = _.keys diff
+
+      entity = patch entity, diff, keys
+
+    delete entity._id
+    Collections[targetState.entityType].update targetState.entity, $set: entity
+
   assignBestTitle: (title) ->
     achievementId = title.entity
     best = Titles.findOne
@@ -15,7 +51,7 @@ Meteor.methods
   basic: ->
     data =
       user: @userId()
-      date: new Date()
+      date: new Date().getTime()
       score: 0
       hot: 0
       best: 0
@@ -180,7 +216,7 @@ notify = (entity, target) ->
     receivers = [target.user]
 
     Notifications.insert
-      date: new Date()
+      date: new Date().getTime()
       type: 'notification'
       user: entity.user
       entity: entity._id

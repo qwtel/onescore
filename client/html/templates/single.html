@@ -36,8 +36,7 @@ Accomplish
 </nav>
 </div>
 {{/with}}
-{{/if}}
-{{#if equals "page" "accomplishments"}}
+{{else}} {{#if equals "page" "accomplishments"}}
 {{#with accomplishment}}
 <div class='span8'>
 <section class='well'>
@@ -70,8 +69,7 @@ Comments
 </nav>
 </div>
 {{/with}}
-{{/if}}
-{{#if equals "page" "comments"}}
+{{else}} {{#if equals "page" "comments"}}
 <div class='span8'>
 <section class='well'>
 {{#with comment}}
@@ -79,13 +77,20 @@ Comments
 {{/with}}
 </section>
 </div>
-{{/if}}
-{{#if equals "page" "newAchievement"}}
+{{else}} {{#if equals "page" "newAchievement"}}
 <div class='span8'>
 <section class='well'>
 <h5 class='heading line'>New achievement</h5>
 {{> newAchievement}}
 </section>
 </div>
+<div class='span4'>
+<section class='well'>
+{{> userWidget}}
+</section>
+</div>
+{{/if}}
+{{/if}}
+{{/if}}
 {{/if}}
 </template>

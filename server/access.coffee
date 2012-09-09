@@ -47,6 +47,11 @@ Meteor.startup ->
     update: -> return true
     remove: -> return true
 
+  Revisions.allow
+    insert: -> return true
+    update: -> return true
+    remove: -> return true
+
   Achievements.allow
     insert: self
     update: creator

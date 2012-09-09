@@ -8,7 +8,7 @@ _.extend Template.newAchievement, Template.edit,
     else
       data =
         user: Meteor.user()._id
-        date: new Date()
+        date: new Date().getTime()
         score: 0
         hot: 0
         best: 0

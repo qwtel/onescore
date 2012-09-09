@@ -23,19 +23,19 @@ _.extend Template.header,
         return "<img src='https://graph.facebook.com/#{fbid}/picture'/>"
 
   items: ->
-    items = [
+    [
+        name: 'Home'
+        url: 'home'
+        icon: 'home'
+        description: 'View success stories of other players'
+        active: window.isActive 'page', 'home'
+      ,
         name: 'Notifications'
         icon: 'envelope'
         url: 'notifications'
         description: 'See how other users interact with your content'
         active: window.isActive 'page', 'notifications'
         counter: true
-      ,
-        name: 'Home'
-        url: 'home'
-        icon: 'home'
-        description: 'View success stories of other players'
-        active: window.isActive 'page', 'home'
       ,
         name: 'Explore'
         url: 'explore'
@@ -70,13 +70,6 @@ _.extend Template.header,
         cooldown: '30 seconds cooldown'
         active: window.isActive 'page', 'newAchievement'
       ,
-        ###
-        name: 'Inventory'
-        icon: 'glass'
-        url: '#'
-        description: 'Manage your quest items'
-      ,
-        ###
         name: 'Accept (passive)'
         icon: 'star'
         url: '#'
@@ -112,8 +105,6 @@ _.extend Template.header,
         description: 'Allows you to tag content'
         cooldown: '1 second cooldown'
     ]
-
-    return items
 
   isPassive: ->
     return if @passive then 'passive' else ''

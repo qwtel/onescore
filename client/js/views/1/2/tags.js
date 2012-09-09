@@ -16,7 +16,7 @@ _.extend(Template.tags, {
         text = text.replace(/\s/g, '');
         this.tags = _.union(this.tags, [text]);
         collection = this.collection || this.type;
-        window.Collections[collection].update(this._id, {
+        Collections[collection].update(this._id, {
           $set: {
             tags: this.tags
           }
@@ -26,7 +26,6 @@ _.extend(Template.tags, {
       cancel: Session.set('addingTag', null)
     }),
     'click .remove': function(e) {
-      e.stopPropagation();
       return window.Collections[this.entityType].update(this.entity, {
         $pull: {
           tags: this.tag

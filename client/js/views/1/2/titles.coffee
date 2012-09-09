@@ -11,3 +11,5 @@ _.extend Template.titles,
 
     return titles
 
+  user: ->
+    return Meteor.users.findOne @user

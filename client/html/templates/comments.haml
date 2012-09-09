@@ -19,15 +19,13 @@
 
   {{#if comments}}
   .comments
+    .fold
     {{#each comments}}
-    .fold
     {{> comment}}
-    {{else}}
-    .fold
-      {{> noContent}}
     {{/each}}
   {{else}}
-  {{> loading}}
+  .fold
+    {{> noContent}}
   {{/if}}
 
   {{> loadMore}}

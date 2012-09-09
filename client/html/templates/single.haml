@@ -28,9 +28,8 @@
         Accomplish
       </li>
   {{/with}}
-  {{/if}}
 
-  {{#if equals "page" "accomplishments"}}
+  {{else}} {{#if equals "page" "accomplishments"}}
   {{#with accomplishment}}
   .span8
     %section.well 
@@ -59,20 +58,25 @@
         Comments
       </li>
   {{/with}}
-  {{/if}}
 
-  {{#if equals "page" "comments"}}
+  {{else}} {{#if equals "page" "comments"}}
   .span8
     %section.well 
       -#%h5.heading.line Comment
       {{#with comment}}
       {{> singleComment}}
       {{/with}}
-  {{/if}}
 
-  {{#if equals "page" "newAchievement"}}
+  {{else}} {{#if equals "page" "newAchievement"}}
   .span8
     %section.well 
       %h5.heading.line New achievement
       {{> newAchievement}}
+  .span4
+    %section.well 
+      {{> userWidget}}
+
+  {{/if}}
+  {{/if}}
+  {{/if}}
   {{/if}}

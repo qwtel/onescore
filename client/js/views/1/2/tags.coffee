@@ -15,7 +15,7 @@ _.extend Template.tags,
           @tags = _.union @tags, [text]
 
           collection = @collection or @type
-          window.Collections[collection].update @_id,
+          Collections[collection].update @_id,
             $set:
               tags: @tags
 
@@ -25,7 +25,6 @@ _.extend Template.tags,
           Session.set 'addingTag', null
 
     'click .remove': (e) ->
-      e.stopPropagation()
       window.Collections[@entityType].update @entity,
         $pull:
           tags: @tag

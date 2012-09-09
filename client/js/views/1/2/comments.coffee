@@ -40,9 +40,12 @@ _.extend Template.comments,
     sel = Template.comments.select()
     sort = Template.filter.sort()
 
-    Comments.find sel,
+    comments = Comments.find sel,
       sort: sort
 
+    if comments.count() is 0 then return false 
+    return comments
+    
   user: ->
     return Meteor.users.findOne @user
 

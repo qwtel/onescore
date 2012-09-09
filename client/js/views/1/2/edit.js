@@ -64,6 +64,31 @@ _.extend(Template.edit, {
       }
     }
   },
+  items: function() {
+    return [
+      {
+        name: 'Basic',
+        url: "/achievements/" + this._id + "/edit/basic",
+        active: window.isActive('tabtab', 'basic')
+      }, {
+        name: 'Title',
+        url: "/achievements/" + this._id + "/edit/title",
+        active: window.isActive('tabtab', 'title')
+      }, {
+        name: 'Image',
+        url: "/achievements/" + this._id + "/edit/image",
+        active: window.isActive('tabtab', 'image')
+      }, {
+        name: 'Items',
+        url: "/achievements/" + this._id + "/edit/items",
+        active: window.isActive('tabtab', 'items')
+      }, {
+        name: 'Revisions',
+        url: "/achievements/" + this._id + "/edit/revisions",
+        active: window.isActive('tabtab', 'revisions')
+      }
+    ];
+  },
   revisions: function() {
     return Revisions.find({
       entity: this._id

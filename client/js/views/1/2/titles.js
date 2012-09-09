@@ -15,5 +15,8 @@ _.extend(Template.titles, {
       return false;
     }
     return titles;
+  },
+  user: function() {
+    return Meteor.users.findOne(this.user);
   }
 });

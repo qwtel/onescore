@@ -13,17 +13,15 @@ Add a comment
 {{/unless}}
 {{#if comments}}
 <div class='comments'>
-{{#each comments}}
 <div class='fold'></div>
+{{#each comments}}
 {{> comment}}
+{{/each}}
+</div>
 {{else}}
 <div class='fold'>
 {{> noContent}}
 </div>
-{{/each}}
-</div>
-{{else}}
-{{> loading}}
 {{/if}}
 {{> loadMore}}
 </template>

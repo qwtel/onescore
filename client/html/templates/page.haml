@@ -1,12 +1,5 @@
 %template(name='page')
   {{#if equals "page" "home"}}
-  -#.row
-    .span12
-      .hero-unit
-        %h1 Heading
-        %p Tagline
-        %p 
-          %a.btn.btn-primary.btn-large Learn more
   .row
     .span8
       %section.well.home
@@ -26,9 +19,8 @@
         {{> tagFilter}}
       -#%aside.well 
         %h5.heading.line Quest items
-  {{/if}}
 
-  {{#if equals "page" "explore"}}
+  {{else}} {{#if equals "page" "explore"}}
   .row
     .span4
       %aside.well.hidden-phone
@@ -44,9 +36,8 @@
         %h5.heading.line Explore
         {{> filter}}
         {{> achievements}}
-  {{/if}}
 
-  {{#if equals "page" "ladder"}}
+  {{else}} {{#if equals "page" "ladder"}}
   .row
     .span4
       %aside.well.hidden-phone
@@ -62,9 +53,8 @@
         .clearfix
         .fold
         {{> ladder }}
-  {{/if}}
 
-  {{#if equals "page" "profile"}}
+  {{else}} {{#if equals "page" "profile"}}
   .row
     .span12
       %section.well 
@@ -99,35 +89,8 @@
         .clearfix
         {{> favourites}}
         {{/if}}
-  {{/if}}
 
-  {{#if session "single"}}
-  .row
-    {{> single}}
-  {{/if}}
-
-  {{#if equals "page" "activities"}}
-  .row
-    .span12
-      .well 
-        {{> activities }}
-  {{/if}}
-
-  {{#if equals "page" "slides"}}
-  .row
-    .span12
-      .well 
-        {{> slideshows }}
-  {{/if}}
-
-  {{#if equals "page" "feedback"}}
-  .row
-    .span12 
-      .well
-        %h3 Y U NO MAKE BETTER?
-  {{/if}}
-
-  {{#if equals "page" "notifications"}}
+  {{else}} {{#if equals "page" "notifications"}}
   .row
     .span8
       %section.well.notifications
@@ -145,4 +108,14 @@
         {{> miniQuestLog}}
       -#%aside.well 
         %h5.heading.line Quest items
+
+  {{else}} {{#if session "single"}}
+  .row
+    {{> single}}
+
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
   {{/if}}

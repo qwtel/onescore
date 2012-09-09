@@ -1,5 +1,8 @@
 <template name='titles'>
+{{> filter}}
+<div class='clearfix'></div>
 {{#if titles}}
+<div class='fold'>
 <table class='table titles'>
 <thead>
 <tr>
@@ -18,14 +21,17 @@
 {{title}}
 </td>
 <td>
-{{> user}}
+<span class='pull-right'>{{#with user}} {{> user}} {{/with}}</span>
 </td>
 </tr>
 {{/each}}
 </tbody>
 </table>
+</div>
 {{else}}
+<div class='fold'>
 {{> noContent}}
+</div>
 {{/if}}
 {{> loadMore}}
 </template>

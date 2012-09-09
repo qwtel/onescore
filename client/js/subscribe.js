@@ -8,17 +8,13 @@ Meteor.subscribe('votes');
 
 Meteor.subscribe('favourites');
 
+Meteor.subscribe('achievements');
+
 Meteor.subscribe('accomplishments');
 
 Meteor.subscribe('titles');
 
-Meteor.autosubscribe(function() {
-  var batch, sel, sort;
-  sel = Template.filter.select();
-  sort = Template.filter.sort();
-  batch = Session.get('skip');
-  return Meteor.subscribe('achievements', sel, sort, batch);
-});
+Meteor.autosubscribe(function() {});
 
 Meteor.autosubscribe(function() {
   var batch;

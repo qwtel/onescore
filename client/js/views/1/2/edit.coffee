@@ -47,6 +47,29 @@ _.extend Template.edit,
     else
       return if 'Random' is @name then 'selected' else ''
 
+  items: ->
+    [
+        name: 'Basic'
+        url: "/achievements/#{@_id}/edit/basic"
+        active: window.isActive 'tabtab', 'basic'
+      ,
+        name: 'Title'
+        url: "/achievements/#{@_id}/edit/title"
+        active: window.isActive 'tabtab', 'title'
+      ,
+        name: 'Image'
+        url: "/achievements/#{@_id}/edit/image"
+        active: window.isActive 'tabtab', 'image'
+      ,
+        name: 'Items'
+        url: "/achievements/#{@_id}/edit/items"
+        active: window.isActive 'tabtab', 'items'
+      ,
+        name: 'Revisions'
+        url: "/achievements/#{@_id}/edit/revisions"
+        active: window.isActive 'tabtab', 'revisions'
+    ] 
+
   revisions: ->
     Revisions.find
       entity: @_id
