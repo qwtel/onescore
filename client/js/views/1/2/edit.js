@@ -37,6 +37,7 @@ _.extend(Template.edit, {
         this.tags = [];
       }
       data.tags = this.tags;
+      data.lastModifiedBy = Meteor.user()._id;
       Achievements.update(this._id, {
         $set: data
       });

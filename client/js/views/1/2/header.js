@@ -122,11 +122,16 @@ _.extend(Template.header, {
     }
   },
   numNotifications: function() {
+    var user;
     if (Meteor.user()) {
+      user = Meteor.user()._id;
       return Notifications.find({
-        receivers: Meteor.user()._id,
+        user: {
+          $ne: user
+        },
+        receivers: user,
         seen: {
-          $ne: Meteor.user()._id
+          $ne: user
         }
       }).count();
     }

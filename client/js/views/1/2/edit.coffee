@@ -36,7 +36,9 @@ _.extend Template.edit,
       unless @tags then @tags = []
       data.tags = @tags
 
+      data.lastModifiedBy = Meteor.user()._id
       Achievements.update @_id, $set: data
+
       window.Router.navigate "achievements/#{@_id}", true
 
   selected: (category) ->

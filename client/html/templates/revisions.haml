@@ -5,6 +5,7 @@
       %tr 
         %th.muted Difference
         %th.muted Time
+        %th.muted User
         %th.muted Restore
     %tbody 
       {{#each revisions}}
@@ -33,6 +34,8 @@
           {{/with}}
         %td
           {{timeago date}}
+        %td
+          {{#with user}} {{> user}} {{/with}}
         %td
           %button.restore.btn.btn-mini.pull-right Restore
       {{/each}}

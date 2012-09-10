@@ -1,17 +1,12 @@
 %template(name='questLog')
   .clearfix
 
-  {{#if favourites}}
   {{#each favourites}}
   .fold
     {{#with achievement}} {{> achievement}} {{/with}}
   {{else}}
   .fold
-    {{> loading}}
-  {{/each}}
-  {{else}}
-  .fold
     {{> noContent}}
-  {{/if}}
+  {{/each}}
 
   {{> loadMore}}

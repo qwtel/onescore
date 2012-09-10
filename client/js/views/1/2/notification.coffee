@@ -21,6 +21,9 @@ _.extend Template.notification,
   reply: (type) ->
     type is 'comment'
 
+  isRevision: (type) ->
+    type is 'revision'
+
   your: ->
     c = Collections[@targetType].findOne @target
     if c and c.user is Meteor.user()._id

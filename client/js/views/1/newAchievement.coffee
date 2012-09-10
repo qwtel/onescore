@@ -14,9 +14,11 @@ _.extend Template.newAchievement, Template.edit,
         best: 0
         value: 0
         comments: 0
+        lastModifiedBy: Meteor.user()._id
+        category: 'Random'
+        type: 'achievement'
+        collection: 'scratchpad'
 
-      data.type = 'achievement'
-      data.collection = 'scratchpad'
       id = Scratchpad.insert data
 
     return Scratchpad.findOne id
@@ -42,12 +44,9 @@ Template.newAchievement.events = _.extend {}, Template.edit.events,
     Scratchpad.update @_id, $set: tags: tags
 
   'click .create': (e) ->
-    defaults =
-      category: 'random'
-
     data = Scratchpad.findOne @_id
-    data = _.defaults data, defaults
     delete data._id
+    data.collection = 'achievements'
     id = Achievements.insert data
 
     if @title

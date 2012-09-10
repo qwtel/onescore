@@ -1,7 +1,9 @@
 %template(name='header')
-  %a.brand.nav-img.pull-left.nav-item(href="/notifications")
   {{#if numNotifications}}
+  %a.brand.nav-img.pull-left.nav-item(href="/notifications")
   %a.label.notify(href="/notifications") {{numNotifications}}
+  {{else}}
+  %a.brand.nav-img.pull-left.nav-item(href="/home")
   {{/if}}
 
   {{#if currentUser}}
@@ -33,17 +35,9 @@
     {{/each}}
     %li.divider-vertical
 
-    -#<li class="{{isActive "page" "profile"}}">
-    -#-#%a.nav-item(href="/{{currentUser.username}}") Profile
-    -#%a.nav-item(href="/{{currentUser.username}}")
-    -#  %i.icon-user
-    -#</li>
-
   %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
     {{{pic}}}
-  .score.pull-right.hidden-phone<
-    -#%span.dollar
-    %span.value {{currentUser.score}}
+
   {{else}}
   .login.pull-right
     {{> loginButtons}}

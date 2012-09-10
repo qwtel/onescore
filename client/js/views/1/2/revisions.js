@@ -21,6 +21,9 @@ _.extend(Template.revisions, {
       return revisions;
     }
   },
+  user: function() {
+    return Meteor.users.findOne(this.user);
+  },
   tagItems: function() {
     var tagItems,
       _this = this;

@@ -17,6 +17,8 @@ patch = (entity, diff, keys) ->
 Meteor.methods
   restore: (targetState) ->
     entity = Collections[targetState.entityType].findOne targetState.entity
+    entity.lastModifiedBy = @userId()
+    notify targetState, entity
 
     revisions = Revisions.find
       entity: targetState.entity
@@ -34,6 +36,7 @@ Meteor.methods
 
     delete entity._id
     Collections[targetState.entityType].update targetState.entity, $set: entity
+
 
   assignBestTitle: (title) ->
     achievementId = title.entity
@@ -149,12 +152,17 @@ Meteor.methods
       entity: data.entity
 
     if acc
+      acc.tags or (acc.tags = [])
+      data.tags or (data.tags = [])
+      tags = _.union acc.tags, data.tags
+
       Accomplishments.update acc._id,
         $set:
           story: data.story
-          tags: _.union acc.tags, data.tags
+          tags: tags
 
       accomplishId = acc._id
+
     else
       basic = Meteor.call 'basic'
       _.extend data, basic

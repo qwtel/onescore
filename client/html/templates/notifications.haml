@@ -1,16 +1,12 @@
 %template(name='notifications')
   %table.notifications.ladder.table
-    -#%thead 
-      %tr 
-        %th
-          %h6 Notifications
     %tbody 
       {{#each notifications}}
       %tr 
         %td
           {{> notification}}
       {{else}}
-      {{> loading}}
+      {{> noContent}}
       {{/each}}
 
   {{> loadMore}}

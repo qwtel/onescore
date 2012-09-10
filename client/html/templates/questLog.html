@@ -1,19 +1,13 @@
 <template name='questLog'>
 <div class='clearfix'></div>
-{{#if favourites}}
 {{#each favourites}}
 <div class='fold'>
 {{#with achievement}} {{> achievement}} {{/with}}
 </div>
 {{else}}
 <div class='fold'>
-{{> loading}}
-</div>
-{{/each}}
-{{else}}
-<div class='fold'>
 {{> noContent}}
 </div>
-{{/if}}
+{{/each}}
 {{> loadMore}}
 </template>

@@ -65,9 +65,11 @@ Meteor.startup ->
 
       if _.size(diff) > 0
         data =
+          type: 'revision'
           entity: newDocument._id
           entityType: newDocument.type
           date: new Date().getTime()
+          user: newDocument.lastModifiedBy
           diff: diff
 
         Revisions.insert data
@@ -79,9 +81,11 @@ Meteor.startup ->
 
       if _.size(diff) > 0
         data =
+          type: 'revision'
           entity: newDocument._id
           entityType: newDocument.type
           date: new Date().getTime()
+          user: newDocument.lastModifiedBy
           diff: diff
 
       Revisions.insert data

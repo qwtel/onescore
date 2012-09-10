@@ -5,6 +5,7 @@
 <tr>
 <th class='muted'>Difference</th>
 <th class='muted'>Time</th>
+<th class='muted'>User</th>
 <th class='muted'>Restore</th>
 </tr>
 </thead>
@@ -37,6 +38,9 @@
 </td>
 <td>
 {{timeago date}}
+</td>
+<td>
+{{#with user}} {{> user}} {{/with}}
 </td>
 <td>
 <button class='restore btn btn-mini pull-right'>Restore</button>

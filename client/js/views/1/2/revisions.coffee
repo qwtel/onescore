@@ -12,6 +12,9 @@ _.extend Template.revisions,
 
     if revisions.count() is 0 then false else revisions
 
+  user: ->
+    return Meteor.users.findOne @user
+
   tagItems: ->
     tagItems = []
     _.each @tags.added, (tag) =>

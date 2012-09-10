@@ -1,12 +1,6 @@
 %template(name='miniQuestLog')
-  {{#if favourites}}
   {{#each favourites}}
-
   {{#with achievement}} {{> miniAchievement}} {{/with}}
-
-  {{else}}
-  {{> loading}}
-  {{/each}}
   {{else}}
   {{> noContent}}
-  {{/if}}
+  {{/each}}

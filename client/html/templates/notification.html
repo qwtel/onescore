@@ -13,6 +13,9 @@ on {{your}}
 {{#if isTitle entityType}}
 suggested a title for {{your}}
 {{/if}}
+{{#if isRevision entityType}}
+restored {{your}}
+{{/if}}
 {{#if vote entityType}}
 voted for {{your}}
 {{/if}}
@@ -26,6 +29,9 @@ accomplished
 your title '{{title}}'
 {{else}}
 <a href='/{{targetType}}s/{{target}}'>{{targetType}}</a>
+{{/if}}
+{{#if isRevision entityType}}
+to a previous version
 {{/if}}
 - {{timeago date}}
 </template>

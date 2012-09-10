@@ -94,9 +94,11 @@ Meteor.startup(function() {
       diff = computeDifference(newDocument, oldDocument, keys);
       if (_.size(diff) > 0) {
         data = {
+          type: 'revision',
           entity: newDocument._id,
           entityType: newDocument.type,
           date: new Date().getTime(),
+          user: newDocument.lastModifiedBy,
           diff: diff
         };
         return Revisions.insert(data);
@@ -110,9 +112,11 @@ Meteor.startup(function() {
       diff = computeDifference(newDocument, oldDocument, keys);
       if (_.size(diff) > 0) {
         data = {
+          type: 'revision',
           entity: newDocument._id,
           entityType: newDocument.type,
           date: new Date().getTime(),
+          user: newDocument.lastModifiedBy,
           diff: diff
         };
       }

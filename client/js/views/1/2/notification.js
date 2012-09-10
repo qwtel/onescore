@@ -26,6 +26,9 @@ _.extend(Template.notification, {
   reply: function(type) {
     return type === 'comment';
   },
+  isRevision: function(type) {
+    return type === 'revision';
+  },
   your: function() {
     var c;
     c = Collections[this.targetType].findOne(this.target);

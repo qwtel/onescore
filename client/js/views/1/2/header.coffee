@@ -111,7 +111,9 @@ _.extend Template.header,
 
   numNotifications: ->
     if Meteor.user()
+      user = Meteor.user()._id
       Notifications.find(
-        receivers: Meteor.user()._id
-        seen: $ne: Meteor.user()._id
+        user: $ne: user
+        receivers: user
+        seen: $ne: user
       ).count()

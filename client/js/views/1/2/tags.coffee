@@ -18,6 +18,7 @@ _.extend Template.tags,
           Collections[collection].update @_id,
             $set:
               tags: @tags
+              lastModifiedBy: Meteor.user()._id
 
           Session.set 'addingTag', null
 
@@ -28,6 +29,8 @@ _.extend Template.tags,
       window.Collections[@entityType].update @entity,
         $pull:
           tags: @tag
+        $set:
+          lastModifiedBy: Meteor.user()._id
 
   tagObjects: ->
     tagObjects = []

@@ -1,7 +1,9 @@
 <template name='header'>
-<a class='brand nav-img pull-left nav-item' href='/notifications'></a>
 {{#if numNotifications}}
+<a class='brand nav-img pull-left nav-item' href='/notifications'></a>
 <a class='label notify' href='/notifications'>{{numNotifications}}</a>
+{{else}}
+<a class='brand nav-img pull-left nav-item' href='/home'></a>
 {{/if}}
 {{#if currentUser}}
 <nav class='nav'>
@@ -18,7 +20,6 @@
 <a class='profile-pic nav-item nav-img pull-right' href='/{{currentUser.username}}'>
 {{{pic}}}
 </a>
-<div class='score pull-right hidden-phone'><span class='value'>{{currentUser.score}}</span></div>
 {{else}}
 <div class='login pull-right'>
 {{> loginButtons}}

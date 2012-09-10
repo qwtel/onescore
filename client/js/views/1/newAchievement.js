@@ -16,10 +16,12 @@ _.extend(Template.newAchievement, Template.edit, {
         hot: 0,
         best: 0,
         value: 0,
-        comments: 0
+        comments: 0,
+        lastModifiedBy: Meteor.user()._id,
+        category: 'Random',
+        type: 'achievement',
+        collection: 'scratchpad'
       };
-      data.type = 'achievement';
-      data.collection = 'scratchpad';
       id = Scratchpad.insert(data);
     }
     return Scratchpad.findOne(id);
@@ -55,13 +57,10 @@ Template.newAchievement.events = _.extend({}, Template.edit.events, {
     });
   },
   'click .create': function(e) {
-    var data, defaults, id, titleData;
-    defaults = {
-      category: 'random'
-    };
+    var data, id, titleData;
     data = Scratchpad.findOne(this._id);
-    data = _.defaults(data, defaults);
     delete data._id;
+    data.collection = 'achievements';
     id = Achievements.insert(data);
     if (this.title) {
       titleData = {

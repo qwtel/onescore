@@ -23,6 +23,8 @@ Meteor.methods({
   restore: function(targetState) {
     var entity, revisions;
     entity = Collections[targetState.entityType].findOne(targetState.entity);
+    entity.lastModifiedBy = this.userId();
+    notify(targetState, entity);
     revisions = Revisions.find({
       entity: targetState.entity,
       date: {
@@ -175,16 +177,19 @@ Meteor.methods({
     return calculateScore(Collections[data.entityType], data.entity);
   },
   accomplish: function(data) {
-    var acc, accomplishId, accomplishment, achievement, basic;
+    var acc, accomplishId, accomplishment, achievement, basic, tags;
     acc = Accomplishments.findOne({
       user: this.userId(),
       entity: data.entity
     });
     if (acc) {
+      acc.tags || (acc.tags = []);
+      data.tags || (data.tags = []);
+      tags = _.union(acc.tags, data.tags);
       Accomplishments.update(acc._id, {
         $set: {
           story: data.story,
-          tags: _.union(acc.tags, data.tags)
+          tags: tags
         }
       });
       accomplishId = acc._id;

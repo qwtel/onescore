@@ -18,7 +18,8 @@ _.extend(Template.tags, {
         collection = this.collection || this.type;
         Collections[collection].update(this._id, {
           $set: {
-            tags: this.tags
+            tags: this.tags,
+            lastModifiedBy: Meteor.user()._id
           }
         });
         return Session.set('addingTag', null);
@@ -29,6 +30,9 @@ _.extend(Template.tags, {
       return window.Collections[this.entityType].update(this.entity, {
         $pull: {
           tags: this.tag
+        },
+        $set: {
+          lastModifiedBy: Meteor.user()._id
         }
       });
     }
