@@ -7723,13 +7723,16 @@ a.badge:hover {
   }
 }
 @media (max-width: 979px) {
-  body {
-    padding-top: 0;
-  }
-  .navbar-fixed-top,
-  .navbar-fixed-bottom {
-    position: static;
-  }
+  /*
+    body {
+      padding-top: 0;
+    }
+    // Unfix the navbar
+    .navbar-fixed-top,
+    .navbar-fixed-bottom {
+      position: static;
+    }
+    */
   .navbar-fixed-top {
     margin-bottom: 18px;
   }
