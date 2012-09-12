@@ -14,6 +14,11 @@ _.extend(Template.achievement, {
         entity: this._id
       };
       return Meteor.call('favourite', data);
+    },
+    'click .tag': function(e) {
+      var tag;
+      tag = $(e.currentTarget).data('tag');
+      return Session.push('tagFilter', tag);
     }
   },
   faved: function() {

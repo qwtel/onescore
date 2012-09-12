@@ -187,10 +187,6 @@ h1, h2, h3, h4, h5, h6
     border: 1px solid rgba(255,255,255,0.25)
     @include box-sizing(border-box)
 
-.navbar:hover
-  .label
-    display: inline
-
 .heading
   text-transform: uppercase
   font-size: 12px
@@ -270,6 +266,8 @@ h1, h2, h3, h4, h5, h6
     margin-left: 2*$padding + 5px
 
   .cutoff
+    margin: 0
+    border-top: 0
     border-bottom: 1px dashed #ddd
 
   .text-wrapper

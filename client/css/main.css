@@ -148,9 +148,6 @@ h1, h2, h3, h4, h5, h6 {
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
 
-.navbar:hover .label {
-  display: inline; }
-
 .heading {
   text-transform: uppercase;
   font-size: 12px;
@@ -216,6 +213,8 @@ h1, h2, h3, h4, h5, h6 {
 .comments .nested {
   margin-left: 33px; }
 .comments .cutoff {
+  margin: 0;
+  border-top: 0;
   border-bottom: 1px dashed #dddddd; }
 .comments .text-wrapper .comment-text {
   margin-bottom: 20px; }

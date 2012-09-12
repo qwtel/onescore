@@ -1,5 +1,5 @@
 %template(name='accomplish')
-  .linebreak
+  -#.linebreak
     %nav.nav.nav-tabs 
       <li class="{{isActive "story" "text"}}">
       %a(href="/achievements/{{_id}}/accomplish/text")
@@ -56,23 +56,19 @@
   {{/if}}
 
   {{else}}
-  -#.btn-toolbar
+  .btn-toolbar
     .btn-group
-      %a(href="/achievements/{{_id}}/accomplish/text" class="btn btn-large" title="Text")
+      {{#if accomplishment}}
+      %a.btn.btn-danger.btn-large.uncreate Unaccomplish
+      {{else}}
+      %a.btn.btn-success.btn-large.create Accomplish
+      {{/if}}
+      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/text" title="Text")
         %i.icon-align-left
-      %a(href="/achievements/{{_id}}/accomplish/picture" class="btn btn-large" title="Picture")
+      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/picture" title="Picture")
         %i.icon-picture
-      %a(href="/achievements/{{_id}}/accomplish/video" class="btn btn-large" title="Video")
+      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/video" title="Video")
         %i.icon-film
-      %a(href="/achievements/{{_id}}/accomplish/link" class="btn btn-large" title="Link")
+      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/link" title="Link")
         %i.icon-bookmark
-      -#%button.btn(title="Audio") 
-        %i.icon-headphones
-
-  {{#if accomplishment}}
-  %a.btn.btn-danger.btn-large.uncreate Unaccomplish
-  {{else}}
-  %a.btn.btn-success.btn-large.create Accomplish
   {{/if}}
-  {{/if}}
-

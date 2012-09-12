@@ -7,6 +7,18 @@
   {{/if}}
 
   {{#if currentUser}}
+
+  -#%a.btn.btn-navbar(data-toggle="collapse" data-target=".nav-collapse")
+    %span.icon-bar
+    %span.icon-bar
+    %span.icon-bar
+
+  %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
+    {{{pic}}}
+
+  %span.score.pull-right 
+    %span.value {{currentUser.score}} 
+
   %nav.nav
     -#%li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
@@ -34,9 +46,6 @@
       -#{{/if}}
     {{/each}}
     %li.divider-vertical
-
-  %a.profile-pic.nav-item.nav-img.pull-right(href="/{{currentUser.username}}")
-    {{{pic}}}
 
   {{else}}
   .login.pull-right

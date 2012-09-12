@@ -5,10 +5,12 @@ _.extend Template.accomplish,
         e.stopPropagation()
 
         story = $("#editor-#{@_id}").val()
+        @tags or (@tags = [])
         data =
           entity: @_id
           entityType: 'achievement'
           story: story
+          tags: @tags
 
         Meteor.call 'accomplish', data, (error, result) ->
           window.Router.navigate "/accomplishments/#{result}", true

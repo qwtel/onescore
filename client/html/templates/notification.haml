@@ -7,25 +7,26 @@
     {{else}}
     commented
     {{/if}}
-  on {{your}}
+  %span on {{your}}
   {{/if}}
 
   {{#if isTitle entityType}}
-  suggested a title for {{your}}
+  %span suggested a
+  %a(href="/achievements/{{target}}/edit/title") title
+  %span for your
   {{/if}}
 
   {{#if isRevision entityType}}
-  restored {{your}}
+  %span restored {{your}}
   {{/if}}
 
   {{#if vote entityType}}
-  voted for {{your}}
+  %span voted for {{your}}
   {{/if}}
 
   {{#if accomplishment entityType}}
-  %a(href="/accomplishments/{{entity}}")
-    accomplished
-  {{your}}
+  %a(href="/accomplishments/{{entity}}") accomplished
+  %span {{your}}
   {{/if}}
 
   -#{{entity}}
@@ -33,13 +34,13 @@
   -#{{on}}
   -#{{target}}
   {{#if isTitle targetType}}
-  your title '{{title}}'
+  %span your title
   {{else}}
   %a(href="/{{targetType}}s/{{target}}") {{targetType}}
   {{/if}}
 
   {{#if isRevision entityType}}
-  to a previous version
+  %span to a previous version
   {{/if}}
 
   \- {{timeago date}}

@@ -10,7 +10,9 @@ Meteor.subscribe 'achievements'
 
 Meteor.subscribe 'accomplishments'
 
-Meteor.subscribe 'titles'
+Meteor.autosubscribe ->
+  id = Session.get 'single'
+  Meteor.subscribe 'titles', id
 
 Meteor.autosubscribe ->
   #sel = Template.filter.select()

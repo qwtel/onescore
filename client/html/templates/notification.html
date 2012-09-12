@@ -8,30 +8,30 @@ replied
 commented
 {{/if}}
 </a>
-on {{your}}
+<span>on {{your}}</span>
 {{/if}}
 {{#if isTitle entityType}}
-suggested a title for {{your}}
+<span>suggested a</span>
+<a href='/achievements/{{target}}/edit/title'>title</a>
+<span>for your</span>
 {{/if}}
 {{#if isRevision entityType}}
-restored {{your}}
+<span>restored {{your}}</span>
 {{/if}}
 {{#if vote entityType}}
-voted for {{your}}
+<span>voted for {{your}}</span>
 {{/if}}
 {{#if accomplishment entityType}}
-<a href='/accomplishments/{{entity}}'>
-accomplished
-</a>
-{{your}}
+<a href='/accomplishments/{{entity}}'>accomplished</a>
+<span>{{your}}</span>
 {{/if}}
 {{#if isTitle targetType}}
-your title '{{title}}'
+<span>your title</span>
 {{else}}
 <a href='/{{targetType}}s/{{target}}'>{{targetType}}</a>
 {{/if}}
 {{#if isRevision entityType}}
-to a previous version
+<span>to a previous version</span>
 {{/if}}
 - {{timeago date}}
 </template>

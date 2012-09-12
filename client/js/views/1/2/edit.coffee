@@ -19,7 +19,7 @@ _.extend Template.edit,
     'change .description': (e) ->
       @description = $("#description-#{@_id}").val()
 
-      unless @tags then @tags = []
+      @tags or (@tags = [])
       @tags = _.union @tags, window.findTags(@description)
 
       Session.toggle 'redraw'
@@ -33,7 +33,7 @@ _.extend Template.edit,
         if field?
           data[field] = $t.val()
 
-      unless @tags then @tags = []
+      @tags or (@tags = [])
       data.tags = @tags
 
       data.lastModifiedBy = Meteor.user()._id

@@ -11,6 +11,10 @@ _.extend Template.achievement,
 
       Meteor.call 'favourite', data
 
+    'click .tag': (e) ->
+      tag = $(e.currentTarget).data 'tag'
+      Session.push 'tagFilter', tag
+
   faved: ->
     if Meteor.user()
       fav = Favourites.findOne

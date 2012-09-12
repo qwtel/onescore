@@ -16,9 +16,7 @@ _.extend(Template.edit, {
     },
     'change .description': function(e) {
       this.description = $("#description-" + this._id).val();
-      if (!this.tags) {
-        this.tags = [];
-      }
+      this.tags || (this.tags = []);
       this.tags = _.union(this.tags, window.findTags(this.description));
       return Session.toggle('redraw');
     },
@@ -33,9 +31,7 @@ _.extend(Template.edit, {
           return data[field] = $t.val();
         }
       });
-      if (!this.tags) {
-        this.tags = [];
-      }
+      this.tags || (this.tags = []);
       data.tags = this.tags;
       data.lastModifiedBy = Meteor.user()._id;
       Achievements.update(this._id, {

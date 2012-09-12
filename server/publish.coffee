@@ -7,8 +7,8 @@ Meteor.publish 'comments', ->
 Meteor.publish 'achievements', ->
   Achievements.find()
 
-Meteor.publish 'titles', ->
-  Titles.find() #entity: entity
+Meteor.publish 'titles', (entity) ->
+  Titles.find entity: entity
 
 Meteor.publish 'votes', ->
   Votes.find()# user: @userId()

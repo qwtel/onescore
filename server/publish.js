@@ -12,8 +12,10 @@ Meteor.publish('achievements', function() {
   return Achievements.find();
 });
 
-Meteor.publish('titles', function() {
-  return Titles.find();
+Meteor.publish('titles', function(entity) {
+  return Titles.find({
+    entity: entity
+  });
 });
 
 Meteor.publish('votes', function() {
