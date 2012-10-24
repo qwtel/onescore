@@ -3,17 +3,18 @@ _.extend Template.accomplishModal,
   #  'click *': (e) ->
   #    $('#modal').modal 'hide'
   #
+
   achievement: ->
     id = Session.get 'modal'
     if id
       Achievements.findOne id
 
-  callback: ->
-    Meteor.setTimeout =>
-      $('#modal').modal()
-        #backdrop: false
-      $('#modal').on 'hidden', ->
-        Session.set 'modal', null
-    ,
-      0
-    return ''
+  rendered: ->
+    id = Session.get 'modal'
+    if id
+      achievement = Achievements.findOne id
+      if achievement
+        $('#modal').modal()
+          #backdrop: false
+        $('#modal').on 'hidden', ->
+          Session.set 'modal', null

@@ -17,7 +17,7 @@ patch = (entity, diff, keys) ->
 Meteor.methods
   restore: (targetState) ->
     entity = Collections[targetState.entityType].findOne targetState.entity
-    entity.lastModifiedBy = @userId()
+    entity.lastModifiedBy = @userId
     notify targetState, entity
 
     revisions = Revisions.find
@@ -53,7 +53,7 @@ Meteor.methods
 
   basic: ->
     data =
-      user: @userId()
+      user: @userId
       date: new Date().getTime()
       score: 0
       hot: 0
@@ -63,7 +63,7 @@ Meteor.methods
 
   favourite: (data) ->
     fav = Favourites.findOne
-      user: @userId()
+      user: @userId
       entity: data.entity
     
     if fav
@@ -73,7 +73,7 @@ Meteor.methods
     else
       Favourites.insert
         type: 'favourite'
-        user: @userId()
+        user: @userId
         entity: data.entity
         active: true
 
@@ -91,7 +91,7 @@ Meteor.methods
 
   comment: (data) ->
     comment = Comments.findOne data._id
-    if comment and comment.user is @userId()
+    if comment and comment.user is @userId
       Comments.update data._id,
         $set: text: data.text
 
@@ -131,7 +131,7 @@ Meteor.methods
     _.extend data, basic
     
     vote = Votes.findOne
-      user: @userId()
+      user: @userId
       entity: data.entity
     
     if vote
@@ -148,7 +148,7 @@ Meteor.methods
 
   accomplish: (data) ->
     acc = Accomplishments.findOne
-      user: @userId()
+      user: @userId
       entity: data.entity
 
     if acc
@@ -172,7 +172,7 @@ Meteor.methods
 
       # update user score
       achievement = Achievements.findOne data.entity
-      Meteor.users.update @userId(),
+      Meteor.users.update @userId,
         $inc:
           score: achievement.value
 
@@ -182,13 +182,12 @@ Meteor.methods
 
     return accomplishId
  
-  # HACK: this will cause problems at num achievements > some constant
   updateUserScoreComplete: ->
     unless @is_simulation
       a = Achievements.find
         $where: "
           return db.accomplishments.findOne({
-            user: '#{@userId()}',
+            user: '#{@userId}',
             entity: this._id
           }) "
       ,
@@ -201,7 +200,7 @@ Meteor.methods
         return memo + num
       , 0
       
-      Meteor.users.update @userId(),
+      Meteor.users.update @userId,
         $set:
           score: score
 

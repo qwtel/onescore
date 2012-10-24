@@ -1,19 +1,17 @@
 _.extend Template.header,
-  events:
+  events: ->
     'click .category .nav-item': (e) ->
       $t = $(e.target).closest '.category'
       category = $t.data 'category'
       Session.set 'category', category
 
-  callback: ->
-    Meteor.setTimeout =>
-      $('.popover').remove()
-      $('.spell').popover
-        placement: 'bottom'
-        trigger: 'hover'
-    ,
-      0
-    return ''
+  rendered: ->
+    # XXX: Does this create a memory leak?
+    $('.popover').remove()
+
+    $('.spell').popover
+      placement: 'bottom'
+      trigger: 'hover'
 
   pic: ->
     user = Meteor.user()

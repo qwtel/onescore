@@ -32,7 +32,7 @@ Meteor.publish('accomplishments', function() {
 
 Meteor.publish('notifications', function(batch) {
   return Notifications.find({
-    receivers: this.userId()
+    receivers: this.userId
   }, {
     sort: {
       date: -1

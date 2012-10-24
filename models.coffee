@@ -66,9 +66,4 @@ class Comment extends Model
 class Title extends Model
   type: 'title'
 
-m = new Model
-  some: 'randomAtributes'
-  random: 123
-  attributes: 'asdf'
 a = new Achievement
-v = new Vote

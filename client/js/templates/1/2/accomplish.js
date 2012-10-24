@@ -6,7 +6,7 @@ _.extend(Template.accomplish, {
       var data, story;
       if (!e.isPropagationStopped()) {
         e.stopPropagation();
-        story = $("#editor-" + this._id).val();
+        story = $("#editor").val();
         this.tags || (this.tags = []);
         data = {
           entity: this._id,
@@ -24,6 +24,7 @@ _.extend(Template.accomplish, {
       return Accomplishments.remove(this._id);
     },
     'click a.editor': function(e) {
+      console.log('test');
       $('.editor').hide();
       return $('.preview').show();
     },
@@ -51,15 +52,11 @@ _.extend(Template.accomplish, {
     }
     return '';
   },
-  callback: function() {
-    var _this = this;
-    Meteor.setTimeout(function() {
-      return $("#editor-" + _this._id).markdownEditor({
-        toolbarLoc: $("#toolbar-" + _this._id),
-        toolbar: "default",
-        preview: $("#preview-" + _this._id)
-      });
-    }, 0);
-    return '';
+  rendered: function() {
+    return $('#editor').markdownEditor({
+      toolbarLoc: $("#toolbar"),
+      toolbar: "default",
+      preview: $("#preview")
+    });
   }
 });

@@ -1,15 +1,16 @@
 <template name='accomplish'>
 {{#if session "story"}}
 {{#if equals "story" "text"}}
+{{#constant}}
 <div class='editor'>
-<div id='toolbar-{{_id}}'></div>
-<textarea class='ta100' id='editor-{{_id}}' rows='10'>{{story}}</textarea>
+<div id='toolbar'></div>
+<textarea class='ta100' id='editor' rows='10'>{{story}}</textarea>
 <span class='help-block'><strong>HINT:</strong>
 You can style your post using
 <a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
 .</span>
 </div>
-<div class='preview hide' id='preview-{{_id}}'></div>
+<div class='preview hide' id='preview'></div>
 <footer class='form-actions'>
 {{#if accomplishment}}
 <a class='btn btn-large create' style='margin-left: -20px'>Save</a>
@@ -19,7 +20,7 @@ You can style your post using
 <a class='btn btn-large editor'>Preview</a>
 <a class='btn btn-large preview hide'>Edit</a>
 </footer>
-{{callback}}
+{{/constant}}
 {{/if}}
 {{else}}
 <div class='btn-toolbar'>

@@ -23,7 +23,7 @@ Meteor.methods({
   restore: function(targetState) {
     var entity, revisions;
     entity = Collections[targetState.entityType].findOne(targetState.entity);
-    entity.lastModifiedBy = this.userId();
+    entity.lastModifiedBy = this.userId;
     notify(targetState, entity);
     revisions = Revisions.find({
       entity: targetState.entity,
@@ -68,7 +68,7 @@ Meteor.methods({
   basic: function() {
     var data;
     return data = {
-      user: this.userId(),
+      user: this.userId,
       date: new Date().getTime(),
       score: 0,
       hot: 0,
@@ -80,7 +80,7 @@ Meteor.methods({
   favourite: function(data) {
     var fav;
     fav = Favourites.findOne({
-      user: this.userId(),
+      user: this.userId,
       entity: data.entity
     });
     if (fav) {
@@ -92,7 +92,7 @@ Meteor.methods({
     } else {
       return Favourites.insert({
         type: 'favourite',
-        user: this.userId(),
+        user: this.userId,
         entity: data.entity,
         active: true
       });
@@ -113,7 +113,7 @@ Meteor.methods({
   comment: function(data) {
     var basic, comment, id, parent, target;
     comment = Comments.findOne(data._id);
-    if (comment && comment.user === this.userId()) {
+    if (comment && comment.user === this.userId) {
       return Comments.update(data._id, {
         $set: {
           text: data.text
@@ -160,7 +160,7 @@ Meteor.methods({
     basic = Meteor.call('basic');
     _.extend(data, basic);
     vote = Votes.findOne({
-      user: this.userId(),
+      user: this.userId,
       entity: data.entity
     });
     if (vote) {
@@ -179,7 +179,7 @@ Meteor.methods({
   accomplish: function(data) {
     var acc, accomplishId, accomplishment, achievement, basic, tags;
     acc = Accomplishments.findOne({
-      user: this.userId(),
+      user: this.userId,
       entity: data.entity
     });
     if (acc) {
@@ -199,7 +199,7 @@ Meteor.methods({
       data.type = 'accomplishment';
       accomplishId = Accomplishments.insert(data);
       achievement = Achievements.findOne(data.entity);
-      Meteor.users.update(this.userId(), {
+      Meteor.users.update(this.userId, {
         $inc: {
           score: achievement.value
         }
@@ -213,7 +213,7 @@ Meteor.methods({
     var a, s, score;
     if (!this.is_simulation) {
       a = Achievements.find({
-        $where: "          return db.accomplishments.findOne({            user: '" + (this.userId()) + "',            entity: this._id          }) "
+        $where: "          return db.accomplishments.findOne({            user: '" + this.userId + "',            entity: this._id          }) "
       }, {
         fields: {
           value: 1
@@ -224,7 +224,7 @@ Meteor.methods({
       score = _.reduce(s, function(memo, num) {
         return memo + num;
       }, 0);
-      return Meteor.users.update(this.userId(), {
+      return Meteor.users.update(this.userId, {
         $set: {
           score: score
         }

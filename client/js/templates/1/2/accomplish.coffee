@@ -4,7 +4,7 @@ _.extend Template.accomplish,
       unless e.isPropagationStopped()
         e.stopPropagation()
 
-        story = $("#editor-#{@_id}").val()
+        story = $("#editor").val()
         @tags or (@tags = [])
         data =
           entity: @_id
@@ -21,6 +21,7 @@ _.extend Template.accomplish,
       Accomplishments.remove @_id
 
     'click a.editor': (e) ->
+      console.log 'test'
       $('.editor').hide()
       $('.preview').show()
 
@@ -42,12 +43,9 @@ _.extend Template.accomplish,
         return acpl.story
     return ''
  
-  callback: ->
-    Meteor.setTimeout =>
-      $("#editor-#{@_id}").markdownEditor
-        toolbarLoc: $("#toolbar-#{@_id}")
-        toolbar: "default"
-        preview: $("#preview-#{@_id}")
-    ,
-      0
-    return ''
+  # TODO: Use new Spark features to include markdown editor
+  rendered: ->
+    $('#editor').markdownEditor
+      toolbarLoc: $("#toolbar")
+      toolbar: "default"
+      preview: $("#preview")

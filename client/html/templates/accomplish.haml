@@ -27,15 +27,18 @@
 
   {{#if session "story"}}
   {{#if equals "story" "text"}}
+
+  {{#constant}}
   .editor
-    %div(id="toolbar-{{_id}}")
-    %textarea.ta100(id="editor-{{_id}}" rows="10") {{story}}
+    %div(id="toolbar")
+    %textarea.ta100(id="editor" rows="10") {{story}}
+
     %span.help-block<
       %strong HINT:
       You can style your post using
       %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
       \.
-  .preview.hide(id="preview-{{_id}}")
+  .preview.hide(id="preview")
 
   -#%div.control-group 
     %label.control-label Tags
@@ -52,7 +55,7 @@
     {{/if}}
     %a.btn.btn-large.editor Preview
     %a.btn.btn-large.preview.hide Edit
-  {{callback}}
+  {{/constant}}
   {{/if}}
 
   {{else}}

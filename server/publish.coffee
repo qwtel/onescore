@@ -11,17 +11,17 @@ Meteor.publish 'titles', (entity) ->
   Titles.find entity: entity
 
 Meteor.publish 'votes', ->
-  Votes.find()# user: @userId()
+  Votes.find()# user: @userId
 
 Meteor.publish 'favourites', ->
-  Favourites.find()# user: @userId()
+  Favourites.find()# user: @userId
 
 Meteor.publish 'accomplishments', ->
   Accomplishments.find()
 
 Meteor.publish 'notifications', (batch) ->
   Notifications.find
-    receivers: @userId()
+    receivers: @userId
   ,
     sort: date: -1
     limit: 15*(batch+1)
@@ -44,7 +44,7 @@ Meteor.publish 'revisions', (document, batch) ->
   #_.each achievements, (achievement) =>
   #
   #  sel =
-  #    user: @userId()
+  #    user: @userId
   #    entity: achievement._id
   #  options =
   #    fields: _id: 1
@@ -68,7 +68,7 @@ Meteor.publish 'revisions', (document, batch) ->
 
 #Meteor.publish 'quests', (user) ->
 #  unless user
-#    user = @userId()
+#    user = @userId
 #  
 #  favs = Favourites.find
 #    user: user
