@@ -25,5 +25,5 @@ _.extend Collections,
   'revisions': Revisions
   'revision': Revisions
 
-Scratchpad = new Meteor.Collection null
+Scratchpad = new Meteor.Collection(null)
 Collections['scratchpad'] = Scratchpad

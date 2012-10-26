@@ -1,19 +1,3 @@
-patch = (entity, diff, keys) ->
-  _.each keys, (key) ->
-    if _.isArray entity[key]
-      if diff[key].removed
-        entity[key] = _.union entity[key], diff[key].removed
-      if diff[key].added
-        entity[key] = _.difference entity[key], diff[key].added
-
-    else if _.isObject entity[key]
-      throw new Error "#{key} is an Object, should recurse, but not implemented"
-
-    else if diff[key]
-      entity[key] = diff[key]
-
-  return entity
-
 Meteor.methods
   restore: (targetState) ->
     entity = Collections[targetState.entityType].findOne targetState.entity
@@ -36,7 +20,6 @@ Meteor.methods
 
     delete entity._id
     Collections[targetState.entityType].update targetState.entity, $set: entity
-
 
   assignBestTitle: (title) ->
     achievementId = title.entity
@@ -272,4 +255,20 @@ hotScore = (up, down, date) ->
   z = Math.max(Math.abs(x), 1)
 
   Math.round(Math.log(z)/Math.log(10) + y*ts/45000)
+
+patch = (entity, diff, keys) ->
+  _.each keys, (key) ->
+    if _.isArray entity[key]
+      if diff[key].removed
+        entity[key] = _.union entity[key], diff[key].removed
+      if diff[key].added
+        entity[key] = _.difference entity[key], diff[key].added
+
+    else if _.isObject entity[key]
+      throw new Error "#{key} is an Object, should recurse, but not implemented"
+
+    else if diff[key]
+      entity[key] = diff[key]
+
+  return entity
 
