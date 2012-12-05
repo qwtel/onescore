@@ -14,11 +14,12 @@ _.extend(Template.tags, {
           this.tags = [];
         }
         text = text.replace(/\s/g, '');
-        this.tags = _.union(this.tags, [text]);
+        this.tags.push(text);
         collection = this.collection || this.type;
         Collections[collection].update(this._id, {
           $set: {
             tags: this.tags,
+            lastModified: new Date().getTime(),
             lastModifiedBy: Meteor.user()._id
           }
         });
@@ -32,20 +33,22 @@ _.extend(Template.tags, {
           tags: this.tag
         },
         $set: {
+          lastModified: new Date().getTime(),
           lastModifiedBy: Meteor.user()._id
         }
       });
     }
   },
   tagObjects: function() {
-    var tagObjects,
+    var collection, tagObjects,
       _this = this;
     tagObjects = [];
+    collection = this.collection || this.type;
     _.each(this.tags, function(tag) {
       return tagObjects.push({
         tag: tag,
         entity: _this._id,
-        entityType: _this.type
+        entityType: collection
       });
     });
     return tagObjects;

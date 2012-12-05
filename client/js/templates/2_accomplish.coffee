@@ -15,13 +15,12 @@ _.extend Template.accomplish,
         Meteor.call 'accomplish', data, (error, result) ->
           window.Router.navigate "/accomplishments/#{result}", true
 
-        Session.set 'modal', @_id
+        #Session.set 'modal', @_id
 
     'click .uncreate': (e) ->
       Accomplishments.remove @_id
 
     'click a.editor': (e) ->
-      console.log 'test'
       $('.editor').hide()
       $('.preview').show()
 

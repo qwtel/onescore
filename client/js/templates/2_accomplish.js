@@ -14,17 +14,15 @@ _.extend(Template.accomplish, {
           story: story,
           tags: this.tags
         };
-        Meteor.call('accomplish', data, function(error, result) {
+        return Meteor.call('accomplish', data, function(error, result) {
           return window.Router.navigate("/accomplishments/" + result, true);
         });
-        return Session.set('modal', this._id);
       }
     },
     'click .uncreate': function(e) {
       return Accomplishments.remove(this._id);
     },
     'click a.editor': function(e) {
-      console.log('test');
       $('.editor').hide();
       return $('.preview').show();
     },

@@ -59,14 +59,14 @@ _.extend Template.edit,
         url: "/achievements/#{@_id}/edit/title"
         active: window.isActive 'tabtab', 'title'
       ,
-        name: 'Image'
-        url: "/achievements/#{@_id}/edit/image"
-        active: window.isActive 'tabtab', 'image'
-      ,
-        name: 'Items'
-        url: "/achievements/#{@_id}/edit/items"
-        active: window.isActive 'tabtab', 'items'
-      ,
+      #  name: 'Image'
+      #  url: "/achievements/#{@_id}/edit/image"
+      #  active: window.isActive 'tabtab', 'image'
+      #,
+      #  name: 'Items'
+      #  url: "/achievements/#{@_id}/edit/items"
+      #  active: window.isActive 'tabtab', 'items'
+      #,
         name: 'Revisions'
         url: "/achievements/#{@_id}/edit/revisions"
         active: window.isActive 'tabtab', 'revisions'

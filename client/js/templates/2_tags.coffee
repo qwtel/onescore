@@ -12,12 +12,14 @@ _.extend Template.tags,
             @tags = []
 
           text = text.replace(///\s///g,'')
-          @tags = _.union @tags, [text]
+          #@tags = _.union @tags, [text]
+          @tags.push text
 
           collection = @collection or @type
           Collections[collection].update @_id,
             $set:
               tags: @tags
+              lastModified: new Date().getTime()
               lastModifiedBy: Meteor.user()._id
 
           Session.set 'addingTag', null
@@ -30,15 +32,17 @@ _.extend Template.tags,
         $pull:
           tags: @tag
         $set:
+          lastModified: new Date().getTime()
           lastModifiedBy: Meteor.user()._id
 
   tagObjects: ->
     tagObjects = []
+    collection = @collection or @type
     _.each @tags, (tag) =>
       tagObjects.push
         tag: tag
         entity: @_id
-        entityType: @type
+        entityType: collection
     return tagObjects
 
   isActive: (name, value) ->
