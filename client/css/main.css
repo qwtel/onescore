@@ -372,20 +372,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   padding: 14px 19px;
   margin-left: -19px;
-  background-color: #cccccc;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(whiteSmoke 5%, #cccccc 0%), color-stop(100%, whiteSmoke));
-  background-image: -webkit-linear-gradient(top, #cccccc 0%, whiteSmoke 5%, whiteSmoke 100%);
-  background-image: -moz-linear-gradient(top, #cccccc 0%, whiteSmoke 5%, whiteSmoke 100%);
-  background-image: -ms-linear-gradient(top, #cccccc 0%, whiteSmoke 5%, whiteSmoke 100%);
-  background-image: -o-linear-gradient(top, #cccccc 0%, whiteSmoke 5%, whiteSmoke 100%);
-  background-image: linear-gradient(top, #cccccc 0%, whiteSmoke 5%, whiteSmoke 100%);
-  -webkit-background-size: 100% 100px;
-  -moz-background-size: 100% 100px;
-  -ms-background-size: 100% 100px;
-  -o-background-size: 100% 100px;
-  background-size: 100% 100px;
-  background-color: whiteSmoke;
-  background-repeat: no-repeat; }
+  border-top: 1px solid #dddddd; }
   .fold .alert {
     margin-bottom: 0; }
 

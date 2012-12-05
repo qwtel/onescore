@@ -49,9 +49,8 @@
           %textarea.input-xlarge.description.lazy(id="description-{{_id}}" data-field="description" rows="4") {{description}}
           %p.help-block.muted
             What has to be done to complete this achievement?
-            %br/
-            %strong HINT:
-            You can include #tags here.
+            -#%br/
+            -#%strong HINT: You can include #tags here.
 
       -#%div.control-group 
         %label.control-label(for="optionsCheckbox") Visibility
@@ -60,7 +59,7 @@
             %input(type="checkbox" id="optionsCheckbox" value="option1")/
               Make this achievement private
 
-      %div.control-group 
+      -#%div.control-group 
         %label.control-label(for="category-{{_id}}") Category
         %div.controls                 
           %select.category.lazy(id="category-{{_id}}" data-field="category") 
@@ -85,4 +84,5 @@
           %input.input-file(id="fileInput" type="file")/
       %footer.form-actions
         %button.btn.btn-large.create Save
+
   {{/with}}

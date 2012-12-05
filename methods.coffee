@@ -165,6 +165,23 @@ Meteor.methods
 
     return accomplishId
  
+  newAchievement: (data) ->
+    basic = Meteor.call 'basic'
+    _.extend data, basic
+    data.type = 'achievement'
+    delete data._id
+    delete data.collection
+    id = Achievements.insert data
+
+    if data.title
+      titleData =
+        title: data.title
+        entity: id
+
+      Meteor.call 'suggestTitle', titleData
+
+    return id 
+
   updateUserScoreComplete: ->
     unless @is_simulation
       a = Achievements.find

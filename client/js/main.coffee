@@ -70,8 +70,30 @@ class AppRouter extends Backbone.Router
 
   newAchievement: ->
     @softReset()
+
+    a = Scratchpad.findOne
+      type: 'achievement'
+
+    if a
+      id = a._id
+    else
+      data =
+        user: Meteor.user()._id
+        date: new Date().getTime()
+        type: 'achievement'
+        score: 0
+        hot: 0
+        best: 0
+        value: 0
+        comments: 0
+        description: ""
+        lastModifiedBy: Meteor.user()._id
+        category: 'random'
+        collection: 'scratchpad'
+      id = Scratchpad.insert data
+    
     Session.set 'page', 'newAchievement'
-    Session.set 'single', 'result'
+    Session.set 'single', id
 
   achievements: (id, tab, tabtab) ->
     @softReset()

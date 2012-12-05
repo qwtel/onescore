@@ -191,6 +191,23 @@ Meteor.methods({
     }
     return accomplishId;
   },
+  newAchievement: function(data) {
+    var basic, id, titleData;
+    basic = Meteor.call('basic');
+    _.extend(data, basic);
+    data.type = 'achievement';
+    delete data._id;
+    delete data.collection;
+    id = Achievements.insert(data);
+    if (data.title) {
+      titleData = {
+        title: data.title,
+        entity: id
+      };
+      Meteor.call('suggestTitle', titleData);
+    }
+    return id;
+  },
   updateUserScoreComplete: function() {
     var a, s, score;
     if (!this.is_simulation) {

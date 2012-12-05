@@ -22,10 +22,11 @@ $fg2: #777
 $fg3: #aaa
 
 @mixin fold-shadow($bg, $shadow)
-  @include linear-gradient($shadow 0%, $bg 5%, $bg 100%)
-  @include background-size(100% 100px)
-  background-color: $bg
-  background-repeat: no-repeat
+  border-top: 1px solid #ddd
+  //@include linear-gradient($shadow 0%, $bg 5%, $bg 100%)
+  //@include background-size(100% 100px)
+  //background-color: $bg
+  //background-repeat: no-repeat
 
 ::selection
   background: lighten($green, 30%)

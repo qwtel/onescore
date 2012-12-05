@@ -1,6 +1,6 @@
-Scratchpad = new Meteor.Collection null
-Activities = new Meteor.Collection 'activities'
-Quests = new Meteor.Collection 'quests'
+#Scratchpad = new Meteor.Collection null
+#Activities = new Meteor.Collection 'activities'
+#Quests = new Meteor.Collection 'quests'
 #Explore = new Meteor.Collection 'explore'
 
 #Collections = Collections or {}
