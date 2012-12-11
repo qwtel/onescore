@@ -1,23 +1,5 @@
 %template(name="newAchievement")
   {{#with newAchievement}}
-
-  {{#unless session "styleGuide"}}
-  %div.alert.alert-block.alert-info
-    %a.close(data-dismiss="alert") ×
-    %h4 Achievement style guide
-    %p Achievements should have the following properties:
-    %dl 
-      %dt 
-        %h5 Atomic
-      %dd Achievements should not be composed.
-      %dt 
-        %h5 Universal
-      %dd Achievements should be easy to agree on.
-      %dt 
-        %h5 Unique
-      %dd Check if the achievement already exists!
-  {{/unless}}
-
   .form-horizontal(id="form-{{_id}}")
     %fieldset 
       %div.control-group

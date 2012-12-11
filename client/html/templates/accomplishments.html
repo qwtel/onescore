@@ -1,8 +1,9 @@
 <template name='accomplishments'>
 {{#if accomplishments}}
 {{#each accomplishments}}
-<div class='fold'></div>
+<div class='fold'>
 {{> accomplishment}}
+</div>
 {{else}}
 <div class='fold'>
 {{> noContent}}

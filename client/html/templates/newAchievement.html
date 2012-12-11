@@ -1,26 +1,5 @@
 <template name='newAchievement'>
 {{#with newAchievement}}
-{{#unless session "styleGuide"}}
-<div class='alert alert-block alert-info'>
-<a class='close' data-dismiss='alert'>×</a>
-<h4>Achievement style guide</h4>
-<p>Achievements should have the following properties:</p>
-<dl>
-<dt>
-<h5>Atomic</h5>
-</dt>
-<dd>Achievements should not be composed.</dd>
-<dt>
-<h5>Universal</h5>
-</dt>
-<dd>Achievements should be easy to agree on.</dd>
-<dt>
-<h5>Unique</h5>
-</dt>
-<dd>Check if the achievement already exists!</dd>
-</dl>
-</div>
-{{/unless}}
 <div class='form-horizontal' id='form-{{_id}}'>
 <fieldset>
 <div class='control-group'>

@@ -1,9 +1,7 @@
 <template name='user'>
-<span class='user'>
+<div class='user pull-left'>
 <a class='face profile-pic' href='/{{username}}'>
 <img src='https://graph.facebook.com/{{services.facebook.id}}/picture' />
 </a>
-<a class="name {{isMe _id}}" href="/{{username}}">{{username}}</a>
-<span class='level'>({{level}})</span>
-</span>
+</div>
 </template>

@@ -1,34 +1,22 @@
 <template name='comment'>
 <article class='comment {{nested}}' id='comment-{{_id}}'>
-<div class='vote-container pull-left'>
-<div>
-<a class='link highlight' href='/comments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
-</div>
-{{> voteContainer}}
-</div>
-<div class='body'>
 {{#if user}}
-<nav class='icons pull-right'>
-<li>
-<a class='unexpand' title='Expand'>{{#unless unexpand}}
+<nav class='btn-group icons pull-right'>
+<a class='btn btn-mini link highlight' href='/comments/{{_id}}' title='Link'><i class="icon-bookmark"></i></a>
+<a class='btn btn-mini unexpand' title='Expand'>{{#unless unexpand}}
 <i class="icon-chevron-up"></i>
 {{else}}
 <i class="icon-chevron-down active"></i>
 {{/unless}}</a>
-</li>
 {{#if isMe user}}
-<li>
-<a class='edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
-</li>
+<a class='btn btn-mini edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
 {{/if}}
-<li>
-<a class='reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" _id}}"></i></a>
-</li>
+<a class='btn btn-mini reply' title='Reply'><i class="icon-share-alt {{isActive "addComment" _id}}"></i></a>
 </nav>
-<div class='part'>
 {{> userActivity}}
-</div>
+{{> voteContainer}}
 {{/if}}
+<div class='clearfix'></div>
 <div class='text'>
 {{#if equals "editComment" _id}}
 <div class='text-wrapper'>
@@ -43,7 +31,6 @@
 <textarea class='comment-text ta100' id='reply-{{_id}}' rows='4'></textarea>
 </div>
 {{/if}}
-</div>
 {{#unless unexpand}}
 {{#unless cutoff}}
 {{#each replies}}

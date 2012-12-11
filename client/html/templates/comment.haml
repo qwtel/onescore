@@ -1,50 +1,40 @@
 %template(name='comment')
   %article.comment(id="comment-{{_id}}" class="{{nested}}")
-    .vote-container.pull-left
-      %div
-        %a.link.highlight(title="Link" href="/comments/{{_id}}")<
-          <i class="icon-bookmark"></i>
-      {{> voteContainer}}
-
-    .body
-      {{#if user}}
-      %nav.icons.pull-right
-        %li
-          %a.unexpand(title="Expand")<
-            {{#unless unexpand}}
-            <i class="icon-chevron-up"></i>
-            {{else}}
-            <i class="icon-chevron-down active"></i>
-            {{/unless}}
-
-        {{#if isMe user}}
-        %li
-          %a.edit(title="Edit")<
-            <i class="icon-pencil {{isActive "editComment" _id}}"></i>
-        {{/if}}
-
-        %li
-          %a.reply(title="Reply")<
-            <i class="icon-share-alt {{isActive "addComment" _id}}"></i>
-
-        -#%li
-          %a.remove(title="Remove")<
-            <i class="icon-remove"></i>
-      .part
-        {{> userActivity}}
-      {{/if}}
-
-      .text
-        {{#if equals "editComment" _id}}
-        .text-wrapper
-          %textarea.edit-text.ta100(id="edit-{{_id}}" rows="4") {{text}}
+    {{#if user}}
+    %nav.btn-group.icons.pull-right
+      %a.btn.btn-mini.link.highlight(title="Link" href="/comments/{{_id}}")<
+        <i class="icon-bookmark"></i>
+      %a.btn.btn-mini.unexpand(title="Expand")<
+        {{#unless unexpand}}
+        <i class="icon-chevron-up"></i>
         {{else}}
-        %p {{{addLineBreaks text}}}
-        {{/if}}
-      {{#if equals "addComment" _id}}
-      .text-wrapper
-        %textarea.comment-text.ta100(id="reply-{{_id}}" rows="4")
+        <i class="icon-chevron-down active"></i>
+        {{/unless}}
+
+      {{#if isMe user}}
+      %a.btn.btn-mini.edit(title="Edit")<
+        <i class="icon-pencil {{isActive "editComment" _id}}"></i>
       {{/if}}
+      %a.btn.btn-mini.reply(title="Reply")<
+        <i class="icon-share-alt {{isActive "addComment" _id}}"></i>
+      -#%a.btn.btn-mini.remove(title="Remove")<
+        <i class="icon-remove"></i>
+
+    {{> userActivity}}
+    {{> voteContainer}}
+    {{/if}}
+    .clearfix
+    .text
+      {{#if equals "editComment" _id}}
+      .text-wrapper
+        %textarea.edit-text.ta100(id="edit-{{_id}}" rows="4") {{text}}
+      {{else}}
+      %p {{{addLineBreaks text}}}
+      {{/if}}
+    {{#if equals "addComment" _id}}
+    .text-wrapper
+      %textarea.comment-text.ta100(id="reply-{{_id}}" rows="4")
+    {{/if}}
 
     {{#unless unexpand}}
     {{#unless cutoff}}

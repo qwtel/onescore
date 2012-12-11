@@ -1,49 +1,45 @@
 %template(name='accomplishment')
   %article.accomplishment(id="{{_id}}")
-    .vote-container.pull-left
-      %div
-        %a(title="Link" href="/accomplishments/{{_id}}")<
-          <i class="icon-bookmark {{isActive "single" _id}}"></i>
-      {{> voteContainer}}
-
-    .body
-      {{#if user}}
-      %nav.icons.pull-right
-        {{#if isMe user}}
-        %li
-          %a(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
-            %i.icon-pencil
-        %li
-          %a(href="/accomplishments/{{_id}}/talk" title="Reply")
-            %i.icon-share-alt
-        {{/if}}
-      {{> userActivity}}
+    {{#if user}}
+    %nav.icons.btn-group.pull-right
+      %a.btn.btn-mini(title="Link" href="/accomplishments/{{_id}}")<
+        <i class="icon-bookmark {{isActive "single" _id}}"></i>
+      {{#if isMe user}}
+      %a.btn.btn-mini(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
+        %i.icon-pencil
+      %a.btn.btn-mini(href="/accomplishments/{{_id}}/talk" title="Reply")
+        %i.icon-share-alt
       {{/if}}
 
-      {{#with achievement}}
-      .embed.well.well-small
-        {{> embedAchievement}}
-      {{/with}}
+    {{> userActivity}}
+    {{> voteContainer}}
+    {{/if}}
+    .clearfix
 
-      {{#if story}}
-      -#%a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
-        %i.icon-align-left
-      .story.part
-        {{#markdown}}{{{story}}}{{/markdown}}
-      {{/if}}
+    {{#with achievement}}
+    .embed
+      {{> embedAchievement}}
+    {{/with}}
 
-      %a.icon-side.add-tag(title="Add a tag")<
-        %i.icon-tags
-      .part
-        {{> tags}}
+    {{#if story}}
+    -#%a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
+      %i.icon-align-left
+    .story.part
+      {{#markdown}}{{{story}}}{{/markdown}}
+    {{/if}}
 
-      {{#if numComments}}
-      %a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<
-        %i.icon-comment
-      .part
-        %a.times.part(href="/accomplishments/{{_id}}/talk")
-          {{numComments}} comments
-      {{/if}}
+    -#%a.icon-side.add-tag(title="Add a tag")<
+      %i.icon-tags
+    .part
+      {{> tags}}
+
+    {{#if numComments}}
+    -#%a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<
+      %i.icon-comment
+    .part
+      %a.times.part(href="/accomplishments/{{_id}}/talk")
+        {{numComments}} comments
+    {{/if}}
 
   -# {{#if equals "single" _id}}
   -# .fold
