@@ -17,13 +17,10 @@
           {{/if}}
         %a.btn.btn-mini(title="Edit" href="/achievements/{{_id}}/edit")<
           %i.icon-pencil
-          -# <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i>
         %a.btn.btn-mini(title="Comment" href="/achievements/{{_id}}/talk")<
           %i.icon-comment
-          -# <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i>
         %a.btn.btn-mini(title="Accomplish" href="/achievements/{{_id}}/accomplish")<
-          %i.icon-certificate
-          -# <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i>
+          %i.icon-flag
       .clearfix
     {{/if}}
 

@@ -49,9 +49,9 @@
     .span8
       %section.well.ladder
         %h5.heading.line Ladder
-        {{> filter }}
-        .clearfix
-        .fold
+        -#{{> filter }}
+        -#.clearfix
+        -#.fold
         {{> ladder }}
 
   {{else}} {{#if equals "page" "profile"}}
@@ -95,10 +95,10 @@
     .span8
       %section.well.notifications
         %h5.heading.line Notifications
-        {{> filter}}
-        .clearfix
-        .fold
-          {{> notifications}}
+        -#{{> filter}}
+        -#.clearfix
+        -#.fold
+        {{> notifications}}
 
     .span4
       %aside.well 

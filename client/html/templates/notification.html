@@ -1,37 +1,60 @@
 <template name='notification'>
 {{#with user}} {{> user}} {{/with}}
 {{#if comment entityType}}
-<a href='/comments/{{entity}}'>
-{{#if reply targetType}}
-replied
-{{else}}
-commented
-{{/if}}
+<a class='btn btn-mini pull-left' href='/comments/{{entity}}' title='commented'>
+<i class='icon-comment'></i>
 </a>
-<span>on {{your}}</span>
-{{/if}}
-{{#if isTitle entityType}}
-<span>suggested a</span>
-<a href='/achievements/{{target}}/edit/title'>title</a>
-<span>for your</span>
-{{/if}}
-{{#if isRevision entityType}}
-<span>restored {{your}}</span>
 {{/if}}
 {{#if vote entityType}}
-<span>voted for {{your}}</span>
+<a class='btn btn-mini disabled pull-left' title='voted'>
+<i class='icon-arrow-up'></i>
+</a>
 {{/if}}
 {{#if accomplishment entityType}}
-<a href='/accomplishments/{{entity}}'>accomplished</a>
-<span>{{your}}</span>
+<a class='btn btn-mini pull-left' href='/accomplishments/{{entity}}' title='accomplished'>
+<i class='icon-flag'></i>
+</a>
 {{/if}}
-{{#if isTitle targetType}}
-<span>your title</span>
-{{else}}
-<a href='/{{targetType}}s/{{target}}'>{{targetType}}</a>
+{{#if isTitle entityType}}
+<a class='btn btn-mini disabled pull-left' title='suggested a title'>
+<i class='icon-minus'></i>
+</a>
 {{/if}}
 {{#if isRevision entityType}}
-<span>to a previous version</span>
+<a class='btn btn-mini disabled pull-left' title='revisioned'>
+<i class='icon-time'></i>
+</a>
+{{/if}}
+{{#with currentUser}} {{> user}} {{/with}}
+{{#if comment targetType}}
+<a class='btn btn-mini pull-left' href='/comments/{{target}}' title='Comment'>
+<i class='icon-comment'></i>
+</a>
+{{/if}}
+{{#if vote targetType}}
+<a class='btn btn-mini disabled pull-left' title='Vote'>
+<i class='icon-arrow-up'></i>
+</a>
+{{/if}}
+{{#if achievement targetType}}
+<a class='btn btn-mini pull-left' href='/achievements/{{target}}' title='Achievement'>
+<i class='icon-certificate'></i>
+</a>
+{{/if}}
+{{#if accomplishment targetType}}
+<a class='btn btn-mini pull-left' href='/accomplishments/{{target}}' title='Accomplishment'>
+<i class='icon-flag'></i>
+</a>
+{{/if}}
+{{#if isTitle targetType}}
+<a class='btn btn-mini disabled pull-left' title='Title'>
+<i class='icon-minus'></i>
+</a>
+{{/if}}
+{{#if isRevision targetType}}
+<a class='btn btn-mini disabled pull-left' title='Revision'>
+<i class='icon-time'></i>
+</a>
 {{/if}}
 - {{timeago date}}
 </template>

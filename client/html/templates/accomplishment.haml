@@ -22,22 +22,15 @@
     {{/with}}
 
     {{#if story}}
-    -#%a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
-      %i.icon-align-left
     .story
       {{#markdown}}{{{story}}}{{/markdown}}
-    {{/if}}
-
-    -#%a.icon-side.add-tag(title="Add a tag")<
-      %i.icon-tags
     {{> tags}}
-
-    {{#if numComments}}
-    -#%a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<
-      %i.icon-comment
-    %a.times.part(href="/accomplishments/{{_id}}/talk")
-      {{numComments}} comments
     {{/if}}
+
+    %time.times.pull-right {{timeago date}}
+    %a.times(href="/accomplishments/{{_id}}/talk")
+      {{numComments}} comments
+    .clearfix
 
   -# {{#if equals "single" _id}}
   -# .fold

@@ -1,46 +1,60 @@
 %template(name='notification')
   {{#with user}} {{> user}} {{/with}}
   {{#if comment entityType}}
-  %a(href="/comments/{{entity}}")
-    {{#if reply targetType}}
-    replied
-    {{else}}
-    commented
-    {{/if}}
-  %span on {{your}}
-  {{/if}}
-
-  {{#if isTitle entityType}}
-  %span suggested a
-  %a(href="/achievements/{{target}}/edit/title") title
-  %span for your
-  {{/if}}
-
-  {{#if isRevision entityType}}
-  %span restored {{your}}
+  %a.btn.btn-mini.pull-left(title="commented" href="/comments/{{entity}}")
+    %i.icon-comment
   {{/if}}
 
   {{#if vote entityType}}
-  %span voted for {{your}}
+  %a.btn.btn-mini.disabled.pull-left(title="voted")
+    %i.icon-arrow-up
   {{/if}}
 
   {{#if accomplishment entityType}}
-  %a(href="/accomplishments/{{entity}}") accomplished
-  %span {{your}}
+  %a.btn.btn-mini.pull-left(title="accomplished" href="/accomplishments/{{entity}}")
+    %i.icon-flag
   {{/if}}
 
-  -#{{entity}}
-  -#%a(href="/{{entityType}}s/{{entity}}") {{entityType}} 
-  -#{{on}}
-  -#{{target}}
-  {{#if isTitle targetType}}
-  %span your title
-  {{else}}
-  %a(href="/{{targetType}}s/{{target}}") {{targetType}}
+  {{#if isTitle entityType}}
+  %a.btn.btn-mini.disabled.pull-left(title="suggested a title")
+    %i.icon-minus
   {{/if}}
 
   {{#if isRevision entityType}}
-  %span to a previous version
+  %a.btn.btn-mini.disabled.pull-left(title="revisioned")
+    %i.icon-time
+  {{/if}}
+
+  {{#with currentUser}} {{> user}} {{/with}}
+
+  {{#if comment targetType}}
+  %a.btn.btn-mini.pull-left(title="Comment" href="/comments/{{target}}")
+    %i.icon-comment
+  {{/if}}
+
+  {{#if vote targetType}}
+  %a.btn.btn-mini.disabled.pull-left(title="Vote")
+    %i.icon-arrow-up
+  {{/if}}
+
+  {{#if achievement targetType}}
+  %a.btn.btn-mini.pull-left(title="Achievement" href="/achievements/{{target}}")
+    %i.icon-certificate
+  {{/if}}
+
+  {{#if accomplishment targetType}}
+  %a.btn.btn-mini.pull-left(title="Accomplishment" href="/accomplishments/{{target}}")
+    %i.icon-flag
+  {{/if}}
+
+  {{#if isTitle targetType}}
+  %a.btn.btn-mini.disabled.pull-left(title="Title")
+    %i.icon-minus
+  {{/if}}
+
+  {{#if isRevision targetType}}
+  %a.btn.btn-mini.disabled.pull-left(title="Revision")
+    %i.icon-time
   {{/if}}
 
   \- {{timeago date}}

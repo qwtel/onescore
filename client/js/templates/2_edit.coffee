@@ -1,4 +1,8 @@
 _.extend Template.edit,
+  newAchievement: ->
+    id = Session.get 'single'
+    return Scratchpad.findOne id
+
   events:
     'click .discard': (e) ->
       Session.toggle 'expand', @_id

@@ -25,12 +25,12 @@
 <div class='story'>
 {{#markdown}}{{{story}}}{{/markdown}}
 </div>
-{{/if}}
 {{> tags}}
-{{#if numComments}}
-<a class='times part' href='/accomplishments/{{_id}}/talk'>
+{{/if}}
+<time class='times pull-right'>{{timeago date}}</time>
+<a class='times' href='/accomplishments/{{_id}}/talk'>
 {{numComments}} comments
 </a>
-{{/if}}
+<div class='clearfix'></div>
 </article>
 </template>

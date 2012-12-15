@@ -190,7 +190,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 7px; }
 
 .accomplishment .story {
-  margin-bottom: 20px; }
+  margin-bottom: 14px; }
 
 .comment .text {
   width: 100%;
@@ -513,6 +513,8 @@ a:hover i, a i.active, button:hover i, button i.active {
 .filter .nav {
   min-height: 35px; }
 
+.notifications .btn, .ladder .btn {
+  margin-right: 7px; }
 .notifications .filter .sort, .ladder .filter .sort {
   display: none; }
 

@@ -15,6 +15,9 @@ _.extend Template.notification,
   accomplishment: (type) ->
     type is 'accomplishment'
 
+  achievement: (type) ->
+    type is 'achievement'
+
   comment: (type) ->
     type is 'comment'
 

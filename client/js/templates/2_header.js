@@ -97,7 +97,7 @@ _.extend(Template.header, {
         cooldown: '5 seconds cooldown'
       }, {
         name: 'Accomplish (passive)',
-        icon: 'certificate',
+        icon: 'flag',
         url: '#',
         passive: true,
         description: 'Gives you the ability to accomplish achievements',

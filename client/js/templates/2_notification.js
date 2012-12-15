@@ -20,6 +20,9 @@ _.extend(Template.notification, {
   accomplishment: function(type) {
     return type === 'accomplishment';
   },
+  achievement: function(type) {
+    return type === 'achievement';
+  },
   comment: function(type) {
     return type === 'comment';
   },
