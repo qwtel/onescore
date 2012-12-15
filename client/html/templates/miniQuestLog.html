@@ -1,6 +1,6 @@
 <template name='miniQuestLog'>
-{{#each favourites}}
-{{#with achievement}} {{> miniAchievement}} {{/with}}
+{{#each achievements}}
+{{> miniAchievement}}
 {{else}}
 {{> noContent}}
 {{/each}}

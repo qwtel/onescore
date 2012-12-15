@@ -1,9 +1,9 @@
 %template(name='questLog')
   .clearfix
 
-  {{#each favourites}}
+  {{#each achievements}}
   .fold
-    {{#with achievement}} {{> achievement}} {{/with}}
+    {{> achievement}}
   {{else}}
   .fold
     {{> noContent}}

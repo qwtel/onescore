@@ -1,22 +1,28 @@
 _.extend Template.favourites,
-  favourites: ->
-    sort = Template.filter.sort()
-
+  achievements: ->
     username = Session.get 'username'
     if username
       user =  Meteor.users.findOne
         username: username
 
       if user
-        return Favourites.find
+        quests = Favourites.find
           user: user._id
           active: true
           $where: ->
             not Accomplishments.findOne
               user: user._id
               entity: @entity
-        ,
-          sort: sort
+          ,
+            fields:
+              entity: 1
 
-  achievement: ->
-    Achievements.findOne @entity
+        quests = quests.fetch()
+        quests = _.pluck quests, 'entity'
+
+        if _.size(quests) > 0
+          sort = Template.filter.sort()
+          Achievements.find
+            _id: $in: quests
+          ,
+            sort: sort

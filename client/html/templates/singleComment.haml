@@ -1,6 +1,6 @@
 %template(name='singleComment')
 
-  %ul.breadcrumb
+  %ul.breadcrumb.well.well-mini
     {{#each breadcrumbs}}
     %li
       <a class="{{isMe user}}" href="{{url}}">{{name}}</a>
@@ -24,27 +24,6 @@
     {{/if}}
     .clearfix
 
-    -#.vote-container.pull-left
-      %div
-        %a(title="Link" href="/comments/{{_id}}")<
-          <i class="icon-bookmark {{isActive "single" _id}}"></i>
-      {{> voteContainer}}
-
-    -#%nav.icons.pull-right
-      {{#if isMe user}}
-      %li
-        %a.edit(title="Edit")<
-          <i class="icon-pencil {{isActive "editComment" _id}}"></i>
-      {{/if}}
-      %li
-        %a.replyy(title="Reply")<
-          <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
-      -#%li
-        %a.remove(title="Remove")<
-          <i class="icon-remove"></i>
-    -#.part
-      {{> userActivity}}
-
     .text
       {{#if equals "editComment" _id}}
       .text-wrapper
@@ -58,4 +37,3 @@
     {{> filter}}
     .clearfix
     {{> comments}}
-
