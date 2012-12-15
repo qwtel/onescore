@@ -12,7 +12,12 @@ _.extend(Template.tagFilter, {
     if (Session.equals('menu', 'questlog')) {
       collection = Template.favourites.achievements();
     } else {
-      collection = Collections[page].find();
+      collection = Collections[page];
+      if (collection) {
+        collection = collection.find();
+      } else {
+        return null;
+      }
     }
     if (collection) {
       tagInfos = [];

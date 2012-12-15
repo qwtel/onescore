@@ -77,13 +77,6 @@ Meteor.startup ->
         $set:
           rank: newRank
 
-  #Votes.find().observe
-  #  added: (vote) ->
-  #    calculateScore Collections[vote.entityType] vote.entity
-  #
-  #  changed: (vote) ->
-  #    calculateScore Collections[vote.entityType] vote.entity
-
   Titles.find().observe
     changed: (title) ->
       # assing 'best' title to its achievement
