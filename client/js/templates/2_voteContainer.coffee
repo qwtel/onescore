@@ -14,6 +14,10 @@ _.extend Template.voteContainer,
 
         Meteor.call 'vote', data
 
+Template.voteContainer.helpers 
+  score: ->
+    @upVotes - (@votes - @upVotes)
+
   voted: (state) ->
     state = if state is 'up' then true else false
 
@@ -24,3 +28,4 @@ _.extend Template.voteContainer,
       if vote and vote.up is state
         return 'active'
     return ''
+

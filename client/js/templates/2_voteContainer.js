@@ -16,6 +16,12 @@ _.extend(Template.voteContainer, {
         return Meteor.call('vote', data);
       }
     }
+  }
+});
+
+Template.voteContainer.helpers({
+  score: function() {
+    return this.upVotes - (this.votes - this.upVotes);
   },
   voted: function(state) {
     var vote;

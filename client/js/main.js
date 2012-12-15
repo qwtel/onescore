@@ -105,6 +105,8 @@ AppRouter = (function(_super) {
         best: 0,
         value: 0,
         comments: 0,
+        upVotes: 0,
+        votes: 0,
         description: "",
         lastModifiedBy: Meteor.user()._id,
         category: 'random'
@@ -156,6 +158,8 @@ AppRouter = (function(_super) {
           best: 0,
           value: 0,
           comments: 0,
+          upVotes: 0,
+          votes: 0,
           lastModifiedBy: Meteor.user()._id,
           entityType: 'achievement',
           entity: id,

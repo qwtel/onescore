@@ -60,6 +60,8 @@ Meteor.methods
       best: 0
       value: 0
       comments: 0
+      upVotes: 0
+      votes: 0
 
   favourite: (data) ->
     fav = Favourites.findOne
@@ -119,13 +121,15 @@ Meteor.methods
 
       comment = Comments.findOne id
       target = Collections[comment.topicType].findOne comment.topic
-      #notify comment, target
-      #
-      #if comment.parent?
-      #  parent = Comments.findOne comment.parent
-      #  notify comment, parent
-      #
-      #Collections[comment.topicType].update comment.topic, $inc: comments: 1
+      notify comment, target
+      
+      if comment.parent?
+        parent = Comments.findOne comment.parent
+        notify comment, parent
+      
+      Collections[comment.topicType].update comment.topic, 
+        $set: lastComment: new Date().getTime()
+        $inc: comments: 1
 
   vote: (data) ->
     basic = Meteor.call 'basic'
@@ -137,13 +141,34 @@ Meteor.methods
     
     if vote
       Votes.update vote._id, $set: data
+
+      if vote.up is true and data.up is false
+        diff = -1
+      else if vote.up is false and data.up is true
+        diff = 1
+
+      if diff
+        Collections[vote.entityType].update vote.entity, 
+          $set: lastVote: new Date().getTime()
+          $inc: upVotes: diff
+
     else
-      data.type = 'vote'
+      _.extend data,
+        type: 'vote'
+        upVotes: 0
+        votes: 0
+
       id = Votes.insert data
 
       vote = Votes.findOne id
       target = Collections[vote.entityType].findOne vote.entity
       notify vote, target
+
+      Collections[vote.entityType].update vote.entity, 
+        $set: lastVote: new Date().getTime()
+        $inc: 
+          upVotes: if data.up then 1 else 0
+          votes: 1
 
     calculateScore Collections[data.entityType], data.entity
 
@@ -226,12 +251,6 @@ Meteor.methods
         $set:
           score: score
 
-countVotes = (id, up) ->
-  Votes.find(
-    entity: id
-    up: up
-  ).count()
-
 updateScore = (collection, id, score) ->
   collection.update id,
     $set:
@@ -255,10 +274,10 @@ notify = (entity, target) ->
       receivers: receivers
 
 calculateScore = (collection, id) ->
-  up = countVotes id, true
-  down = countVotes id, false
-
   doc = collection.findOne id
+
+  up = doc.upVotes
+  down = doc.votes - doc.upVotes
 
   score =
     naive: naiveScore up, down

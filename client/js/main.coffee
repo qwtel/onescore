@@ -87,6 +87,8 @@ class AppRouter extends Backbone.Router
         best: 0
         value: 0
         comments: 0
+        upVotes: 0
+        votes: 0
         description: ""
         lastModifiedBy: Meteor.user()._id
         category: 'random'
@@ -132,6 +134,8 @@ class AppRouter extends Backbone.Router
           best: 0
           value: 0
           comments: 0
+          upVotes: 0
+          votes: 0
           lastModifiedBy: Meteor.user()._id
           entityType: 'achievement'
           entity: id
