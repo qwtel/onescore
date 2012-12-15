@@ -5,11 +5,15 @@ _.extend Template.tagFilter,
 
   tags: ->
     page = Session.get 'page'
-    collection = window.Collections[page]
+
+    if Session.equals('menu', 'questlog')
+      collection = Template.favourites.achievements()
+    else
+      collection = Collections[page].find()
 
     if collection
       tagInfos = []
-      collection.find().forEach (entity) ->
+      collection.forEach (entity) ->
         _.each entity.tags, (tag) ->
           tagInfo = _.find tagInfos, (x) ->
             return (x.tag is tag)

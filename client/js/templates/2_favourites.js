@@ -2,7 +2,7 @@
 
 _.extend(Template.favourites, {
   achievements: function() {
-    var quests, sort, user, username;
+    var quests, sel, sort, user, username;
     username = Session.get('username');
     if (username) {
       user = Meteor.users.findOne({
@@ -27,11 +27,13 @@ _.extend(Template.favourites, {
         quests = _.pluck(quests, 'entity');
         if (_.size(quests) > 0) {
           sort = Template.filter.sort();
-          return Achievements.find({
+          sel = Template.filter.select();
+          _.extend(sel, {
             _id: {
               $in: quests
             }
-          }, {
+          });
+          return Achievements.find(sel, {
             sort: sort
           });
         }

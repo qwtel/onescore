@@ -22,7 +22,10 @@ _.extend Template.favourites,
 
         if _.size(quests) > 0
           sort = Template.filter.sort()
-          Achievements.find
+          sel = Template.filter.select()
+
+          _.extend sel,
             _id: $in: quests
-          ,
+
+          Achievements.find sel,
             sort: sort
