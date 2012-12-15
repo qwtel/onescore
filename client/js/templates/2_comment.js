@@ -29,20 +29,7 @@ _.extend(Template.comment, {
     'click .unexpand': function(e) {
       if (!e.isPropagationStopped()) {
         e.stopPropagation();
-        Session.embed('unexpand', this._id, true);
-        return Session.toggle('redraw');
-      }
-    },
-    'mouseover .highlight': function(e) {
-      if (!e.isPropagationStopped()) {
-        e.stopPropagation();
-        return $(e.target).closest('.comment').addClass('hover');
-      }
-    },
-    'mouseout .highlight': function(e) {
-      if (!e.isPropagationStopped()) {
-        e.stopPropagation();
-        return $(e.target).closest('.comment').removeClass('hover');
+        return Session.toggle("unexpand-" + this._id, true);
       }
     },
     'keyup .comment-text, keydown .comment-text': window.makeOkCancelHandler({
@@ -75,13 +62,7 @@ _.extend(Template.comment, {
     })
   },
   unexpand: function() {
-    var field;
-    Session.get('redraw');
-    field = Session.get('unexpand');
-    if (field) {
-      return field[this._id];
-    }
-    return false;
+    return Session.equals("unexpand-" + this._id, true);
   },
   verb: function() {
     if (this.parent != null) {

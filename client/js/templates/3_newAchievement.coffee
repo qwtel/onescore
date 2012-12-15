@@ -19,3 +19,4 @@ Template.newAchievement.events = _.extend {}, Template.edit.events,
     data = Scratchpad.findOne @_id
     Meteor.call 'newAchievement', data, (error, result) ->
       window.Router.navigate "achievements/#{result}", true
+    Scratchpad.remove @_id

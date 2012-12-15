@@ -2,8 +2,6 @@
 
 Meteor.subscribe('users');
 
-Meteor.subscribe('comments');
-
 Meteor.subscribe('votes');
 
 Meteor.subscribe('favourites');
@@ -13,9 +11,12 @@ Meteor.subscribe('achievements');
 Meteor.subscribe('accomplishments');
 
 Meteor.autosubscribe(function() {
-  var id;
+  var batch, id;
   id = Session.get('single');
-  return Meteor.subscribe('titles', id);
+  Meteor.subscribe('titles', id);
+  Meteor.subscribe('comments', id);
+  batch = Session.get('skip');
+  return Meteor.subscribe('revisions', id, batch);
 });
 
 Meteor.autosubscribe(function() {});
@@ -24,11 +25,4 @@ Meteor.autosubscribe(function() {
   var batch;
   batch = Session.get('skip');
   return Meteor.subscribe('notifications', batch);
-});
-
-Meteor.autosubscribe(function() {
-  var batch, id;
-  id = Session.get('single');
-  batch = Session.get('skip');
-  return Meteor.subscribe('revisions', id, batch);
 });

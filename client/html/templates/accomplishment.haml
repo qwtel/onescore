@@ -7,38 +7,36 @@
       {{#if isMe user}}
       %a.btn.btn-mini(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
         %i.icon-pencil
-      %a.btn.btn-mini(href="/accomplishments/{{_id}}/talk" title="Reply")
-        %i.icon-share-alt
       {{/if}}
+      %a.btn.btn-mini(href="/accomplishments/{{_id}}/talk" title="Comment")
+        %i.icon-comment
 
-    {{> userActivity}}
+    {{> user}}
     {{> voteContainer}}
     {{/if}}
     .clearfix
 
     {{#with achievement}}
-    .embed
+    .embed.well.well-small
       {{> embedAchievement}}
     {{/with}}
 
     {{#if story}}
     -#%a.icon-side(title="Text" href="/accomplishments/{{_id}}/text")<
       %i.icon-align-left
-    .story.part
+    .story
       {{#markdown}}{{{story}}}{{/markdown}}
     {{/if}}
 
     -#%a.icon-side.add-tag(title="Add a tag")<
       %i.icon-tags
-    .part
-      {{> tags}}
+    {{> tags}}
 
     {{#if numComments}}
     -#%a.icon-side(title="Comments" href="/accomplishments/{{_id}}/talk")<
       %i.icon-comment
-    .part
-      %a.times.part(href="/accomplishments/{{_id}}/talk")
-        {{numComments}} comments
+    %a.times.part(href="/accomplishments/{{_id}}/talk")
+      {{numComments}} comments
     {{/if}}
 
   -# {{#if equals "single" _id}}
@@ -49,20 +47,6 @@
   -# {{> comments}}
   -# {{/if}}
 
-  -#{{#if user}}
-  -#.user
-  -#  .content
-  -#    %a.face.profile-pic(href="/{{user.username}}")
-  -#      %img(src="https://graph.facebook.com/{{user.services.facebook.id}}/picture")/
-  -#    <a class="name {{isMe user}}" href="/{{user.username}}">{{user.username}}</a>
-  -#    %span.score ({{user.score}})
-  -#
-  -#    %span.verb {{verb}}:
-  -#    -#.score.pull-right<
-  -#      %span.dollar.dollar-green
-  -#      %span.value {{user.score}}
-  -#{{/if}}
-  -#
   -#{{#with achievement}}
   -#.minimal
   -#  {{> achievement}}

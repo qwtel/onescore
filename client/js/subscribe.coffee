@@ -1,7 +1,5 @@
 Meteor.subscribe 'users'
 
-Meteor.subscribe 'comments'
-
 Meteor.subscribe 'votes'
 
 Meteor.subscribe 'favourites'
@@ -13,6 +11,10 @@ Meteor.subscribe 'accomplishments'
 Meteor.autosubscribe ->
   id = Session.get 'single'
   Meteor.subscribe 'titles', id
+  Meteor.subscribe 'comments', id
+
+  batch = Session.get 'skip'
+  Meteor.subscribe 'revisions', id, batch
 
 Meteor.autosubscribe ->
   #sel = Template.filter.select()
@@ -23,11 +25,6 @@ Meteor.autosubscribe ->
 Meteor.autosubscribe ->
   batch = Session.get 'skip'
   Meteor.subscribe 'notifications', batch
-
-Meteor.autosubscribe ->
-  id = Session.get 'single'
-  batch = Session.get 'skip'
-  Meteor.subscribe 'revisions', id, batch
 
 #Meteor.autosubscribe ->
 #  id = Session.get 'single'

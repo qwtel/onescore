@@ -1,5 +1,7 @@
 _.extend Template.singleComment, Template.comment,
   events:
+    'click .edit': Template.comment.events['click .edit']
+
     'click .replyy': (e) ->
       Session.toggle 'addComment', 'new'
       Meteor.flush()

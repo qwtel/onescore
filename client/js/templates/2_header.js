@@ -38,7 +38,7 @@ _.extend(Template.header, {
         active: window.isActive('page', 'home')
       }, {
         name: 'Notifications',
-        icon: 'envelope',
+        icon: 'globe',
         url: 'notifications',
         description: 'See how other users interact with your content',
         active: window.isActive('page', 'notifications'),
@@ -46,7 +46,7 @@ _.extend(Template.header, {
       }, {
         name: 'Explore',
         url: 'explore',
-        icon: 'globe',
+        icon: 'search',
         description: 'Allows you to find achievements',
         active: window.isActive('page', 'explore')
       }, {

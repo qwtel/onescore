@@ -192,21 +192,25 @@ h1, h2, h3, h4, h5, h6 {
 .accomplishment .story {
   margin-bottom: 20px; }
 
-.comments .comment {
-  border-left: 1px dashed #dddddd; }
-  .comments .comment .text {
-    width: 100%; }
-.comments .hover {
+.comment .text {
+  width: 100%;
+  margin-top: 7px;
+  margin-bottom: 14px; }
+
+.hover {
   background: #f0f0f0; }
-.comments .nested {
+
+.nested {
   margin-left: 33px; }
-.comments .cutoff {
-  margin: 0;
+
+.cutoff {
+  margin-bottom: 20px;
   border-top: 0;
-  border-bottom: 1px dashed #dddddd; }
-.comments .text-wrapper .comment-text {
+  border-bottom: 1px dashed #cccccc; }
+
+.text-wrapper .comment-text {
   margin-bottom: 20px; }
-.comments .text-wrapper .edit-text {
+.text-wrapper .edit-text {
   background: none; }
 
 .my {
@@ -253,6 +257,13 @@ h1, h2, h3, h4, h5, h6 {
   .create .well .text {
     color: #999999;
     background: transparent; }
+
+.i100 {
+  width: 100%;
+  min-height: 26px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
 
 .ta100 {
   width: 100%;
@@ -358,7 +369,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .fold {
   width: 100%;
-  padding: 19px;
+  padding: 14px 19px;
   margin-left: -19px;
   border-top: 1px solid #dddddd; }
   .fold .alert {
@@ -380,13 +391,6 @@ i.icon-white {
 a:hover i, a i.active, button:hover i, button i.active {
   opacity: 1;
   filter: alpha(opacity=100); }
-
-.icons {
-  list-style: none;
-  margin: 0; }
-  .icons li {
-    float: left;
-    margin-right: 5px; }
 
 .advice {
   font-weight: bold;
@@ -421,6 +425,7 @@ a:hover i, a i.active, button:hover i, button i.active {
     .achievement .content .description .tag {
       color: #999999; }
 .achievement .value {
+  margin-left: 10px;
   display: block;
   font-size: 24px;
   line-height: 48px;
@@ -535,5 +540,14 @@ a:hover i, a i.active, button:hover i, button i.active {
   margin-right: 8px;
   border-radius: 6px; }
   .user .profile-pic {
-    width: 27px !important;
-    height: 27px !important; }
+    width: 23px;
+    height: 23px; }
+
+.btn-group .btn-mini {
+  min-height: 15px; }
+
+#toolbar .btn-toolbar {
+  margin-bottom: 5px; }
+
+#list {
+  margin-bottom: 14px; }

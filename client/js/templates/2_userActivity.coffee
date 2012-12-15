@@ -1,7 +1,4 @@
 _.extend Template.userActivity,
-  user: ->
-    return Meteor.users.findOne @user
-  
   verb: ->
     switch @type
       when 'accomplishment'

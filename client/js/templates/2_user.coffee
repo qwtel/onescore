@@ -1,7 +1,12 @@
-_.extend Template.user
-  #user: ->
-  #  return this
+Template.user.helpers
+  user: ->
+    if @type is 'user'
+      return this
 
+    else if @user
+      return Meteor.users.findOne @user
+
+#_.extend Template.user
   #events:
   #  'click .edit': (e) ->
   #    value = Session.get 'editUsername'
@@ -22,4 +27,3 @@ _.extend Template.user
   #
   #editUsername: ->
   #  return Session.equals 'editUsername', true
-

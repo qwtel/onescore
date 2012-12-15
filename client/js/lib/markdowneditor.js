@@ -44,7 +44,7 @@
 			'outdent': {'name': 'Outdent', 'icon':'indent-right', callback: function (caret) {caret.replaceInSelection(/[ ]{4}(?![ ]{4})/g, "");}}
 		},
 		toolbars: {
-			'default': [/*['open', 'savemd', 'savehtml'],*/['h1','h2','h3'], ['bold','italic'], ['image','link'], ['quote', 'code'] /*,['hr']*/]
+			'default': [/*['open', 'savemd', 'savehtml'],['h1','h2','h3'],*/ ['bold','italic'], [/*'image',*/'link'], /*['quote', 'code'] ,['hr']*/]
 		}
 	};
 	$.fn.markdownEditor = function (opts) {
@@ -59,7 +59,7 @@
 
 			$this.preview = function () {
         var converter = new Showdown.converter();
-				$preview.html(converter.makeHtml($this.val()));
+				$preview.html(converter.makeHtml(_.escape($this.val())));
 				//$.markdownEditor.filepicker.save();
 			}; $this.preview();
 
@@ -110,7 +110,7 @@
 		this.$bar.html(bar);
 	}
 	$.markdownEditor.ui.prototype.makeButton = function(key, obj) {
-        var button = $("<button></button>").addClass('me-'+key).addClass('btn').attr('alt', obj.name).click(this.clickHandler(obj.callback));
+        var button = $("<button></button>").addClass('me-'+key).addClass('btn').addClass('btn-mini').attr('alt', obj.name).click(this.clickHandler(obj.callback));
         button.addClass(obj.btn_class);
         if (obj.icon == '') {
 		    button.html(obj.name)

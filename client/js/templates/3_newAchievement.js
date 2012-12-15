@@ -25,8 +25,9 @@ Template.newAchievement.events = _.extend({}, Template.edit.events, {
   'click .create': function(e) {
     var data;
     data = Scratchpad.findOne(this._id);
-    return Meteor.call('newAchievement', data, function(error, result) {
+    Meteor.call('newAchievement', data, function(error, result) {
       return window.Router.navigate("achievements/" + result, true);
     });
+    return Scratchpad.remove(this._id);
   }
 });

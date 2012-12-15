@@ -8,41 +8,54 @@
     {{/each}}
 
   %article.comment(id="comment-{{_id}}" class="{{nested}}")
-    .vote-container.pull-left
+    {{#if user}}
+    %nav.icons.btn-group.pull-right
+      {{#if isMe user}}
+      %a.btn.btn-mini.edit(title="Edit")<
+        <i class="icon-pencil {{isActive "editComment" _id}}"></i>
+      {{/if}}
+      %a.btn.btn-mini.replyy(title="Reply")<
+        <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
+      -#%li
+        %a.remove(title="Remove")<
+          <i class="icon-remove"></i>
+    {{> userActivity}}
+    {{> voteContainer}}
+    {{/if}}
+    .clearfix
+
+    -#.vote-container.pull-left
       %div
         %a(title="Link" href="/comments/{{_id}}")<
           <i class="icon-bookmark {{isActive "single" _id}}"></i>
       {{> voteContainer}}
 
-    .body
-      {{#if user}}
-      %nav.icons.pull-right
-        {{#if isMe user}}
-        %li
-          %a.edit(title="Edit")<
-            <i class="icon-pencil {{isActive "editComment" _id}}"></i>
-        {{/if}}
-        %li
-          %a.replyy(title="Reply")<
-            <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
-        -#%li
-          %a.remove(title="Remove")<
-            <i class="icon-remove"></i>
-      .part
-        {{> userActivity}}
+    -#%nav.icons.pull-right
+      {{#if isMe user}}
+      %li
+        %a.edit(title="Edit")<
+          <i class="icon-pencil {{isActive "editComment" _id}}"></i>
+      {{/if}}
+      %li
+        %a.replyy(title="Reply")<
+          <i class="icon-share-alt {{isActive "addComment" "new"}}"></i>
+      -#%li
+        %a.remove(title="Remove")<
+          <i class="icon-remove"></i>
+    -#.part
+      {{> userActivity}}
+
+    .text
+      {{#if equals "editComment" _id}}
+      .text-wrapper
+        %textarea.edit-text.ta100(id="edit-{{_id}}" rows="4") {{text}}
+      {{else}}
+      %p {{{addLineBreaks text}}}
       {{/if}}
 
-      .text
-        {{#if equals "editComment" _id}}
-        .text-wrapper
-          %textarea.edit-text.ta100(id="edit-{{_id}}" rows="4") {{text}}
-        {{else}}
-        %p {{{addLineBreaks text}}}
-        {{/if}}
-
   .fold
-  %h5.heading.line Replies
-  {{> filter}}
-  .clearfix
-  {{> comments}}
+    %h5.heading.line Replies
+    {{> filter}}
+    .clearfix
+    {{> comments}}
 

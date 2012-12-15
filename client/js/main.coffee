@@ -78,6 +78,7 @@ class AppRouter extends Backbone.Router
       id = a._id
     else
       data =
+        collection: 'scratchpad'
         user: Meteor.user()._id
         date: new Date().getTime()
         type: 'achievement'
@@ -89,7 +90,6 @@ class AppRouter extends Backbone.Router
         description: ""
         lastModifiedBy: Meteor.user()._id
         category: 'random'
-        collection: 'scratchpad'
       id = Scratchpad.insert data
     
     Session.set 'page', 'newAchievement'
@@ -107,6 +107,38 @@ class AppRouter extends Backbone.Router
       when 'accomplish'
         unless tabtab then tabtab = null
         Session.set 'story', tabtab
+
+        a = Accomplishments.findOne
+          user: Meteor.userId()
+          entity: id
+
+        if a
+          delete a._id
+          a.collection = 'scratchpad'
+          return Scratchpad.insert a
+
+        a = Scratchpad.findOne
+          type: 'accomplishment'
+          entity: id
+        if a then return
+
+        Scratchpad.insert
+          collection: 'scratchpad'
+          user: Meteor.user()._id
+          date: new Date().getTime()
+          type: 'accomplishment'
+          score: 0
+          hot: 0
+          best: 0
+          value: 0
+          comments: 0
+          lastModifiedBy: Meteor.user()._id
+          entityType: 'achievement'
+          entity: id
+          story: ''
+          facebookImageId: null
+          tags: null
+
       when 'edit' 
         unless tabtab then tabtab = 'basic'
         Session.set 'tabtab', tabtab
@@ -142,6 +174,18 @@ class AppRouter extends Backbone.Router
     Session.set 'unexpand', null
     Session.set 'skip', 0
 
+    Scratchpad.remove type: 'accomplishment'
+
 window.Router = new AppRouter
 Meteor.startup ->
   Backbone.history.start pushState: true
+
+  Accounts.ui.config
+    requestPermissions:
+      facebook: [
+        "publish_stream"
+        "user_about_me"
+        "user_location"
+        "user_photos"
+      ]
+

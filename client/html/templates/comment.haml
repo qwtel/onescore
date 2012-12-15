@@ -24,6 +24,7 @@
     {{> voteContainer}}
     {{/if}}
     .clearfix
+
     .text
       {{#if equals "editComment" _id}}
       .text-wrapper
@@ -31,6 +32,7 @@
       {{else}}
       %p {{{addLineBreaks text}}}
       {{/if}}
+
     {{#if equals "addComment" _id}}
     .text-wrapper
       %textarea.comment-text.ta100(id="reply-{{_id}}" rows="4")

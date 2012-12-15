@@ -239,29 +239,30 @@ h1, h2, h3, h4, h5, h6
   .story
     margin-bottom: $margin
 
-.comments
-  .comment
-    border-left: 1px dashed #ddd
-    .text
-      width: 100%
+.comment
+  //border-left: 1px dashed #ddd
+  .text
+    width: 100%
+    margin-top: 7px
+    margin-bottom: 14px
 
-  .hover
-    background: #f0f0f0
+.hover
+  background: #f0f0f0
 
-  .nested
-    margin-left: 2*$padding + 5px
+.nested
+  margin-left: 2*$padding + 5px
 
-  .cutoff
-    margin: 0
-    border-top: 0
-    border-bottom: 1px dashed #ddd
+.cutoff
+  margin-bottom: 20px
+  border-top: 0
+  border-bottom: 1px dashed #ccc
 
-  .text-wrapper
-    .comment-text
-      margin-bottom: 20px
+.text-wrapper
+  .comment-text
+    margin-bottom: 20px
 
-    .edit-text
-      background: none
+  .edit-text
+    background: none
 
 .my
   color: $green
@@ -308,6 +309,11 @@ $activityPadding: 15px
     .text
       color: #999
       background: transparent
+
+.i100
+  width: 100%
+  min-height: 26px
+  @include box-sizing(border-box)
 
 .ta100
   width: 100%
@@ -434,7 +440,7 @@ $activityPadding: 15px
 
 .fold
   width: 100%
-  padding: 19px
+  padding: 14px 19px 
   margin-left: -19px
   @include fold-shadow(whiteSmoke, #ccc)
 
@@ -453,13 +459,6 @@ i.icon-white
 a:hover i, a i.active, button:hover i, button i.active
   opacity: 1
   filter: alpha(opacity=100)
-
-.icons
-  list-style: none
-  margin: 0
-  li
-    float: left
-    margin-right: 5px
 
 .advice
   font:
@@ -496,6 +495,7 @@ a:hover i, a i.active, button:hover i, button i.active
         color: #999
 
   .value
+    margin-left: 10px
     display: block
     font-size: 24px
     line-height: 48px
@@ -620,7 +620,16 @@ a:hover i, a i.active, button:hover i, button i.active
   margin-right: 8px
   border-radius: 6px
   .profile-pic
-    width: 27px!important
-    height: 27px!important
+    width: 23px
+    height: 23px
 
+.btn-group
+  .btn-mini
+    min-height: 15px
 
+#toolbar
+  .btn-toolbar
+    margin-bottom: 5px
+
+#list
+  margin-bottom: $padding

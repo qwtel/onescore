@@ -47,6 +47,7 @@ Meteor.methods({
       });
     }
   },
+  upload: function(formData, accomplishmentId) {},
   basic: function() {
     var data;
     return data = {
@@ -124,17 +125,7 @@ Meteor.methods({
       data.type = 'comment';
       id = Comments.insert(data);
       comment = Comments.findOne(id);
-      target = Collections[comment.topicType].findOne(comment.topic);
-      notify(comment, target);
-      if (comment.parent != null) {
-        parent = Comments.findOne(comment.parent);
-        notify(comment, parent);
-      }
-      return Collections[comment.topicType].update(comment.topic, {
-        $inc: {
-          comments: 1
-        }
-      });
+      return target = Collections[comment.topicType].findOne(comment.topic);
     }
   },
   vote: function(data) {
@@ -160,6 +151,8 @@ Meteor.methods({
   },
   accomplish: function(data) {
     var acc, accomplishId, accomplishment, achievement, basic, tags;
+    delete data._id;
+    delete data.collection;
     acc = Accomplishments.findOne({
       user: this.userId,
       entity: data.entity
@@ -193,11 +186,11 @@ Meteor.methods({
   },
   newAchievement: function(data) {
     var basic, id, titleData;
+    delete data._id;
+    delete data.collection;
     basic = Meteor.call('basic');
     _.extend(data, basic);
     data.type = 'achievement';
-    delete data._id;
-    delete data.collection;
     id = Achievements.insert(data);
     if (data.title) {
       titleData = {

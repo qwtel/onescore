@@ -1,16 +1,3 @@
-fetchUserInformation = (user) ->
-  url = "https://graph.facebook.com/#{user.services.facebook.id}"
-  options =
-    params:
-      access_token: user.services.facebook.accessToken
-
-  Meteor.http.get url, options, (error, res) =>
-    Meteor.users.update user._id,
-      $set:
-        username: res.data.username
-        bio: res.data.bio
-        location: res.data.location.name
-
 # HACK: this should be some exponential formula.
 # HACK: this should be part of a user model.
 nextLevel = (level) ->
@@ -23,6 +10,46 @@ nextLevel = (level) ->
     when 5 then next = 1225
   return next
 
+# XXX: List of allowed facebook ids
+betaKeys = ["1237137766"]
+
+Accounts.onCreateUser (options, user) ->
+  if options.profile
+    user.profile = options.profile
+
+  url = "https://graph.facebook.com/#{user.services.facebook.id}"
+  query =
+    params:
+      access_token: user.services.facebook.accessToken
+
+  res = Meteor.http.get url, query 
+
+  if !res or !res.data or !res.data.username 
+    throw new Error
+
+  if not _.contains(betaKeys, res.data.id)
+    throw new Error
+
+  _.extend user,
+    type: 'user'
+    date: new Date().getTime()
+    score: 0
+    hot: 0
+    best: 0
+    value: 0
+    comments: 0
+    username: res.data.username
+    level: 0
+    rank: 0
+    ranked: false
+
+  _.extend user.profile,
+    username: res.data.username
+    bio: res.data.bio
+    location: res.data.location.name
+
+  return user
+
 Meteor.startup ->
   # Assign global ranks
   users = Meteor.users.find {},
@@ -30,15 +57,12 @@ Meteor.startup ->
 
   users.observe
     added: (user, beforeIndex) ->
-      unless user.username?
+      unless user.ranked
         Meteor.users.update user._id,
           $set:
+            ranked: true
             level: 1
-            score: 0
             rank: beforeIndex + 1
-
-      # fetch facebook data when a new user is added
-      fetchUserInformation user
 
     changed: (user) ->
       next = nextLevel user.level

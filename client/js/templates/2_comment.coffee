@@ -24,18 +24,17 @@ _.extend Template.comment,
     'click .unexpand': (e) ->
       unless e.isPropagationStopped()
         e.stopPropagation()
-        Session.embed 'unexpand', @_id, true
-        Session.toggle 'redraw'
+        Session.toggle "unexpand-#{@_id}", true
 
-    'mouseover .highlight': (e) ->
-      unless e.isPropagationStopped()
-        e.stopPropagation()
-        $(e.target).closest('.comment').addClass 'hover'
-
-    'mouseout .highlight': (e) ->
-      unless e.isPropagationStopped()
-        e.stopPropagation()
-        $(e.target).closest('.comment').removeClass 'hover'
+    #'mouseover .highlight': (e) ->
+    #  unless e.isPropagationStopped()
+    #    e.stopPropagation()
+    #    $(e.target).closest('.comment').addClass 'hover'
+    #
+    #'mouseout .highlight': (e) ->
+    #  unless e.isPropagationStopped()
+    #    e.stopPropagation()
+    #    $(e.target).closest('.comment').removeClass 'hover'
 
     'keyup .comment-text, keydown .comment-text':
       window.makeOkCancelHandler
@@ -66,11 +65,7 @@ _.extend Template.comment,
           e.target.value = ""
 
   unexpand: ->
-    Session.get 'redraw'
-    field = Session.get 'unexpand'
-    if field
-      return field[@_id]
-    return false
+    Session.equals "unexpand-#{@_id}", true
 
   verb: ->
     if @parent?

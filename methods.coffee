@@ -34,6 +34,23 @@ Meteor.methods
         $set:
           title: best.title
 
+  upload: (formData, accomplishmentId) ->
+    #if Meteor.isClient
+    #  user = Meteor.user()
+    #  url = "https://graph.facebook.com/#{user.services.facebook.id}/photos/"
+    #  options =
+    #    params:
+    #      access_token: user.services.facebook.accessToken
+    #    contentType: 'multipart/form-data'
+    #    content: formData
+    #  
+    #  Meteor.http.post url, options, (error, result) ->
+    #    unless error
+    #      id = result.data.id
+    #      Accomplishments.update accomplishmentId, 
+    #        $set: 
+    #          facebookImageId: id
+
   basic: ->
     data =
       user: @userId
@@ -74,6 +91,7 @@ Meteor.methods
 
   comment: (data) ->
     comment = Comments.findOne data._id
+
     if comment and comment.user is @userId
       Comments.update data._id,
         $set: text: data.text
@@ -101,13 +119,13 @@ Meteor.methods
 
       comment = Comments.findOne id
       target = Collections[comment.topicType].findOne comment.topic
-      notify comment, target
-  
-      if comment.parent?
-        parent = Comments.findOne comment.parent
-        notify comment, parent
-  
-      Collections[comment.topicType].update comment.topic, $inc: comments: 1
+      #notify comment, target
+      #
+      #if comment.parent?
+      #  parent = Comments.findOne comment.parent
+      #  notify comment, parent
+      #
+      #Collections[comment.topicType].update comment.topic, $inc: comments: 1
 
   vote: (data) ->
     basic = Meteor.call 'basic'
@@ -130,6 +148,9 @@ Meteor.methods
     calculateScore Collections[data.entityType], data.entity
 
   accomplish: (data) ->
+    delete data._id
+    delete data.collection
+
     acc = Accomplishments.findOne
       user: @userId
       entity: data.entity
@@ -166,11 +187,12 @@ Meteor.methods
     return accomplishId
  
   newAchievement: (data) ->
+    delete data._id
+    delete data.collection
+
     basic = Meteor.call 'basic'
     _.extend data, basic
     data.type = 'achievement'
-    delete data._id
-    delete data.collection
     id = Achievements.insert data
 
     if data.title

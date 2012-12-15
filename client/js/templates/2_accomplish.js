@@ -3,21 +3,27 @@
 _.extend(Template.accomplish, {
   events: {
     'click .create': function(e) {
-      var data, story;
+      var data;
       if (!e.isPropagationStopped()) {
         e.stopPropagation();
-        story = $("#editor").val();
-        this.tags || (this.tags = []);
-        data = {
-          entity: this._id,
-          entityType: 'achievement',
-          story: story,
-          tags: this.tags
-        };
+        data = Scratchpad.findOne({
+          type: 'accomplishment',
+          entity: this._id
+        });
         return Meteor.call('accomplish', data, function(error, result) {
           return window.Router.navigate("/accomplishments/" + result, true);
         });
       }
+    },
+    'change .lazy': function(e) {
+      var $t, data, field;
+      data = {};
+      $t = $(e.currentTarget);
+      field = $t.attr('name');
+      data[field] = $t.val();
+      return Scratchpad.update(this._id, {
+        $set: data
+      });
     },
     'click .uncreate': function(e) {
       return Accomplishments.remove(this._id);
@@ -29,26 +35,20 @@ _.extend(Template.accomplish, {
     'click a.preview': function(e) {
       $('.editor').show();
       return $('.preview').hide();
-    }
+    },
+    'change #upload': function(evt) {}
+  },
+  newAccomplishment: function() {
+    return Scratchpad.findOne({
+      type: 'accomplishment',
+      entity: Session.get('single')
+    });
   },
   accomplishment: function() {
     return Accomplishments.findOne({
       user: Meteor.user()._id,
       entity: this._id
     });
-  },
-  story: function() {
-    var acpl;
-    acpl = Accomplishments.findOne({
-      user: Meteor.user()._id,
-      entity: this._id
-    });
-    if (acpl) {
-      if (acpl.story) {
-        return acpl.story;
-      }
-    }
-    return '';
   },
   rendered: function() {
     return $('#editor').markdownEditor({

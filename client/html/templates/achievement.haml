@@ -1,41 +1,42 @@
 %template(name='achievement')
   %article.achievement(id="{{_id}}" class="{{color}}")
+    {{#if session "single"}}
+    %nav.icons.btn-toolbar
+      {{> userActivity}}
+      .btn-group.pull-left
+        {{> voteContainer}}
+
+      .btn-group.pull-right
+        %a.btn.btn-mini.fav(title="Add to favourites")<
+          <i class="icon-star {{faved}}"></i>
+        -#%a.btn.btn-mini.expand(title="Expand")<
+          {{#if equals "expand" _id}}
+          <i class="icon-chevron-up active"></i>
+          {{else}}
+          <i class="icon-chevron-down"></i>
+          {{/if}}
+        %a.btn.btn-mini(title="Edit" href="/achievements/{{_id}}/edit")<
+          %i.icon-pencil
+          -# <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i>
+        %a.btn.btn-mini(title="Comment" href="/achievements/{{_id}}/talk")<
+          %i.icon-comment
+          -# <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i>
+        %a.btn.btn-mini(title="Accomplish" href="/achievements/{{_id}}/accomplish")<
+          %i.icon-certificate
+          -# <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i>
+      .clearfix
+    {{/if}}
+
     %a.value.pull-right(href="/achievements/{{_id}}/accomplish")
       %span.points
         {{#if value}} {{value}} {{else}}
         %img(src="/grayLoading.gif")/
         {{/if}}
 
-    .vote-container.pull-right
-      {{> voteContainer}}
-
     %a.icon.pull-left(href="/achievements/{{_id}}")
 
     .content
       %header.head
-        %nav.icons.pull-right
-          {{#unless session "single"}}
-          %li
-            %a.expand(title="Expand")<
-              {{#if equals "expand" _id}}
-              <i class="icon-chevron-up active"></i>
-              {{else}}
-              <i class="icon-chevron-down"></i>
-              {{/if}}
-          %li
-            %a(title="Edit" href="/achievements/{{_id}}/edit")<
-              %i.icon-pencil
-              -# <i class="icon-pencil {{#if equals "tab" "edit"}}{{isActive "single" _id}}{{/if}}"></i>
-          %li
-            %a(title="Comment" href="/achievements/{{_id}}/talk")<
-              %i.icon-comment
-              -# <i class="icon-comment {{#if equals "tab" "talk"}}{{isActive "single" _id}}{{/if}}"></i>
-          %li
-            %a(title="Accomplish" href="/achievements/{{_id}}/accomplish")<
-              %i.icon-certificate
-              -# <i class="icon-certificate {{#if equals "tab" "accomplish"}}{{isActive "single" _id}}{{/if}}"></i>
-          {{/unless}}
-
         %h5.title
           {{#if title}}
           %a(href="/achievements/{{_id}}") {{title}}
@@ -61,6 +62,6 @@
   {{#if equals "single" _id}}{{#if session "tab"}}
   .expandAchievement
     .fold
-    {{> expand}}
+      {{> expand}}
   {{/if}}{{/if}}
 

@@ -12,5 +12,5 @@ _.extend Template.userBanner,
   pic: ->
     username = Session.get 'username'
     if username
-      return "<img src='https://graph.facebook.com/#{username}/picture&type=normal'/>"
+      return "<img src='https://graph.facebook.com/#{username}/picture?type=normal'/>"
 

@@ -8,28 +8,17 @@
 {{/each}}
 </ul>
 <article class='comment {{nested}}' id='comment-{{_id}}'>
-<div class='vote-container pull-left'>
-<div>
-<a href='/comments/{{_id}}' title='Link'><i class="icon-bookmark {{isActive "single" _id}}"></i></a>
-</div>
-{{> voteContainer}}
-</div>
-<div class='body'>
 {{#if user}}
-<nav class='icons pull-right'>
+<nav class='icons btn-group pull-right'>
 {{#if isMe user}}
-<li>
-<a class='edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
-</li>
+<a class='btn btn-mini edit' title='Edit'><i class="icon-pencil {{isActive "editComment" _id}}"></i></a>
 {{/if}}
-<li>
-<a class='replyy' title='Reply'><i class="icon-share-alt {{isActive "addComment" "new"}}"></i></a>
-</li>
+<a class='btn btn-mini replyy' title='Reply'><i class="icon-share-alt {{isActive "addComment" "new"}}"></i></a>
 </nav>
-<div class='part'>
 {{> userActivity}}
-</div>
+{{> voteContainer}}
 {{/if}}
+<div class='clearfix'></div>
 <div class='text'>
 {{#if equals "editComment" _id}}
 <div class='text-wrapper'>
@@ -39,11 +28,11 @@
 <p>{{{addLineBreaks text}}}</p>
 {{/if}}
 </div>
-</div>
 </article>
-<div class='fold'></div>
+<div class='fold'>
 <h5 class='heading line'>Replies</h5>
 {{> filter}}
 <div class='clearfix'></div>
 {{> comments}}
+</div>
 </template>

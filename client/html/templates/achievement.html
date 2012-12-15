@@ -1,5 +1,20 @@
 <template name='achievement'>
 <article class='achievement {{color}}' id='{{_id}}'>
+{{#if session "single"}}
+<nav class='icons btn-toolbar'>
+{{> userActivity}}
+<div class='btn-group pull-left'>
+{{> voteContainer}}
+</div>
+<div class='btn-group pull-right'>
+<a class='btn btn-mini fav' title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
+<a class='btn btn-mini' href='/achievements/{{_id}}/edit' title='Edit'><i class='icon-pencil'></i></a>
+<a class='btn btn-mini' href='/achievements/{{_id}}/talk' title='Comment'><i class='icon-comment'></i></a>
+<a class='btn btn-mini' href='/achievements/{{_id}}/accomplish' title='Accomplish'><i class='icon-certificate'></i></a>
+</div>
+<div class='clearfix'></div>
+</nav>
+{{/if}}
 <a class='value pull-right' href='/achievements/{{_id}}/accomplish'>
 <span class='points'>
 {{#if value}} {{value}} {{else}}
@@ -7,32 +22,9 @@
 {{/if}}
 </span>
 </a>
-<div class='vote-container pull-right'>
-{{> voteContainer}}
-</div>
 <a class='icon pull-left' href='/achievements/{{_id}}'></a>
 <div class='content'>
 <header class='head'>
-<nav class='icons pull-right'>
-{{#unless session "single"}}
-<li>
-<a class='expand' title='Expand'>{{#if equals "expand" _id}}
-<i class="icon-chevron-up active"></i>
-{{else}}
-<i class="icon-chevron-down"></i>
-{{/if}}</a>
-</li>
-<li>
-<a href='/achievements/{{_id}}/edit' title='Edit'><i class='icon-pencil'></i></a>
-</li>
-<li>
-<a href='/achievements/{{_id}}/talk' title='Comment'><i class='icon-comment'></i></a>
-</li>
-<li>
-<a href='/achievements/{{_id}}/accomplish' title='Accomplish'><i class='icon-certificate'></i></a>
-</li>
-{{/unless}}
-</nav>
 <h5 class='title'>
 {{#if title}}
 <a href='/achievements/{{_id}}'>{{title}}</a>
@@ -59,8 +51,9 @@
 {{/if}}
 {{#if equals "single" _id}}{{#if session "tab"}}
 <div class='expandAchievement'>
-<div class='fold'></div>
+<div class='fold'>
 {{> expand}}
+</div>
 </div>
 {{/if}}{{/if}}
 </template>

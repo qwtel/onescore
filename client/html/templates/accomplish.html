@@ -1,16 +1,56 @@
 <template name='accomplish'>
 {{#if session "story"}}
+{{#with newAccomplishment}}
 {{#if equals "story" "text"}}
-{{#constant}}
 <div class='editor'>
 <div id='toolbar'></div>
-<textarea class='ta100' id='editor' rows='10'>{{story}}</textarea>
+{{#isolate}}
+<textarea class='ta100 lazy' id='editor' name='story' rows='10'>{{{story}}}</textarea>
+{{/isolate}}
 <span class='help-block'><strong>HINT:</strong>
 You can style your post using
 <a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
 .</span>
 </div>
 <div class='preview hide' id='preview'></div>
+{{else}}
+{{#if equals "story" "picture"}}
+<div class='editor'>
+<label>Upload a Photo:</label>
+<div class='well well-small breadcrumb'>
+<input class='input-file' id='upload' type='file' />
+<ul class='thumbnails' id='thumbnails'></ul>
+</div>
+<label>Caption: (optional)</label>
+<div id='toolbar'></div>
+{{#isolate}}
+<textarea class='ta100 lazy' id='editor' name='story' rows='4'>{{story}}</textarea>
+{{/isolate}}
+<span class='help-block'><strong>HINT:</strong>
+You can style your post using
+<a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
+.</span>
+</div>
+<div class='preview hide' id='list'></div>
+<div class='preview hide' id='preview'></div>
+{{else}}
+{{#if equals "story" "link"}}
+<div class='editor'>
+<label>Link:</label>
+<input class='i100' type='text' />
+<label>Caption: (optional)</label>
+<div id='toolbar'></div>
+<textarea class='ta100' id='editor' rows='4'>{{story}}</textarea>
+<span class='help-block'><strong>HINT:</strong>
+You can style your post using
+<a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
+.</span>
+</div>
+<div class='preview hide' id='preview'></div>
+{{/if}}
+{{/if}}
+{{/if}}
+{{/with}}
 <footer class='form-actions'>
 {{#if accomplishment}}
 <a class='btn btn-large create' style='margin-left: -20px'>Save</a>
@@ -20,8 +60,6 @@ You can style your post using
 <a class='btn btn-large editor'>Preview</a>
 <a class='btn btn-large preview hide'>Edit</a>
 </footer>
-{{/constant}}
-{{/if}}
 {{else}}
 <div class='btn-toolbar'>
 <div class='btn-group'>
@@ -35,9 +73,6 @@ You can style your post using
 </a>
 <a class='btn btn-large' href='/achievements/{{_id}}/accomplish/picture' title='Picture'>
 <i class='icon-picture'></i>
-</a>
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/video' title='Video'>
-<i class='icon-film'></i>
 </a>
 <a class='btn btn-large' href='/achievements/{{_id}}/accomplish/link' title='Link'>
 <i class='icon-bookmark'></i>

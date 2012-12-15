@@ -1,7 +1,9 @@
 Meteor.publish 'users', ->
-  Meteor.users.find()
+  Meteor.users.find {},
+    fields: 
+      'services.facebook.accessToken': 0
 
-Meteor.publish 'comments', ->
+Meteor.publish 'comments', (topic) ->
   Comments.find()# topic: topic
 
 Meteor.publish 'achievements', ->

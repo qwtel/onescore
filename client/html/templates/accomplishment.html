@@ -7,34 +7,30 @@
 <a class='btn btn-mini' href='/achievements/{{achievement._id}}/accomplish/text' title='Edit'>
 <i class='icon-pencil'></i>
 </a>
-<a class='btn btn-mini' href='/accomplishments/{{_id}}/talk' title='Reply'>
-<i class='icon-share-alt'></i>
-</a>
 {{/if}}
+<a class='btn btn-mini' href='/accomplishments/{{_id}}/talk' title='Comment'>
+<i class='icon-comment'></i>
+</a>
 </nav>
-{{> userActivity}}
+{{> user}}
 {{> voteContainer}}
 {{/if}}
 <div class='clearfix'></div>
 {{#with achievement}}
-<div class='embed'>
+<div class='embed well well-small'>
 {{> embedAchievement}}
 </div>
 {{/with}}
 {{#if story}}
-<div class='story part'>
+<div class='story'>
 {{#markdown}}{{{story}}}{{/markdown}}
 </div>
 {{/if}}
-<div class='part'>
 {{> tags}}
-</div>
 {{#if numComments}}
-<div class='part'>
 <a class='times part' href='/accomplishments/{{_id}}/talk'>
 {{numComments}} comments
 </a>
-</div>
 {{/if}}
 </article>
 </template>

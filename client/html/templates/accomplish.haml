@@ -26,19 +26,22 @@
       </li>
 
   {{#if session "story"}}
+  {{#with newAccomplishment}}
   {{#if equals "story" "text"}}
 
-  {{#constant}}
   .editor
-    %div(id="toolbar")
-    %textarea.ta100(id="editor" rows="10") {{story}}
+    #toolbar
+
+    {{#isolate}}
+    %textarea#editor.ta100.lazy(name="story" rows="10") {{{story}}}
+    {{/isolate}}
 
     %span.help-block<
       %strong HINT:
       You can style your post using
       %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
       \.
-  .preview.hide(id="preview")
+  #preview.preview.hide
 
   -#%div.control-group 
     %label.control-label Tags
@@ -46,6 +49,53 @@
       {{#with tags}}
       {{> tags}}
       {{/with}}
+
+  {{else}}
+  {{#if equals "story" "picture"}}
+
+  .editor
+    %label Upload a Photo:
+    .well.well-small.breadcrumb
+      %input#upload.input-file(type="file")/
+      %ul#thumbnails.thumbnails
+
+    %label Caption: (optional)
+    #toolbar
+
+    {{#isolate}}
+    %textarea#editor.ta100.lazy(name="story" rows="4") {{story}}
+    {{/isolate}}
+
+    %span.help-block<
+      %strong HINT:
+      You can style your post using
+      %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
+      \.
+
+  #list.preview.hide
+  #preview.preview.hide
+
+  {{else}}
+  {{#if equals "story" "link"}}
+
+  .editor
+    %label Link:
+    %input.i100(type="text")
+
+    %label Caption: (optional)
+    #toolbar
+    %textarea#editor.ta100(rows="4") {{story}}
+
+    %span.help-block<
+      %strong HINT:
+      You can style your post using
+      %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
+      \.
+  #preview.preview.hide
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/with}}
 
   %footer.form-actions
     {{#if accomplishment}}
@@ -55,8 +105,6 @@
     {{/if}}
     %a.btn.btn-large.editor Preview
     %a.btn.btn-large.preview.hide Edit
-  {{/constant}}
-  {{/if}}
 
   {{else}}
   .btn-toolbar
@@ -70,7 +118,7 @@
         %i.icon-align-left
       %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/picture" title="Picture")
         %i.icon-picture
-      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/video" title="Video")
+      -#%a.btn.btn-large(href="/achievements/{{_id}}/accomplish/video" title="Video")
         %i.icon-film
       %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/link" title="Link")
         %i.icon-bookmark

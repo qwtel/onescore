@@ -96,6 +96,7 @@ AppRouter = (function(_super) {
       id = a._id;
     } else {
       data = {
+        collection: 'scratchpad',
         user: Meteor.user()._id,
         date: new Date().getTime(),
         type: 'achievement',
@@ -106,8 +107,7 @@ AppRouter = (function(_super) {
         comments: 0,
         description: "",
         lastModifiedBy: Meteor.user()._id,
-        category: 'random',
-        collection: 'scratchpad'
+        category: 'random'
       };
       id = Scratchpad.insert(data);
     }
@@ -116,6 +116,7 @@ AppRouter = (function(_super) {
   };
 
   AppRouter.prototype.achievements = function(id, tab, tabtab) {
+    var a;
     this.softReset();
     Session.set('page', 'achievements');
     Session.set('single', id);
@@ -128,7 +129,40 @@ AppRouter = (function(_super) {
         if (!tabtab) {
           tabtab = null;
         }
-        return Session.set('story', tabtab);
+        Session.set('story', tabtab);
+        a = Accomplishments.findOne({
+          user: Meteor.userId(),
+          entity: id
+        });
+        if (a) {
+          delete a._id;
+          a.collection = 'scratchpad';
+          return Scratchpad.insert(a);
+        }
+        a = Scratchpad.findOne({
+          type: 'accomplishment',
+          entity: id
+        });
+        if (a) {
+          return;
+        }
+        return Scratchpad.insert({
+          collection: 'scratchpad',
+          user: Meteor.user()._id,
+          date: new Date().getTime(),
+          type: 'accomplishment',
+          score: 0,
+          hot: 0,
+          best: 0,
+          value: 0,
+          comments: 0,
+          lastModifiedBy: Meteor.user()._id,
+          entityType: 'achievement',
+          entity: id,
+          story: '',
+          facebookImageId: null,
+          tags: null
+        });
       case 'edit':
         if (!tabtab) {
           tabtab = 'basic';
@@ -170,7 +204,10 @@ AppRouter = (function(_super) {
     Session.set('single', null);
     Session.set('tab', null);
     Session.set('unexpand', null);
-    return Session.set('skip', 0);
+    Session.set('skip', 0);
+    return Scratchpad.remove({
+      type: 'accomplishment'
+    });
   };
 
   return AppRouter;
@@ -180,7 +217,12 @@ AppRouter = (function(_super) {
 window.Router = new AppRouter;
 
 Meteor.startup(function() {
-  return Backbone.history.start({
+  Backbone.history.start({
     pushState: true
+  });
+  return Accounts.ui.config({
+    requestPermissions: {
+      facebook: ["publish_stream", "user_about_me", "user_location", "user_photos"]
+    }
   });
 });
