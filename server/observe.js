@@ -57,9 +57,7 @@ Accounts.onCreateUser(function(options, user) {
     ranked: false
   });
   _.extend(user.profile, {
-    username: res.data.username,
-    bio: res.data.bio,
-    location: res.data.location.name
+    username: res.data.username
   });
   return user;
 });

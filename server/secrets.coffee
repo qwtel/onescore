@@ -11,7 +11,7 @@ unless facebook
       "user_about_me"
       "user_location"
       "user_photos"
-      "user_videos"
+      #"user_videos"
     ]
 
 # first, remove configuration entry in case service is already configured

@@ -45,8 +45,8 @@ Accounts.onCreateUser (options, user) ->
 
   _.extend user.profile,
     username: res.data.username
-    bio: res.data.bio
-    location: res.data.location.name
+    #bio: res.data.bio
+    #location: res.data.location.name
 
   return user
 
