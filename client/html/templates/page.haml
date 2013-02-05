@@ -56,10 +56,6 @@
 
   {{else}} {{#if equals "page" "profile"}}
   .row
-    .span12
-      %section.well 
-        {{> userBanner}}
-  .row
     .span4
       {{> menu }}
       %aside.well.hidden-phone
@@ -68,6 +64,9 @@
       -#%aside.well.hidden-phone 
         %h5.heading.line Quest items
     .span8
+      %section.well 
+        {{> userBanner}}
+
       %section.well.profile 
         {{#if equals "menu" "activity"}}
         %h5.heading.line Activity

@@ -7,8 +7,7 @@
   {{/if}}
 
   {{#if currentUser}}
-
-  -#%a.btn.btn-navbar(data-toggle="collapse" data-target=".nav-collapse")
+  %a.btn.btn-navbar.pull-left(data-toggle="collapse" data-target=".nav-collapse")
     %span.icon-bar
     %span.icon-bar
     %span.icon-bar
@@ -19,7 +18,7 @@
   %span.score.pull-right 
     %span.value {{currentUser.score}} 
 
-  %nav.nav
+  %nav.nav.nav-collapse.collapse
     -#%li.dropdown
       %a.dropdown-toggle(data-toggle="dropdown")<
         {{#if session "category"}}

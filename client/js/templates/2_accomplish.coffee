@@ -33,29 +33,29 @@ _.extend Template.accomplish,
       $('.preview').hide()
 
     'change #upload': (evt) ->
-      #files = evt.target.files
-      #formData = new FormData()
-      #
-      #for f in files
-      #  if not f.type.match('image.*')
-      #    continue
-      #
-      #  formData.append f.name, f
-      #
-      #  reader = new FileReader()
-      #  reader.onload = ((theFile) ->
-      #    return (e) ->
-      #      $img = $('<img/>').attr('src', e.target.result).attr('title', 
-      #        _.escape(theFile.name))
-      #      $img2 = $img.clone()
-      #      $('#thumbnails').html(
-      #        $('<li></li>').addClass('span3').append(
-      #          $('<div></div>').addClass('thumbnail').append($img)))
-      #      $('#list').html($img2)
-      #  )(f)
-      #  reader.readAsDataURL(f)
-      #
-      #Meteor.call 'upload', formData, @_id
+      files = evt.target.files
+      formData = new FormData()
+      
+      for f in files
+        if not f.type.match('image.*')
+          continue
+      
+        formData.append f.name, f
+      
+        reader = new FileReader()
+        reader.onload = ((theFile) ->
+          return (e) ->
+            $img = $('<img/>').attr('src', e.target.result).attr('title', 
+              _.escape(theFile.name))
+            $img2 = $img.clone()
+            $('#thumbnails').html(
+              $('<li></li>').addClass('span3').append(
+                $('<div></div>').addClass('thumbnail').append($img)))
+            $('#list').html($img2)
+        )(f)
+        reader.readAsDataURL(f)
+      
+      Meteor.call 'upload', formData, @_id
 
   newAccomplishment: ->
     Scratchpad.findOne

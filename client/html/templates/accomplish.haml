@@ -41,7 +41,7 @@
       You can style your post using
       %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
       \.
-  #preview.preview.hide
+  #preview.preview.story.hide
 
   -#%div.control-group 
     %label.control-label Tags
@@ -73,7 +73,7 @@
       \.
 
   #list.preview.hide
-  #preview.preview.hide
+  #preview.preview.story.hide
 
   {{else}}
   {{#if equals "story" "link"}}
@@ -91,7 +91,7 @@
       You can style your post using
       %a(href="http://daringfireball.net/projects/markdown/" target="_blank") Markdown
       \.
-  #preview.preview.hide
+  #preview.preview.story.hide
   {{/if}}
   {{/if}}
   {{/if}}
@@ -99,27 +99,27 @@
 
   %footer.form-actions
     {{#if accomplishment}}
-    %a.btn.btn-large.create(style="margin-left: -20px") Save
+    %a.btn.create(style="margin-left: -20px") Save
     {{else}}
-    %a.btn.btn-success.btn-large.create(style="margin-left: -20px") Accomplish
+    %a.btn.btn-success.create(style="margin-left: -20px") Accomplish
     {{/if}}
-    %a.btn.btn-large.editor Preview
-    %a.btn.btn-large.preview.hide Edit
+    %a.btn.editor Preview
+    %a.btn.preview.hide Edit
 
   {{else}}
   .btn-toolbar
     .btn-group
       {{#if accomplishment}}
-      %a.btn.btn-danger.btn-large.uncreate Unaccomplish
+      %a.btn.btn-danger.uncreate Unaccomplish
       {{else}}
-      %a.btn.btn-success.btn-large.create Accomplish
+      %a.btn.btn-success.create Accomplish
       {{/if}}
-      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/text" title="Text")
+      %a.btn(href="/achievements/{{_id}}/accomplish/text" title="Text")
         %i.icon-align-left
-      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/picture" title="Picture")
+      %a.btn(href="/achievements/{{_id}}/accomplish/picture" title="Picture")
         %i.icon-picture
-      -#%a.btn.btn-large(href="/achievements/{{_id}}/accomplish/video" title="Video")
+      -#%a.btn.(href="/achievements/{{_id}}/accomplish/video" title="Video")
         %i.icon-film
-      %a.btn.btn-large(href="/achievements/{{_id}}/accomplish/link" title="Link")
+      -#%a.btn(href="/achievements/{{_id}}/accomplish/link" title="Link")
         %i.icon-bookmark
   {{/if}}

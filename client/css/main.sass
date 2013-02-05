@@ -42,6 +42,9 @@ body
 
   @media (max-width: 480px)
     background: whitesmoke
+    .embed
+      margin-left: -10px
+      margin-top: 10px
 
 a
   cursor: pointer
@@ -235,9 +238,18 @@ h1, h2, h3, h4, h5, h6
 .part
   margin-bottom: $padding/2
 
-.accomplishment
-  .story
-    margin-bottom: $padding
+.story
+  margin-bottom: $padding
+
+  h1
+    font-size: 18px
+    line-height: 24px
+  h2
+    font-size: 16px
+    line-height: 22px
+  h3, h4, h5, h6
+    font-size: 13px
+    line-height: 18px
 
 .comment
   //border-left: 1px dashed #ddd
@@ -561,7 +573,6 @@ a:hover i, a i.active, button:hover i, button i.active
 
 .embed
   border: 1px solid #ddd
-  padding: 10px
   margin: $padding 0 
   .icons
     display: none

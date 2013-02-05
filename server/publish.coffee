@@ -35,6 +35,8 @@ Meteor.publish 'revisions', (document, batch) ->
     sort: date: -1
     limit: 15*(batch+1)
 
+################################################################################
+
 #Meteor.publish 'explore', (sel, sort, batch) ->
 #  achievements = Achievements.find sel,
 #    sort: sort

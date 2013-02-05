@@ -59,13 +59,6 @@
 </div>
 {{else}} {{#if equals "page" "profile"}}
 <div class='row'>
-<div class='span12'>
-<section class='well'>
-{{> userBanner}}
-</section>
-</div>
-</div>
-<div class='row'>
 <div class='span4'>
 {{> menu }}
 <aside class='well hidden-phone'>
@@ -74,6 +67,9 @@
 </aside>
 </div>
 <div class='span8'>
+<section class='well'>
+{{> userBanner}}
+</section>
 <section class='well profile'>
 {{#if equals "menu" "activity"}}
 <h5 class='heading line'>Activity</h5>

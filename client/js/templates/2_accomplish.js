@@ -36,7 +36,30 @@ _.extend(Template.accomplish, {
       $('.editor').show();
       return $('.preview').hide();
     },
-    'change #upload': function(evt) {}
+    'change #upload': function(evt) {
+      var f, files, formData, reader, _i, _len;
+      files = evt.target.files;
+      formData = new FormData();
+      for (_i = 0, _len = files.length; _i < _len; _i++) {
+        f = files[_i];
+        if (!f.type.match('image.*')) {
+          continue;
+        }
+        formData.append(f.name, f);
+        reader = new FileReader();
+        reader.onload = (function(theFile) {
+          return function(e) {
+            var $img, $img2;
+            $img = $('<img/>').attr('src', e.target.result).attr('title', _.escape(theFile.name));
+            $img2 = $img.clone();
+            $('#thumbnails').html($('<li></li>').addClass('span3').append($('<div></div>').addClass('thumbnail').append($img)));
+            return $('#list').html($img2);
+          };
+        })(f);
+        reader.readAsDataURL(f);
+      }
+      return Meteor.call('upload', formData, this._id);
+    }
   },
   newAccomplishment: function() {
     return Scratchpad.findOne({

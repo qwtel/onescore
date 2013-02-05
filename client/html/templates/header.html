@@ -6,13 +6,18 @@
 <a class='brand nav-img pull-left nav-item' href='/home'></a>
 {{/if}}
 {{#if currentUser}}
+<a class='btn btn-navbar pull-left' data-target='.nav-collapse' data-toggle='collapse'>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+<span class='icon-bar'></span>
+</a>
 <a class='profile-pic nav-item nav-img pull-right' href='/{{currentUser.username}}'>
 {{{pic}}}
 </a>
 <span class='score pull-right'>
 <span class='value'>{{currentUser.score}}</span>
 </span>
-<nav class='nav'>
+<nav class='nav nav-collapse collapse'>
 {{#each items}}
 <li class='divider-vertical'></li>
 <li class='spell-item {{active}} {{isPassive}}'>

@@ -43,6 +43,9 @@ class AppRouter extends Backbone.Router
     Session.set 'sort', 'best'
     Session.set 'type', 'achievement'
 
+    Session.set 'btn-completed', true
+    Session.set 'btn-accepted', true
+
   ladder: ->
     @hardReset()
     Session.set 'page', 'ladder'

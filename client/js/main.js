@@ -55,7 +55,9 @@ AppRouter = (function(_super) {
     this.hardReset();
     Session.set('page', 'explore');
     Session.set('sort', 'best');
-    return Session.set('type', 'achievement');
+    Session.set('type', 'achievement');
+    Session.set('btn-completed', true);
+    return Session.set('btn-accepted', true);
   };
 
   AppRouter.prototype.ladder = function() {

@@ -12,7 +12,7 @@ You can style your post using
 <a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
 .</span>
 </div>
-<div class='preview hide' id='preview'></div>
+<div class='preview story hide' id='preview'></div>
 {{else}}
 {{#if equals "story" "picture"}}
 <div class='editor'>
@@ -32,7 +32,7 @@ You can style your post using
 .</span>
 </div>
 <div class='preview hide' id='list'></div>
-<div class='preview hide' id='preview'></div>
+<div class='preview story hide' id='preview'></div>
 {{else}}
 {{#if equals "story" "link"}}
 <div class='editor'>
@@ -46,36 +46,33 @@ You can style your post using
 <a href='http://daringfireball.net/projects/markdown/' target='_blank'>Markdown</a>
 .</span>
 </div>
-<div class='preview hide' id='preview'></div>
+<div class='preview story hide' id='preview'></div>
 {{/if}}
 {{/if}}
 {{/if}}
 {{/with}}
 <footer class='form-actions'>
 {{#if accomplishment}}
-<a class='btn btn-large create' style='margin-left: -20px'>Save</a>
+<a class='btn create' style='margin-left: -20px'>Save</a>
 {{else}}
-<a class='btn btn-success btn-large create' style='margin-left: -20px'>Accomplish</a>
+<a class='btn btn-success create' style='margin-left: -20px'>Accomplish</a>
 {{/if}}
-<a class='btn btn-large editor'>Preview</a>
-<a class='btn btn-large preview hide'>Edit</a>
+<a class='btn editor'>Preview</a>
+<a class='btn preview hide'>Edit</a>
 </footer>
 {{else}}
 <div class='btn-toolbar'>
 <div class='btn-group'>
 {{#if accomplishment}}
-<a class='btn btn-danger btn-large uncreate'>Unaccomplish</a>
+<a class='btn btn-danger uncreate'>Unaccomplish</a>
 {{else}}
-<a class='btn btn-success btn-large create'>Accomplish</a>
+<a class='btn btn-success create'>Accomplish</a>
 {{/if}}
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/text' title='Text'>
+<a class='btn' href='/achievements/{{_id}}/accomplish/text' title='Text'>
 <i class='icon-align-left'></i>
 </a>
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/picture' title='Picture'>
+<a class='btn' href='/achievements/{{_id}}/accomplish/picture' title='Picture'>
 <i class='icon-picture'></i>
-</a>
-<a class='btn btn-large' href='/achievements/{{_id}}/accomplish/link' title='Link'>
-<i class='icon-bookmark'></i>
 </a>
 </div>
 </div>

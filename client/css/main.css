@@ -11,7 +11,10 @@ body {
   overflow-x: hidden; }
   @media (max-width: 480px) {
     body {
-      background: whitesmoke; } }
+      background: whitesmoke; }
+      body .embed {
+        margin-left: -10px;
+        margin-top: 10px; } }
 
 a {
   cursor: pointer;
@@ -189,8 +192,17 @@ h1, h2, h3, h4, h5, h6 {
 .part {
   margin-bottom: 7px; }
 
-.accomplishment .story {
+.story {
   margin-bottom: 14px; }
+  .story h1 {
+    font-size: 18px;
+    line-height: 24px; }
+  .story h2 {
+    font-size: 16px;
+    line-height: 22px; }
+  .story h3, .story h4, .story h5, .story h6 {
+    font-size: 13px;
+    line-height: 18px; }
 
 .comment .text {
   width: 100%;
@@ -487,7 +499,6 @@ a:hover i, a i.active, button:hover i, button i.active {
 
 .embed {
   border: 1px solid #dddddd;
-  padding: 10px;
   margin: 14px 0; }
   .embed .icons {
     display: none; }
