@@ -23,7 +23,7 @@ nextLevel = function(level) {
   return next;
 };
 
-betaKeys = ["1237137766"];
+betaKeys = ["1237137766", "1339462332"];
 
 Accounts.onCreateUser(function(options, user) {
   var query, res, url;

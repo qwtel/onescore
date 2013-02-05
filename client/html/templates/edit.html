@@ -34,17 +34,6 @@ What has to be done to complete this achievement?
 </div>
 </div>
 <div class='control-group'>
-<label class='control-label' for='category-{{_id}}'>Category</label>
-<div class='controls'>
-<select class='category lazy' data-field='category' id='category-{{_id}}'>
-{{#each categories}}
-<option value="{{name}}" {{selected ../category}}>{{name}}</option>
-{{/each}}
-</select>
-<p class='help-block muted'>If it doesn't fit in anywhere, choose 'Random'</p>
-</div>
-</div>
-<div class='control-group'>
 <label class='control-label'>Tags</label>
 <div class='controls'>
 {{> tags}}

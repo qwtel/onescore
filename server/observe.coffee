@@ -11,7 +11,7 @@ nextLevel = (level) ->
   return next
 
 # XXX: List of allowed facebook ids
-betaKeys = ["1237137766"]
+betaKeys = ["1237137766", "1339462332"]
 
 Accounts.onCreateUser (options, user) ->
   if options.profile
