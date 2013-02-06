@@ -47,13 +47,10 @@ _.extend(Template.comments, {
     var comments, sel, sort;
     sel = Template.comments.select();
     sort = Template.filter.sort();
-    comments = Comments.find(sel, {
-      sort: sort
+    return comments = Comments.find(sel, {
+      sort: sort,
+      limit: 3 * (Session.get('skip') + 1)
     });
-    if (comments.count() === 0) {
-      return false;
-    }
-    return comments;
   },
   user: function() {
     return Meteor.users.findOne(this.user);

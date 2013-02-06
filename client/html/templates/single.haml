@@ -39,10 +39,13 @@
       {{/if}}
 
       {{#if equals "tab" "talk"}}
-      %h5.heading.line Comments
-      {{> filter}}
-      .clearfix
-      {{> comments}}
+      %h5.heading.line Accomplishment
+      {{> accomplishment}}
+      .fold
+        %h5.heading.line Comments
+        {{> filter}}
+        .clearfix
+        {{> comments}}
       {{/if}}
 
   .span4.menu

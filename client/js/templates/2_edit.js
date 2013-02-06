@@ -82,14 +82,5 @@ _.extend(Template.edit, {
         active: window.isActive('tabtab', 'revisions')
       }
     ];
-  },
-  revisions: function() {
-    return Revisions.find({
-      entity: this._id
-    }, {
-      sort: {
-        date: -1
-      }
-    });
   }
 });

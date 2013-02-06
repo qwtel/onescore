@@ -3,17 +3,14 @@
 _.extend(Template.miniTitles, {
   titles: function() {
     var titles;
-    titles = Titles.find({
+    return titles = Titles.find({
       entity: this._id,
       user: Meteor.user()._id
     }, {
       sort: {
         score: -1
-      }
+      },
+      limit: 5
     });
-    if (titles.count() === 0) {
-      return false;
-    }
-    return titles;
   }
 });

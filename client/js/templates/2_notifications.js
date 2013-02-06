@@ -8,7 +8,8 @@ _.extend(Template.notifications, {
     }, {
       sort: {
         date: -1
-      }
+      },
+      limit: 15 * (Session.get('skip') + 1)
     });
     Notifications.update({
       receivers: Meteor.user()._id,

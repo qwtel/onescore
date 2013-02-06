@@ -42,9 +42,9 @@ _.extend Template.comments,
 
     comments = Comments.find sel,
       sort: sort
+      limit: 3*(Session.get('skip')+1)
 
-    if comments.count() is 0 then return false 
-    return comments
+    #if comments.count() is 0 then false else comments
     
   user: ->
     return Meteor.users.findOne @user

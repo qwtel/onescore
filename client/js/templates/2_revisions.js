@@ -8,18 +8,14 @@ _.extend(Template.revisions, {
   },
   revisions: function() {
     var revisions;
-    revisions = Revisions.find({
+    return revisions = Revisions.find({
       entity: this._id
     }, {
-      sort: {
+      eort: {
         date: -1
-      }
+      },
+      limit: 5 * (Session.get('skip') + 1)
     });
-    if (revisions.count() === 0) {
-      return false;
-    } else {
-      return revisions;
-    }
   },
   user: function() {
     return Meteor.users.findOne(this.user);

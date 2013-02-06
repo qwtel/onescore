@@ -76,9 +76,9 @@ _.extend Template.edit,
         active: window.isActive 'tabtab', 'revisions'
     ] 
 
-  revisions: ->
-    Revisions.find
-      entity: @_id
-    ,
-      sort:
-        date: -1
+  #revisions: ->
+  #  Revisions.find
+  #    entity: @_id
+  #  ,
+  #    sort: date: -1
+  #    limit: 5*(Session.get('skip')+1)

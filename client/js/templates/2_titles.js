@@ -3,18 +3,15 @@
 _.extend(Template.titles, {
   titles: function() {
     var titles;
-    titles = Titles.find({
+    return titles = Titles.find({
       entity: this._id,
       user: Meteor.user()._id
     }, {
       sort: {
         score: -1
-      }
+      },
+      limit: 5 * (Session.get('skip') + 1)
     });
-    if (titles.count() === 0) {
-      return false;
-    }
-    return titles;
   },
   user: function() {
     return Meteor.users.findOne(this.user);

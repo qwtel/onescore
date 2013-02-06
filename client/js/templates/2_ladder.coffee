@@ -9,3 +9,4 @@ _.extend Template.ladder,
       sort:
         score: -1
         _id: -1
+      limit: 25*(Session.get('skip')+1)

@@ -27,5 +27,7 @@ _.extend Template.achievements,
       else
         return true
 
-    Achievements.find sel, sort: sort
+    Achievements.find sel, 
+      sort: sort
+      limit: 15*(Session.get('skip')+1)
 

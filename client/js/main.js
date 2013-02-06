@@ -173,6 +173,7 @@ AppRouter = (function(_super) {
         if (!tabtab) {
           tabtab = 'basic';
         }
+        Session.set('skip', 0);
         return Session.set('tabtab', tabtab);
     }
   };

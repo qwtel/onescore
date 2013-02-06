@@ -14,8 +14,7 @@ _.extend Template.favourites,
               user: user._id
               entity: @entity
           ,
-            fields:
-              entity: 1
+            fields: entity: 1
 
         quests = quests.fetch()
         quests = _.pluck quests, 'entity'
@@ -29,3 +28,4 @@ _.extend Template.favourites,
 
           Achievements.find sel,
             sort: sort
+            limit: 15*(Session.get('skip')+1)

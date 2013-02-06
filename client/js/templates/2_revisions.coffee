@@ -7,10 +7,10 @@ _.extend Template.revisions,
     revisions = Revisions.find
       entity: @_id
     ,
-      sort:
-        date: -1
+      eort: date: -1
+      limit: 5*(Session.get('skip')+1)
 
-    if revisions.count() is 0 then false else revisions
+    #if revisions.count() is 0 then false else revisions
 
   user: ->
     return Meteor.users.findOne @user

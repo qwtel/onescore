@@ -34,7 +34,8 @@ _.extend(Template.favourites, {
             }
           });
           return Achievements.find(sel, {
-            sort: sort
+            sort: sort,
+            limit: 15 * (Session.get('skip') + 1)
           });
         }
       }

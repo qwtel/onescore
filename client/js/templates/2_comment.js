@@ -109,7 +109,8 @@ _.extend(Template.comment, {
     sel = Template.comments.select(this._id);
     sort = Template.filter.sort();
     return Comments.find(sel, {
-      sort: sort
+      sort: sort,
+      limit: 3 * (Session.get('skip') + 1)
     });
   }
 });

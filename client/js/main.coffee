@@ -148,6 +148,7 @@ class AppRouter extends Backbone.Router
 
       when 'edit' 
         unless tabtab then tabtab = 'basic'
+        Session.set 'skip', 0
         Session.set 'tabtab', tabtab
 
   accomplishments: (id, tab) ->

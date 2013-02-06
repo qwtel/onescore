@@ -16,7 +16,7 @@ _.extend Template.accomplishments,
   accomplishments: ->
     username = Session.get 'username'
     if username
-      user =  Meteor.users.findOne
+      user = Meteor.users.findOne
         username: username
 
       if user
@@ -27,3 +27,5 @@ _.extend Template.accomplishments,
         sort = Template.filter.sort()
         return Accomplishments.find sel,
           sort: sort
+          limit: 15*(Session.get('skip')+1)
+
