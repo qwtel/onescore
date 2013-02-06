@@ -26,7 +26,7 @@ nextLevel = function(level) {
 betaKeys = ["1237137766", "1339462332"];
 
 Accounts.onCreateUser(function(options, user) {
-  var query, res, url;
+  var data, query, res, url;
   if (options.profile) {
     user.profile = options.profile;
   }
@@ -37,12 +37,16 @@ Accounts.onCreateUser(function(options, user) {
     }
   };
   res = Meteor.http.get(url, query);
-  if (!res || !res.data || !res.data.username) {
-    throw new Error;
+  if (!res) {
+    throw new Error("No response from facebook received");
   }
-  if (!_.contains(betaKeys, res.data.id)) {
-    throw new Error;
+  if (!res.data) {
+    throw new Error("No data from facebook received");
   }
+  if (!res.data.username) {
+    throw new Error("No username from facebook received");
+  }
+  data = res.data;
   _.extend(user, {
     type: 'user',
     date: new Date().getTime(),
@@ -51,15 +55,15 @@ Accounts.onCreateUser(function(options, user) {
     best: 0,
     value: 0,
     comments: 0,
-    username: res.data.username,
+    username: data.username,
     level: 0,
     rank: 0,
     ranked: false
   });
   _.extend(user.profile, {
-    username: res.data.username,
-    bio: res.data.bio != null ? res.data.bio : '',
-    location: res.data.location.name != null ? res.data.location.name : ''
+    username: data.username,
+    bio: data.bio != null ? data.bio : '',
+    location: (data.location != null) && (data.location.name != null) ? data.location.name : ''
   });
   return user;
 });

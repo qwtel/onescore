@@ -34,23 +34,6 @@ Meteor.methods
         $set:
           title: best.title
 
-  upload: (formData, accomplishmentId) ->
-    #if Meteor.isClient
-    #  user = Meteor.user()
-    #  url = "https://graph.facebook.com/#{user.services.facebook.id}/photos/"
-    #  options =
-    #    params:
-    #      access_token: user.services.facebook.accessToken
-    #    contentType: 'multipart/form-data'
-    #    content: formData
-    #  
-    #  Meteor.http.post url, options, (error, result) ->
-    #    unless error
-    #      id = result.data.id
-    #      Accomplishments.update accomplishmentId, 
-    #        $set: 
-    #          facebookImageId: id
-
   basic: ->
     data =
       user: @userId
@@ -172,7 +155,24 @@ Meteor.methods
 
     calculateScore Collections[data.entityType], data.entity
 
-  accomplish: (data) ->
+  upload: (formData, accomplishId) ->
+    if Meteor.isClient
+      user = Meteor.user()
+      url = "https://graph.facebook.com/#{user.services.facebook.id}/photos/"
+      options =
+        params:
+          access_token: user.services.facebook.accessToken
+        contentType: 'multipart/form-data'
+        content: formData
+      
+      Meteor.http.post url, options, (error, result) ->
+        unless error
+          id = result.data.id
+          Accomplishments.update accomplishId, 
+            $set: 
+              facebookImageId: id
+
+  accomplish: (data, formData) ->
     delete data._id
     delete data.collection
 
@@ -209,6 +209,7 @@ Meteor.methods
       accomplishment = Accomplishments.findOne accomplishId
       notify accomplishment, achievement
 
+    #Meteor.call 'upload', formData, accomplishId
     return accomplishId
  
   newAchievement: (data) ->

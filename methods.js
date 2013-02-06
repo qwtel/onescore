@@ -47,7 +47,6 @@ Meteor.methods({
       });
     }
   },
-  upload: function(formData, accomplishmentId) {},
   basic: function() {
     var data;
     return data = {
@@ -192,7 +191,32 @@ Meteor.methods({
     }
     return calculateScore(Collections[data.entityType], data.entity);
   },
-  accomplish: function(data) {
+  upload: function(formData, accomplishId) {
+    var options, url, user;
+    if (Meteor.isClient) {
+      user = Meteor.user();
+      url = "https://graph.facebook.com/" + user.services.facebook.id + "/photos/";
+      options = {
+        params: {
+          access_token: user.services.facebook.accessToken
+        },
+        contentType: 'multipart/form-data',
+        content: formData
+      };
+      return Meteor.http.post(url, options, function(error, result) {
+        var id;
+        if (!error) {
+          id = result.data.id;
+          return Accomplishments.update(accomplishId, {
+            $set: {
+              facebookImageId: id
+            }
+          });
+        }
+      });
+    }
+  },
+  accomplish: function(data, formData) {
     var acc, accomplishId, accomplishment, achievement, basic, tags;
     delete data._id;
     delete data.collection;

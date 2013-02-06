@@ -10,7 +10,8 @@ _.extend(Template.accomplish, {
           type: 'accomplishment',
           entity: this._id
         });
-        return Meteor.call('accomplish', data, function(error, result) {
+        console.log(formData);
+        return Meteor.call('accomplish', data, formData, function(error, result) {
           return window.Router.navigate("/accomplishments/" + result, true);
         });
       }
@@ -37,9 +38,9 @@ _.extend(Template.accomplish, {
       return $('.preview').hide();
     },
     'change #upload': function(evt) {
-      var f, files, formData, reader, _i, _len;
+      var f, files, reader, _i, _len, _results;
       files = evt.target.files;
-      formData = new FormData();
+      _results = [];
       for (_i = 0, _len = files.length; _i < _len; _i++) {
         f = files[_i];
         if (!f.type.match('image.*')) {
@@ -56,9 +57,9 @@ _.extend(Template.accomplish, {
             return $('#list').html($img2);
           };
         })(f);
-        reader.readAsDataURL(f);
+        _results.push(reader.readAsDataURL(f));
       }
-      return Meteor.call('upload', formData, this._id);
+      return _results;
     }
   },
   newAccomplishment: function() {

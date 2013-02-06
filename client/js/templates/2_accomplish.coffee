@@ -8,7 +8,8 @@ _.extend Template.accomplish,
           type: 'accomplishment'
           entity: @_id
 
-        Meteor.call 'accomplish', data, (error, result) ->
+        console.log formData
+        Meteor.call 'accomplish', data, formData, (error, result) ->
           window.Router.navigate "/accomplishments/#{result}", true
 
         #Session.set 'modal', @_id
@@ -34,7 +35,7 @@ _.extend Template.accomplish,
 
     'change #upload': (evt) ->
       files = evt.target.files
-      formData = new FormData()
+      #formData = new FormData()
       
       for f in files
         if not f.type.match('image.*')
@@ -55,8 +56,6 @@ _.extend Template.accomplish,
         )(f)
         reader.readAsDataURL(f)
       
-      Meteor.call 'upload', formData, @_id
-
   newAccomplishment: ->
     Scratchpad.findOne
       type: 'accomplishment'

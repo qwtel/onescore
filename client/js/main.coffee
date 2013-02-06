@@ -1,5 +1,8 @@
 Session.set 'limit', 'all'
 
+# XXX
+formData = null
+
 class AppRouter extends Backbone.Router
   # NOTE: Some 'pseudo-routs' added to deal with 'dead links'
   routes:
@@ -145,6 +148,9 @@ class AppRouter extends Backbone.Router
           story: ''
           facebookImageId: null
           tags: null
+
+        # XXX
+        formData = new FormData()
 
       when 'edit' 
         unless tabtab then tabtab = 'basic'

@@ -24,11 +24,17 @@ Accounts.onCreateUser (options, user) ->
 
   res = Meteor.http.get url, query 
 
-  if !res or !res.data or !res.data.username 
-    throw new Error
+  if !res
+    throw new Error "No response from facebook received"
+  if !res.data
+    throw new Error "No data from facebook received"
+  if !res.data.username
+    throw new Error "No username from facebook received"
 
-  if not _.contains(betaKeys, res.data.id)
-    throw new Error
+  data = res.data
+
+  #if not _.contains(betaKeys, res.data.id)
+  #  throw new Error "facebook id not in whitelist"
 
   _.extend user,
     type: 'user'
@@ -38,15 +44,15 @@ Accounts.onCreateUser (options, user) ->
     best: 0
     value: 0
     comments: 0
-    username: res.data.username
+    username: data.username
     level: 0
     rank: 0
     ranked: false
 
   _.extend user.profile,
-    username: res.data.username
-    bio: if res.data.bio? then res.data.bio else ''
-    location: if res.data.location.name? then res.data.location.name else ''
+    username: data.username
+    bio: if data.bio? then data.bio else ''
+    location: if (data.location? and data.location.name?) then data.location.name else ''
 
   return user
 
