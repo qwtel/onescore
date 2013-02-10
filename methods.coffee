@@ -25,7 +25,7 @@ Meteor.methods
     achievementId = title.entity
     best = Titles.findOne
       entity: achievementId
-    ,
+    , 
       sort:
         score: -1
 
@@ -47,6 +47,9 @@ Meteor.methods
       votes: 0
 
   favourite: (data) ->
+    skill = Skills.findOne name: 'favourite'
+    if !useSkill skill
+      return 0 
     fav = Favourites.findOne
       user: @userId
       entity: data.entity
@@ -75,6 +78,10 @@ Meteor.methods
     Meteor.call 'assignBestTitle', title
 
   comment: (data) ->
+    skill = Skills.findOne name: 'comment'
+    if !useSkill skill
+      return 0
+   
     comment = Comments.findOne data._id
 
     if comment and comment.user is @userId
@@ -110,11 +117,14 @@ Meteor.methods
         parent = Comments.findOne comment.parent
         notify comment, parent
       
-      Collections[comment.topicType].update comment.topic, 
+      Collections[comment.topicType].update comment.topic,
         $set: lastComment: new Date().getTime()
         $inc: comments: 1
 
   vote: (data) ->
+    skill = Skills.findOne name: 'vote'
+    if !useSkill skill
+      return 0
     basic = Meteor.call 'basic'
     _.extend data, basic
     
@@ -155,6 +165,12 @@ Meteor.methods
 
     calculateScore Collections[data.entityType], data.entity
 
+  useSkill: (skill) ->
+    time = new Date().getTime()
+    if skill.cooldown?
+      # XXX: What if skill.name+'lastChanged' doesn't exist?
+      return (Meteor.user()[skill.name+'lastChanged'] + skill.cooldown) < time
+
   upload: (formData, accomplishId) ->
     if Meteor.isClient
       user = Meteor.user()
@@ -175,13 +191,15 @@ Meteor.methods
   accomplish: (data, formData) ->
     delete data._id
     delete data.collection
-
+    skill = Skills.findOne name: 'accomplish'
+    if !useSkill skill
+      return 0
     acc = Accomplishments.findOne
       user: @userId
       entity: data.entity
 
     if acc
-      acc.tags or (acc.tags = [])
+      acc.tags or (acc.tgags = [])
       data.tags or (data.tags = [])
       tags = _.union acc.tags, data.tags
 
@@ -219,6 +237,15 @@ Meteor.methods
     basic = Meteor.call 'basic'
     _.extend data, basic
     data.type = 'achievement'
+    time = new Date().getTime()
+
+    # check if user is spamming
+    skill = Skills.findOne name: 'newAchievement'
+    if !useSkill skill
+      return 0
+    Meteor.users.update Meteor.userId(),
+      $set:
+        newAchievementCreated: time
     id = Achievements.insert data
 
     if data.title

@@ -62,7 +62,13 @@ Meteor.methods({
     };
   },
   favourite: function(data) {
-    var fav;
+    var fav, skill;
+    skill = Skills.findOne({
+      name: 'favourite'
+    });
+    if (!useSkill(skill)) {
+      return 0;
+    }
     fav = Favourites.findOne({
       user: this.userId,
       entity: data.entity
@@ -95,7 +101,13 @@ Meteor.methods({
     return Meteor.call('assignBestTitle', title);
   },
   comment: function(data) {
-    var basic, comment, id, parent, target;
+    var basic, comment, id, parent, skill, target;
+    skill = Skills.findOne({
+      name: 'comment'
+    });
+    if (!useSkill(skill)) {
+      return 0;
+    }
     comment = Comments.findOne(data._id);
     if (comment && comment.user === this.userId) {
       return Comments.update(data._id, {
@@ -143,7 +155,13 @@ Meteor.methods({
     }
   },
   vote: function(data) {
-    var basic, diff, id, target, vote;
+    var basic, diff, id, skill, target, vote;
+    skill = Skills.findOne({
+      name: 'vote'
+    });
+    if (!useSkill(skill)) {
+      return 0;
+    }
     basic = Meteor.call('basic');
     _.extend(data, basic);
     vote = Votes.findOne({
@@ -191,6 +209,13 @@ Meteor.methods({
     }
     return calculateScore(Collections[data.entityType], data.entity);
   },
+  useSkill: function(skill) {
+    var time;
+    time = new Date().getTime();
+    if (skill.cooldown != null) {
+      return (Meteor.user()[skill.name + 'lastChanged'] + skill.cooldown) < time;
+    }
+  },
   upload: function(formData, accomplishId) {
     var options, url, user;
     if (Meteor.isClient) {
@@ -217,15 +242,21 @@ Meteor.methods({
     }
   },
   accomplish: function(data, formData) {
-    var acc, accomplishId, accomplishment, achievement, basic, tags;
+    var acc, accomplishId, accomplishment, achievement, basic, skill, tags;
     delete data._id;
     delete data.collection;
+    skill = Skills.findOne({
+      name: 'accomplish'
+    });
+    if (!useSkill(skill)) {
+      return 0;
+    }
     acc = Accomplishments.findOne({
       user: this.userId,
       entity: data.entity
     });
     if (acc) {
-      acc.tags || (acc.tags = []);
+      acc.tags || (acc.tgags = []);
       data.tags || (data.tags = []);
       tags = _.union(acc.tags, data.tags);
       Accomplishments.update(acc._id, {
@@ -252,12 +283,24 @@ Meteor.methods({
     return accomplishId;
   },
   newAchievement: function(data) {
-    var basic, id, titleData;
+    var basic, id, skill, time, titleData;
     delete data._id;
     delete data.collection;
     basic = Meteor.call('basic');
     _.extend(data, basic);
     data.type = 'achievement';
+    time = new Date().getTime();
+    skill = Skills.findOne({
+      name: 'newAchievement'
+    });
+    if (!useSkill(skill)) {
+      return 0;
+    }
+    Meteor.users.update(Meteor.userId(), {
+      $set: {
+        newAchievementCreated: time
+      }
+    });
     id = Achievements.insert(data);
     if (data.title) {
       titleData = {
