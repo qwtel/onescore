@@ -47,8 +47,8 @@ Meteor.methods
       votes: 0
 
   favourite: (data) ->
-    skill = Skills.findOne name: 'favourite'
-    if !useSkill skill
+    skill = Skills.findOne id: 'favourite'
+    if !isAllowedToUseSkill skill
       return 0 
     fav = Favourites.findOne
       user: @userId
@@ -78,8 +78,8 @@ Meteor.methods
     Meteor.call 'assignBestTitle', title
 
   comment: (data) ->
-    skill = Skills.findOne name: 'comment'
-    if !useSkill skill
+    skill = Skills.findOne id: 'comment'
+    if !isAllowedToUseSkill skill
       return 0
    
     comment = Comments.findOne data._id
@@ -122,8 +122,8 @@ Meteor.methods
         $inc: comments: 1
 
   vote: (data) ->
-    skill = Skills.findOne name: 'vote'
-    if !useSkill skill
+    skill = Skills.findOne id: 'vote'
+    if !isAllowedToUseSkill skill
       return 0
     basic = Meteor.call 'basic'
     _.extend data, basic
@@ -165,12 +165,6 @@ Meteor.methods
 
     calculateScore Collections[data.entityType], data.entity
 
-  useSkill: (skill) ->
-    time = new Date().getTime()
-    if skill.cooldown?
-      # XXX: What if skill.name+'lastChanged' doesn't exist?
-      return (Meteor.user()[skill.name+'lastChanged'] + skill.cooldown) < time
-
   upload: (formData, accomplishId) ->
     if Meteor.isClient
       user = Meteor.user()
@@ -191,9 +185,11 @@ Meteor.methods
   accomplish: (data, formData) ->
     delete data._id
     delete data.collection
-    skill = Skills.findOne name: 'accomplish'
-    if !useSkill skill
+    skill = Skills.findOne id: 'accomplish'
+
+    if !isAllowedToUseSkill skill
       return 0
+
     acc = Accomplishments.findOne
       user: @userId
       entity: data.entity
@@ -240,12 +236,10 @@ Meteor.methods
     time = new Date().getTime()
 
     # check if user is spamming
-    skill = Skills.findOne name: 'newAchievement'
-    if !useSkill skill
+    skill = Skills.findOne id: 'newAchievement'
+    if !isAllowedToUseSkill skill
       return 0
-    Meteor.users.update Meteor.userId(),
-      $set:
-        newAchievementCreated: time
+
     id = Achievements.insert data
 
     if data.title
@@ -358,3 +352,21 @@ patch = (entity, diff, keys) ->
 
   return entity
 
+isAllowedToUseSkill = (skill) ->
+  user = Meteor.user()
+  #if _.has(skill, 'level')
+  #  unless user.level >= skill.level
+  #    return false
+
+  if _.has(skill, 'cooldown')
+    time = new Date().getTime()
+    isAllowed = true
+    if _.has(user, skill.name+'LastChanged')
+      if (user[skill.name+'LastChanged'] + skill.cooldown*1000) > time
+        isAllowed = false
+    setter = {}
+    setter[skill.name+'LastChanged'] = time
+    Meteor.users.update user._id, $set: setter
+    return isAllowed
+  else
+    return true

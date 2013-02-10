@@ -19,12 +19,21 @@
 </span>
 <nav class='nav nav-collapse collapse'>
 {{#each items}}
+{{#if passive}}
+<li class='divider-vertical'></li>
+<li class='spell-item {{active}} {{isPassive}}'>
+<a class='spell' data-content="{{description}}&lt;div class='muted'&gt;{{cooldownText}} &lt;/div&gt;" data-original-title='{{name}}' rel='popover' title='{{name}}'>
+<i class='icon-white icon-{{icon}}'></i>
+</a>
+</li>
+{{else}}
 <li class='divider-vertical'></li>
 <li class='spell-item {{active}} {{isPassive}}'>
 <a class='spell' data-content="{{description}}&lt;div class='muted'&gt;{{cooldownText}} &lt;/div&gt;" data-original-title='{{name}}' href='/{{url}}' rel='popover' title='{{name}}'>
 <i class='icon-white icon-{{icon}}'></i>
 </a>
 </li>
+{{/if}}
 {{/each}}
 <li class='divider-vertical'></li>
 </nav>
