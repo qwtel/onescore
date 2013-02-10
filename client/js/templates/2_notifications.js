@@ -4,7 +4,10 @@ _.extend(Template.notifications, {
   notifications: function() {
     var ret;
     ret = Notifications.find({
-      receivers: Meteor.user()._id
+      receivers: Meteor.user()._id,
+      user: {
+        $ne: Meteor.user()._id
+      }
     }, {
       sort: {
         date: -1

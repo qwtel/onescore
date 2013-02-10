@@ -40,11 +40,12 @@ _.extend Template.comments,
     sel = Template.comments.select()
     sort = Template.filter.sort()
 
+    test = Comments.find sel
     comments = Comments.find sel,
       sort: sort
       limit: 3*(Session.get('skip')+1)
 
-    #if comments.count() is 0 then false else comments
+    if test.count() is 0 then false else comments
     
   user: ->
     return Meteor.users.findOne @user

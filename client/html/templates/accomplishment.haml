@@ -21,15 +21,16 @@
       {{> embedAchievement}}
     {{/with}}
 
-    {{#if story}}
-    .story
-      {{#markdown}}{{{story}}}{{/markdown}}
-    {{> tags}}
-    {{/if}}
+    .selectable
+      {{#if story}}
+      .story
+        {{#markdown}}{{{story}}}{{/markdown}}
+      -#{{> tags}}
+      {{/if}}
 
-    %time.times.pull-right {{timeago date}}
-    %a.times(href="/accomplishments/{{_id}}/talk")
-      {{numComments}} comments
+      %time.times.pull-right {{timeago date}}
+      %a.times(href="/accomplishments/{{_id}}/talk")
+        {{numComments}} comments
     .clearfix
 
   -# {{#if equals "single" _id}}

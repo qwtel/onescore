@@ -2,8 +2,12 @@
 
 _.extend(Template.titles, {
   titles: function() {
-    var titles;
-    return titles = Titles.find({
+    var test, titles;
+    test = Titles.find({
+      entity: this._id,
+      user: Meteor.user()._id
+    });
+    titles = Titles.find({
       entity: this._id,
       user: Meteor.user()._id
     }, {
@@ -12,6 +16,11 @@ _.extend(Template.titles, {
       },
       limit: 5 * (Session.get('skip') + 1)
     });
+    if (test.count() === 0) {
+      return false;
+    } else {
+      return titles;
+    }
   },
   user: function() {
     return Meteor.users.findOne(this.user);

@@ -44,13 +44,19 @@ _.extend(Template.comments, {
     return sel;
   },
   comments: function() {
-    var comments, sel, sort;
+    var comments, sel, sort, test;
     sel = Template.comments.select();
     sort = Template.filter.sort();
-    return comments = Comments.find(sel, {
+    test = Comments.find(sel);
+    comments = Comments.find(sel, {
       sort: sort,
       limit: 3 * (Session.get('skip') + 1)
     });
+    if (test.count() === 0) {
+      return false;
+    } else {
+      return comments;
+    }
   },
   user: function() {
     return Meteor.users.findOne(this.user);

@@ -2,8 +2,12 @@
 
 _.extend(Template.miniTitles, {
   titles: function() {
-    var titles;
-    return titles = Titles.find({
+    var test, titles;
+    test = Titles.find({
+      entity: this._id,
+      user: Meteor.user()._id
+    });
+    titles = Titles.find({
       entity: this._id,
       user: Meteor.user()._id
     }, {
@@ -12,5 +16,10 @@ _.extend(Template.miniTitles, {
       },
       limit: 5
     });
+    if (test.count() === 0) {
+      return false;
+    } else {
+      return titles;
+    }
   }
 });

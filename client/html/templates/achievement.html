@@ -23,7 +23,7 @@
 </span>
 </a>
 <a class='icon pull-left' href='/achievements/{{_id}}'></a>
-<div class='content'>
+<div class='content selectable'>
 <header class='head'>
 <h5 class='title'>
 {{#if title}}
@@ -31,7 +31,7 @@
 {{else}}
 <a href='/achievements/{{_id}}' style='font-weight: normal'>&lt;No title suggested&gt;</a>
 {{/if}}
-<a class='fav' title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
+<a class='fav hidden-phone hidden-tablet' title='Add to favourites'><i class="icon-star {{faved}}"></i></a>
 </h5>
 </header>
 <div class='description'>

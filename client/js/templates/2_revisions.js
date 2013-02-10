@@ -7,8 +7,11 @@ _.extend(Template.revisions, {
     }
   },
   revisions: function() {
-    var revisions;
-    return revisions = Revisions.find({
+    var revisions, test;
+    test = Revisions.find({
+      entity: this._id
+    });
+    revisions = Revisions.find({
       entity: this._id
     }, {
       eort: {
@@ -16,6 +19,11 @@ _.extend(Template.revisions, {
       },
       limit: 5 * (Session.get('skip') + 1)
     });
+    if (test.count() === 0) {
+      return false;
+    } else {
+      return revisions;
+    }
   },
   user: function() {
     return Meteor.users.findOne(this.user);

@@ -1,5 +1,5 @@
 %template(name='userWidget')
-  .userWidget
+  .userWidget.selectable
     %a.profile-pic.pull-left(href="/{{currentUser.username}}")
       {{{pic}}}
     %h4.name.muted {{currentUser.username}}

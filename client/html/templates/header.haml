@@ -36,7 +36,7 @@
     {{#each items}}
     %li.divider-vertical
     %li.spell-item(class="{{active}} {{isPassive}}")
-      %a.spell(href="/{{url}}" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldown}}</div>")
+      %a.spell(href="/{{url}}" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldownText}} </div>")
         %i.icon-white(class="icon-{{icon}}")
       -#{{#if counter}}
       -#{{#if numNotifications}}

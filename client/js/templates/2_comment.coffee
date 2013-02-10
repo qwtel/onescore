@@ -100,4 +100,4 @@ _.extend Template.comment,
 
     Comments.find sel,
       sort: sort
-      limit: 3*(Session.get('skip')+1)
+      limit: 3
