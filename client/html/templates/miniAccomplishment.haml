@@ -1,0 +1,69 @@
+%template(name='miniAccomplishment')
+  %article.accomplishment(id="{{_id}}")
+    {{#if user}}
+    %nav.icons.btn-group.pull-right
+      %a.btn.btn-mini(title="Link" href="/accomplishments/{{_id}}")<
+        <i class="icon-bookmark {{isActive "single" _id}}"></i>
+      {{#if isMe user}}
+      %a.btn.btn-mini(href="/achievements/{{achievement._id}}/accomplish/text" title="Edit")
+        %i.icon-pencil
+      {{/if}}
+      %a.btn.btn-mini(href="/accomplishments/{{_id}}/talk" title="Comment")
+        %i.icon-comment
+
+    {{> user}}
+    {{> voteContainer}}
+    {{/if}}
+    .clearfix
+
+    .selectable
+      {{#if story}}
+      .story
+        {{#markdown}}{{{story}}}{{/markdown}}
+      -#{{> tags}}
+      {{/if}}
+
+      %time.times.pull-right {{timeago date}}
+      %a.times(href="/accomplishments/{{_id}}/talk")
+        {{numComments}} comments
+    .clearfix
+
+  -# {{#if equals "single" _id}}
+  -# .fold
+  -# %h5.heading.line Comments
+  -# {{> filter}}
+  -# .clearfix
+  -# {{> comments}}
+  -# {{/if}}
+
+  -#{{#with achievement}}
+  -#.minimal
+  -#  {{> achievement}}
+  -#{{/with}}
+  -#
+  -#{{#if story}}
+  -#.story
+  -#  .vote-container.pull-left
+  -#    %div
+  -#      %a.href(title="Link" href="/accomplishments/{{_id}}")<
+  -#        <i class="icon-bookmark"></i>
+  -#    %div
+  -#      %a.vote(data-up="true")<
+  -#        <i class="icon-arrow-up {{voted "up"}}" title="Vote up"></i>
+  -#    %div
+  -#      %span.count {{score}}
+  -#    %div
+  -#      %a.vote(data-up="false")<
+  -#        <i class="icon-arrow-down {{voted "down"}}" title="Vote down"></i>
+  -#  .content
+  -#    -#%nav.icons.pull-right
+  -#      %li
+  -#        %a.href(title="Link" href="/accomplishments/{{_id}}")<
+  -#          <i class="icon-bookmark"></i>
+  -#      -#%li
+  -#        %a.href(title="Comments" href="/accomplishments/{{_id}}/talk")<
+  -#          <i class="icon-comment"></i>
+  -#    -#%time.time {{formatDate date}}
+  -#    {{#markdown}}{{{story}}}{{/markdown}}
+  -#{{/if}}
+
