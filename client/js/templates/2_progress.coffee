@@ -7,6 +7,6 @@ _.extend Template.progress,
 
   progressText: ->
     user = Meteor.user()
-    if user and !user.loading
+    if user and user.score
       next = Template.body.nextLevel user.level
       return "#{user.score}/#{next}"

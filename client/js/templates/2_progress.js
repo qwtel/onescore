@@ -12,7 +12,7 @@ _.extend(Template.progress, {
   progressText: function() {
     var next, user;
     user = Meteor.user();
-    if (user && !user.loading) {
+    if (user && user.score) {
       next = Template.body.nextLevel(user.level);
       return "" + user.score + "/" + next;
     }

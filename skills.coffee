@@ -1,5 +1,4 @@
-Skills = new Meteor.Collection 'skills'
-Skills.remove {}
+Skills = new Meteor.Collection null
 Skills.insert
   id: 'home'
   name: 'Home'
