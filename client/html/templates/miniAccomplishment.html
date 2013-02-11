@@ -16,16 +16,8 @@
 {{> voteContainer}}
 {{/if}}
 <div class='clearfix'></div>
-<div class='selectable'>
-{{#if story}}
-<div class='story'>
+<div class='selectable story'>
 {{#markdown}}{{{story}}}{{/markdown}}
-</div>
-{{/if}}
-<time class='times pull-right'>{{timeago date}}</time>
-<a class='times' href='/accomplishments/{{_id}}/talk'>
-{{numComments}} comments
-</a>
 </div>
 <div class='clearfix'></div>
 </article>

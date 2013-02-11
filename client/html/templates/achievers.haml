@@ -1,8 +1,7 @@
 %template(name='achievers')
   {{#if accomplishments}}
   {{#each accomplishments}}
-  .fold
-    {{> miniAccomplishment}}
+  {{> miniAccomplishment}}
   {{else}}
   .fold
     {{> loading}}

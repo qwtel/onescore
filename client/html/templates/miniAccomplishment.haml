@@ -21,15 +21,12 @@
     -#  {{> miniAchievement}}
     -#{{/with}}
 
-    .selectable
-      {{#if story}}
-      .story
-        {{#markdown}}{{{story}}}{{/markdown}}
+    .selectable.story
+      {{#markdown}}{{{story}}}{{/markdown}}
       -#{{> tags}}
-      {{/if}}
 
-      %time.times.pull-right {{timeago date}}
-      %a.times(href="/accomplishments/{{_id}}/talk")
+      -#%time.times.pull-right {{timeago date}}
+      -#%a.times(href="/accomplishments/{{_id}}/talk")
         {{numComments}} comments
     .clearfix
 

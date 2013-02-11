@@ -1,9 +1,7 @@
 <template name='achievers'>
 {{#if accomplishments}}
 {{#each accomplishments}}
-<div class='fold'>
 {{> miniAccomplishment}}
-</div>
 {{else}}
 <div class='fold'>
 {{> loading}}

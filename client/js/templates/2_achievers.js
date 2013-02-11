@@ -11,13 +11,14 @@ _.extend(Template.achievers, {
       if (user) {
         sel = Template.accomplishments.select();
         _.extend(sel, {
-          user: user._id,
           entity: this._id
         });
         test = Accomplishments.find(sel);
         sort = Template.filter.sort();
         accomplishments = Accomplishments.find(sel, {
-          sort: sort,
+          sort: {
+            best: -1
+          },
           limit: 3 * (Session.get('skip') + 1)
         });
         if (test.count() === 0) {
