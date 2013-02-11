@@ -2,7 +2,7 @@
 
 _.extend(Template.achievers, {
   accomplishments: function() {
-    var sel, sort, user, username;
+    var accomplishments, sel, sort, test, user, username;
     username = Session.get('username');
     if (username) {
       user = Meteor.users.findOne({
@@ -14,11 +14,17 @@ _.extend(Template.achievers, {
           user: user._id,
           entity: this._id
         });
+        test = Accomplishments.find(sel);
         sort = Template.filter.sort();
-        return Accomplishments.find(sel, {
+        accomplishments = Accomplishments.find(sel, {
           sort: sort,
           limit: 3 * (Session.get('skip') + 1)
         });
+        if (test.count() === 0) {
+          return false;
+        } else {
+          return accomplishments;
+        }
       }
     }
   }

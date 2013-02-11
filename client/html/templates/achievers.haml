@@ -1,12 +1,15 @@
 %template(name='achievers')
   {{#if accomplishments}}
   {{#each accomplishments}}
-  {{> accomplishment}}
+  .fold
+    {{> miniAccomplishment}}
   {{else}}
-  {{> noContent}}
+  .fold
+    {{> loading}}
   {{/each}}
   {{else}}
-  {{> loading}}
+  .fold
+    {{> noContent}}
   {{/if}}
 
   {{> loadMore}}

@@ -11,7 +11,11 @@ _.extend Template.achievers,
           user: user._id
           entity: @_id
 
+        test = Accomplishments.find sel
+
         sort = Template.filter.sort()
-        return Accomplishments.find sel,
+        accomplishments = Accomplishments.find sel,
           sort: sort
           limit: 3*(Session.get('skip')+1)
+
+        if test.count() is 0 then false else accomplishments
