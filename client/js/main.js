@@ -232,7 +232,7 @@ Meteor.startup(function() {
   });
   return Accounts.ui.config({
     requestPermissions: {
-      facebook: ["publish_stream", "user_about_me", "user_location", "user_photos"]
+      facebook: ["user_about_me", "user_location"]
     }
   });
 });

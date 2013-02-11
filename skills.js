@@ -92,7 +92,7 @@ Skills.insert({
   icon: 'certificate',
   url: 'achievements/new',
   description: 'Create a new achievement',
-  cooldown: 30,
+  cooldown: 10,
   active: function() {
     return window.isActive('page', 'newAchievement');
   },
@@ -139,7 +139,7 @@ Skills.insert({
   url: '#',
   passive: true,
   description: 'Gives you the ability to accomplish achievements',
-  cooldown: 30,
+  cooldown: 10,
   level: 1
 });
 

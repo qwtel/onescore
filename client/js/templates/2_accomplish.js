@@ -10,7 +10,6 @@ _.extend(Template.accomplish, {
           type: 'accomplishment',
           entity: this._id
         });
-        console.log(formData);
         return Meteor.call('accomplish', data, formData, function(error, result) {
           return window.Router.navigate("/accomplishments/" + result, true);
         });

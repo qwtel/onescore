@@ -13,26 +13,5 @@ _.extend(Template.body, {
         }
       }
     }
-  },
-  nextLevel: function(level) {
-    var next;
-    next = 0;
-    switch (level) {
-      case 1:
-        next = 10;
-        break;
-      case 2:
-        next = 25;
-        break;
-      case 3:
-        next = 125;
-        break;
-      case 4:
-        next = 525;
-        break;
-      case 5:
-        next = 1225;
-    }
-    return next;
   }
 });

@@ -1,15 +1,3 @@
-# HACK: this should be some exponential formula.
-# HACK: this should be part of a user model.
-nextLevel = (level) ->
-  next = 0
-  switch level
-    when 1 then next = 10
-    when 2 then next = 25
-    when 3 then next = 125
-    when 4 then next = 525
-    when 5 then next = 1225
-  return next
-
 # XXX: List of allowed facebook ids
 betaKeys = ["1237137766", "1339462332"]
 
@@ -72,7 +60,8 @@ Meteor.startup ->
 
     changed: (user) ->
       next = nextLevel user.level
-      if user.score >= next
+      inLevelScore = user.score - prevLevels(user.level) 
+      if inLevelScore >= next
         Meteor.users.update user._id,
           $inc:
             level: 1

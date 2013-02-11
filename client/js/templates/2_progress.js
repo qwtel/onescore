@@ -2,19 +2,23 @@
 
 _.extend(Template.progress, {
   progress: function() {
-    var next, user;
+    var inLevelScore, next, user;
     user = Meteor.user();
-    if (user && !user.loading) {
-      next = Template.body.nextLevel(user.level);
-      return 100 * user.score / next;
+    if (user && user.score && user.level) {
+      next = nextLevel(user.level);
+      inLevelScore = user.score - prevLevels(user.level);
+      inLevelScore = inLevelScore < 0 ? 0 : inLevelScore;
+      return 100 * inLevelScore / next;
     }
   },
   progressText: function() {
-    var next, user;
+    var inLevelScore, next, user;
     user = Meteor.user();
-    if (user && user.score) {
-      next = Template.body.nextLevel(user.level);
-      return "" + user.score + "/" + next;
+    if (user && user.score && user.level) {
+      next = nextLevel(user.level);
+      inLevelScore = user.score - prevLevels(user.level);
+      inLevelScore = inLevelScore < 0 ? 0 : inLevelScore;
+      return "" + inLevelScore + "/" + next;
     }
   }
 });

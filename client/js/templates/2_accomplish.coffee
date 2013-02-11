@@ -8,7 +8,6 @@ _.extend Template.accomplish,
           type: 'accomplishment'
           entity: @_id
 
-        console.log formData
         Meteor.call 'accomplish', data, formData, (error, result) ->
           window.Router.navigate "/accomplishments/#{result}", true
 

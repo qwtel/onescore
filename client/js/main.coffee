@@ -197,9 +197,7 @@ Meteor.startup ->
   Accounts.ui.config
     requestPermissions:
       facebook: [
-        "publish_stream"
         "user_about_me"
         "user_location"
-        "user_photos"
       ]
 

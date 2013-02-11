@@ -60,7 +60,7 @@ Skills.insert
   icon: 'certificate'
   url: 'achievements/new'
   description: 'Create a new achievement'
-  cooldown: 30
+  cooldown: 10
   active: -> window.isActive 'page', 'newAchievement'
   level: 5
 
@@ -101,7 +101,7 @@ Skills.insert
   url: '#'
   passive: true
   description: 'Gives you the ability to accomplish achievements'
-  cooldown: 30
+  cooldown: 10
   level: 1
 
 Skills.insert

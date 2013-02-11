@@ -281,6 +281,21 @@ updateScore = (collection, id, score) ->
       hot: score.hot
       value: Math.round 10*score.wilson
 
+# using the Pentagonal numbers (http://oeis.org/A000326) 
+# starting at the 4th (12).
+nextLevel = (level) ->
+  n = level + 2
+  return n*(3*n-1)/2
+
+# calculates the sum of all previous levels
+prevLevels = (level) ->
+  prev = 0
+  i = 0
+  while i < level - 1
+    i++
+    prev += nextLevel i 
+  return prev
+
 notify = (entity, target) ->
   if entity and target
     receivers = [target.user]
@@ -352,8 +367,11 @@ patch = (entity, diff, keys) ->
 
   return entity
 
+# XXX: I'm too stupid to write this function. 
+# please fix that LastChanged gets updated on every try, thanks.
 isAllowedToUseSkill = (skill) ->
   user = Meteor.user()
+
   #if _.has(skill, 'level')
   #  unless user.level >= skill.level
   #    return false
