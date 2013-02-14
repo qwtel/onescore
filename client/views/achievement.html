@@ -13,18 +13,19 @@
       <span><i class="icon-certificate"/> {{accomplishments}}</span>
     </div>
   </div>
-  {{#if selected}}
-    <div class="navbar navbar-fixed-bottom actionbar" style="margin-top: 5px">
-      <div class="navbar-inner">
-        <ul class="nav">
-          {{> skills}}
-        <ul>
-      </div>
-    </div>
-  {{/if}}
   {{#if hasBeenSelected}}
-    <div class="well">
-      {{> noContent}}
+    <div class="well" style="margin-top: 5px">
+      {{#if images}}
+        {{> images}}
+      {{else}} 
+        {{#if stories}}
+          {{> stories}}
+        {{else}}
+          {{#if achievers}}
+            {{> achievers}}
+          {{/if}}
+        {{/if}}
+      {{/if}}
     </div>
   {{/if}}
 </template>

@@ -31,82 +31,86 @@ Meteor.methods
     return id 
 
   favourite: (data) ->
-    user = Meteor.user()
-    skill = Skills.findOne 'favourite'
-    if !isAllowedToUseSkill user, skill then return 0 
+    if !@isSimulation
+      user = Meteor.user()
+      skill = Skills.findOne 'favourite'
+      if !isAllowedToUseSkill user, skill then return 0 
 
-    fav = Favourites.findOne
-      user: @userId
-      entity: data.entity
-    
-    if fav
-      Favourites.update fav._id,
-        $set:
-          active: !fav.active
-    else
-      _.extend data, basic(),
-        type: 'favourite'
-        active: true
-      Favourites.insert data
-      Achievements.update data.entity,
-        $inc:
-          favourites: 1
+      fav = Favourites.findOne
+        user: @userId
+        entity: data.entity
+      
+      if fav
+        Favourites.update fav._id,
+          $set:
+            active: !fav.active
+      else
+        _.extend data, basic(),
+          type: 'favourite'
+          active: true
+        Favourites.insert data
+        Achievements.update data.entity,
+          $inc:
+            favourites: 1
 
   accomplish: (data) ->
-    user = Meteor.user()
-    skill = Skills.findOne 'accomplish'
-    if !isAllowedToUseSkill user, skill then return 0
+    if !@isSimulation
+      user = Meteor.user()
+      skill = Skills.findOne 'accomplish'
+      if !isAllowedToUseSkill user, skill then return 0
 
-    acc = Accomplishments.findOne
-      user: @userId
-      entity: data.entity
+      acc = Accomplishments.findOne
+        user: @userId
+        entity: data.entity
 
-    if acc
-      Accomplishments.update acc._id,
-        $set:
-          active: !acc.active
-    else
-      _.extend data, basic(),
-        type: 'accomplishment'
-        active: true
+      if acc
+        Accomplishments.update acc._id,
+          $set:
+            active: !acc.active
+      else
+        _.extend data, basic(),
+          type: 'accomplishment'
+          active: true
 
-      id = Accomplishments.insert data
-      Achievements.update data.entity,
-        $inc:
-          accomplishments: 1
+        id = Accomplishments.insert data
+        Achievements.update data.entity,
+          $inc:
+            accomplishments: 1
 
-      # update user score
-      achievement = Achievements.findOne data.entity
-      Meteor.users.update user._id,
-        $inc:
-          'profile.score': achievement.value
-
-      # level up?
-      next = nextLevel user.profile.level
-      inLevelScore = user.profile.score - prevLevels(user.profile.level) 
-      if inLevelScore >= next
+        # update user score
+        achievement = Achievements.findOne data.entity
         Meteor.users.update user._id,
           $inc:
-            'profile.level': 1
+            'profile.score': achievement.value
 
-      # send notificatións
-      #accomplishment = Accomplishments.findOne accomplishId
-      #notify accomplishment, achievement
+        # level up?
+        next = nextLevel user.profile.level
+        inLevelScore = user.profile.score - prevLevels(user.profile.level) 
+        if inLevelScore >= next
+          Meteor.users.update user._id,
+            $inc:
+              'profile.level': 1
 
-    #Meteor.call 'upload', formData, accomplishId
-    return id or acc._id
+        # send notificatións
+        #accomplishment = Accomplishments.findOne accomplishId
+        #notify accomplishment, achievement
+
+      #Meteor.call 'upload', formData, accomplishId
+      return id or acc._id
 
   voteUp: (id, type) ->
-    user = Meteor.user()
-    skill = Skills.findOne 'voteUp'
-    if !isAllowedToUseSkill user, skill then return 0
-    voteFor user, id, type, true
+    if !@isSimulation
+      user = Meteor.user()
+      skill = Skills.findOne 'voteUp'
+      if !isAllowedToUseSkill user, skill then return 0
+      voteFor user, id, type, true
 
   voteDown: (id, type) ->
-    user = Meteor.user()
-    skill = Skills.findOne 'voteDown'
-    if !isAllowedToUseSkill user, skill then return 0
-    voteFor user, id, type, false
+    if !@isSimulation
+      user = Meteor.user()
+      skill = Skills.findOne 'voteDown'
+      if !isAllowedToUseSkill user, skill then return 0
+      voteFor user, id, type, false
 
 voteFor = (user, id, type, active) ->
   data = _.extend basic(),

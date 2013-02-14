@@ -1,8 +1,8 @@
-Template.skills.events
+Template.actionbar.events
   'click .spell': (e) ->
     if @click and @usable and @usable() then @click()
 
-Template.skills.helpers
+Template.actionbar.helpers
   skills: ->
     user = Meteor.user()
     if user and user.profile

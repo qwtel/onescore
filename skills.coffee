@@ -1,5 +1,6 @@
 # TODO: move hard-coded text into strings.coffee
 Skills = new Meteor.Collection null
+
 Skills.insert
   _id: 'home'
   icon: 'home'
@@ -104,7 +105,7 @@ Skills.insert
   active: ->
     id = Session.get 'target'
     user = Meteor.user()
-    if user and id then isUpVoted(id, user._id)
+    if user and id then isUpVoted id, user._id
 
 Skills.insert
   _id: 'voteDown'
@@ -122,7 +123,7 @@ Skills.insert
   active: ->
     id = Session.get 'target'
     user = Meteor.user()
-    if user and id then isDownVoted(id, user._id)
+    if user and id then isDownVoted id, user._id
 
 Skills.insert
   _id: 'favourite'
@@ -139,7 +140,7 @@ Skills.insert
   active: -> 
     id = Session.get 'target'
     user = Meteor.user()
-    if user and id then isActiveInCollection(Favourites, id, user._id)
+    if user and id then isActiveInCollection Favourites, id, user._id
 
 Skills.insert
   _id: 'accomplish'
@@ -157,7 +158,7 @@ Skills.insert
   active: ->
     id = Session.get 'target'
     user = Meteor.user()
-    if user and id then isActiveInCollection(Accomplishments, id, user._id)
+    if user and id then isActiveInCollection Accomplishments, id, user._id
 
 Skills.insert
   _id: 'comment'
@@ -196,22 +197,22 @@ Skills.insert
   level: 8
 
 isActiveInCollection = (collection, id, userId) ->
-  exists = collection.findOne
+  (collection.findOne
     user: userId
     entity: id
     active: true
-  return exists?
+  )?
 
 isUpVoted = (id, userId) ->
-  exists = Votes.findOne
+  (Votes.findOne
     user: userId
     entity: id
     active: true
-  return exists?
+  )?
 
 isDownVoted = (id, userId) ->
-  exists = Votes.findOne
+  (Votes.findOne
     user: userId
     entity: id
     active: false
-  return exists?
+  )?
