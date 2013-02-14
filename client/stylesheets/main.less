@@ -1,0 +1,232 @@
+// Grays
+// -------------------------
+@black:                 #000;
+@grayDarker:            #222;
+@grayDark:              #333;
+@gray:                  #555;
+@grayLight:             #999;
+@grayLighter:           #eee;
+@white:                 #fff;
+
+
+// Accent colors
+// -------------------------
+@blue:                  #049cdb;
+@blueDark:              #0064cd;
+@green:                 #4dc206;
+@red:                   #f70852;
+@yellow:                #f7be08;
+@orange:                #f89406;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
+
+@iconSize: 75px;
+@iconSizeSmall: 50px;
+
+body {
+  margin-top: 65px;
+  padding: 0 20px;
+  background: @grayLighter;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.nested {
+  margin-top: 15px;
+  margin-left: 25px;
+}
+
+.hero-unit {
+  background: lighten(@grayLighter, 5%);
+  //border: 1px solid darken(@grayLighter, 5%);
+}
+
+.nav a {
+  cursor: pointer;
+}
+
+.achievement {
+  .icon {
+    width: @iconSize;
+    height: @iconSize;
+    //box-sizing: border-box;
+
+    img {
+      border-radius: 5px;
+      width: 100%;
+      height: 100%;
+    }
+
+    @media (max-width: 480px) {
+      width: @iconSizeSmall;
+      height: @iconSizeSmall;
+    }
+  }
+}
+
+.pill {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid darken(@grayLighter, 5%);
+  background: @grayLighter;
+
+  a {
+    color: @gray;
+    text-decoration: none;
+  }
+}
+
+.pill.accepted {
+  a {
+    color: @blue
+  }
+}
+
+.pill.completed {
+  a {
+    color: @green
+  }
+}
+
+.pill.uncompleted {
+  a {
+    color: @red
+  }
+}
+
+.achievement.preview {
+  cursor: default;
+}
+
+.achievement.preview {
+  background: darken(@grayLighter, 5%);
+}
+
+.pill.selected {
+  background: @red;
+  color: lighten(@red, 45%);
+  border-color: @red;
+  a {
+    color: darken(@red, 15%);
+  }
+  i {
+    background-image: url('/img/glyphicons-halflings-white.png');
+  }
+}
+
+.pill.selected.accepted {
+  background: @blue;
+  color: lighten(@blue, 45%);
+  border-color: @blue;
+  a {
+    color: darken(@blue, 15%);
+  }
+}
+
+.pill.selected.completed {
+  background: @green;
+  color: lighten(@green, 45%);
+  border-color: @green;
+  a {
+    color: darken(@green, 15%);
+  }
+}
+
+.navbar {
+  .divider-vertical {
+    margin: 0;
+  }
+
+  .passive {
+    opacity: 0.6;
+    a {
+      cursor: default!important;
+    }
+  }
+}
+
+.actionbar {
+  .spell-name {
+    display: none!important;
+  }
+}
+
+.navbar-inverse {
+  i {
+    background-image: url('/img/glyphicons-halflings-white.png');
+  }
+  @media (min-width: 768px) {
+    .dropdown-menu i {
+      background-image: url('/img/glyphicons-halflings.png');
+    }
+  }
+}
+.navbar-fixed-top {
+  @media (max-width: 768px) {
+    i {
+      float: right;
+    }
+  }
+
+  .score {
+    font-size: 24px;
+  }
+
+  .profile-pic {
+    padding: 3px!important;
+    img {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  .profile-pic:hover, .score:hover {
+    background: transparent!important;
+  }
+
+  .brand {
+    display: block;
+    float: left;
+    height: 34px;
+    width: 34px;
+    padding: 3px;
+    margin: 0 10px 0 10px;
+    background: url('/img/logo128.png') no-repeat;
+    background-size: cover;
+    @media (max-width: 768px) {
+      cursor: pointer;
+    }
+  }
+
+  .passive {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .xp-bar {
+    text-align: center;
+    .progress {
+      margin: 0;
+      border-radius: 0;
+      height: 4px;
+      background: #ebebeb;
+      border-top: 1px solid rgba(0, 0, 0, 0.10);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+      overflow: visible;
+      //@include transition(height 0.2s linear);
+
+      .bar {
+        background: @green;
+        height: 4px;
+        //@include transition(height 0.2s linear);
+      }
+    }
+    .label {
+      position: relative;
+      top: -14px;
+      background-color: @green;
+    }
+  }
+}

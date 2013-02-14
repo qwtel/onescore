@@ -1,135 +1,217 @@
+# TODO: move hard-coded text into strings.coffee
 Skills = new Meteor.Collection null
 Skills.insert
-  id: 'home'
-  name: 'Home'
+  _id: 'home'
   icon: 'home'
   url: 'home'
-  description: 'View success stories of other players'
-  active: -> window.isActive 'page', 'home'
+  name: strings 'home'
+  description: strings 'homeDesc'
+  active: -> Session.equals 'page', 'home'
   level: 1
+  usable: true
+  nav: true
 
 Skills.insert
-  id: 'notifications'
-  name: 'Notifications'
+  _id: 'notifications'
   icon: 'globe'
   url: 'notifications'
-  description: 'See how other users interact with your content'
-  active: -> window.isActive 'page', 'notifications'
-  level: 2
+  name: strings 'notifications'
+  description: strings 'notificationDesc' 
+  active: -> Session.equals 'page', 'notifications'
+  level: 99
+  usable: true
+  nav: true
 
 Skills.insert
-  id: 'explore'
-  name: 'Explore'
+  _id: 'explore'
   url: 'explore'
   icon: 'road'
-  description: 'Allows you to find achievements'
-  active: -> window.isActive 'page', 'explore'
+  name: strings 'explore'
+  description: strings 'exploreDesc'
+  active: -> Session.equals 'page', 'explore'
   level: 1
+  usable: true
+  nav: true
 
 Skills.insert
-  id: 'ladder'
-  name: 'Ladder'
+  _id: 'ladder'
   url: 'ladder'
   icon: 'th-list'
-  description: 'Compete with other players based on your score'
-  active: -> window.isActive 'page', 'ladder'
+  name: strings 'ladder'
+  description: strings 'ladderDesc'
+  active: -> Session.equals 'page', 'ladder'
   level: 4
+  usable: true
+  nav: true
 
 Skills.insert
-  id: 'profile'
-  name: 'Profile'
-  url: -> Meteor.user().username
+  _id: 'profile'
+  url: -> Meteor.user().profile.username
   icon: 'user'
-  description: 'Check out your recent activity'
-  active: -> if Session.equals('page', 'profile') and
-    not Session.equals('menu', 'questlog') then 'active' else ''
+  name: strings 'profile'
+  description: strings 'profileDesc'
+  active: -> 
+    if Session.equals('page', 'profile') and 
+      not Session.equals('menu', 'questlog') then 'active' else ''
   level: 1
+  usable: true
+  nav: true
 
 Skills.insert
-  name: 'Quest Log'
-  icon: 'glass'
-  url: -> Meteor.user().username+'/questlog'
-  description: 'Keept track of achievements you want to complete'
-  active: -> if Session.equals('page', 'profile') and
-    Session.equals('menu', 'questlog') then 'active' else ''
-  level: 3
-
-Skills.insert
-  id: 'newAchievement'
-  name: 'New achievement'
-  icon: 'certificate'
-  url: 'achievements/new'
-  description: 'Create a new achievement'
-  cooldown: 10
-  active: -> window.isActive 'page', 'newAchievement'
-  level: 5
-
-Skills.insert
-  id: 'favourite'
-  name: 'Accept'
+  _id: 'questlog'
+  url: -> Meteor.user().profile.username+'/questlog'
   icon: 'star'
-  url: '#'
-  passive: true
-  description: 'Allows you to add achievements to your quest log'
-  cooldown: 1
+  name: strings 'questlog'
+  description: strings 'questlogDesc'
+  active: -> 
+    if Session.equals('page', 'profile') and
+      Session.equals('menu', 'questlog') then 'active' else ''
   level: 3
+  usable: true
+  nav: true
 
 Skills.insert
-  id: 'vote'
-  name: 'Vote'
+  _id: 'newAchievement'
+  icon: 'plus'
+  name: strings 'newAchievement'
+  description: strings 'newAchievementDesc' 
+  cooldown: 10
+  level: 1
+  usable: true
+  active: -> 
+    Session.equals 'page', 'newAchievement'
+  url: -> 
+    id = Session.get 'target'
+    type = Session.get 'type'
+    if id and type is 'achievement'
+      return "achievement/#{id}/new"
+    else
+      return "achievement/new"
+
+Skills.insert
+  _id: 'voteUp'
+  name: 'Vote Up'
   icon: 'arrow-up'
-  url: '#'
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
-  level: 5
+  level: 1
+  usable: -> !Session.equals 'type', null
+  click: ->
+    id = Session.get 'target'
+    type = Session.get 'type'
+    Meteor.call 'voteUp', id, type
+  active: ->
+    id = Session.get 'target'
+    user = Meteor.user()
+    if user and id then isUpVoted(id, user._id)
 
 Skills.insert
-  id: 'comment'
+  _id: 'voteDown'
+  name: 'Vote Down'
+  icon: 'arrow-down'
+  passive: true
+  description: 'Allows you to vote for content'
+  cooldown: 1
+  level: 1
+  usable: -> !Session.equals 'type', null
+  click: ->
+    id = Session.get 'target'
+    type = Session.get 'type'
+    Meteor.call 'voteDown', id, type
+  active: ->
+    id = Session.get 'target'
+    user = Meteor.user()
+    if user and id then isDownVoted(id, user._id)
+
+Skills.insert
+  _id: 'favourite'
+  icon: 'star'
+  passive: true
+  name: strings 'accept'
+  description: strings 'acceptDesc' 
+  cooldown: 1
+  level: 1
+  usable: -> Session.equals 'type', 'achievement'
+  click: ->
+    id = Session.get 'target'
+    Meteor.call 'favourite', entity: id
+  active: -> 
+    id = Session.get 'target'
+    user = Meteor.user()
+    if user and id then isActiveInCollection(Favourites, id, user._id)
+
+Skills.insert
+  _id: 'accomplish'
+  icon: 'certificate'
+  passive: true
+  name: strings 'accomplish'
+  description: strings 'accomplishDesc'
+  cooldown: 10
+  level: 1
+  usable: -> Session.equals 'type', 'achievement'
+  click: ->
+    id = Session.get 'target'
+    Meteor.call 'accomplish', entity: id, (error, result) ->
+      Router.navigate "/accomplishment/#{result}", true
+  active: ->
+    id = Session.get 'target'
+    user = Meteor.user()
+    if user and id then isActiveInCollection(Accomplishments, id, user._id)
+
+Skills.insert
+  _id: 'comment'
   name: 'Comment'
   icon: 'comment'
-  url: '#'
   passive: true
   description: 'Allows you to comment on content'
   cooldown: 5
   level: 5
 
 Skills.insert
-  id: 'accomplish'
-  name: 'Accomplish'
-  icon: 'flag'
-  url: '#'
-  passive: true
-  description: 'Gives you the ability to accomplish achievements'
-  cooldown: 10
-  level: 1
-
-Skills.insert
-  id: 'tag'
+  _id: 'tag'
   name: 'Tag'
   icon: 'tag'
-  url: '#'
   passive: true
   description: 'Allows you to tag content'
   cooldown: 1
   level: 6
 
 Skills.insert
-  id: 'edit'
+  _id: 'edit'
   name: 'Edit'
   icon: 'pencil'
-  url: '#'
   passive: true
   description: 'Allows you to edit achievements'
   cooldown: 1
   level: 7
 
 Skills.insert
-  id: 'revision'
+  _id: 'revision'
   name: 'Revision'
   icon: 'time'
-  url: '#'
   passive: true
   description: 'Allows you to revision achievements'
   cooldown: 1
   level: 8
+
+isActiveInCollection = (collection, id, userId) ->
+  exists = collection.findOne
+    user: userId
+    entity: id
+    active: true
+  return exists?
+
+isUpVoted = (id, userId) ->
+  exists = Votes.findOne
+    user: userId
+    entity: id
+    active: true
+  return exists?
+
+isDownVoted = (id, userId) ->
+  exists = Votes.findOne
+    user: userId
+    entity: id
+    active: false
+  return exists?

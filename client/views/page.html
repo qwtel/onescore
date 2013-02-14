@@ -1,0 +1,103 @@
+<template name='page'>
+  {{> navbar}}
+
+  <div class="row-fluid">
+    <div class="span12">
+      {{#if skill}} {{#with skill}} {{> skill}} {{/with}} {{/if}}
+    </div>
+  </div>
+
+  <div class="row-fluid">
+  {{#if equals "page" "home"}}
+    <div class="span8">
+      {{> noContent}}
+    </div>
+    <div class="span4 hidden-phone">
+      {{> noContent}}
+    </div>
+  {{else}}
+
+  {{#if equals "page" "notifications"}}
+    <div class="span8">
+      {{> noContent}}
+    </div>
+    <div class="span4 hidden-phone">
+      {{> noContent}}
+    </div>
+  {{else}}
+
+
+  {{#if equals "page" "explore"}}
+    <div class="span4">
+      <h3>Filter</h3>
+      {{> filter}}
+    </div>
+    <div class="span8">
+      <h3>Achievements</h3>
+      {{> achievements}}
+    </div>
+  {{else}}
+
+  {{#if equals "page" "ladder"}}
+    <div class="span8">
+      {{> ladder}}
+    </div>
+    <div class="span4 hidden-phone">
+      {{> noContent}}
+    </div>
+  {{else}}
+
+  {{#if equals "page" "profile"}}
+    <div class="span8">
+      {{> noContent}}
+    </div>
+    <div class="span4 hidden-phone">
+      {{> noContent}}
+    </div>
+  {{else}}
+
+  {{#if equals "page" "questlog"}}
+    <div class="span8">
+      {{> noContent}}
+    </div>
+    <div class="span4 hidden-phone">
+      {{> noContent}}
+    </div>
+  {{else}}
+
+  {{#if equals "page" "newAchievement"}}
+    <div class="span8">
+      {{> newAchievement}}
+    </div>
+    <div class="span4 hidden-phone">
+      {{> styleGuide}}
+    </div>
+  {{else}}
+
+  {{#if equals "page" "achievement"}}
+    <div class="span8">
+      {{> noContent}}
+    </div>
+    <div class="span4 hidden-phone">
+      {{> noContent}}
+    </div>
+  {{else}}
+
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  {{/if}}
+  </div>
+</template>
+
+<template name='skill'>
+  <div class="hero-unit">
+    <h1>{{name}}</h1>
+    <p>{{description}}</p>
+  </div>
+</template>
+

@@ -1,0 +1,25 @@
+<template name='filter'>
+  <!--<input id="filter" class="search-query" type="text" placeholder="Search" value="{{query}}" />-->
+
+  <!--<p>Order by:</p>-->
+  <ul class="sort nav nav-stacked nav-pills">
+    <li class="{{#if equals "sort" "hot"}}active{{/if}}">
+    <a data-value="hot">{{strings "hot"}}</a></li>
+    <li class="{{#if equals "sort" "best"}}active{{/if}}">
+    <a data-value="best">{{strings "best"}}</a></li>
+    <li class="{{#if equals "sort" "new"}}active{{/if}}">
+    <a data-value="new">{{strings "new"}}</a></li>
+    <li class="{{#if equals "sort" "old"}}active{{/if}}">
+    <a data-value="old">{{strings "old"}}</a></li>
+  </ul>
+
+  <!--<p>Show content from:</p>-->
+  <ul class="scope nav nav-stacked nav-pills">
+    <li class="{{#if equals "scope" "all"}}active{{/if}}">
+      <a data-value="all">{{strings "all"}}</a>
+    </li>
+    <li class="{{#if equals "scope" "me"}}active{{/if}}">
+      <a data-value="me">{{strings "me"}}</a>
+    </li>
+  </ul>
+</template>

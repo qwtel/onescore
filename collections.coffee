@@ -6,24 +6,18 @@ Favourites = new Meteor.Collection 'favourites'
 Accomplishments = new Meteor.Collection 'accomplishments'
 Notifications = new Meteor.Collection 'notifications'
 Revisions = new Meteor.Collection 'revisions'
+Tags = new Meteor.Collection 'tags'
+Scratchpad = new Meteor.Collection null
 
 Collections = Collections or {}
 _.extend Collections,
-  'achievements': Achievements
-  'achievement': Achievements
-  'explore': Achievements
-  'accomplishments': Accomplishments
-  'accomplishment': Accomplishments
-  'home': Accomplishments
-  'profile': Accomplishments
-  'titles': Titles
-  'title': Titles
-  'votes': Votes
-  'vote': Votes
-  'comments': Comments
   'comment': Comments
-  'revisions': Revisions
+  'achievement': Achievements
+  'title': Titles
+  'vote': Votes
+  'favourite': Favourites
+  'accomplishment': Accomplishments
+  'notifiacation': Notifications
   'revision': Revisions
-
-Scratchpad = new Meteor.Collection(null)
-Collections['scratchpad'] = Scratchpad
+  'tag': Revisions
+  'scratchpad': Scratchpad

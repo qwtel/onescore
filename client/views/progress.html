@@ -1,0 +1,10 @@
+<template name='progress'>
+  <div class="xp-bar">
+    <div class='progress'>
+      <div class='bar' style='width: {{progress}}%'></div>
+    </div>
+    {{#if progressText}}
+    <span class='label'>{{progressText}}</span>
+    {{/if}}
+  </div>
+</template>

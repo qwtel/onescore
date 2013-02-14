@@ -1,0 +1,30 @@
+<head>
+  <title>Onescore</title>
+
+  <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' name='viewport' />
+  <meta content='yes' name='apple-mobile-web-app-capable' />
+  <meta content='black-translucent' name='apple-mobile-web-app-status-bar-style' />
+
+  <link href='/img/icon16.png' rel='icon' sizes='16x16' type='image/png' />
+  <link href='/img/icon32.png' rel='icon' sizes='32x32' type='image/png' />
+  <link href='/img/icon96.png' rel='icon' sizes='96x96' type='image/png' />
+  <link href='/img/icon96.png' rel='apple-touch-icon' />
+  <link href='/img/icon96.png' rel='apple-touch-precomposed' />
+</head>
+
+<body>
+  {{> page}}
+</body>
+
+<template name='loading'>
+  <div class='loading'>
+    <img src='/loading.gif' />
+  </div>
+</template>
+
+<template name='noContent'>
+  <div class='alert'>
+    <strong>Warning!</strong>
+    No Content.
+  </div>
+</template>

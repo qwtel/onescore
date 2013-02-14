@@ -1,0 +1,14 @@
+<template name='user'>
+  <div class="media pill {{#if selected}}selected{{/if}} {{color}}">
+    {{#with profile}}
+    <a class="profile-pic pull-left">
+      <img class="media-object" style="width:30px; height:30px; border-radius: 2px;" src="https://graph.facebook.com/{{username}}/picture">
+    </a>
+    <!--<a class="value pull-right"></a>-->
+    <div class="media-body">
+      <h4 class="media-heading pull-left"><a>{{username}}</a> ({{score}})</h4>
+      <!--<h4 class="media-heading pull-right">{{score}}</h4>-->
+    </div>
+    {{/with}}
+  </div>
+</template>

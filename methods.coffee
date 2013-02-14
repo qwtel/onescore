@@ -1,55 +1,40 @@
 Meteor.methods
-  restore: (targetState) ->
-    entity = Collections[targetState.entityType].findOne targetState.entity
-    entity.lastModifiedBy = @userId
-    notify targetState, entity
+  newAchievement: (data) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'newAchievement'
+    if !isAllowedToUseSkill user, skill
+      return 0
 
-    revisions = Revisions.find
-      entity: targetState.entity
-      date: $gte: targetState.date
-    ,
-      sort:
-        date: -1
+    # XXX: This is not good (in so many respects I don't even know where to
+    # start)
+    delete data._id
+    _.extend data, basic(),
+      favourites: 0
+      accomplishments: 0
+    data.type = 'achievement'
 
-    revisions = revisions.fetch()
-    _.each revisions, (revision) ->
-      diff = revision.diff
-      keys = _.keys diff
+    # achievements have levels based on the number of predecessors
+    data.level = 1
+    if data.parent
+      parent = Achievements.findOne data.parent
+      data.level = parent.level + 1
 
-      entity = patch entity, diff, keys
+    id = Achievements.insert data
 
-    delete entity._id
-    Collections[targetState.entityType].update targetState.entity, $set: entity
+    #if data.title
+    #  titleData =
+    #    title: data.title
+    #    entity: id
+    #
+    #  Meteor.call 'suggestTitle', titleData
 
-  assignBestTitle: (title) ->
-    achievementId = title.entity
-    best = Titles.findOne
-      entity: achievementId
-    , 
-      sort:
-        score: -1
-
-    if best
-      Achievements.update achievementId,
-        $set:
-          title: best.title
-
-  basic: ->
-    data =
-      user: @userId
-      date: new Date().getTime()
-      score: 0
-      hot: 0
-      best: 0
-      value: 0
-      comments: 0
-      upVotes: 0
-      votes: 0
+    return id 
 
   favourite: (data) ->
-    skill = Skills.findOne id: 'favourite'
-    if !isAllowedToUseSkill skill
-      return 0 
+    user = Meteor.user()
+    skill = Skills.findOne 'favourite'
+    if !isAllowedToUseSkill user, skill then return 0 
+
     fav = Favourites.findOne
       user: @userId
       entity: data.entity
@@ -59,227 +44,112 @@ Meteor.methods
         $set:
           active: !fav.active
     else
-      Favourites.insert
+      _.extend data, basic(),
         type: 'favourite'
-        user: @userId
-        entity: data.entity
         active: true
+      Favourites.insert data
+      Achievements.update data.entity,
+        $inc:
+          favourites: 1
 
-  suggestTitle: (data) ->
-    basic = Meteor.call 'basic'
-    _.extend data, basic,
-      type: 'title'
-    id = Titles.insert data
-
-    title = Titles.findOne id
-    achievement = Achievements.findOne title.entity
-    notify title, achievement
-
-    Meteor.call 'assignBestTitle', title
-
-  comment: (data) ->
-    skill = Skills.findOne id: 'comment'
-    if !isAllowedToUseSkill skill
-      return 0
-   
-    comment = Comments.findOne data._id
-
-    if comment and comment.user is @userId
-      Comments.update data._id,
-        $set: text: data.text
-
-    else
-      basic = Meteor.call 'basic'
-      _.extend data, basic,
-        entity: data.topic
-        entityType: data.topicType
-
-      parent = Comments.findOne data.parent
-      if parent
-        _.extend data,
-          parent: parent._id
-          mention: parent.user
-          level: parent.level + 1
-      else
-        _.extend data,
-          parent: null
-          mention: null
-          level: 0
-      
-      data.type = 'comment'
-      id = Comments.insert data
-
-      comment = Comments.findOne id
-      target = Collections[comment.topicType].findOne comment.topic
-      notify comment, target
-      
-      if comment.parent?
-        parent = Comments.findOne comment.parent
-        notify comment, parent
-      
-      Collections[comment.topicType].update comment.topic,
-        $set: lastComment: new Date().getTime()
-        $inc: comments: 1
-
-  vote: (data) ->
-    skill = Skills.findOne id: 'vote'
-    if !isAllowedToUseSkill skill
-      return 0
-    basic = Meteor.call 'basic'
-    _.extend data, basic
-    
-    vote = Votes.findOne
-      user: @userId
-      entity: data.entity
-    
-    if vote
-      Votes.update vote._id, $set: data
-
-      if vote.up is true and data.up is false
-        diff = -1
-      else if vote.up is false and data.up is true
-        diff = 1
-
-      if diff
-        Collections[vote.entityType].update vote.entity, 
-          $set: lastVote: new Date().getTime()
-          $inc: upVotes: diff
-
-    else
-      _.extend data,
-        type: 'vote'
-        upVotes: 0
-        votes: 0
-
-      id = Votes.insert data
-
-      vote = Votes.findOne id
-      target = Collections[vote.entityType].findOne vote.entity
-      notify vote, target
-
-      Collections[vote.entityType].update vote.entity, 
-        $set: lastVote: new Date().getTime()
-        $inc: 
-          upVotes: if data.up then 1 else 0
-          votes: 1
-
-    calculateScore Collections[data.entityType], data.entity
-
-  upload: (formData, accomplishId) ->
-    if Meteor.isClient
-      user = Meteor.user()
-      url = "https://graph.facebook.com/#{user.services.facebook.id}/photos/"
-      options =
-        params:
-          access_token: user.services.facebook.accessToken
-        contentType: 'multipart/form-data'
-        content: formData
-      
-      Meteor.http.post url, options, (error, result) ->
-        unless error
-          id = result.data.id
-          Accomplishments.update accomplishId, 
-            $set: 
-              facebookImageId: id
-
-  accomplish: (data, formData) ->
-    delete data._id
-    delete data.collection
-    skill = Skills.findOne id: 'accomplish'
-
-    if !isAllowedToUseSkill skill
-      return 0
+  accomplish: (data) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'accomplish'
+    if !isAllowedToUseSkill user, skill then return 0
 
     acc = Accomplishments.findOne
       user: @userId
       entity: data.entity
 
     if acc
-      acc.tags or (acc.tgags = [])
-      data.tags or (data.tags = [])
-      tags = _.union acc.tags, data.tags
-
       Accomplishments.update acc._id,
         $set:
-          story: data.story
-          tags: tags
-
-      accomplishId = acc._id
-
+          active: !acc.active
     else
-      basic = Meteor.call 'basic'
-      _.extend data, basic
+      _.extend data, basic(),
+        type: 'accomplishment'
+        active: true
 
-      data.type = 'accomplishment'
-      accomplishId = Accomplishments.insert data
+      id = Accomplishments.insert data
+      Achievements.update data.entity,
+        $inc:
+          accomplishments: 1
 
       # update user score
       achievement = Achievements.findOne data.entity
-      Meteor.users.update @userId,
+      Meteor.users.update user._id,
         $inc:
-          score: achievement.value
+          'profile.score': achievement.value
+
+      # level up?
+      next = nextLevel user.profile.level
+      inLevelScore = user.profile.score - prevLevels(user.profile.level) 
+      if inLevelScore >= next
+        Meteor.users.update user._id,
+          $inc:
+            'profile.level': 1
 
       # send notificatións
-      accomplishment = Accomplishments.findOne accomplishId
-      notify accomplishment, achievement
+      #accomplishment = Accomplishments.findOne accomplishId
+      #notify accomplishment, achievement
 
     #Meteor.call 'upload', formData, accomplishId
-    return accomplishId
- 
-  newAchievement: (data) ->
-    delete data._id
-    delete data.collection
+    return id or acc._id
 
-    basic = Meteor.call 'basic'
-    _.extend data, basic
-    data.type = 'achievement'
-    time = new Date().getTime()
+  voteUp: (id, type) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'voteUp'
+    if !isAllowedToUseSkill user, skill then return 0
+    voteFor user, id, type, true
 
-    # check if user is spamming
-    skill = Skills.findOne id: 'newAchievement'
-    if !isAllowedToUseSkill skill
-      return 0
+  voteDown: (id, type) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'voteDown'
+    if !isAllowedToUseSkill user, skill then return 0
+    voteFor user, id, type, false
 
-    id = Achievements.insert data
+voteFor = (user, id, type, active) ->
+  data = _.extend basic(),
+    entity: id
+    entityType: type
+    active: active
 
-    if data.title
-      titleData =
-        title: data.title
-        entity: id
+  vote = Votes.findOne
+    user: user._id
+    entity: data.entity
+  
+  if vote
+    Votes.update vote._id, $set: data
 
-      Meteor.call 'suggestTitle', titleData
+    if vote.active is true and active is false
+      diff = -1
+    else if vote.active is false and active is true
+      diff = 1
 
-    return id 
+    if diff
+      Collections[vote.entityType].update vote.entity, 
+        #$set: lastVote: new Date().getTime()
+        $inc: upVotes: diff
 
-  updateUserScoreComplete: ->
-    unless @is_simulation
-      a = Achievements.find
-        $where: "
-          return db.accomplishments.findOne({
-            user: '#{@userId}',
-            entity: this._id
-          }) "
-      ,
-        fields:
-          value: 1
+  else
+    _.extend data,
+      type: 'vote'
+      upVotes: 0
+      votes: 0
 
-      a = a.fetch()
-      s = _.pluck a, 'value'
-      score = _.reduce s, (memo, num) ->
-        return memo + num
-      , 0
-      
-      Meteor.users.update @userId,
-        $set:
-          score: score
+    id = Votes.insert data
 
-updateScore = (collection, id, score) ->
-  collection.update id,
-    $set:
-      score: score.naive
-      best: score.wilson
-      hot: score.hot
-      value: Math.round 10*score.wilson
+    vote = Votes.findOne id
+    target = Collections[vote.entityType].findOne vote.entity
+    #notify vote, target
+    
+    Collections[vote.entityType].update vote.entity, 
+      #$set: lastVote: new Date().getTime()
+      $inc: 
+        upVotes: if data.active then 1 else 0
+        votes: 1
+
+  calculateScore Collections[data.entityType], data.entity
 
 # using the Pentagonal numbers (http://oeis.org/A000326) 
 # starting at the 4th (12).
@@ -296,82 +166,9 @@ prevLevels = (level) ->
     prev += nextLevel i 
   return prev
 
-notify = (entity, target) ->
-  if entity and target
-    receivers = [target.user]
-
-    Notifications.insert
-      date: new Date().getTime()
-      type: 'notification'
-      user: entity.user
-      entity: entity._id
-      entityType: entity.type
-      target: target._id
-      targetType: target.type
-      receivers: receivers
-
-calculateScore = (collection, id) ->
-  doc = collection.findOne id
-
-  up = doc.upVotes
-  down = doc.votes - doc.upVotes
-
-  score =
-    naive: naiveScore up, down
-    wilson: wilsonScore up, up+down
-    hot: hotScore up, down, doc.date
-
-  updateScore collection, id, score
-
-naiveScore = (up, down) ->
-  return up - down
-
-wilsonScore = (pos, n) ->
-  if n is 0
-    return 0
-
-  # NOTE: hardcoded for performance (confidence = 0.95)
-  z = 1.96
-  phat = pos/n
-
-  (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
-
-hotScore = (up, down, date) ->
-  a = new Date(date).getTime()
-  b = new Date(2005, 12, 8, 7, 46, 43).getTime()
-  ts = a - b
-
-  x = naiveScore up, down
-
-  if x > 0 then y = 1
-  else if x < 0 then y = -1
-  else y = 0
-
-  z = Math.max(Math.abs(x), 1)
-
-  Math.round(Math.log(z)/Math.log(10) + y*ts/45000)
-
-patch = (entity, diff, keys) ->
-  _.each keys, (key) ->
-    if _.isArray entity[key]
-      if diff[key].removed
-        entity[key] = _.union entity[key], diff[key].removed
-      if diff[key].added
-        entity[key] = _.difference entity[key], diff[key].added
-
-    else if _.isObject entity[key]
-      throw new Error "#{key} is an Object, should recurse, but not implemented"
-
-    else if diff[key]
-      entity[key] = diff[key]
-
-  return entity
-
 # XXX: I'm too stupid to write this function. 
 # please fix that LastChanged gets updated on every try, thanks.
-isAllowedToUseSkill = (skill) ->
-  user = Meteor.user()
-
+isAllowedToUseSkill = (user, skill) ->
   #if _.has(skill, 'level')
   #  unless user.level >= skill.level
   #    return false
@@ -388,3 +185,62 @@ isAllowedToUseSkill = (skill) ->
     return isAllowed
   else
     return true
+
+# XXX: Shouldn't there be some kind of base model class that implements this?
+basic = ->
+  user: Meteor.user()._id
+  date: new Date().getTime()
+  score: 0
+  hot: 0
+  best: 0
+  value: 0
+  comments: 0
+  upVotes: 0
+  votes: 0
+
+calculateScore = (collection, id) ->
+  doc = collection.findOne id
+
+  up = doc.upVotes
+  down = doc.votes - doc.upVotes
+
+  naive = naiveScore up, down
+  wilson = wilsonScore up, doc.votes
+  hot = hotScore up, down, doc.date
+
+  collection.update id,
+    $set:
+      score: naive
+      best: wilson
+      hot: hot
+      value: Math.round 10*wilson
+
+naiveScore = (up, down) ->
+  return up - down
+
+# http://amix.dk/blog/post/19588
+wilsonScore = (pos, n) ->
+  if n <= 0 or pos <= 0
+    return 0
+
+  # NOTE: hardcoded for performance (confidence = 0.95)
+  z = 1.96
+  phat = pos/n
+
+  (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
+
+# http://amix.dk/blog/post/19588
+hotScore = (up, down, date) ->
+  a = new Date(date).getTime()
+  b = new Date(2005, 12, 8, 7, 46, 43).getTime()
+  ts = a - b
+
+  x = up - down
+
+  if x > 0 then y = 1
+  else if x < 0 then y = -1
+  else y = 0
+
+  z = Math.max(Math.abs(x), 1)
+
+  Math.round(Math.log(z)/Math.log(10) + y*ts/45000)
