@@ -7,3 +7,11 @@ Template.previewAchievement.helpers
 
   votesDiff: ->
     @upVotes - (@votes - @upVotes)
+
+  level: ->
+    id = Session.get 'parentAchievement'
+    if id 
+      parent = Achievements.findOne id
+      if parent
+        return parent.level + 1
+    return 1

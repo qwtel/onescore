@@ -9,7 +9,6 @@ Template.user.events
       Session.set 'type', null
 
 Template.user.helpers
-  achievement: -> Achievements.findOne()
   title: ->
     if @title != '' then @title else '<No title>'
 

@@ -1,4 +1,8 @@
 Meteor.startup ->
+  Meteor.users.allow
+    insert: -> true
+    update: -> true
+    remove: -> true
   Comments.allow
     insert: -> true
     update: -> true

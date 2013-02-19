@@ -11,6 +11,7 @@ Scratchpad = new Meteor.Collection null
 
 Collections = Collections or {}
 _.extend Collections,
+  'user': Meteor.users
   'comment': Comments
   'achievement': Achievements
   'title': Titles
@@ -19,5 +20,5 @@ _.extend Collections,
   'accomplishment': Accomplishments
   'notifiacation': Notifications
   'revision': Revisions
-  'tag': Revisions
+  'tag': Tags
   'scratchpad': Scratchpad

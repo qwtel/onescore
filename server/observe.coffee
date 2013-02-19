@@ -2,6 +2,8 @@
 betaKeys = ["1237137766", "1339462332"]
 
 Accounts.onCreateUser (options, user) ->
+  console.log options, user
+
   if options.profile
     user.profile = options.profile
 
@@ -24,10 +26,7 @@ Accounts.onCreateUser (options, user) ->
   #if not _.contains(betaKeys, res.data.id)
   #  throw new Error "facebook id not in whitelist"
 
-  _.extend user.profile,
-    username: data.username
-    bio: if data.bio? then data.bio else ''
-    location: if (data.location? and data.location.name?) then data.location.name else ''
+  _.extend user,
     type: 'user'
     date: new Date().getTime()
     score: 0
@@ -35,10 +34,16 @@ Accounts.onCreateUser (options, user) ->
     best: 0
     value: 0
     comments: 0
+    upVotes: 0
+    votes: 0
+
+  _.extend user.profile,
     username: data.username
+    bio: if data.bio? then data.bio else ''
+    location: if (data.location? and data.location.name?) then data.location.name else ''
+    xp: 0
     level: 1
     rank: 0
-    #ranked: false
 
   return user
 

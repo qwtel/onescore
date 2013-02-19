@@ -44,12 +44,12 @@ class Router extends Backbone.Router
     @softReset()
 
     newAchievement = Scratchpad.findOne type: 'achievement'
+
     if not newAchievement
       data = _.extend basic(),
         type: 'achievement'
         title: ''
         parent: if id then id else null
-        level: 1
         description: ''
         favourites: 0
         accomplishments: 0

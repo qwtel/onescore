@@ -49,6 +49,8 @@ body {
   .icon {
     width: @iconSize;
     height: @iconSize;
+    background-image: url('/img/bg_new.png');
+    background-size: @iconSize @iconSize;
     //box-sizing: border-box;
 
     img {
@@ -60,11 +62,13 @@ body {
     @media (max-width: 480px) {
       width: @iconSizeSmall;
       height: @iconSizeSmall;
+      background-size: @iconSizeSmall @iconSizeSmall;
     }
   }
 }
 
 .pill {
+  position: relative;
   cursor: pointer;
   padding: 10px;
   border-radius: 5px;
@@ -75,6 +79,23 @@ body {
     color: @gray;
     text-decoration: none;
   }
+
+  .nav-pills {
+    background-color: inherit;
+    position: absolute;
+    margin: 0;
+    top: 2px;
+    right: 2px;
+  }
+
+  .nav-pills > li > a:hover {
+    background-color: rgba(255,255,255,0.25);
+  }
+
+  .nav-pills > .active > a, .nav-pills > .active > a:hover {
+    background-color: rgba(0,0,0,0.25);
+  }
+
 }
 
 .pill.accepted {

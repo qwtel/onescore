@@ -1,4 +1,10 @@
 Template.achievement.events
+  'click .unexpand': (e) ->
+    e.stopImmediatePropagation()
+    Session.set "target-#{@_id}", null
+    if Session.equals 'target', @_id
+      Session.set 'target', null
+
   'click .pill': (e) ->
     e.stopImmediatePropagation()
     Session.toggle 'target', @_id
@@ -8,27 +14,29 @@ Template.achievement.events
     else
       Session.set 'type', null
 
-Template.achievement.rendered = -> console.log 'rendered'
+  'click .nav': (e) ->
+    e.stopImmediatePropagation()
+
+#Template.achievement.rendered = -> console.log 'rendered'
 
 Template.achievement.helpers
   title: ->
     if @title != '' then @title else '<No title>'
-
+  
   description: ->
     if @description != '' then @description else '<No description>'
-
+  
   votesDiff: ->
     @upVotes - (@votes - @upVotes)
-
+  
   selected: -> 
     if Session.equals 'target', @_id
       Session.set "target-#{@_id}", true
       return true
-
+  
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
-    false
-
+  
   color: ->
     user = Meteor.user()
     if user
@@ -39,21 +47,8 @@ Template.achievement.helpers
         return 'accepted'
       else if Achievements.find().count() > 0
         return 'uncompleted'
-    return ''
-  
-  images: ->
-    (Accomplishments.find
-      entity: @_id
-      image: $ne: null
-    ).fetch()
 
-  stories: ->
-    console.log (Accomplishments.find
-      entity: @_id
-      story: $ne: null
-    ).fetch()
-
-  achievers: ->
-    console.log (Accomplishments.find
-      entity: @_id
-    ).fetch()
+  successors: ->
+    Achievements.find parent: @_id,
+      sort: best: -1
+      limit: 3

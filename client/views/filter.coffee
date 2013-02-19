@@ -9,7 +9,7 @@ Template.filter.events
 
 Template.filter.helpers
 
-getSelect = ->
+Template.filter.getSelect = ->
   sel = {}
   switch Session.get 'limit'
     when 'me'
@@ -20,7 +20,7 @@ getSelect = ->
 
   return sel
 
-getSort = ->
+Template.filter.getSort = ->
   sort = Session.get 'sort'
 
   switch sort
@@ -30,8 +30,8 @@ getSort = ->
     when 'new' then data = date: -1
     when 'old' then data = date: 1
 
-    when 'best' then data = best: -1
-    when 'worst' then data = best: 1
+    when 'best' then data = best: -1, date: -1
+    when 'worst' then data = best: 1, date: -1
 
   return data
 

@@ -2,9 +2,8 @@ Template.achievements.events()
 
 Template.achievements.helpers
   achievements: ->
-    sel = getSelect()
+    sel = Template.filter.getSelect()
     sel.parent = null
+    sort = Template.filter.getSort()
     Achievements.find sel,
-      sort: getSort()
-      limit: 15
-
+      sort: sort

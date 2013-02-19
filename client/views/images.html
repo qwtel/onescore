@@ -8,8 +8,8 @@
     <!-- Carousel items -->
     <div class="carousel-inner">
       {{#each images}}
-      <div class="active item">
-        <img style="width: 100%" src="" />
+      <div class="{{#if active}}active{{/if}} item">
+        <img style="width: 100%; height: 400px;" src="" />
       </div>
       {{/each}}
     </div>

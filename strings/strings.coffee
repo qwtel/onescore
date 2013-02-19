@@ -27,6 +27,8 @@ Strings.insert _id: 'accept', string: 'Accept'
 Strings.insert _id: 'acceptDesc', string: 'Allows you to add achievements to your quest log'
 Strings.insert _id: 'accomplish', string: 'Accomplish'
 Strings.insert _id: 'accomplishDesc', string: 'Gives you the ability to accomplish achievements'
+Strings.insert _id: 'inspect', string: 'Inspect'
+Strings.insert _id: 'inspectDesc', string: 'Gives you the ability to accomplish achievements'
 
 Strings.insert _id: 'titleHelp', string: "You don't have to suggest a title."
 Strings.insert _id: 'descriptionHelp', string: "What has to be done to complete this achievement?"
@@ -47,7 +49,7 @@ Strings.insert _id: 'atomic', string: "Atomic"
 Strings.insert _id: 'atomicText', string: "Achievements should not be composed."
 Strings.insert _id: 'universal', string: "Universal"
 Strings.insert _id: 'universalText', string: "Achievements should be easy to agree on."
-Strings.insert _id: 'unique', string: "Universal"
+Strings.insert _id: 'unique', string: "Unique"
 Strings.insert _id: 'uniqueText', string: "Check if the achievement already exists!"
 
 Strings.insert _id: 'navigate', string: "Navigate"

@@ -51,9 +51,7 @@ Skills.insert
   icon: 'user'
   name: strings 'profile'
   description: strings 'profileDesc'
-  active: -> 
-    if Session.equals('page', 'profile') and 
-      not Session.equals('menu', 'questlog') then 'active' else ''
+  active: -> Session.equals 'page', 'profile' 
   level: 1
   usable: true
   nav: true
@@ -64,12 +62,23 @@ Skills.insert
   icon: 'star'
   name: strings 'questlog'
   description: strings 'questlogDesc'
-  active: -> 
-    if Session.equals('page', 'profile') and
-      Session.equals('menu', 'questlog') then 'active' else ''
+  active: -> Session.equals 'page', 'questlog'
   level: 3
   usable: true
   nav: true
+
+Skills.insert
+  _id: 'inspect'
+  icon: 'bookmark'
+  name: strings 'inspect'
+  description: strings 'inspectDesc' 
+  level: 1
+  active: false
+  usable: -> (Session.get 'target')?
+  url: -> 
+    id = Session.get 'target'
+    type = Session.get 'type'
+    if id and type then "#{type}/#{id}"
 
 Skills.insert
   _id: 'newAchievement'
@@ -92,7 +101,7 @@ Skills.insert
 Skills.insert
   _id: 'voteUp'
   name: 'Vote Up'
-  icon: 'arrow-up'
+  icon: 'thumbs-up'
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
@@ -110,7 +119,7 @@ Skills.insert
 Skills.insert
   _id: 'voteDown'
   name: 'Vote Down'
-  icon: 'arrow-down'
+  icon: 'thumbs-down'
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
@@ -154,7 +163,7 @@ Skills.insert
   click: ->
     id = Session.get 'target'
     Meteor.call 'accomplish', entity: id, (error, result) ->
-      Router.navigate "/accomplishment/#{result}", true
+      #Router.navigate "/accomplishment/#{result}", true
   active: ->
     id = Session.get 'target'
     user = Meteor.user()
