@@ -105,7 +105,7 @@ Skills.insert
 Skills.insert
   _id: 'voteUp'
   name: 'Vote Up'
-  icon: 'thumbs-up'
+  icon: 'arrow-up'
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
@@ -123,7 +123,7 @@ Skills.insert
 Skills.insert
   _id: 'voteDown'
   name: 'Vote Down'
-  icon: 'thumbs-down'
+  icon: 'arrow-down'
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
