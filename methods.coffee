@@ -169,6 +169,7 @@ prevLevels = (level) ->
 # XXX: I'm too stupid to write this function. 
 # please fix that LastChanged gets updated on every try, thanks.
 isAllowedToUseSkill = (user, skill) ->
+
   #if _.has(skill, 'level')
   #  unless user.level >= skill.level
   #    return false
