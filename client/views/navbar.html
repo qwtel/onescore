@@ -4,12 +4,12 @@
       <ul class="nav pull-right">
       {{#if currentUser}}
         {{#if currentUser.profile}}
-        {{#with currentUser.profile}}
-          <li><a class="score">{{xp}}</a></li> 
+        {{#with currentUser}}
+          <li><a class="score">{{profile.xp}}</a></li> 
           <li class="divider-vertical"></li>
           <li>
-            <a class="profile-pic" href="/{{username}}">
-              <img src='https://graph.facebook.com/{{username}}/picture'/>
+            <a class="profile-pic" href="/user/{{_id}}">
+              <img src='https://graph.facebook.com/{{profile.username}}/picture'/>
             </a>
           </li> 
         {{/with}}

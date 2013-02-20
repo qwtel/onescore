@@ -9,7 +9,7 @@ Template.previewAchievement.helpers
     @upVotes - (@votes - @upVotes)
 
   level: ->
-    id = Session.get 'parentAchievement'
+    id = Session.get 'id'
     if id 
       parent = Achievements.findOne id
       if parent

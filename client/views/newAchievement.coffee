@@ -1,6 +1,6 @@
 Template.newAchievement.helpers
   parentAchievement: -> 
-    id = Session.get 'parentAchievement'
+    id = Session.get 'id'
     if id then Achievements.findOne id
 
   newAchievement: -> 
@@ -21,7 +21,7 @@ Template.newAchievement.events
   'click #new-achievement': (e) ->
     data = Scratchpad.findOne @_id
 
-    parent = Session.get 'parentAchievement'
+    parent = Session.get 'id'
     if parent then data.parent = parent else data.parent = null
 
     # XXX: I don't like this whole "data-business" any more. Should be formal

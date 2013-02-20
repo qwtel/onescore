@@ -1,0 +1,18 @@
+<template name='profile'>
+  {{#if user}}
+  {{#with user}}
+    {{> user}}
+  {{/with}}
+  {{/if}}
+
+  <h3>Achievements</h3>
+  {{#each accomplishments}}
+    {{#with achievement}}
+      {{> achievement}}
+    {{/with}}
+  {{else}}
+  {{> noContent}}
+  {{/each}}
+  {{> loadMore}}
+</template>
+

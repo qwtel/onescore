@@ -19,12 +19,12 @@
 
   <h3>Edit</h3>
   {{#with newAchievement}}
-    <div id="form-{{_id}}" class="form-horizontal">
+    <div id="form-{{_id}}" class="form">
       <fieldset>
         <div class="control-group">
           <label class="control-label" for="title">Title</label>
           <div class="controls">
-            <input id="title" class="span4" type="text" data-field="title" value="{{title}}"/>
+            <input id="title" class="span5" type="text" data-field="title" value="{{title}}"/>
             <p class="help-block muted">{{strings "titleHelp"}}</p>
           </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="control-group">
           <label class="control-label" for="description">Description</label>
           <div class="controls">
-            <textarea id="description" class="input-xlarge" data-field="description" rows="4">{{description}}</textarea>
+            <textarea id="description" class="span6" data-field="description" rows="4">{{description}}</textarea>
             <p class="help-block muted">{{strings "descriptionHelp"}}</p>
           </div>
         </div>

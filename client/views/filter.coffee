@@ -11,9 +11,9 @@ Template.filter.helpers
 
 Template.filter.getSelect = ->
   sel = {}
-  switch Session.get 'limit'
+  switch Session.get 'scope'
     when 'me'
-      sel.user = Meteor.user()._id
+      sel.user = Meteor.userId()
     when 'friends'
       # TODO: friends
       sel.user = $in: [Meteor.user()._id]
@@ -34,4 +34,3 @@ Template.filter.getSort = ->
     when 'worst' then data = best: 1, date: -1
 
   return data
-

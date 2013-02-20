@@ -8,7 +8,13 @@ Template.user.events
     else
       Session.set 'type', null
 
+  'click .nav': (e) ->
+    e.stopImmediatePropagation()
+
 Template.user.helpers
+  selected: -> 
+    Session.equals 'target', @_id
+
   title: ->
     if @title != '' then @title else '<No title>'
 
@@ -22,9 +28,9 @@ Template.user.helpers
     Session.equals 'target', @_id
 
   color: ->
-    if Meteor.user()
-      userId = Meteor.user()._id
-      if userId == @title
+    user = Meteor.user()
+    if user.profile
+      if user.profile.username == @profile.username
         return 'completed'
       #if isActiveInCollection(Favourites, @_id, userId)
       #  return 'accepted'

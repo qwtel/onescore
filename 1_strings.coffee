@@ -10,7 +10,7 @@ Strings.insert _id: 'oneseccooldown', string: '1 second cooldown'
 Strings.insert _id: 'xseccooldown', string: 'seconds cooldown'
 
 Strings.insert _id: 'home', string: 'Home'
-Strings.insert _id: 'homeDesc', string: 'View success stories of other players'
+Strings.insert _id: 'homeDesc', string: 'View other players'
 Strings.insert _id: 'notifications', string: 'Notifications'
 Strings.insert _id: 'notificationDesc', string: 'See how other users interact with your content'
 Strings.insert _id: 'explore', string: 'Explore'
@@ -18,7 +18,7 @@ Strings.insert _id: 'exploreDesc', string: 'Allows you to find new achievements'
 Strings.insert _id: 'ladder', string: 'Ladder'
 Strings.insert _id: 'ladderDesc', string: 'Compete with other players based on your score'
 Strings.insert _id: 'profile', string: 'Profile'
-Strings.insert _id: 'profileDesc', string: 'Check out your recent activity or that of others'
+Strings.insert _id: 'profileDesc', string: 'Check out recent activity'
 Strings.insert _id: 'questlog', string: 'Quest Log'
 Strings.insert _id: 'questlogDesc', string: 'Keept track of achievements you want to complete'
 Strings.insert _id: 'newAchievement', string: 'Create'
@@ -28,7 +28,7 @@ Strings.insert _id: 'acceptDesc', string: 'Allows you to add achievements to you
 Strings.insert _id: 'accomplish', string: 'Accomplish'
 Strings.insert _id: 'accomplishDesc', string: 'Gives you the ability to accomplish achievements'
 Strings.insert _id: 'inspect', string: 'Inspect'
-Strings.insert _id: 'inspectDesc', string: 'Gives you the ability to accomplish achievements'
+Strings.insert _id: 'inspectDesc', string: 'Inspect your current target to get more information about it'
 
 Strings.insert _id: 'titleHelp', string: "You don't have to suggest a title."
 Strings.insert _id: 'descriptionHelp', string: "What has to be done to complete this achievement?"

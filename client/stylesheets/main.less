@@ -24,16 +24,38 @@
 @iconSizeSmall: 50px;
 
 body {
-  margin-top: 65px;
-  padding: 0 20px;
+  padding: 65px 20px;
   background: @grayLighter;
   overflow-y: scroll;
   overflow-x: hidden;
+
+  @media (max-width: 768px) {
+    -webkit-touch-callout: text;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
 }
 
 .nested {
   margin-top: 15px;
-  margin-left: 25px;
+  padding-left: 20px;
+  margin-left: 12px;
+  border-left: 2px solid @grayLight;
+}
+
+.nested.accepted {
+  border-color: @blue;
+}
+
+.nested.completed {
+  border-color: @green;
+}
+
+.nested.uncompleted {
+  border-color: @red;
 }
 
 .hero-unit {
@@ -52,6 +74,7 @@ body {
     background-image: url('/img/bg_new.png');
     background-size: @iconSize @iconSize;
     //box-sizing: border-box;
+    //border: 2px solid @red;
 
     img {
       border-radius: 5px;
@@ -73,7 +96,7 @@ body {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid darken(@grayLighter, 5%);
-  background: @grayLighter;
+  background: darken(@grayLighter, 5%);
 
   a {
     color: @gray;
@@ -86,6 +109,10 @@ body {
     margin: 0;
     top: 2px;
     right: 2px;
+
+    .passive {
+      display: none;
+    }
   }
 
   .nav-pills > li > a:hover {
@@ -96,21 +123,25 @@ body {
     background-color: rgba(0,0,0,0.25);
   }
 
+  .muted {
+    color: rgba(0,0,0,0.33);
+  }
+
 }
 
-.pill.accepted {
+.pill.accepted, .breadcrumb .accepted {
   a {
     color: @blue
   }
 }
 
-.pill.completed {
+.pill.completed, .breadcrumb .completed {
   a {
     color: @green
   }
 }
 
-.pill.uncompleted {
+.pill.uncompleted, .breadcrumb .uncompleted {
   a {
     color: @red
   }

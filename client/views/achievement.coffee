@@ -1,10 +1,4 @@
 Template.achievement.events
-  'click .unexpand': (e) ->
-    e.stopImmediatePropagation()
-    Session.set "target-#{@_id}", null
-    if Session.equals 'target', @_id
-      Session.set 'target', null
-
   'click .pill': (e) ->
     e.stopImmediatePropagation()
     Session.toggle 'target', @_id
@@ -36,7 +30,7 @@ Template.achievement.helpers
   
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
-  
+
   color: ->
     user = Meteor.user()
     if user
@@ -48,7 +42,3 @@ Template.achievement.helpers
       else if Achievements.find().count() > 0
         return 'uncompleted'
 
-  successors: ->
-    Achievements.find parent: @_id,
-      sort: best: -1
-      limit: 3

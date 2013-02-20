@@ -3,13 +3,14 @@ class Router extends Backbone.Router
     '': 'home'
     'home': 'home'
     'explore': 'explore'
-    'ladder': 'ladder'
-    'notifications': 'notifications'
+    #'ladder': 'ladder'
+    #'notifications': 'notifications'
     'achievement/new': 'newAchievement'
     'achievement/:id/new': 'newAchievement'
     'achievement/:id': 'achievement'
-    ':user': 'profile'
-    ':user/questlog': 'questlog'
+    'user/:id': 'user'
+    #'user/:id/questlog': 'questlog'
+    ':crap': 'home'
 
   home: ->
     @hardReset()
@@ -19,6 +20,7 @@ class Router extends Backbone.Router
   explore: ->
     @hardReset()
     Session.set 'page', 'explore'
+    Session.set 'scope', 'all'
     Session.set 'sort', 'best'
 
   ladder: ->
@@ -31,9 +33,11 @@ class Router extends Backbone.Router
     Session.set 'page', 'notifications'
     Session.set 'sort', 'new'
 
-  profile: (user) ->
+  user: (id) ->
     @hardReset()
-    Session.set 'page', 'profile'
+    Session.set 'id', id
+    Session.set 'page', 'user'
+    Session.set 'scope', 'me'
     Session.set 'sort', 'new'
 
   questlog: (user) ->
@@ -55,22 +59,23 @@ class Router extends Backbone.Router
         accomplishments: 0
       Scratchpad.insert data
 
-    Session.set 'parentAchievement', id
+    Session.set 'id', id
     Session.set 'page', 'newAchievement'
 
   achievement: (id, tab, tabtab) ->
     @softReset()
     Session.set 'page', 'achievement'
-    Session.set 'target', id
+    Session.set 'id', id
 
   softReset: ->
     $(document).scrollTop 0
     Session.set 'target', null
     Session.set 'type', null
+    Session.set 'limit', 1
 
   hardReset: ->
     @softReset()
-    Session.set 'parentAchievement', null
+    Session.set 'id', null
 
     # Awesome! Thanks to 
     # http://stackoverflow.com/questions/10758112/loop-through-object-get-value-using-regex-key-matches-javascript 

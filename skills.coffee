@@ -41,29 +41,29 @@ Skills.insert
   name: strings 'ladder'
   description: strings 'ladderDesc'
   active: -> Session.equals 'page', 'ladder'
-  level: 4
+  level: 99
   usable: true
   nav: true
 
 Skills.insert
-  _id: 'profile'
-  url: -> Meteor.user().profile.username
+  _id: 'user'
+  url: -> "user/#{Meteor.userId()}"
   icon: 'user'
   name: strings 'profile'
   description: strings 'profileDesc'
-  active: -> Session.equals 'page', 'profile' 
+  active: -> Session.equals 'page', 'user' 
   level: 1
   usable: true
   nav: true
 
 Skills.insert
   _id: 'questlog'
-  url: -> Meteor.user().profile.username+'/questlog'
+  url: -> "user/#{Meteor.userId()}/questlog"
   icon: 'star'
   name: strings 'questlog'
   description: strings 'questlogDesc'
   active: -> Session.equals 'page', 'questlog'
-  level: 3
+  level: 99
   usable: true
   nav: true
 
@@ -73,7 +73,10 @@ Skills.insert
   name: strings 'inspect'
   description: strings 'inspectDesc' 
   level: 1
-  active: false
+  active: ->
+    id = Session.get 'id'
+    target = Session.get 'target'
+    id == target
   usable: -> (Session.get 'target')?
   url: -> 
     id = Session.get 'target'
@@ -87,7 +90,8 @@ Skills.insert
   description: strings 'newAchievementDesc' 
   cooldown: 10
   level: 1
-  usable: true
+  usable: -> 
+    Session.equals('type', 'achievement') or !Session.get('target')?
   active: -> 
     Session.equals 'page', 'newAchievement'
   url: -> 
@@ -123,7 +127,7 @@ Skills.insert
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
-  level: 1
+  level: 3
   usable: -> !Session.equals 'type', null
   click: ->
     id = Session.get 'target'
@@ -141,7 +145,7 @@ Skills.insert
   name: strings 'accept'
   description: strings 'acceptDesc' 
   cooldown: 1
-  level: 1
+  level: 2
   usable: -> Session.equals 'type', 'achievement'
   click: ->
     id = Session.get 'target'
@@ -157,7 +161,7 @@ Skills.insert
   passive: true
   name: strings 'accomplish'
   description: strings 'accomplishDesc'
-  cooldown: 10
+  cooldown: 5
   level: 1
   usable: -> Session.equals 'type', 'achievement'
   click: ->
@@ -176,7 +180,7 @@ Skills.insert
   passive: true
   description: 'Allows you to comment on content'
   cooldown: 5
-  level: 5
+  level: 99
 
 Skills.insert
   _id: 'tag'
@@ -185,7 +189,7 @@ Skills.insert
   passive: true
   description: 'Allows you to tag content'
   cooldown: 1
-  level: 6
+  level: 99
 
 Skills.insert
   _id: 'edit'
@@ -194,7 +198,7 @@ Skills.insert
   passive: true
   description: 'Allows you to edit achievements'
   cooldown: 1
-  level: 7
+  level: 99
 
 Skills.insert
   _id: 'revision'
@@ -203,7 +207,7 @@ Skills.insert
   passive: true
   description: 'Allows you to revision achievements'
   cooldown: 1
-  level: 8
+  level: 99
 
 isActiveInCollection = (collection, id, userId) ->
   (collection.findOne

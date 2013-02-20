@@ -10,7 +10,8 @@
   <div class="row-fluid">
   {{#if equals "page" "home"}}
     <div class="span8">
-      {{> noContent}}
+      <h3>Ladder</h3>
+      {{> ladder}}
     </div>
     <div class="span4 hidden-phone">
       {{> noContent}}
@@ -47,9 +48,9 @@
     </div>
   {{else}}
 
-  {{#if equals "page" "profile"}}
+  {{#if equals "page" "user"}}
     <div class="span8">
-      {{> noContent}}
+      {{> profile}}
     </div>
     <div class="span4 hidden-phone">
       {{> noContent}}
@@ -75,11 +76,11 @@
   {{else}}
 
   {{#if equals "page" "achievement"}}
-    <div class="span8">
-      {{> noContent}}
-    </div>
-    <div class="span4 hidden-phone">
-      {{> noContent}}
+    <div class="span8 offset2">
+      {{> breadcrumbs}}
+      {{#with entity}}
+      {{> treeAchievement}}
+      {{/with}}
     </div>
   {{else}}
 
@@ -94,11 +95,11 @@
   </div>
 
   <div class="actionbar navbar navbar-fixed-bottom visible-phone">
-  <div class="navbar-inner">
-  <ul class="nav">
-  {{> actionbar}}
-  </ul>
-  </div>
+    <div class="navbar-inner">
+      <ul class="nav">
+        {{> actionbar}}
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -108,4 +109,3 @@
     <p>{{description}}</p>
   </div>
 </template>
-

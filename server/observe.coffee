@@ -1,9 +1,7 @@
 # XXX: List of allowed facebook ids
-betaKeys = ["1237137766", "1339462332"]
+#betaKeys = ["1237137766", "1339462332"]
 
 Accounts.onCreateUser (options, user) ->
-  console.log options, user
-
   if options.profile
     user.profile = options.profile
 

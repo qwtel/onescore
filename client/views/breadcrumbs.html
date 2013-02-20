@@ -1,0 +1,12 @@
+<template name='breadcrumbs'>
+  {{#if breadcrumbs}}
+  <ul class="breadcrumb">
+    {{#each breadcrumbs}}
+      <li class="{{color}}" title="{{title}}">
+        <a href="{{url}}">{{name}}</a>
+        <span class="divider">></span>
+      </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</template>
