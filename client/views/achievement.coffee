@@ -11,8 +11,6 @@ Template.achievement.events
   'click .nav': (e) ->
     e.stopImmediatePropagation()
 
-Template.achievement.rendered = -> console.log 'rendered'
-
 Template.achievement.helpers
   title: ->
     if @title != '' then @title else '<No title>'
@@ -42,14 +40,17 @@ Template.achievement.helpers
       else if Achievements.find().count() > 0
         return 'uncompleted'
 
-  successors: ->
+  hasMore: ->
     query = Achievements.find parent: @_id
-    if query.count() is 0 then return false
+    count = query.count()
+    limit = Session.get("limit-#{@_id}") or 1
+    return 3 * limit < count
 
+  successors: ->
+    sort = Template.filter.getSort()
     limit = Session.get("limit-#{@_id}") or 1
 
-    sort = Template.filter.getSort()
     Achievements.find parent: @_id,
       sort: sort
-      #skip: 3*(limit-1)
-      limit: 3*limit
+      #skip: 3 * (limit-1)
+      limit: 3 * limit

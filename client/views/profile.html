@@ -13,6 +13,9 @@
   {{else}}
   {{> noContent}}
   {{/each}}
-  {{> loadMore}}
+
+  {{#if hasMore}}
+    {{> loadMore}}
+  {{/if}}
 </template>
 

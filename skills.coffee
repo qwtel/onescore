@@ -68,24 +68,8 @@ Skills.insert
   nav: true
 
 Skills.insert
-  _id: 'inspect'
-  icon: 'bookmark'
-  name: strings 'inspect'
-  description: strings 'inspectDesc' 
-  level: 1
-  active: ->
-    id = Session.get 'id'
-    target = Session.get 'target'
-    id == target
-  usable: -> (Session.get 'target')?
-  url: -> 
-    id = Session.get 'target'
-    type = Session.get 'type'
-    if id and type then "#{type}/#{id}"
-
-Skills.insert
   _id: 'newAchievement'
-  icon: 'plus'
+  icon: 'file'
   name: strings 'newAchievement'
   description: strings 'newAchievementDesc' 
   cooldown: 10
@@ -101,6 +85,22 @@ Skills.insert
       return "achievement/#{id}/new"
     else
       return "achievement/new"
+
+Skills.insert
+  _id: 'inspect'
+  icon: 'eye-open'
+  name: strings 'inspect'
+  description: strings 'inspectDesc' 
+  level: 1
+  active: ->
+    id = Session.get 'id'
+    target = Session.get 'target'
+    id == target
+  usable: -> (Session.get 'target')?
+  url: -> 
+    id = Session.get 'target'
+    type = Session.get 'type'
+    if id and type then "#{type}/#{id}"
 
 Skills.insert
   _id: 'voteUp'

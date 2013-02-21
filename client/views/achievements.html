@@ -5,5 +5,10 @@
   {{else}}
   {{> noContent}}
   {{/each}}
-  {{> loadMore}}
+
+  {{#if hasMore}}
+    {{> loadMore}}
+  {{else}}
+    {{> createNew}}
+  {{/if}}
 </template>
