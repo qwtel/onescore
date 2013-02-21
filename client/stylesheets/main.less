@@ -30,12 +30,12 @@ body {
   overflow-x: hidden;
 
   @media (max-width: 768px) {
-    -webkit-touch-callout: text;
-    -webkit-user-select: text;
-    -khtml-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
-    user-select: text;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 }
 
@@ -60,7 +60,36 @@ body {
 
 .hero-unit {
   background: lighten(@grayLighter, 5%);
-  //border: 1px solid darken(@grayLighter, 5%);
+  background-position: center center;
+  background-size: cover;
+}
+
+// http://www.sxc.hu/photo/1324306
+.hero-unit-home {
+  background-image: url('/img/home.jpg');
+  color: @white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.75);
+}
+
+// http://www.sxc.hu/photo/1387131
+.hero-unit-explore {
+  background-image: url('/img/explore.jpg');
+  color: @white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.75);
+}
+
+// http://www.sxc.hu/photo/909773
+.hero-unit-user {
+  background-image: url('/img/profile.jpg');
+  color: @white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.75);
+}
+
+// http://www.sxc.hu/photo/1005830
+.hero-unit-newAchievement {
+  background-image: url('/img/create.jpg');
+  color: @white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.75);
 }
 
 .nav a {
