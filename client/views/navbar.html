@@ -23,13 +23,11 @@
       <a class="brand" url="" title="{{strings "title"}}" data-toggle="collapse" data-target=".nav-collapse"></a>
       <div class="nav-collapse collapse">
         <ul class="nav">
-
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">
               {{strings "navigate"}}
               <b class="caret"></b>
             </a>
-
             <ul class="dropdown-menu">
               {{#each nav}}
                 <li class="{{#if active}}active{{/if}} {{#unless usable}}passive{{/unless}}">
@@ -41,9 +39,7 @@
               {{/each}}
             </ul>
           </li>
-
           {{> actionbar}}
-
         </ul>
       </div>
     </div>

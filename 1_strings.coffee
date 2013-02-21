@@ -53,3 +53,6 @@ Strings.insert _id: 'unique', string: "Unique"
 Strings.insert _id: 'uniqueText', string: "Check if the achievement already exists!"
 
 Strings.insert _id: 'navigate', string: "Navigate"
+
+Strings.insert _id: 'loadMore', string: "Load More"
+Strings.insert _id: 'createNew', string: "Create New Achievement"

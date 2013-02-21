@@ -8,4 +8,4 @@ Template.achievements.helpers
     sort = Template.filter.getSort()
     Achievements.find sel,
       sort: sort
-      limit: 15 * Session.get 'limit'
+      limit: 5 * Session.get 'limit'

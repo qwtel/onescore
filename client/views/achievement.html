@@ -17,7 +17,19 @@
           {{> actionbar}}
         <ul>
       {{/if}}
-
     </div>
   </div>
+
+  {{#if hasBeenSelected}}
+    <div class="nested {{color}}">
+      {{#if successors}}
+        {{#each successors}}
+          {{> achievement}}
+        {{/each}}
+        {{#if selected}} {{> loadMore}} {{/if}}
+      {{else}}
+        {{#if selected}} {{> createNew}} {{/if}}
+      {{/if}}
+    </div>
+  {{/if}}
 </template>

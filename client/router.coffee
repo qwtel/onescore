@@ -84,3 +84,7 @@ class Router extends Backbone.Router
     for key in _.keys Session.keys
       if /target-*/.test(key)
         delete Session.keys[key]
+
+    for key in _.keys Session.keys
+      if /limit-*/.test(key)
+        delete Session.keys[key]

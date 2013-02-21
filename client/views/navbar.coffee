@@ -7,9 +7,11 @@ Template.navbar.rendered = ->
   $('.popover').remove()
 
   $(@findAll('.spell')).popover
+    animation: false
+    container: 'body'
+    html: true
     placement: 'bottom'
     trigger: 'hover'
-    animation: false
 
 Template.navbar.helpers
   nav: ->
