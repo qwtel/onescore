@@ -83,7 +83,9 @@ Meteor.methods
 
       # level up?
       next = nextLevel user.profile.level
-      inLevelXp = user.profile.xp - prevLevels(user.profile.level) 
+      inLevelXp = (user.profile.xp + achievement.value) -
+        prevLevels(user.profile.level) 
+
       if inLevelXp >= next
         Meteor.users.update user._id,
           $inc:
