@@ -43,7 +43,9 @@
         </ul>
       </div>
     </div>
-    {{> progress}}
+    {{#with currentUser}}
+      {{> progress}}
+    {{/with}}
   </div>
 </template>
 

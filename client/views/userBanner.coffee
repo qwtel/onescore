@@ -1,4 +1,4 @@
-Template.user.events
+Template.userBanner.events
   'click .pill': (e) ->
     e.stopImmediatePropagation()
     Session.toggle 'target', @_id
@@ -11,7 +11,7 @@ Template.user.events
   'click .nav': (e) ->
     e.stopImmediatePropagation()
 
-Template.user.helpers
+Template.userBanner.helpers
   selected: -> 
     Session.equals 'target', @_id
 
@@ -25,3 +25,18 @@ Template.user.helpers
       #else if Achievements.find().count() > 0
       #  return 'uncompleted'
     return ''
+
+  numVotes: ->
+    Votes.find(user: @_id).count()
+
+  numFavs: ->
+    Favourites.find(user: @_id).count()
+
+  numAccomplishments: ->
+    Accomplishments.find(user: @_id).count()
+
+  numComments: ->
+    Comments.find(user: @_id).count()
+
+  numAchievements: ->
+    Achievements.find(user: @_id).count()

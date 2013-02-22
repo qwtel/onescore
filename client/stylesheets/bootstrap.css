@@ -5806,18 +5806,18 @@ a.badge:focus {
 }
 .progress-success .bar,
 .progress .bar-success {
-  background-color: #5eb95e;
-  background-image: -moz-linear-gradient(top, #62c462, #57a957);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#57a957));
-  background-image: -webkit-linear-gradient(top, #62c462, #57a957);
-  background-image: -o-linear-gradient(top, #62c462, #57a957);
-  background-image: linear-gradient(to bottom, #62c462, #57a957);
+  background-color: #4fc706;
+  background-image: -moz-linear-gradient(top, #57db07, #43a905);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#57db07), to(#43a905));
+  background-image: -webkit-linear-gradient(top, #57db07, #43a905);
+  background-image: -o-linear-gradient(top, #57db07, #43a905);
+  background-image: linear-gradient(to bottom, #57db07, #43a905);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff57a957', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff57db07', endColorstr='#ff43a905', GradientType=0);
 }
 .progress-success.progress-striped .bar,
 .progress-striped .bar-success {
-  background-color: #62c462;
+  background-color: #4dc206;
   background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);

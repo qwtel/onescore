@@ -286,18 +286,17 @@ body {
 
   .xp-bar {
     text-align: center;
+
     .progress {
       margin: 0;
       border-radius: 0;
       height: 4px;
       background: #ebebeb;
-      border-top: 1px solid rgba(0, 0, 0, 0.10);
       border-bottom: 1px solid rgba(0, 0, 0, 0.10);
       overflow: visible;
       //@include transition(height 0.2s linear);
 
       .bar {
-        background: @green;
         height: 4px;
         //@include transition(height 0.2s linear);
       }
@@ -307,5 +306,21 @@ body {
       top: -14px;
       background-color: @green;
     }
+  }
+}
+
+.user-banner {
+  .xp-bar {
+    text-align: center;
+
+    .progress {
+      box-shadow: none;
+    }
+
+    .label {
+      position: relative;
+      top: -41px;
+    }
+    margin-bottom: -30px;
   }
 }
