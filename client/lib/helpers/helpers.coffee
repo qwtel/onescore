@@ -27,3 +27,15 @@ Session.toggle = (name, value) ->
       Session.set name, value
   else
     Session.set name, !Session.get(name)
+
+color = ->
+  user = Meteor.user()
+  if user
+    userId = user._id
+    if isActiveInCollection Accomplishments, @_id, userId
+      return 'completed'
+    if isActiveInCollection Favourites, @_id, userId
+      return 'accepted'
+    else if Achievements.find().count() > 0
+      return 'uncompleted'
+
