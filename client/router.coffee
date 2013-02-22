@@ -21,7 +21,7 @@ class Router extends Backbone.Router
     @hardReset()
     Session.set 'page', 'explore'
     Session.set 'scope', 'all'
-    Session.set 'sort', 'best'
+    Session.set 'sort', 'hot'
 
   ladder: ->
     @hardReset()

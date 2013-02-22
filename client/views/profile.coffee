@@ -16,7 +16,7 @@ Template.profile.helpers
     limit = Session.get('limit') or 1
     Accomplishments.find sel,
       sort: sort
-      limit: 5 * limit
+      limit: 25 * limit
 
   achievement: ->
     Achievements.findOne @entity
@@ -32,4 +32,4 @@ Template.profile.helpers
     count = query.count()
 
     limit = Session.get('limit') or 1
-    return 5 * limit < count
+    return 25 * limit < count

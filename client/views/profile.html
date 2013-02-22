@@ -8,11 +8,12 @@
   <h3>Achievements</h3>
   {{#each accomplishments}}
     {{#with achievement}}
-      {{> baseAchievement}}
+      {{> badgeAchievement}}
     {{/with}}
   {{else}}
-  {{> noContent}}
+    {{> noContent}}
   {{/each}}
+  <div class="clearfix"/>
 
   {{#if hasMore}}
     {{> loadMore}}

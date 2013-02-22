@@ -2,10 +2,9 @@
   <div class="media pill user-banner {{#if selected}}selected{{/if}} {{color}}">
     {{#if profile}}
     <a class="profile-pic pull-left">
-      <img class="media-object" style="border-radius: 2px;"
-      src="https://graph.facebook.com/{{profile.username}}/picture?width=150&height=150">
+      <img class="media-object" style="border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture?width=150&height=150">
     </a>
-    <!--<a class="value pull-right"></a>-->
+
     <div class="media-body">
       <h3 class="media-heading"><a>{{profile.username}}</a></h3>
       {{> progress}}
@@ -26,13 +25,7 @@
           {{> actionbar}}
         <ul>
       {{/if}}
-
     </div>
     {{/if}}
   </div>
-
-  {{#each favourites}}
-    {{> baseAchievement}}
-  {{/each}}
-
 </template>
