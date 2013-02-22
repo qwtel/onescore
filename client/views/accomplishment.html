@@ -1,0 +1,23 @@
+<template name='accomplishment'>
+  <div class="pill-top">
+    {{#if user}}
+    {{#with user}}
+    {{> user}}
+    {{/with}}
+    {{/if}}
+  </div>
+  <div class="pill-middle">
+    {{#if achievement}}
+    {{#with achievement}}
+    {{> baseAchievement}}
+    {{/with}}
+    {{/if}}
+  </div>
+  <div class="pill-bottom">
+    {{#if story}}
+    {{#with story}}
+    {{> story}}
+    {{/with}}
+    {{/if}}
+  </div>
+</template>

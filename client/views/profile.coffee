@@ -12,7 +12,7 @@ Template.profile.helpers
     sel.user = id
     sel.active = true
 
-    sort = Template.filter.getSort()
+    sort = Template.sort.getSort()
     limit = Session.get('limit') or 1
     Accomplishments.find sel,
       sort: sort

@@ -13,7 +13,7 @@ Template.achievement.helpers
     return 3 * limit < count
 
   successors: ->
-    sort = Template.filter.getSort()
+    sort = Template.sort.getSort()
     limit = Session.get("limit-#{@_id}") or 1
 
     Achievements.find parent: @_id,

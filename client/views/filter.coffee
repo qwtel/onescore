@@ -1,15 +1,14 @@
-Template.filter.events
-  'click .sort a': (e) ->
+Template.sort.events
+  'click a': (e) ->
     $t = $(e.currentTarget)
     Session.set 'sort', $t.data 'value'
 
-  'click .scope a': (e) ->
+Template.scope.events
+  'click a': (e) ->
     $t = $(e.currentTarget)
     Session.set 'scope', $t.data 'value'
 
-Template.filter.helpers
-
-Template.filter.getSelect = ->
+Template.scope.getSelect = ->
   sel = {}
   switch Session.get 'scope'
     when 'me'
@@ -20,7 +19,7 @@ Template.filter.getSelect = ->
 
   return sel
 
-Template.filter.getSort = ->
+Template.sort.getSort = ->
   sort = Session.get 'sort'
 
   switch sort

@@ -64,7 +64,7 @@ body {
   background-size: cover;
 }
 
-// http://www.sxc.hu/photo/1324306
+// http://www.sxc.hu/photo/1052285
 .hero-unit-home {
   background-image: url('/img/home.jpg');
   color: @white;
@@ -345,4 +345,18 @@ body {
       margin-bottom: 10px;
     }
   }
+}
+
+.pill-top .pill {
+  border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid darken(@grayLighter, 10%);
+}
+
+.pill-middle .pill {
+  border-radius: 0;
+  border-bottom: 1px solid darken(@grayLighter, 10%);
+}
+
+.pill-bottom .pill {
+  border-radius: 0 0 5px 5px;
 }

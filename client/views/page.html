@@ -10,7 +10,6 @@
   <div class="row-fluid">
   {{#if equals "page" "home"}}
     <div class="span8">
-      <h3>Ladder</h3>
       {{> ladder}}
     </div>
     <div class="span4 hidden-phone">
@@ -30,11 +29,10 @@
 
   {{#if equals "page" "explore"}}
     <div class="span4">
-      <h3>Filter</h3>
-      {{> filter}}
+      {{> sort}}
+      {{> scope}}
     </div>
     <div class="span8">
-      <h3>Achievements</h3>
       {{> achievements}}
     </div>
   {{else}}
@@ -53,7 +51,7 @@
       {{> profile}}
     </div>
     <div class="span4 hidden-phone">
-      {{> noContent}}
+      {{> sort}}
     </div>
   {{else}}
 
