@@ -1,12 +1,7 @@
 Template.badgeAchievement.events
   'click .pill': (e) ->
     e.stopImmediatePropagation()
-    Session.toggle 'target', @_id
-    if Session.equals 'target', @_id
-      Session.set 'type', 'achievement'
-      #Router.navigate "achievement/#{@_id}", false
-    else
-      Session.set 'type', null
+    clickPill this
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()

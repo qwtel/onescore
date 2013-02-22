@@ -57,6 +57,8 @@ Meteor.methods
     skill = Skills.findOne 'accomplish'
     if !isAllowedToUseSkill user, skill then return 0
 
+    voteFor user, data.entity, 'achievement', true
+
     acc = Accomplishments.findOne
       user: @userId
       entity: data.entity
@@ -130,7 +132,6 @@ voteFor = (user, id, type, active) ->
 
     if diff
       Collections[vote.entityType].update vote.entity, 
-        #$set: lastVote: new Date().getTime()
         $inc: upVotes: diff
 
   else
@@ -146,7 +147,6 @@ voteFor = (user, id, type, active) ->
     #notify vote, target
     
     Collections[vote.entityType].update vote.entity, 
-      #$set: lastVote: new Date().getTime()
       $inc: 
         upVotes: if data.active then 1 else 0
         votes: 1

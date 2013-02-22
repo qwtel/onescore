@@ -1,12 +1,7 @@
 Template.user.events
   'click .pill': (e) ->
     e.stopImmediatePropagation()
-    Session.toggle 'target', @_id
-    if Session.equals 'target', @_id
-      Session.set 'type', 'user'
-      #Router.navigate @profile.username, false
-    else
-      Session.set 'type', null
+    clickPill this
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()

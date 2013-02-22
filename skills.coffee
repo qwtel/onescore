@@ -72,7 +72,7 @@ Skills.insert
   icon: 'file'
   name: strings 'newAchievement'
   description: strings 'newAchievementDesc' 
-  cooldown: 10
+  cooldown: 5
   level: 1
   usable: -> 
     Session.equals('type', 'achievement') or !Session.get('target')?
@@ -161,7 +161,7 @@ Skills.insert
   passive: true
   name: strings 'accomplish'
   description: strings 'accomplishDesc'
-  cooldown: 5
+  cooldown: 1
   level: 1
   usable: -> Session.equals 'type', 'achievement'
   click: ->
@@ -179,7 +179,7 @@ Skills.insert
   icon: 'comment'
   passive: true
   description: 'Allows you to comment on content'
-  cooldown: 5
+  cooldown: 1
   level: 99
 
 Skills.insert

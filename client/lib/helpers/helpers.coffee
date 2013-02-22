@@ -39,3 +39,13 @@ color = ->
     else if Achievements.find().count() > 0
       return 'uncompleted'
 
+clickPill = (entity) ->
+  target = Session.get 'target'
+  if target is entity._id
+    Session.set 'target', null
+    Session.set 'type', null
+    Session.set "target-#{entity._id}", false
+  else
+    Session.set 'target', entity._id
+    Session.set 'type', if entity.type? then entity.type else 'user' # XXX
+    Session.set "target-#{entity._id}", true

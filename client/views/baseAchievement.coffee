@@ -1,12 +1,7 @@
 Template.baseAchievement.events
   'click .pill': (e) ->
     e.stopImmediatePropagation()
-    Session.toggle 'target', @_id
-    if Session.equals 'target', @_id
-      Session.set 'type', 'achievement'
-      #Router.navigate "achievement/#{@_id}", false
-    else
-      Session.set 'type', null
+    clickPill this
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()
@@ -23,9 +18,7 @@ Template.baseAchievement.helpers
     @upVotes - (@votes - @upVotes)
   
   selected: -> 
-    if Session.equals 'target', @_id
-      Session.set "target-#{@_id}", true
-      return true
+    Session.equals 'target', @_id
   
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
