@@ -37,6 +37,10 @@
                   </a>
                 </li>
               {{/each}}
+              {{#if currentUser}}
+              <li class="divider"></li>
+              <li><a id="log-out">{{strings "signOut"}}</a></li>
+              {{/if}}
             </ul>
           </li>
           {{> actionbar}}

@@ -2,6 +2,9 @@ Template.navbar.events
   'click .nav-spell': (e) ->
     if @click and @usable and @usable() then @click()
 
+  'click #log-out': (e) ->
+    Meteor.logout()
+
 Template.navbar.rendered = ->
   # XXX: Does this create a memory leak?
   $('.popover').remove()
