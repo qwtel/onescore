@@ -56,3 +56,5 @@ Strings.insert _id: 'navigate', string: "Navigate"
 
 Strings.insert _id: 'loadMore', string: "Load More"
 Strings.insert _id: 'createNew', string: "Create New Achievement"
+
+Strings.insert _id: 'signOut', string: "Sign out"
