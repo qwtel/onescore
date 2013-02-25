@@ -172,9 +172,9 @@ prevLevels = (level) ->
 # please fix that LastChanged gets updated on every try, thanks.
 isAllowedToUseSkill = (user, skill) ->
 
-  #if _.has(skill, 'level')
-  #  unless user.level >= skill.level
-  #    return false
+  # if _.has(skill, 'level')
+  #   unless user.level >= skill.level
+  #     return false
 
   if _.has(skill, 'cooldown')
     time = new Date().getTime()
@@ -183,13 +183,13 @@ isAllowedToUseSkill = (user, skill) ->
       if (user.profile[skill._id+'LastChanged'] + skill.cooldown*1000) > time
         isAllowed = false
 
-    # XXX: this could possibly override other updates to user.profile
-    setter = {}
-    setter.profile = user.profile
-    setter.profile[skill._id+'LastChanged'] = time 
+    if isAllowed
+      setter = {}
+      setter.profile = user.profile
+      setter.profile[skill._id+'LastChanged'] = time 
 
-    Meteor.users.update user._id, $set: setter
-    return isAllowed
+      Meteor.users.update user._id, $set: setter
+      return isAllowed
   else
     return true
 
