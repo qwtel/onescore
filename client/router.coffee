@@ -49,8 +49,16 @@ class Router extends Backbone.Router
 
     newAchievement = Scratchpad.findOne type: 'achievement'
 
-    if not newAchievement
-      data = _.extend basic(),
+    if not newAchievement 
+      data =
+        score: 0
+        hot: 0
+        best: 0
+        value: 0
+        comments: 0
+        upVotes: 0
+        votes: 0
+        #===
         type: 'achievement'
         title: ''
         parent: if id then id else null
