@@ -168,13 +168,11 @@ prevLevels = (level) ->
     prev += nextLevel i 
   return prev
 
-# XXX: I'm too stupid to write this function. 
-# please fix that LastChanged gets updated on every try, thanks.
 isAllowedToUseSkill = (user, skill) ->
 
-  # if _.has(skill, 'level')
-  #   unless user.level >= skill.level
-  #     return false
+  if _.has(skill, 'level')
+    unless user.profile.level >= skill.level
+      return false
 
   if _.has(skill, 'cooldown')
     time = new Date().getTime()
