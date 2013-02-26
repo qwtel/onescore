@@ -64,15 +64,12 @@ Meteor.methods
       entity: id
 
     if acc
-      Accomplishments.update acc._id,
-        $set:
-          #active: !acc.active
-          story: if story? then story else ''
+      if story?
+        Accomplishments.update acc._id, $set: story: story
     else
       data = _.extend basic(),
         entity: id
         type: 'accomplishment'
-        story: if story? then story else ''
         active: true
 
       id = Accomplishments.insert data

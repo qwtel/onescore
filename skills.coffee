@@ -179,12 +179,11 @@ Skills.insert
   usable: -> Session.equals 'type', 'achievement'
   click: ->
     id = Session.get 'target'
-    Session.set "accomplished-#{id}", true
-    Session.set "length", 0
+    Session.set "accomplished", id
     Meteor.flush()
-    $("#accomplished-#{id}").focus()
+    $("#accomplished-#{id}").focus().select()
 
-    Meteor.call 'accomplish', id, '', (error, result) ->
+    Meteor.call 'accomplish', id, null, (error, result) ->
       unless error
         console.log 'tst'
 

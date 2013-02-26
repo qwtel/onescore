@@ -1,5 +1,5 @@
 Template.baseAchievement.events
-  'click .pill': (e) ->
+  'click .achievement': (e) ->
     e.stopImmediatePropagation()
     clickPill this
 
@@ -8,14 +8,18 @@ Template.baseAchievement.events
 
   'click .add-story': (e) ->
     text = $("#accomplished-#{@_id}").val()
-    Meteor.call 'accomplish', @_id, text
+    if text isnt ''
+      Meteor.call 'accomplish', @_id, text
     Session.set "accomplished-#{@_id}", false
 
   'keydown textarea': (e) ->
     length = $(e.currentTarget).val().length
     Session.set 'length', length
 
-#Template.baseAchievement.rendered = -> console.log 'rendered'
+Template.baseAchievement.rendered = ->
+  length = $(@find('textarea')).val().length
+  Session.set 'length', length
+
 Template.baseAchievement.helpers
   title: ->
     if @title != '' then @title else '<No title>'
@@ -29,11 +33,15 @@ Template.baseAchievement.helpers
   selected: -> 
     Session.equals 'target', @_id
   
+  story: ->
+    acc = Accomplishments.findOne entity: @_id
+    if acc then acc.story else ''
+
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
 
   hasBeenAccomplished: ->
-    Session.get "accomplished-#{@_id}"
+    Session.equals "accomplished", @_id
 
   remainingChars: ->
     140 - (Session.get('length') or 0)

@@ -10,7 +10,7 @@ Strings.insert _id: 'oneseccooldown', string: '1 second cooldown'
 Strings.insert _id: 'xseccooldown', string: 'seconds cooldown'
 
 Strings.insert _id: 'home', string: 'Home'
-Strings.insert _id: 'homeDesc', string: 'View other players'
+Strings.insert _id: 'homeDesc', string: 'View success stories of other players'
 Strings.insert _id: 'notifications', string: 'Notifications'
 Strings.insert _id: 'notificationDesc', string: 'See how other users interact with your content'
 Strings.insert _id: 'explore', string: 'Explore'
