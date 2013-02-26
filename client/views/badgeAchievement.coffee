@@ -24,4 +24,10 @@ Template.badgeAchievement.helpers
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
 
+  hasBeenAccomplished: ->
+    Session.get "accomplished-#{@_id}"
+
+  remainingChars: ->
+    140 - (Session.get('length') or 0)
+
   color: color

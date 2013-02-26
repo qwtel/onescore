@@ -20,4 +20,16 @@
     </div>
     {{/if}}
   </div>
+  {{#if selected}}
+    {{#if hasBeenAccomplished}}
+      <div class="clearfix"/>
+      <div style="margin-top: 15px">
+        <textarea id="accomplished-{{_id}}" placeholder="{{strings "howAreYouFeeling"}}" id="story" class="textarea-100" data-field="story" rows="3"></textarea>
+        <button class="add-story btn btn-primary pull-right">{{strings "ok"}}</button>
+        <p class="lead pull-right" style="margin-right: 10px">{{#isolate}}{{remainingChars}}{{/isolate}}</p>
+        <input id="" name="" class="input-file" type="file" accept="image/x-png, image/gif, image/jpeg"/>
+        <div class="clearfix"/>
+      </div>
+    {{/if}}
+  {{/if}}
 </template>

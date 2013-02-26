@@ -15,6 +15,7 @@ class Router extends Backbone.Router
   home: ->
     @hardReset()
     Session.set 'page', 'home'
+    Session.set 'scope', 'all'
     Session.set 'sort', 'hot'
 
   explore: ->
