@@ -22,7 +22,9 @@ Strings.insert _id: 'profileDesc', string: 'Check out recent activity'
 Strings.insert _id: 'questlog', string: 'Quest Log'
 Strings.insert _id: 'questlogDesc', string: 'Keept track of achievements you want to complete'
 Strings.insert _id: 'newAchievement', string: 'Create'
-Strings.insert _id: 'newAchievementDesc', string: 'Create a new achievement. If you have an achievement selected you will create a follow-up achievement'
+Strings.insert _id: 'newAchievementDesc', string: 'Create a new achievement'
+Strings.insert _id: 'replyAchievement', string: 'Create Follow-Up'
+Strings.insert _id: 'replyAchievementDesc', string: 'Create a follow-up achievement'
 Strings.insert _id: 'accept', string: 'Accept'
 Strings.insert _id: 'acceptDesc', string: 'Allows you to add achievements to your quest log'
 Strings.insert _id: 'accomplish', string: 'Accomplish'
@@ -58,3 +60,6 @@ Strings.insert _id: 'loadMore', string: "Load More"
 Strings.insert _id: 'createNew', string: "Create New Achievement"
 
 Strings.insert _id: 'signOut', string: "Sign out"
+
+Strings.insert _id: 'howAreYouFeeling', string: "Congratulations! Why don't you tell us how you accomplished this achievement?"
+Strings.insert _id: 'ok', string: "OK"

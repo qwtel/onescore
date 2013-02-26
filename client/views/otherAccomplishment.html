@@ -1,5 +1,10 @@
-<template name='accomplishment'>
+<template name='otherAccomplishment'>
   <div class="stacked-pills">
+    {{#if user}}
+      {{#with user}}
+        {{> user}}
+      {{/with}}
+    {{/if}}
     {{#if achievement}}
       {{#with achievement}}
         {{> baseAchievement}}

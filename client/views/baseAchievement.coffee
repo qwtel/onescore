@@ -6,7 +6,16 @@ Template.baseAchievement.events
   'click .nav': (e) ->
     e.stopImmediatePropagation()
 
-Template.baseAchievement.rendered = -> console.log 'rendered'
+  'click .add-story': (e) ->
+    text = $("#accomplished-#{@_id}").val()
+    Meteor.call 'accomplish', @_id, text
+    Session.set "accomplished-#{@_id}", false
+
+  'keydown textarea': (e) ->
+    length = $(e.currentTarget).val().length
+    Session.set 'length', length
+
+#Template.baseAchievement.rendered = -> console.log 'rendered'
 Template.baseAchievement.helpers
   title: ->
     if @title != '' then @title else '<No title>'
@@ -22,5 +31,11 @@ Template.baseAchievement.helpers
   
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
+
+  hasBeenAccomplished: ->
+    Session.get "accomplished-#{@_id}"
+
+  remainingChars: ->
+    140 - (Session.get('length') or 0)
 
   color: color

@@ -74,8 +74,37 @@ Skills.insert
   description: strings 'newAchievementDesc' 
   cooldown: 5
   level: 1
+  usable: true
+  active: -> 
+    Session.equals 'page', 'newAchievement'
+  url: "achievement/new"
+  nav: true
+
+Skills.insert
+  _id: 'inspect'
+  icon: 'eye-open'
+  name: strings 'inspect'
+  description: strings 'inspectDesc' 
+  level: 1
+  active: ->
+    id = Session.get 'id'
+    target = Session.get 'target'
+    id? and target? and id is target
+  usable: -> (Session.get 'target')?
+  url: -> 
+    id = Session.get 'target'
+    type = Session.get 'type'
+    if id and type then "#{type}/#{id}"
+
+Skills.insert
+  _id: 'replyAchievement'
+  icon: 'share-alt'
+  name: strings 'replyAchievement'
+  description: strings 'replyAchievementDesc' 
+  cooldown: 5
+  level: 3
   usable: -> 
-    Session.equals('type', 'achievement') or !Session.get('target')?
+    Session.equals 'type', 'achievement'
   active: -> 
     Session.equals 'page', 'newAchievement'
   url: -> 
@@ -87,22 +116,6 @@ Skills.insert
       return "achievement/new"
 
 Skills.insert
-  _id: 'inspect'
-  icon: 'eye-open'
-  name: strings 'inspect'
-  description: strings 'inspectDesc' 
-  level: 1
-  active: ->
-    id = Session.get 'id'
-    target = Session.get 'target'
-    id == target
-  usable: -> (Session.get 'target')?
-  url: -> 
-    id = Session.get 'target'
-    type = Session.get 'type'
-    if id and type then "#{type}/#{id}"
-
-Skills.insert
   _id: 'voteUp'
   name: 'Vote Up'
   icon: 'arrow-up'
@@ -110,7 +123,7 @@ Skills.insert
   description: 'Allows you to vote for content'
   cooldown: 1
   level: 1
-  usable: -> !Session.equals 'type', null
+  usable: -> (Session.get 'type')? and (Session.get 'target')?
   click: ->
     id = Session.get 'target'
     type = Session.get 'type'
@@ -127,8 +140,8 @@ Skills.insert
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
-  level: 3
-  usable: -> !Session.equals 'type', null
+  level: 4
+  usable: -> (Session.get 'type')? and (Session.get 'target')?
   click: ->
     id = Session.get 'target'
     type = Session.get 'type'
@@ -166,8 +179,15 @@ Skills.insert
   usable: -> Session.equals 'type', 'achievement'
   click: ->
     id = Session.get 'target'
-    Meteor.call 'accomplish', entity: id, (error, result) ->
-      #Router.navigate "/accomplishment/#{result}", true
+    Session.set "accomplished-#{id}", true
+    Session.set "length", 0
+    Meteor.flush()
+    $("#accomplished-#{id}").focus()
+
+    Meteor.call 'accomplish', id, '', (error, result) ->
+      unless error
+        console.log 'tst'
+
   active: ->
     id = Session.get 'target'
     user = Meteor.user()

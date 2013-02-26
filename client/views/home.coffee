@@ -1,16 +1,12 @@
-Template.profile.events
-
-Template.profile.helpers
+Template.home.helpers
   user: ->
     id = Session.get 'id'
     Meteor.users.findOne id
 
   accomplishments: ->
-    id = Session.get 'id'
-
-    sel = {}
-    sel.user = id
+    sel = Template.scope.getSelect()
     sel.active = true
+    sel.story = $exists: true
 
     sort = Template.sort.getSort()
     limit = Session.get('limit') or 1
@@ -22,20 +18,12 @@ Template.profile.helpers
     Achievements.findOne @entity
 
   hasStory: ->
-    (@story? and @story != '') 
-
-  isFavourite: ->
-    (Favourites.findOne 
-      entity: @entity
-      active: true
-    )?
+    @story? and @story != ''
 
   hasMore: ->
-    id = Session.get 'id'
-
-    sel = {}
-    sel.user = id
+    sel = Template.scope.getScope()
     sel.active = true
+    sel.story = $ne: ''
 
     query = Accomplishments.find sel
     count = query.count()

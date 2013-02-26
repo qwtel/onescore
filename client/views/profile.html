@@ -5,12 +5,22 @@
   {{/with}}
   {{/if}}
 
-  <h3>Achievements</h3>
-
   {{#each accomplishments}}
-    {{#with achievement}}
-      {{> badgeAchievement}}
-    {{/with}}
+    {{#if hasStory}}
+      <div class="clearfix"/>
+      {{> accomplishment}}
+    {{else}}
+      {{#if isFavourite}}
+        {{#with achievement}}
+          <div class="clearfix"/>
+          {{> baseAchievement}}
+        {{/with}}
+      {{else}}
+        {{#with achievement}}
+          {{> badgeAchievement}}
+        {{/with}}
+      {{/if}}
+    {{/if}}
   {{else}}
     {{> noContent}}
   {{/each}}

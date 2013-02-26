@@ -15,6 +15,9 @@ Handlebars.registerHelper 'hasLevel', (level) ->
   if user and user.profile
     return user.profile.level >= level
 
+Handlebars.registerHelper 'username', (id) ->
+  Meteor.users.findOne(id).profile.username
+
 Handlebars.registerHelper 'timeago', (date) ->
   d = moment(new Date(date))
   d.fromNow()

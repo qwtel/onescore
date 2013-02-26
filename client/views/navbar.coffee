@@ -4,6 +4,7 @@ Template.navbar.events
 
   'click #log-out': (e) ->
     Meteor.logout()
+    Router.navigate '/home', true
 
 Template.navbar.rendered = ->
   # XXX: Does this create a memory leak?

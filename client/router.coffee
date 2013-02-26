@@ -77,8 +77,6 @@ class Router extends Backbone.Router
 
   softReset: ->
     $(document).scrollTop 0
-    Session.set 'target', null
-    Session.set 'type', null
     Session.set 'limit', 1
 
   hardReset: ->
@@ -95,4 +93,8 @@ class Router extends Backbone.Router
 
     for key in _.keys Session.keys
       if /limit-*/.test(key)
+        delete Session.keys[key]
+
+    for key in _.keys Session.keys
+      if /accomplished-*/.test(key)
         delete Session.keys[key]

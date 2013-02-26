@@ -5,7 +5,7 @@
       {{#if currentUser}}
         {{#if currentUser.profile}}
         {{#with currentUser}}
-          <li><a class="score">{{profile.xp}}</a></li> 
+          <li><a class="score" href="/user/{{_id}}">{{profile.xp}}</a></li> 
           <li class="divider-vertical"></li>
           <li>
             <a class="profile-pic" href="/user/{{_id}}">
@@ -14,6 +14,15 @@
           </li> 
         {{/with}}
         {{/if}}
+        <li class="divider-vertical"></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-cog"/>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a id="log-out">{{strings "signOut"}}</a></li>
+          </ul>
+        </li>
       {{else}}
         <li style="margin-top: 6px; margin-right: 6px">
           {{loginButtons}}
@@ -22,27 +31,16 @@
       </ul>
       <a class="brand" url="" title="{{strings "title"}}" data-toggle="collapse" data-target=".nav-collapse"></a>
       <div class="nav-collapse collapse">
-        <ul class="nav">
-          <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown">
-              {{strings "navigate"}}
-              <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
+        <ul class="nav" style="margin-right: 0">
               {{#each nav}}
+                <li class="divider-vertical"></li>
                 <li class="{{#if active}}active{{/if}} {{#unless usable}}passive{{/unless}}">
-                  <a href="/{{url}}" class="nav-spell" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldownText}}</div">
+                  <a href="/{{url}}" class="spell" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldownText}}</div">
                     <i class="icon-{{icon}}" />
-                    <span>{{name}}</span>
+                    <span class="spell-name visible-phone">{{name}}</span>
                   </a>
                 </li>
               {{/each}}
-              {{#if currentUser}}
-              <li class="divider"></li>
-              <li><a id="log-out">{{strings "signOut"}}</a></li>
-              {{/if}}
-            </ul>
-          </li>
         </ul>
         <ul class="nav hidden-phone">
           {{> actionbar}}

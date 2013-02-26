@@ -52,24 +52,27 @@ Meteor.methods
         $inc:
           favourites: 1
 
-  accomplish: (data) ->
+  accomplish: (id, story) ->
     user = Meteor.user()
     skill = Skills.findOne 'accomplish'
     if !isAllowedToUseSkill user, skill then return 0
 
-    voteFor user, data.entity, 'achievement', true
+    voteFor user, id, 'achievement', true
 
     acc = Accomplishments.findOne
       user: @userId
-      entity: data.entity
+      entity: id
 
     if acc
       Accomplishments.update acc._id,
         $set:
-          active: !acc.active
+          #active: !acc.active
+          story: if story? then story else ''
     else
-      _.extend data, basic(),
+      data = _.extend basic(),
+        entity: id
         type: 'accomplishment'
+        story: if story? then story else ''
         active: true
 
       id = Accomplishments.insert data
