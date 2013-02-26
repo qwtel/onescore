@@ -10,7 +10,7 @@ Template.baseAchievement.events
     text = $("#accomplished-#{@_id}").val()
     if text isnt ''
       Meteor.call 'accomplish', @_id, text
-    Session.set "accomplished-#{@_id}", false
+    Session.set "accomplished", null
 
   'keydown textarea': (e) ->
     length = $(e.currentTarget).val().length

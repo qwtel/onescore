@@ -10,11 +10,15 @@ Template.badgeAchievement.events
     text = $("#accomplished-#{@_id}").val()
     if text isnt ''
       Meteor.call 'accomplish', @_id, text
-    Session.set "accomplished-#{@_id}", false
+    Session.set "accomplished", null
 
   'keydown textarea': (e) ->
     length = $(e.currentTarget).val().length
     Session.set 'length', length
+
+Template.badgeAchievement.rendered = ->
+  length = $(@find('textarea')).val().length
+  Session.set 'length', length
 
 Template.badgeAchievement.helpers
   title: ->
@@ -31,14 +35,8 @@ Template.badgeAchievement.helpers
   
   story: ->
     acc = Accomplishments.findOne entity: @_id
-    if acc
-      #Session.set 'length', acc.story.length
-      return acc.story
-    else
-      #Session.set 'length', 0
-      return ''
+    if acc then acc.story else ''
 
-  
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
 
