@@ -29,7 +29,9 @@
         </li>
       {{/if}}
       </ul>
-      <a class="brand" url="" title="{{strings "title"}}" data-toggle="collapse" data-target=".nav-collapse"></a>
+      <a class="brand" url="/notifications" title="{{strings "title"}}" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="label notify">{{numNotifications}}</span>
+      </a>
       <div class="nav-collapse collapse">
         <ul class="nav" style="margin-right: 0">
           {{#each nav}}

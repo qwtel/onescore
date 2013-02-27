@@ -35,9 +35,17 @@ Template.navbar.helpers
   cooldownText: ->
     if @cooldown?
       if @cooldown == 1
-        return '1 second cooldown'
+        return strings 'oneseccooldown'
       else
-        return "#{@cooldown} seconds cooldown"
+        return @cooldown + ' ' + strings('xseccooldown')
     else
       return '' 
   
+  numNotifications: ->
+    userId = Meteor.userId()
+    if userId
+      Notifications.find(
+        #user: $ne: userId
+        receivers: userId
+        seen: $ne: userId
+      ).count()
