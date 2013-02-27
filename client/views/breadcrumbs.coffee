@@ -7,7 +7,7 @@ Template.breadcrumbs.helpers
       if parent
         userId = Meteor.userId()
         if userId
-          while parent.parent isnt null
+          while parent.parent?
             parent = Achievements.findOne parent.parent
 
             color = 'uncompleted'
