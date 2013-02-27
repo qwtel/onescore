@@ -8,7 +8,9 @@
 
     {{#isolate}}
       <div class="comment pill {{#if selected}}selected{{/if}} {{color}}">
-        <p>{{text}}</p>
+        <div class="markdown">
+          {{#markdown}}{{text}}{{/markdown}}
+        </div>
         <p class="pull-right muted">{{timeago date}} by {{username user}}</p>
         <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
         <span class="muted"><i class="icon-comment"/> {{comments}}</span>

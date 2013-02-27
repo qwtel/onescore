@@ -1,10 +1,8 @@
 <template name='story'>
   <div class="story pill {{#if selected}}selected{{/if}} {{color}}">
-    {{#if isTweet}}
-      <p class="lead">{{story}}</p>
-    {{else}}
+    <div class="markdown">
       {{#markdown}}{{story}}{{/markdown}}
-    {{/if}}
+    </div>
     <p class="pull-right muted">{{timeago date}} by {{username user}}</p>
     <div style="margin-top: 10px">
       <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
