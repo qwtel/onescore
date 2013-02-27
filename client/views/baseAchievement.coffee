@@ -17,7 +17,8 @@ Template.baseAchievement.events
     Session.set 'length', length
 
 Template.baseAchievement.rendered = ->
-  length = $(@find('textarea')).val().length
+  val = $(@find('textarea')).val()
+  length = if val then val.length else 0
   Session.set 'length', length
 
 Template.baseAchievement.helpers

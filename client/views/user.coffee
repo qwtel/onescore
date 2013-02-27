@@ -10,6 +10,9 @@ Template.user.helpers
   selected: -> 
     Session.equals 'target', @_id
 
+  credibility: ->
+    Math.round 100 * @best
+
   color: ->
     user = Meteor.user()
     if user.profile
