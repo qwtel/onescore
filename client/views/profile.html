@@ -7,24 +7,15 @@
 
   {{#each accomplishments}}
     {{#if hasStory}}
-      <div class="clearfix"/>
       {{> accomplishment}}
     {{else}}
-      {{#if isFavourite}}
-        {{#with achievement}}
-          <div class="clearfix"/>
-          {{> baseAchievement}}
-        {{/with}}
-      {{else}}
-        {{#with achievement}}
-          {{> badgeAchievement}}
-        {{/with}}
-      {{/if}}
+      {{#with achievement}}
+        {{> baseAchievement}}
+      {{/with}}
     {{/if}}
   {{else}}
     {{> noContent}}
   {{/each}}
-  <div class="clearfix"/>
 
   {{#if hasMore}}
     {{> loadMore}}

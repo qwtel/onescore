@@ -63,3 +63,4 @@ Strings.insert _id: 'signOut', string: "Sign out"
 
 Strings.insert _id: 'howAreYouFeeling', string: "Congratulations! Why don't you tell us how you accomplished this achievement?"
 Strings.insert _id: 'ok', string: "OK"
+Strings.insert _id: 'cancel', string: "Cancel"

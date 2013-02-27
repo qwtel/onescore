@@ -79,6 +79,8 @@ class Router extends Backbone.Router
   softReset: ->
     $(document).scrollTop 0
     Session.set 'limit', 1
+    Session.set 'target', null
+    Session.set 'type', null
 
   hardReset: ->
     @softReset()

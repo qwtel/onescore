@@ -325,28 +325,12 @@ body {
   }
 }
 
-.badge2 {
-  .pull-left {
-    margin-right: 0;
-    margin-bottom: 0;
-  }
-  float: left;
-  margin: 15px 15px 0 0!important;
-}
-
-.badge2.selected {
-  width: 100%;
-  box-sizing: border-box;
-  .pull-left {
-    margin-right: 10px;
-    @media (max-width: 480px) {
-      margin-bottom: 10px;
-    }
-  }
-}
-
 .stacked-pills {
   margin-top: 25px;
+}
+
+.stacked-pills:first-child {
+  margin-top: 0;
 }
 
 .stacked-pills .pill {
@@ -379,5 +363,16 @@ body {
   .lead {
     font-size: 18px;
     margin-bottom: 10px;
+  }
+}
+
+.phantom {
+  position: relative;
+  overflow: hidden;
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
   }
 }

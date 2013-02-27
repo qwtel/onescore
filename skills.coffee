@@ -97,25 +97,6 @@ Skills.insert
     if id and type then "#{type}/#{id}"
 
 Skills.insert
-  _id: 'replyAchievement'
-  icon: 'share-alt'
-  name: strings 'replyAchievement'
-  description: strings 'replyAchievementDesc' 
-  cooldown: 5
-  level: 3
-  usable: -> 
-    Session.equals 'type', 'achievement'
-  active: -> 
-    Session.equals 'page', 'newAchievement'
-  url: -> 
-    id = Session.get 'target'
-    type = Session.get 'type'
-    if id and type is 'achievement'
-      return "achievement/#{id}/new"
-    else
-      return "achievement/new"
-
-Skills.insert
   _id: 'voteUp'
   name: 'Vote Up'
   icon: 'arrow-up'
@@ -150,6 +131,25 @@ Skills.insert
     id = Session.get 'target'
     user = Meteor.user()
     if user and id then isDownVoted id, user._id
+
+Skills.insert
+  _id: 'replyAchievement'
+  icon: 'share-alt'
+  name: strings 'replyAchievement'
+  description: strings 'replyAchievementDesc' 
+  cooldown: 5
+  level: 3
+  usable: -> 
+    Session.equals 'type', 'achievement'
+  active: -> 
+    Session.equals 'page', 'newAchievement'
+  url: -> 
+    id = Session.get 'target'
+    type = Session.get 'type'
+    if id and type is 'achievement'
+      return "achievement/#{id}/new"
+    else
+      return "achievement/new"
 
 Skills.insert
   _id: 'favourite'

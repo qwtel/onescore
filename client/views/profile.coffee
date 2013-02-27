@@ -24,12 +24,6 @@ Template.profile.helpers
   hasStory: ->
     (@story? and @story != '') 
 
-  isFavourite: ->
-    (Favourites.findOne 
-      entity: @entity
-      active: true
-    )?
-
   hasMore: ->
     id = Session.get 'id'
 
