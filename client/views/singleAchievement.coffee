@@ -15,9 +15,9 @@ Template.singleAchievement.helpers
     @story? and @story != ''
 
   hasMore: ->
-    sel = Template.scope.getScope()
+    sel = Template.scope.getSelect()
+    sel.entity = @_id
     sel.active = true
-    sel.story = $ne: ''
 
     query = Accomplishments.find sel
     count = query.count()

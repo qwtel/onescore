@@ -15,6 +15,12 @@
           {{/with}}
         {{/if}}
       {{/if}}
+    {{else}}
+      {{> noContent}}
     {{/each}}
+
+    {{#if hasMore}}
+      {{> loadMore}}
+    {{/if}}
   </div>
 </template>
