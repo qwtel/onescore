@@ -6,10 +6,23 @@ Template.singleAchievement.helpers
     sel.active = true
 
     sort = Template.sort.getSort()
-    limit = Session.get('limit') or 1
+    limit = Session.get("limit-#{@_id}") or 1
     Accomplishments.find sel,
       sort: sort
       limit: 3 * limit
+
+  comments: ->
+    sel = Template.scope.getSelect()
+    sel.entity = @_id
+    query = Comments.find sel
+    if query.count() is 0 then return false
+
+    sort = Template.sort.getSort()
+    limit = Session.get("limit-#{@_id}") or 1
+    Comments.find sel,
+      sort: sort
+      #limit: 3 * limit
+
 
   hasStory: ->
     @story? and @story != ''
@@ -22,5 +35,5 @@ Template.singleAchievement.helpers
     query = Accomplishments.find sel
     count = query.count()
 
-    limit = Session.get('limit') or 1
+    limit = Session.get("limit-#{@_id}") or 1
     return 3 * limit < count

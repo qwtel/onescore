@@ -62,6 +62,7 @@ Strings.insert _id: 'createNew', string: "Create New Achievement"
 Strings.insert _id: 'signOut', string: "Sign out"
 
 Strings.insert _id: 'howAreYouFeeling', string: "Congratulations! Why don't you tell us how you accomplished this Achievement?"
+Strings.insert _id: 'whatsOnYourMind', string: "Write a Comment on this"
 Strings.insert _id: 'ok', string: "OK"
 Strings.insert _id: 'cancel', string: "Cancel"
 
@@ -70,5 +71,7 @@ Strings.insert _id: 'achievement', string: "Achievement"
 Strings.insert _id: 'accomplishment', string: "Story"
 Strings.insert _id: 'comment', string: "Comment"
 Strings.insert _id: 'vote', string: "Vote"
+Strings.insert _id: 'entity', string: "Entity"
 
 Strings.insert _id: 'achievers', string: "Achievers"
+Strings.insert _id: 'comments', string: "Comments"

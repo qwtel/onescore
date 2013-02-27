@@ -14,11 +14,11 @@
         <strong>XP:</strong> {{profile.xp}}
       </p>
 
-      <i class="icon-file"/> {{numAchievements}}
-      <i class="icon-arrow-up"/> {{numVotes}}
-      <i class="icon-star"/> {{numFavs}}
-      <i class="icon-certificate"/> {{numAccomplishments}}
-      <i class="icon-comment"/> {{numComments}}
+      <span class="muted"><i class="icon-file"/> {{numAchievements}}</span>
+      <span class="muted"><i class="icon-arrow-up"/> {{numVotes}}</span>
+      <span class="muted"><i class="icon-star"/> {{numFavs}}</span>
+      <span class="muted"><i class="icon-certificate"/> {{numAccomplishments}}</span>
+      <span class="muted"><i class="icon-comment"/> {{numComments}}</span>
 
       {{#if selected}}
         <ul class="nav nav-pills hidden-phone">

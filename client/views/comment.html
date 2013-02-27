@@ -1,0 +1,41 @@
+<template name='comment'>
+  <div class="stacked-pills">
+    {{#if user}}
+      {{#with user}}
+        {{> miniUser}}
+      {{/with}}
+    {{/if}}
+
+    {{#isolate}}
+      <div class="comment pill {{#if selected}}selected{{/if}} {{color}}">
+        <p>{{text}}</p>
+        <p class="pull-right muted">{{timeago date}} by {{username user}}</p>
+        <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
+        <span class="muted"><i class="icon-comment"/> {{comments}}</span>
+
+        {{#if selected}}
+          <ul class="nav nav-pills hidden-phone">
+            {{> actionbar}}
+          <ul>
+        {{/if}}
+      </div>
+      {{#if selected}}
+        {{#if equals "comment" _id}}
+          {{> newComment}}
+        {{/if}}
+      {{/if}}
+    {{/isolate}}
+  </div>
+
+  {{#if successors}}
+    <div class="nested {{color}}">
+      {{#each successors}}
+        {{> comment}}
+      {{/each}}
+
+      {{#if hasMore}} 
+        {{> loadMore}}
+      {{/if}}
+    </div>
+  {{/if}}
+</template>

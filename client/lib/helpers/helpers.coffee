@@ -48,6 +48,8 @@ clickPill = (entity) ->
     Session.set 'target', null
     Session.set 'type', null
     Session.set "target-#{entity._id}", false
+    Session.set "comment", null
+    Session.set "accomplished", null
   else
     Session.set 'target', entity._id
     Session.set 'type', if entity.type? then entity.type else 'user' # XXX

@@ -183,9 +183,7 @@ Skills.insert
     Meteor.flush()
     $("#accomplished-#{id}").focus().select()
 
-    Meteor.call 'accomplish', id, null, (error, result) ->
-      unless error
-        console.log 'tst'
+    Meteor.call 'accomplish', id, null
 
   active: ->
     id = Session.get 'target'
@@ -198,8 +196,21 @@ Skills.insert
   icon: 'comment'
   passive: true
   description: 'Allows you to comment on content'
-  cooldown: 1
-  level: 99
+  cooldown: 10
+  level: 3
+  usable: -> 
+    if (Session.get 'type')? and (Session.get 'target')?
+      unless Session.get('type') is 'user'
+        return true
+    return false
+  click: ->
+    id = Session.get 'target'
+    Session.set "comment", id
+    Meteor.flush()
+    $("#comment-#{id}").focus().select()
+  active: ->
+    id = Session.get 'target'
+    Session.equals "comment", id
 
 Skills.insert
   _id: 'tag'

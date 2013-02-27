@@ -1,0 +1,12 @@
+<template name='singleAccomplishment'>
+  {{> otherAccomplishment}}
+
+  <h3>{{strings "comments"}}:</h3>
+  <div>
+    {{#each comments}}
+      {{> comment}}
+    {{else}}
+      {{> noContent}}
+    {{/each}}
+  </div>
+</template>

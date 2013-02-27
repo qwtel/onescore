@@ -5,12 +5,11 @@
       <h4 class="media-heading"><a>{{title}}</a></h4>
       <p>{{description}}</p>
 
-      <span><i class="icon-arrow-up"/> {{votesDiff}}</span>
-      <span><i class="icon-comment"/> {{comments}}</span>
-      <span><i class="icon-star"/> {{favourites}}</span>
-      <span><i class="icon-certificate"/> {{accomplishments}}</span>
-      <span class="muted">Level: {{level}}</span>
-      <span class="muted">XP: {{value}}</span>
+        <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
+        <span class="muted"><i class="icon-comment"/> {{comments}}</span>
+        <span class="muted"><i class="icon-star"/> {{favourites}}</span>
+        <span class="muted"><i class="icon-certificate"/> {{accomplishments}}</span>
+        <span class="muted">+XP: {{value}}</span>
 
       {{#if selected}}
         <ul class="nav nav-pills hidden-phone">
@@ -20,16 +19,11 @@
     </div>
   </div>
   {{#if selected}}
-  {{#if hasBeenAccomplished}}
-    <div class="pill inbetween" style="margin-top:10px">
-      <textarea id="accomplished-{{_id}}" placeholder="{{strings "howAreYouFeeling"}}" id="story" class="textarea-100" data-field="story" rows="3">{{story}}</textarea>
-      <button class="add-story btn btn-primary pull-right">{{strings "ok"}}</button>
-      <p class="lead pull-right" style="margin-right: 10px">{{#isolate}}{{remainingChars}}{{/isolate}}</p>
-      <a class="btn phantom">
-        <i class="icon-camera"/>
-        <input id="" name="" class="input-file" type="file" accept="image/x-png, image/gif, image/jpeg"/>
-      </a>
-    </div>
-  {{/if}}
+    {{#if equals "accomplished" _id}}
+      {{> newStory}}
+    {{/if}}
+    {{#if equals "comment" _id}}
+      {{> newComment}}
+    {{/if}}
   {{/if}}
 </template>

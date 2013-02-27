@@ -6,21 +6,6 @@ Template.baseAchievement.events
   'click .nav': (e) ->
     e.stopImmediatePropagation()
 
-  'click .add-story': (e) ->
-    text = $("#accomplished-#{@_id}").val()
-    if text isnt ''
-      Meteor.call 'accomplish', @_id, text
-    Session.set "accomplished", null
-
-  'keydown textarea': (e) ->
-    length = $(e.currentTarget).val().length
-    Session.set 'length', length
-
-Template.baseAchievement.rendered = ->
-  val = $(@find('textarea')).val()
-  length = if val then val.length else 0
-  Session.set 'length', length
-
 Template.baseAchievement.helpers
   title: ->
     if @title != '' then @title else '<No title>'
@@ -34,17 +19,7 @@ Template.baseAchievement.helpers
   selected: -> 
     Session.equals 'target', @_id
   
-  story: ->
-    acc = Accomplishments.findOne entity: @_id
-    if acc then acc.story else ''
-
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
-
-  hasBeenAccomplished: ->
-    Session.equals "accomplished", @_id
-
-  remainingChars: ->
-    140 - (Session.get('length') or 0)
 
   color: color

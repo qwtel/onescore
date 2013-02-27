@@ -1,26 +1,22 @@
-Template.story.events
-  'click .story': (e) ->
+Template.miniUser.events
+  'click .pill': (e) ->
     e.stopImmediatePropagation()
     clickPill this
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()
 
-Template.story.helpers
+Template.miniUser.helpers
   selected: -> 
     Session.equals 'target', @_id
 
-  isTweet: ->
-    if @story
-      @story.length <= 140
-
-  votesDiff: ->
-    @upVotes - (@votes - @upVotes)
+  credibility: ->
+    Math.round 100 * @best
 
   color: ->
-    userId = Meteor.userId()
-    if userId
-      if userId == @user
+    user = Meteor.user()
+    if user.profile
+      if user.profile.username == @profile.username
         return 'completed'
       #if isActiveInCollection(Favourites, @_id, userId)
       #  return 'accepted'

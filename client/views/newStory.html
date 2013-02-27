@@ -1,0 +1,12 @@
+<template name='newStory'>
+  <div class="pill inbetween">
+    <textarea id="accomplished-{{_id}}" placeholder="{{strings "howAreYouFeeling"}}" id="story" class="textarea-100" data-field="story" rows="3">{{story}}</textarea>
+    <button class="add-story btn btn-primary pull-right">{{strings "ok"}}</button>
+    <p class="lead pull-right" style="margin-right: 10px">{{#isolate}}{{remainingChars}}{{/isolate}}</p>
+    <a class="btn phantom">
+      <i class="icon-camera"/>
+      <input id="" name="" class="input-file" type="file" accept="image/x-png, image/gif, image/jpeg"/>
+    </a>
+    <div class="clearfix"/>
+  </div>
+</template>

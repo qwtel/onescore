@@ -112,6 +112,41 @@ Meteor.methods
     if !isAllowedToUseSkill user, skill then return 0
     voteFor user, id, type, false
 
+  comment: (id, type, text) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'comment'
+    if !isAllowedToUseSkill user, skill then return 0
+   
+    data = _.extend basic(),
+      type: 'comment'
+      entity: id
+      entityType: type
+      text: text
+
+    if type is 'comment'
+      parent = Comments.findOne id
+      _.extend data,
+        parent: parent._id
+        level: parent.level + 1
+    else
+      _.extend data,
+        parent: null
+        level: 1
+    
+    Comments.insert data
+
+    Collections[type].update id,
+      $inc: comments: 1
+      #$set: lastComment: new Date().getTime()
+
+    #comment = Comments.findOne id
+    #target = Collections[comment.topicType].findOne comment.topic
+    #notify comment, target
+    #
+    #if comment.parent?
+    #  parent = Comments.findOne comment.parent
+    #  notify comment, parent
+
 voteFor = (user, id, type, active) ->
   data = _.extend basic(),
     entity: id

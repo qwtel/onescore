@@ -5,10 +5,10 @@
     {{else}}
       {{#markdown}}{{story}}{{/markdown}}
     {{/if}}
-    <small class="pull-right muted">{{timeago date}} by {{username user}}</small>
+    <p class="pull-right muted">{{timeago date}} by {{username user}}</p>
     <div style="margin-top: 10px">
-      <span><i class="icon-arrow-up"/> {{votesDiff}}</span>
-      <span><i class="icon-comment"/> {{comments}}</span>
+      <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
+      <span class="muted"><i class="icon-comment"/> {{comments}}</span>
     </div>
     {{#if selected}}
       <ul class="nav nav-pills hidden-phone">
@@ -16,4 +16,9 @@
       <ul>
     {{/if}}
   </div>
+  {{#if selected}}
+    {{#if equals "comment" _id}}
+      {{> newComment}}
+    {{/if}}
+  {{/if}}
 </template>

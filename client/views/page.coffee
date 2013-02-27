@@ -7,7 +7,9 @@ Template.page.events
       if href then Router.navigate href, true
 
 Template.page.helpers
-  skill: -> Skills.findOne Session.get('page')
+  skill: -> Skills.findOne 
+    _id: Session.get('page')
+    nav: true
 
   entity: ->
     id = Session.get 'id'

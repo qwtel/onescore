@@ -1,0 +1,19 @@
+<template name='miniUser'>
+  <div class="pill {{#if selected}}selected{{/if}} {{color}}">
+    {{#if profile}}
+    <a class="profile-pic pull-left">
+      <img class="media-object" style="width:24px; height:24px; border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture">
+    </a>
+    <div class="media-body">
+      <h5 class="media-heading" style="margin-left: 8px"><a>{{profile.username}}</a></h5>
+
+      {{#if selected}}
+        <ul class="nav nav-pills hidden-phone">
+          {{> actionbar}}
+        <ul>
+      {{/if}}
+
+    </div>
+    {{/if}}
+  </div>
+</template>

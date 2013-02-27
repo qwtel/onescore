@@ -156,6 +156,9 @@ body {
 
   .muted {
     color: rgba(0,0,0,0.33);
+    i {
+      opacity: 0.33;
+    }
   }
 }
 
@@ -164,7 +167,10 @@ body {
 }
 
 .pill.inbetween {
-  cursor: default;
+  margin-top: 10px;
+  .lead {
+    margin-bottom: 0;
+  }
 }
 .pill.inbetween:hover {
   background: darken(@grayLighter, 5%);
@@ -200,7 +206,7 @@ body {
   a {
     color: darken(@red, 15%);
   }
-  i {
+  .nav i {
     background-image: url('/img/glyphicons-halflings-white.png');
   }
 }
@@ -386,12 +392,5 @@ body {
     top: 0;
     left: 0;
     opacity: 0;
-  }
-}
-
-#target {
-  margin: 0 20px;
-  @media (min-width: 480px) {
-    width: 150px;
   }
 }
