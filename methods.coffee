@@ -47,10 +47,14 @@ Meteor.methods
       _.extend data, basic(),
         type: 'favourite'
         active: true
-      Favourites.insert data
+
+      data._id = Favourites.insert data
+      notify skill, data, achievement
+
       Achievements.update data.entity,
         $inc:
           favourites: 1
+
 
   accomplish: (id, story) ->
     user = Meteor.user()
@@ -60,22 +64,27 @@ Meteor.methods
     voteFor user, id, 'achievement', true
 
     acc = Accomplishments.findOne
-      user: @userId
+      user: user._id
       entity: id
 
-    if acc
+    if acc?
       if story?
         Accomplishments.update acc._id, $set: story: story
+      return acc._id 
     else
       data = _.extend basic(),
         entity: id
         type: 'accomplishment'
         active: true
 
-      id = Accomplishments.insert data
+      data._id = Accomplishments.insert data
       Achievements.update data.entity,
         $inc:
           accomplishments: 1
+
+      # notify
+      achievement = Achievements.findOne data.entity
+      notify skill, data, achievement
 
       # update user xp
       achievement = Achievements.findOne data.entity
@@ -93,31 +102,26 @@ Meteor.methods
           $inc:
             'profile.level': 1
 
-      # send notificatións
-      #accomplishment = Accomplishments.findOne accomplishId
-      #notify accomplishment, achievement
-
-    #Meteor.call 'upload', formData, accomplishId
-    return id or acc._id
+      return data._id
 
   voteUp: (id, type) ->
     user = Meteor.user()
     skill = Skills.findOne 'voteUp'
     if !isAllowedToUseSkill user, skill then return 0
-    voteFor user, id, type, true
+    voteFor user, id, type, true, skill
 
   voteDown: (id, type) ->
     user = Meteor.user()
     skill = Skills.findOne 'voteDown'
     if !isAllowedToUseSkill user, skill then return 0
-    voteFor user, id, type, false
+    voteFor user, id, type, false, skill
 
   comment: (id, type, text) ->
     user = Meteor.user()
     skill = Skills.findOne 'comment'
     if !isAllowedToUseSkill user, skill then return 0
    
-    data = _.extend basic(),
+    comment = _.extend basic(),
       type: 'comment'
       entity: id
       entityType: type
@@ -125,19 +129,32 @@ Meteor.methods
 
     if type is 'comment'
       parent = Comments.findOne id
-      _.extend data,
+      _.extend comment,
         parent: parent._id
         level: parent.level + 1
     else
-      _.extend data,
+      _.extend comment,
         parent: null
         level: 1
     
-    Comments.insert data
+    comment._id = Comments.insert comment
 
     Collections[type].update id,
       $inc: comments: 1
-      #$set: lastComment: new Date().getTime()
+
+    target = Collections[type].findOne id
+    receivers = [target.user]
+
+    node = comment
+    while node.parent?
+      node = Comments.findOne node.parent
+      Collections[node.entityType].update node.entity,
+        $inc: comments: 1
+
+      entity = Collections[node.entityType].findOne node.entity
+      receivers.push entity.user
+
+    notify skill, comment, target, receivers
 
     #comment = Comments.findOne id
     #target = Collections[comment.topicType].findOne comment.topic
@@ -147,7 +164,7 @@ Meteor.methods
     #  parent = Comments.findOne comment.parent
     #  notify comment, parent
 
-voteFor = (user, id, type, active) ->
+voteFor = (user, id, type, active, skill) ->
   data = _.extend basic(),
     entity: id
     entityType: type
@@ -179,7 +196,7 @@ voteFor = (user, id, type, active) ->
 
     vote = Votes.findOne id
     target = Collections[vote.entityType].findOne vote.entity
-    #notify vote, target
+    notify skill, vote, target
     
     Collections[vote.entityType].update vote.entity, 
       $inc: 
@@ -284,3 +301,15 @@ hotScore = (up, down, date) ->
   z = Math.max(Math.abs(x), 1)
 
   Math.round(Math.log(z)/Math.log(10) + y*ts/45000)
+
+notify = (skill, entity, target, receivers) ->
+  Notifications.insert
+    type: 'notification'
+    date: entity.date
+    user: entity.user
+    skill: skill._id
+    entity: entity._id
+    entityType: entity.type
+    target: target._id
+    targetType: target.type
+    receivers: receivers or [target.user]
