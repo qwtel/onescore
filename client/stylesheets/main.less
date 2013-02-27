@@ -121,7 +121,7 @@ body {
   cursor: pointer;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid darken(@grayLighter, 5%);
+  //border: 1px solid darken(@grayLighter, 5%);
   background: darken(@grayLighter, 5%);
 
   a {
@@ -157,6 +157,17 @@ body {
   .muted {
     color: rgba(0,0,0,0.33);
   }
+}
+
+.pill:hover {
+  background: darken(@grayLighter, 10%);
+}
+
+.pill.inbetween {
+  cursor: default;
+}
+.pill.inbetween:hover {
+  background: darken(@grayLighter, 5%);
 }
 
 .pill.accepted, .breadcrumb .accepted {
@@ -368,11 +379,19 @@ body {
 
 .phantom {
   position: relative;
+  cursor: pointer;
   overflow: hidden;
   input {
     position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
+  }
+}
+
+#target {
+  margin: 0 20px;
+  @media (min-width: 480px) {
+    width: 150px;
   }
 }

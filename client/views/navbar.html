@@ -32,16 +32,17 @@
       <a class="brand" url="" title="{{strings "title"}}" data-toggle="collapse" data-target=".nav-collapse"></a>
       <div class="nav-collapse collapse">
         <ul class="nav" style="margin-right: 0">
-              {{#each nav}}
-                <li class="divider-vertical"></li>
-                <li class="{{#if active}}active{{/if}} {{#unless usable}}passive{{/unless}}">
-                  <a href="/{{url}}" class="spell" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldownText}}</div">
-                    <i class="icon-{{icon}}" />
-                    <span class="spell-name visible-phone">{{name}}</span>
-                  </a>
-                </li>
-              {{/each}}
+          {{#each nav}}
+            <li class="divider-vertical"></li>
+            <li class="{{#if active}}active{{/if}} {{#unless usable}}passive{{/unless}}">
+              <a href="/{{url}}" class="spell" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldownText}}</div">
+                <i class="icon-{{icon}}" />
+                <span class="spell-name visible-phone">{{name}}</span>
+              </a>
+            </li>
+          {{/each}}
         </ul>
+
         <ul class="nav hidden-phone">
           {{> actionbar}}
         </ul>

@@ -8,6 +8,7 @@ class Router extends Backbone.Router
     'achievement/new': 'newAchievement'
     'achievement/:id/new': 'newAchievement'
     'achievement/:id': 'achievement'
+    'accomplishment/:id': 'accomplishment'
     'user/:id': 'user'
     #'user/:id/questlog': 'questlog'
     ':crap': 'home'
@@ -71,10 +72,17 @@ class Router extends Backbone.Router
     Session.set 'id', id
     Session.set 'page', 'newAchievement'
 
-  achievement: (id, tab, tabtab) ->
+  achievement: (id) ->
     @softReset()
     Session.set 'page', 'achievement'
     Session.set 'id', id
+    Session.set 'sort', 'best'
+
+  accomplishment: (id) ->
+    @softReset()
+    Session.set 'page', 'accomplishment'
+    Session.set 'id', id
+    Session.set 'sort', 'best'
 
   softReset: ->
     $(document).scrollTop 0

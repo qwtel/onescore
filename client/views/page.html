@@ -76,13 +76,26 @@
 
   {{#if equals "page" "achievement"}}
     <div class="span8 offset2">
+      {{#if entity}}
       {{> breadcrumbs}}
       {{#with entity}}
-      {{> achievement}}
+        {{> singleAchievement}}
       {{/with}}
+      {{/if}}
     </div>
   {{else}}
 
+  {{#if equals "page" "accomplishment"}}
+    <div class="span8 offset2">
+      {{#if entity}}
+      {{#with entity}}
+        {{> otherAccomplishment}}
+      {{/with}}
+      {{/if}}
+    </div>
+  {{else}}
+
+  {{/if}}
   {{/if}}
   {{/if}}
   {{/if}}

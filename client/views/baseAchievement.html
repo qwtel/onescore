@@ -21,7 +21,7 @@
   </div>
   {{#if selected}}
   {{#if hasBeenAccomplished}}
-    <div class="pill" style="margin-top:10px">
+    <div class="pill inbetween" style="margin-top:10px">
       <textarea id="accomplished-{{_id}}" placeholder="{{strings "howAreYouFeeling"}}" id="story" class="textarea-100" data-field="story" rows="3">{{story}}</textarea>
       <button class="add-story btn btn-primary pull-right">{{strings "ok"}}</button>
       <p class="lead pull-right" style="margin-right: 10px">{{#isolate}}{{remainingChars}}{{/isolate}}</p>

@@ -1,0 +1,20 @@
+<template name='singleAchievement'>
+  {{> achievement}}
+
+  <h3>{{strings "achievers"}}:</h3>
+  <div>
+    {{#each achievers}}
+      {{#if story}}
+        <div class="stacked-pills">
+          {{> protoAccomplishment}}
+        </div>
+      {{else}}
+        {{#if user}}
+          {{#with user}}
+            {{> user}}
+          {{/with}}
+        {{/if}}
+      {{/if}}
+    {{/each}}
+  </div>
+</template>
