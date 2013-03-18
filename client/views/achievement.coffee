@@ -4,8 +4,6 @@ Template.achievement.helpers
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
 
-  color: color
-
   hasMore: ->
     query = Achievements.find parent: @_id
     count = query.count()

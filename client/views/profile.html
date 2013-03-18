@@ -1,9 +1,5 @@
 <template name='profile'>
-  {{#if user}}
-  {{#with user}}
-    {{> userBanner}}
-  {{/with}}
-  {{/if}}
+  {{> userBanner}}
 
   {{#each accomplishments}}
     {{#if hasStory}}

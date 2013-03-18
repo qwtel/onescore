@@ -4,9 +4,9 @@ class Router extends Backbone.Router
     'home': 'home'
     'explore': 'explore'
     #'ladder': 'ladder'
-    #'notifications': 'notifications'
-    'achievement/new': 'newAchievement'
-    'achievement/:id/new': 'newAchievement'
+    'notification': 'notification'
+    #'achievement/new': 'newAchievement'
+    #'achievement/:id/new': 'newAchievement'
     'user/:id': 'user'
     #'user/:id/questlog': 'questlog'
     ':type/:id': 'single'
@@ -29,9 +29,9 @@ class Router extends Backbone.Router
     Session.set 'page', 'ladder'
     Session.set 'sort', 'best'
 
-  notifications: ->
+  notification: ->
     @hardReset()
-    Session.set 'page', 'notifications'
+    Session.set 'page', 'notification'
     Session.set 'sort', 'new'
 
   user: (id) ->
@@ -47,27 +47,6 @@ class Router extends Backbone.Router
 
   newAchievement: (id) ->
     @softReset()
-
-    newAchievement = Scratchpad.findOne type: 'achievement'
-
-    if not newAchievement 
-      data =
-        score: 0
-        hot: 0
-        best: 0
-        value: 0
-        comments: 0
-        upVotes: 0
-        votes: 0
-        #===
-        type: 'achievement'
-        title: ''
-        parent: if id then id else null
-        description: ''
-        favourites: 0
-        accomplishments: 0
-      Scratchpad.insert data
-
     Session.set 'id', id
     Session.set 'page', 'newAchievement'
 
@@ -82,6 +61,8 @@ class Router extends Backbone.Router
     Session.set 'limit', 1
     Session.set 'target', null
     Session.set 'type', null
+    Session.set 'temp', null
+    Session.set 'reply', null
 
   hardReset: ->
     @softReset()

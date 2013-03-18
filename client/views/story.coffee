@@ -1,7 +1,7 @@
 Template.story.events
   'click .story': (e) ->
     e.stopImmediatePropagation()
-    clickPill this
+    clickPill this, e
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()
@@ -16,14 +16,3 @@ Template.story.helpers
 
   votesDiff: ->
     @upVotes - (@votes - @upVotes)
-
-  color: ->
-    userId = Meteor.userId()
-    if userId
-      if userId == @user
-        return 'completed'
-      #if isActiveInCollection(Favourites, @_id, userId)
-      #  return 'accepted'
-      #else if Achievements.find().count() > 0
-      #  return 'uncompleted'
-    return ''

@@ -12,21 +12,18 @@ Template.home.helpers
     limit = Session.get('limit') or 1
     Accomplishments.find sel,
       sort: sort
-      limit: 25 * limit
+      limit: 15 * limit
 
   achievement: ->
     Achievements.findOne @entity
 
-  hasStory: ->
-    @story? and @story != ''
-
   hasMore: ->
-    sel = Template.scope.getScope()
+    sel = Template.scope.getSelect()
     sel.active = true
-    sel.story = $ne: ''
+    sel.story = $exists: true
 
     query = Accomplishments.find sel
     count = query.count()
 
     limit = Session.get('limit') or 1
-    return 25 * limit < count
+    return 15 * limit < count

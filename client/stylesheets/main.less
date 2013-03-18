@@ -96,13 +96,12 @@ body {
   .icon {
     width: @iconSize;
     height: @iconSize;
-    background-image: url('/img/bg_new.png');
-    background-size: @iconSize @iconSize;
+    background-size: cover;
+    background-position: center center;
     //box-sizing: border-box;
     //border: 2px solid @red;
 
     img {
-      border-radius: 5px;
       width: 100%;
       height: 100%;
     }
@@ -196,6 +195,39 @@ body {
 
 .achievement.preview {
   cursor: default;
+  background: transparent;
+  border: 1px solid rgba(82, 168, 236, 0.8);
+  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset, rgba(82, 168, 236, 0.6) 0px 0px 8px 0px;
+
+  input, textarea {
+    background: none;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  .title-input {
+    font-size: 17.5px;
+    line-height: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .btn-primary {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    @media (max-width: 480px) {
+      position: relative;
+      bottom: 0;
+      right: 0;
+      margin: 0;
+      margin-top: 10px;
+    }
+  }
+}
+
+.achievement.preview:hover {
   background: transparent;
 }
 
@@ -352,25 +384,28 @@ body {
 }
 
 .stacked-pills {
-  margin-top: 25px;
+  margin-top: 15px;
+  .nested {
+    margin-bottom: 15px;
+  }
 }
 
 .stacked-pills:first-child {
   margin-top: 0;
 }
 
-.stacked-pills .pill {
+.stacked-pills > .pill {
   border-radius: 0;
   border-bottom: 1px solid darken(@grayLighter, 10%);
   margin-top: 0!important;
 }
 
-.stacked-pills .pill:first-child {
+.stacked-pills > .pill:first-child {
   border-radius: 5px 5px 0 0;
   border-bottom: 1px solid darken(@grayLighter, 10%);
 }
 
-.stacked-pills .pill:last-child {
+.stacked-pills > .pill:last-child {
   border-radius: 0 0 5px 5px;
   border-bottom: none;
 }
@@ -396,5 +431,30 @@ body {
     top: 0;
     left: 0;
     opacity: 0;
+  }
+}
+
+.afx {
+  position: fixed; 
+  top: 0;
+  left: -2.6%;
+  height: 100%;
+  overflow: hidden;
+  padding-top: 65px;
+
+  .hide-scrollbar {
+    //box-sizing: border-box;
+    //padding-top: 65px;
+    //padding-bottom: 65px;
+    padding-right: 15px;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+  }
+}
+
+.notifications {
+  .btn {
+    margin: 0 8px;
   }
 }

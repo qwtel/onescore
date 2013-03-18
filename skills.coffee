@@ -15,11 +15,11 @@ Skills.insert
 Skills.insert
   _id: 'notifications'
   icon: 'globe'
-  url: 'notifications'
+  url: 'notification'
   name: strings 'notifications'
   description: strings 'notificationDesc' 
-  active: -> Session.equals 'page', 'notifications'
-  level: 99
+  active: -> Session.equals 'page', 'notification'
+  level: 1
   usable: true
   nav: true
 
@@ -74,11 +74,9 @@ Skills.insert
   description: strings 'newAchievementDesc' 
   cooldown: 5
   level: 1
-  usable: true
-  active: -> 
-    Session.equals 'page', 'newAchievement'
-  url: "achievement/new"
-  nav: true
+  usable: false
+  active: false
+  #url: "achievement/new"
 
 Skills.insert
   _id: 'inspect'
@@ -138,18 +136,45 @@ Skills.insert
   name: strings 'replyAchievement'
   description: strings 'replyAchievementDesc' 
   cooldown: 5
-  level: 3
+  level: 1
   usable: -> 
     Session.equals 'type', 'achievement'
-  active: -> 
-    Session.equals 'page', 'newAchievement'
-  url: -> 
+  #url: -> 
+  #  id = Session.get 'target'
+  #  type = Session.get 'type'
+  #  if id and type is 'achievement'
+  #    return "achievement/#{id}/new"
+  #  else
+  #    return "achievement/new"
+  click: ->
     id = Session.get 'target'
-    type = Session.get 'type'
-    if id and type is 'achievement'
-      return "achievement/#{id}/new"
-    else
-      return "achievement/new"
+    Session.set "reply", id
+  active: ->
+    id = Session.get 'target'
+    Session.equals "reply", id
+
+
+Skills.insert
+  _id: 'comment'
+  name: 'Comment'
+  icon: 'comment'
+  passive: true
+  description: 'Allows you to comment on content'
+  cooldown: 10
+  level: 1
+  usable: -> 
+    if (Session.get 'type')? and (Session.get 'target')?
+      unless Session.get('type') is 'user'
+        return true
+    return false
+  click: ->
+    id = Session.get 'target'
+    Session.set "comment", id
+    Meteor.flush()
+    $(".comment-#{id}").first().focus().select()
+  active: ->
+    id = Session.get 'target'
+    Session.equals "comment", id
 
 Skills.insert
   _id: 'favourite'
@@ -162,7 +187,7 @@ Skills.insert
   usable: -> Session.equals 'type', 'achievement'
   click: ->
     id = Session.get 'target'
-    Meteor.call 'favourite', entity: id
+    Meteor.call 'favourite', id
   active: -> 
     id = Session.get 'target'
     user = Meteor.user()
@@ -180,37 +205,13 @@ Skills.insert
   click: ->
     id = Session.get 'target'
     Session.set "accomplished", id
-    Meteor.flush()
-    $("#accomplished-#{id}").focus().select()
-
-    Meteor.call 'accomplish', id, null
+    Meteor.call 'accomplish', id, null, ->
+      $(".accomplished-#{id}").first().focus().select()
 
   active: ->
     id = Session.get 'target'
     user = Meteor.user()
     if user and id then isActiveInCollection Accomplishments, id, user._id
-
-Skills.insert
-  _id: 'comment'
-  name: 'Comment'
-  icon: 'comment'
-  passive: true
-  description: 'Allows you to comment on content'
-  cooldown: 10
-  level: 3
-  usable: -> 
-    if (Session.get 'type')? and (Session.get 'target')?
-      unless Session.get('type') is 'user'
-        return true
-    return false
-  click: ->
-    id = Session.get 'target'
-    Session.set "comment", id
-    Meteor.flush()
-    $("#comment-#{id}").focus().select()
-  active: ->
-    id = Session.get 'target'
-    Session.equals "comment", id
 
 Skills.insert
   _id: 'tag'

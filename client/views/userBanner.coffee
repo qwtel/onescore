@@ -1,7 +1,7 @@
 Template.userBanner.events
   'click .pill': (e) ->
     e.stopImmediatePropagation()
-    clickPill this
+    clickPill this, e
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()
@@ -9,17 +9,6 @@ Template.userBanner.events
 Template.userBanner.helpers
   selected: -> 
     Session.equals 'target', @_id
-
-  color: ->
-    user = Meteor.user()
-    if user.profile
-      if user.profile.username == @profile.username
-        return 'completed'
-      #if isActiveInCollection(Favourites, @_id, userId)
-      #  return 'accepted'
-      #else if Achievements.find().count() > 0
-      #  return 'uncompleted'
-    return ''
 
   numVotes: ->
     Votes.find(user: @_id).count()

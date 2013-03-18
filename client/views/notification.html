@@ -1,0 +1,56 @@
+<template name='notification'>
+  {{#with user}} 
+    <a class="pull-left" href="/user/{{_id}}" title="{{profile.username}}">
+      <img style="width:30px; height:30px; border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture">
+    </a>
+  {{/with}}
+
+  {{#if type entityType "comment"}}
+    <a class='btn pull-left' href='/comment/{{entity}}' title='commented'>
+      <i class='icon-comment'></i>
+    </a>
+  {{/if}}
+  {{#if type entityType "vote"}}
+    <a class='btn disabled pull-left' title='voted'>
+      <i class='icon-arrow-up'></i>
+    </a>
+  {{/if}}
+  {{#if type entityType "favourite"}}
+    <a class='btn disabled pull-left' title='stared'>
+      <i class='icon-star'></i>
+    </a>
+  {{/if}}
+  {{#if type entityType "accomplishment"}}
+    <a class='btn pull-left' href='/accomplishment/{{entity}}' title='accomplished'>
+      <i class='icon-certificate'></i>
+    </a>
+  {{/if}}
+
+  {{#with targetUser}} 
+  <a class="pull-left" href="/user/{{_id}}" title="{{profile.username}}">
+      <img style="width:30px; height:30px; border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture">
+    </a>
+  {{/with}}
+
+  {{#if type targetType "comment"}}
+    <a class='btn pull-left' href='/comment/{{target}}' title='Comment'>
+      <i class='icon-comment'></i> 
+    </a>
+  {{/if}}
+  {{#if type targetType "vote"}}
+    <a class='btn disabled pull-left' title='Vote'>
+      <i class='icon-arrow-up'></i>
+    </a>
+  {{/if}}
+  {{#if type targetType "achievement"}}
+    <a class='btn pull-left' href='/achievement/{{target}}' title='Achievement'>
+      <i class='icon-file'></i>
+    </a>
+  {{/if}}
+  {{#if type targetType "accomplishment"}}
+    <a class='btn pull-left' href='/accomplishment/{{target}}' title='Accomplishment'>
+      <i class='icon-certificate'></i>
+    </a>
+  {{/if}}
+  <span class='pull-right'>{{timeago date}}</span>
+</template>

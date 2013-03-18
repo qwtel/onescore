@@ -1,10 +1,31 @@
 Template.newAchievement.events
   'change .input-file': (e) ->
     e.stopImmediatePropagation()
-    # TODO: Image upload 
+
+    f = e.target.files[0]
+    if not f.type.match ///^image/.+///
+      return
+  
+    reader = new FileReader()
+    reader.onload = ((file) =>
+      return (e) =>
+        Scratchpad.update @_id, $set: source: e.target.result
+
+        Meteor.http.post "https://api.imgur.com/3/upload", 
+          contentType: 'multipart/form-data'
+          content: file
+          headers: 'Authorization': 'Client-ID 08d10aaf84947ac'
+        ,
+          (error, result) =>
+            unless error
+              Scratchpad.update @_id, 
+                $set: 
+                  imgur: result.data.data
+                  source: result.data.data.link
+    )(f)
+    reader.readAsDataURL(f)
 
   'change input, change textarea': (e) ->
-    console.log e
     $t = $(e.currentTarget)
     field = $t.data('field') 
     data = {}
@@ -14,14 +35,10 @@ Template.newAchievement.events
   'click #new-achievement': (e) ->
     data = Scratchpad.findOne @_id
 
-    parent = Session.get 'id'
-    if parent then data.parent = parent else data.parent = null
-
-    # XXX: I don't like this whole idea of "data objects" any more. Should be 
-    # formal function parameters, e.g. title, description, parent, etc...
-    Meteor.call 'newAchievement', data, (error, result) ->
-      unless error
-        Router.navigate "achievement/#{result}", true
+    Meteor.call 'newAchievement', @title, @description, @parent, @imgur,
+      (error, result) ->
+        unless error
+          Router.navigate "achievement/#{result}", true
 
 Template.newAchievement.helpers
   parentAchievement: -> 

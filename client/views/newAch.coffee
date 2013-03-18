@@ -1,10 +1,10 @@
-Template.newComment.events
-  'click .add-comment': (e) ->
+Template.newStory.events
+  'click .add-story': (e) ->
     $t = $(e.currentTarget).parents('.pill')
-    text = $t.find(".comment-#{@_id}").val()
+    text = $t.find(".accomplished-#{@_id}").val()
     if text isnt ''
-      Meteor.call 'comment', @_id, @type, text
-    Session.set "comment", null
+      Meteor.call 'accomplish', @_id, text
+    Session.set "accomplished", null
 
   'keydown textarea': (e) ->
     length = $(e.currentTarget).val().length
@@ -15,18 +15,12 @@ Template.newComment.events
 #  length = if val then val.length else 0
 #  Session.set 'length', length
 
-Template.newComment.helpers
+Template.newStory.helpers
   story: ->
-    acc = Comments.findOne 
+    acc = Accomplishments.findOne 
       user: Meteor.userId()
       entity: @_id
     if acc then acc.story else ''
 
   remainingChars: ->
     140 - (Session.get('length') or 0)
-
-  typeName: ->
-    if @type
-      strings @type
-    else
-      strings 'entity'

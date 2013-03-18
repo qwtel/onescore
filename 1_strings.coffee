@@ -32,7 +32,7 @@ Strings.insert _id: 'accomplishDesc', string: 'Gives you the ability to accompli
 Strings.insert _id: 'inspect', string: 'Inspect'
 Strings.insert _id: 'inspectDesc', string: 'Inspect your current target to get more information about it'
 
-Strings.insert _id: 'titleHelp', string: "You don't have to suggest a title."
+Strings.insert _id: 'titleHelp', string: "Suggest a title"
 Strings.insert _id: 'descriptionHelp', string: "What has to be done to complete this Achievement?"
 
 Strings.insert _id: 'best', string: "Best"

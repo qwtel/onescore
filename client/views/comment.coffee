@@ -1,7 +1,7 @@
 Template.comment.events
   'click .comment': (e) ->
     e.stopImmediatePropagation()
-    clickPill this
+    clickPill this, e
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()
@@ -28,5 +28,3 @@ Template.comment.helpers
     Comments.find sel,
       sort: sort
       #limit: 3 * limit
-
-  color: color

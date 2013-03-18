@@ -1,25 +1,26 @@
 Meteor.methods
-  newAchievement: (data) ->
+  newAchievement: (title, description, parentId, imgur) ->
     user = Meteor.user()
     skill = Skills.findOne 'newAchievement'
     if !isAllowedToUseSkill user, skill
       return 0
 
-    # XXX: This is not good (in so many respects I don't even know where to
-    # start)
-    delete data._id
-    _.extend data, basic(),
+    achievement = _.extend basic(),
+      type: 'achievement'
+      title: title
+      description: description
+      parent: parentId
+      imgur: imgur
       favourites: 0
       accomplishments: 0
-    data.type = 'achievement'
 
     # achievements have levels based on the number of predecessors
-    data.level = 1
-    if data.parent
-      parent = Achievements.findOne data.parent
-      data.level = parent.level + 1
+    achievement.level = 1
+    if parentId?
+      parent = Achievements.findOne parentId
+      achievement.level = parent.level + 1
 
-    id = Achievements.insert data
+    achievement._id = Achievements.insert achievement
 
     #if data.title
     #  titleData =
@@ -28,47 +29,48 @@ Meteor.methods
     #
     #  Meteor.call 'suggestTitle', titleData
 
-    return id 
+    return achievement._id 
 
-  favourite: (data) ->
+  favourite: (id) ->
     user = Meteor.user()
     skill = Skills.findOne 'favourite'
     if !isAllowedToUseSkill user, skill then return 0 
 
     fav = Favourites.findOne
-      user: @userId
-      entity: data.entity
+      user: user._id
+      entity: id
     
     if fav
       Favourites.update fav._id,
         $set:
           active: !fav.active
     else
-      _.extend data, basic(),
+      fav = _.extend basic(),
         type: 'favourite'
+        entity: id
         active: true
 
-      data._id = Favourites.insert data
-      notify skill, data, achievement
+      fav._id = Favourites.insert fav
+      achievement = Achievements.findOne id
+      notify skill, fav, achievement
 
-      Achievements.update data.entity,
+      Achievements.update id,
         $inc:
           favourites: 1
-
 
   accomplish: (id, story) ->
     user = Meteor.user()
     skill = Skills.findOne 'accomplish'
     if !isAllowedToUseSkill user, skill then return 0
 
-    voteFor user, id, 'achievement', true
+    voteFor user, id, 'achievement', true, Skills.findOne('voteUp')
 
     acc = Accomplishments.findOne
       user: user._id
       entity: id
 
     if acc?
-      if story?
+      if story? and story isnt acc.story
         Accomplishments.update acc._id, $set: story: story
       return acc._id 
     else
@@ -116,6 +118,17 @@ Meteor.methods
     if !isAllowedToUseSkill user, skill then return 0
     voteFor user, id, type, false, skill
 
+  notifyy: ->
+    sel = 
+      receivers: @userId
+      seen: $ne: @userId
+
+    Notifications.update sel,
+      $push:
+        seen: @userId
+    ,
+      multi: true
+      
   comment: (id, type, text) ->
     user = Meteor.user()
     skill = Skills.findOne 'comment'
@@ -306,10 +319,12 @@ notify = (skill, entity, target, receivers) ->
   Notifications.insert
     type: 'notification'
     date: entity.date
-    user: entity.user
     skill: skill._id
+    user: entity.user
     entity: entity._id
     entityType: entity.type
     target: target._id
     targetType: target.type
+    targetUser: target.user
     receivers: receivers or [target.user]
+    seen: []

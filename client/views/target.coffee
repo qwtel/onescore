@@ -19,5 +19,3 @@ Template.target.helpers
 
   selected: -> 
     Session.equals 'target', @_id
-
-  color: color

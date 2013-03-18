@@ -1,4 +1,4 @@
-#Meteor.startup ->
+Meteor.startup ->
 #  Accounts.loginServiceConfiguration.remove({})
 #  Meteor.users.remove({})
 #  Comments.remove({})
@@ -10,3 +10,8 @@
 #  Notifications.remove({})
 #  Revisions.remove({})
 #  Tags.remove({})
+  Notifications.update {},
+    $set:
+      seen: []
+    ,
+      multi: true

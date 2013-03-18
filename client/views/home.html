@@ -4,4 +4,7 @@
   {{else}}
     {{> noContent}}
   {{/each}}
+  {{#if hasMore}}
+    {{> loadMore}}
+  {{/if}}
 </template>

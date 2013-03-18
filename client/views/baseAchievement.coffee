@@ -1,11 +1,12 @@
 Template.baseAchievement.events
   'click .achievement': (e) ->
     e.stopImmediatePropagation()
-    clickPill this
+    clickPill this, e
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()
 
+#Template.baseAchievement.rendered = -> console.log 'rendered'
 Template.baseAchievement.helpers
   title: ->
     if @title != '' then @title else '<No title>'
@@ -22,4 +23,10 @@ Template.baseAchievement.helpers
   hasBeenSelected: ->
     Session.get "target-#{@_id}"
 
-  color: color
+  icon: ->
+    if @imgur?
+      split = @imgur.link.split('.')
+      fileExtension = split[split.length-1]
+      return "http://i.imgur.com/#{@imgur.id}t.#{fileExtension}"
+    else
+      return '/img/bg_new.png'

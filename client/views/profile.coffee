@@ -1,16 +1,10 @@
 Template.profile.events
 
 Template.profile.helpers
-  user: ->
-    id = Session.get 'id'
-    Meteor.users.findOne id
-
   accomplishments: ->
-    id = Session.get 'id'
-
-    sel = {}
-    sel.user = id
-    sel.active = true
+    sel =
+      user: @_id
+      active: true
 
     sort = Template.sort.getSort()
     limit = Session.get('limit') or 1
@@ -25,11 +19,9 @@ Template.profile.helpers
     (@story? and @story != '') 
 
   hasMore: ->
-    id = Session.get 'id'
-
-    sel = {}
-    sel.user = id
-    sel.active = true
+    sel =
+      user: @_id
+      active: true
 
     query = Accomplishments.find sel
     count = query.count()
