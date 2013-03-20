@@ -10,9 +10,15 @@ Template.story.helpers
   selected: -> 
     Session.equals 'target', @_id
 
-  isTweet: ->
-    if @story
-      @story.length <= 140
+  #isTweet: ->
+  #  if @story
+  #    @story.length <= 140
 
   votesDiff: ->
     @upVotes - (@votes - @upVotes)
+
+  image: ->
+    if @imgur?
+      split = @imgur.link.split('.')
+      fileExtension = split[split.length-1]
+      return "http://i.imgur.com/#{@imgur.id}h.#{fileExtension}"

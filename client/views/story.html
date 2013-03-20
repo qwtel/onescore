@@ -1,5 +1,8 @@
 <template name='story'>
   <div class="story pill {{#if selected}}selected{{/if}} {{color}}">
+    {{#if imgur}} 
+      <img src="{{image}}" style="margin-bottom: 10px" /> 
+    {{/if}}
     <div class="markdown">
       {{#markdown}}{{story}}{{/markdown}}
     </div>

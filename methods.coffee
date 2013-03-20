@@ -178,7 +178,10 @@ Meteor.methods
     #  notify comment, parent
 
   saveImage: (id, result) ->
-    Accomplishments.update id, 
+    Accomplishments.update
+      entity: id
+      user: @userId
+    ,
       $set: 
         imgur: result.data.data
         source: result.data.data.link
