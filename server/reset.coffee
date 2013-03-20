@@ -10,8 +10,9 @@ Meteor.startup ->
 #  Notifications.remove({})
 #  Revisions.remove({})
 #  Tags.remove({})
-  Notifications.update {},
-    $set:
-      seen: []
-    ,
-      multi: true
+
+#  Notifications.update {},
+#    $set:
+#      seen: []
+#    ,
+#      multi: true

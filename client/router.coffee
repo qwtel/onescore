@@ -3,14 +3,14 @@ class Router extends Backbone.Router
     '': 'home'
     'home': 'home'
     'explore': 'explore'
-    #'ladder': 'ladder'
     'notification': 'notification'
-    #'achievement/new': 'newAchievement'
-    #'achievement/:id/new': 'newAchievement'
     'user/:id': 'user'
-    #'user/:id/questlog': 'questlog'
     ':type/:id': 'single'
     ':crap': 'home'
+    #'ladder': 'ladder'
+    #'achievement/new': 'newAchievement'
+    #'achievement/:id/new': 'newAchievement'
+    #'user/:id/questlog': 'questlog'
 
   home: ->
     @hardReset()
@@ -38,7 +38,7 @@ class Router extends Backbone.Router
     @hardReset()
     Session.set 'id', id
     Session.set 'page', 'user'
-    Session.set 'scope', 'me'
+    Session.set 'scope', 'all'
     Session.set 'sort', 'new'
 
   questlog: (user) ->

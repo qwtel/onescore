@@ -177,6 +177,12 @@ Meteor.methods
     #  parent = Comments.findOne comment.parent
     #  notify comment, parent
 
+  saveImage: (id, result) ->
+    Accomplishments.update id, 
+      $set: 
+        imgur: result.data.data
+        source: result.data.data.link
+
 voteFor = (user, id, type, active, skill) ->
   data = _.extend basic(),
     entity: id

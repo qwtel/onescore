@@ -4,12 +4,13 @@ Template.achievements.helpers
   achievements: ->
     sel = Template.scope.getSelect()
     sel.parent = null
-    userId = Meteor.userId()
-    sel.$where = ->
-      a = Accomplishments.findOne
-        user: userId
-        entity: @_id
-      return not a
+
+    #userId = Meteor.userId()
+    #sel.$where = ->
+    #  a = Accomplishments.findOne
+    #    user: userId
+    #    entity: @_id
+    #  return not a
 
     sort = Template.sort.getSort()
     limit = Session.get('limit') or 1
@@ -20,6 +21,13 @@ Template.achievements.helpers
   hasMore: ->
     sel = Template.scope.getSelect()
     sel.parent = null
+
+    #userId = Meteor.userId()
+    #sel.$where = ->
+    #  a = Accomplishments.findOne
+    #    user: userId
+    #    entity: @_id
+    #  return not a
 
     query = Achievements.find sel
     count = query.count()

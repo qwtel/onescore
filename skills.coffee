@@ -136,7 +136,7 @@ Skills.insert
   name: strings 'replyAchievement'
   description: strings 'replyAchievementDesc' 
   cooldown: 5
-  level: 1
+  level: 99
   usable: -> 
     Session.equals 'type', 'achievement'
   #url: -> 
