@@ -11,6 +11,21 @@ Template.singleAccomplishment.helpers
       sort: sort
       #limit: 3 * limit
 
+  voters: ->
+    sel = Template.scope.getSelect()
+    sort = Template.sort.getSort()
+    limit = Session.get("limit-#{@_id}") or 1
+
+    entity = @_id
+    sel.$where = ->
+      Votes.findOne
+        user: @_id
+        entity: entity
+
+    Meteor.users.find sel,
+      sort: sort
+      limit: 3 * limit
+
   #hasMore: ->
   #  sel = Template.scope.getSelect()
   #  sel.entity = @_id

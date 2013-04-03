@@ -272,6 +272,14 @@ body {
       cursor: default!important;
     }
   }
+
+  .spell-name {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: inline!important;
+    }
+  }
 }
 
 .actionbar {
@@ -369,9 +377,9 @@ body {
 }
 
 .user-banner {
-  margin-bottom: 35px;
   .xp-bar {
     text-align: center;
+    margin-bottom: -30px;
     .progress {
       box-shadow: none;
     }
@@ -379,7 +387,6 @@ body {
       position: relative;
       top: -41px;
     }
-    margin-bottom: -30px;
   }
 }
 
@@ -440,13 +447,11 @@ body {
   left: -2.6%;
   height: 100%;
   overflow: hidden;
-  padding-top: 65px;
+  padding-top: 45px;
 
   .hide-scrollbar {
-    //box-sizing: border-box;
-    //padding-top: 65px;
-    //padding-bottom: 65px;
-    padding-right: 15px;
+    box-sizing: border-box;
+    padding: 20px 0 50px 0;
     height: 100%;
     width: 100%;
     overflow-y: scroll;
@@ -463,4 +468,12 @@ body {
   img {
     max-width: 100%;
   }
+}
+
+.create-new {
+  margin-bottom: 15px;
+}
+
+.loading {
+  text-align: center; 
 }

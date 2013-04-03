@@ -9,4 +9,13 @@
       {{> noContent}}
     {{/each}}
   </div>
+
+  <h3>{{strings "voters"}}</h3>
+  <div>
+    {{#each voters}}
+      {{> miniUser}}
+    {{else}}
+      {{> noContent}}
+    {{/each}}
+  </div>
 </template>

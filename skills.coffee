@@ -171,7 +171,7 @@ Skills.insert
     id = Session.get 'target'
     Session.set "comment", id
     Meteor.flush()
-    $(".comment-#{id}").first().focus().select()
+    #$(".comment-#{id}").first().focus().select()
   active: ->
     id = Session.get 'target'
     Session.equals "comment", id
@@ -195,7 +195,7 @@ Skills.insert
 
 Skills.insert
   _id: 'accomplish'
-  icon: 'certificate'
+  icon: 'lock'
   passive: true
   name: strings 'accomplish'
   description: strings 'accomplishDesc'
@@ -206,7 +206,7 @@ Skills.insert
     id = Session.get 'target'
     Session.set "accomplished", id
     Meteor.call 'accomplish', id, null, ->
-      $(".accomplished-#{id}").first().focus().select()
+      #$(".accomplished-#{id}").first().focus().select()
 
   active: ->
     id = Session.get 'target'

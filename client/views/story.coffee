@@ -21,4 +21,4 @@ Template.story.helpers
     if @imgur?
       split = @imgur.link.split('.')
       fileExtension = split[split.length-1]
-      return "http://i.imgur.com/#{@imgur.id}h.#{fileExtension}"
+      return "http://i.imgur.com/#{@imgur.id}l.#{fileExtension}"

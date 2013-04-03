@@ -1,10 +1,10 @@
-<template name='page'>
+<template name="page">
   {{> navbar}}
 
   <div class="row-fluid">
   {{#if equals "page" "home"}}
     <div class="span6 stories">
-      <h3>Stories</h3>
+      <h3>{{strings "achievers"}}</h3>
       {{> home}}
     </div>
     <div class="offset6 span6 afx hidden-phone">
@@ -181,7 +181,7 @@
   </div>
 </template>
 
-<template name='skill'>
+<template name="skill">
   <div class="hero-unit hero-unit-{{_id}}">
     <h1>{{name}}</h1>
     <p>{{description}}</p>

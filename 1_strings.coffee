@@ -27,8 +27,8 @@ Strings.insert _id: 'replyAchievement', string: 'Create Follow-Up'
 Strings.insert _id: 'replyAchievementDesc', string: 'Create a follow-up Achievement'
 Strings.insert _id: 'accept', string: 'Star'
 Strings.insert _id: 'acceptDesc', string: 'Add an uncompleted Achievement to your Quest Log'
-Strings.insert _id: 'accomplish', string: 'Accomplish'
-Strings.insert _id: 'accomplishDesc', string: 'Gives you the ability to accomplish Achievements'
+Strings.insert _id: 'accomplish', string: 'Unlock'
+Strings.insert _id: 'accomplishDesc', string: 'Gives you the ability to unlock Achievements'
 Strings.insert _id: 'inspect', string: 'Inspect'
 Strings.insert _id: 'inspectDesc', string: 'Inspect your current target to get more information about it'
 
@@ -68,10 +68,11 @@ Strings.insert _id: 'cancel', string: "Cancel"
 
 Strings.insert _id: 'user', string: "User"
 Strings.insert _id: 'achievement', string: "Achievement"
-Strings.insert _id: 'accomplishment', string: "Story"
+Strings.insert _id: 'accomplishment', string: "Unlock"
 Strings.insert _id: 'comment', string: "Comment"
 Strings.insert _id: 'vote', string: "Vote"
 Strings.insert _id: 'entity', string: "Entity"
 
-Strings.insert _id: 'achievers', string: "Achievers"
+Strings.insert _id: 'achievers', string: "Unlocks"
 Strings.insert _id: 'comments', string: "Comments"
+Strings.insert _id: 'voters', string: "Voters"

@@ -1,14 +1,9 @@
 <template name='profile'>
   {{> userBanner}}
 
+  <h3>{{strings "achievers"}}</h3>
   {{#each accomplishments}}
-    {{#if hasStory}}
-      {{> accomplishment}}
-    {{else}}
-      {{#with achievement}}
-        {{> baseAchievement}}
-      {{/with}}
-    {{/if}}
+    {{> accomplishment}}
   {{else}}
     {{> noContent}}
   {{/each}}

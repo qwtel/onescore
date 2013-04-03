@@ -6,10 +6,10 @@ Template.home.helpers
   accomplishments: ->
     sel = Template.scope.getSelect()
     sel.active = true
-    sel.story = $exists: true
 
     sort = Template.sort.getSort()
     limit = Session.get('limit') or 1
+
     Accomplishments.find sel,
       sort: sort
       limit: 15 * limit

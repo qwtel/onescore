@@ -4,17 +4,9 @@
   <h3>{{strings "achievers"}}</h3>
   <div>
     {{#each achievers}}
-      {{#if story}}
-        <div class="stacked-pills">
-          {{> protoAccomplishment}}
-        </div>
-      {{else}}
-        {{#if user}}
-          {{#with user}}
-            {{> user}}
-          {{/with}}
-        {{/if}}
-      {{/if}}
+      <div class="stacked-pills">
+        {{> protoAccomplishment}}
+      </div>
     {{else}}
       {{> noContent}}
     {{/each}}
@@ -28,6 +20,15 @@
   <div>
     {{#each comments}}
       {{> comment}}
+    {{else}}
+      {{> noContent}}
+    {{/each}}
+  </div>
+
+  <h3>{{strings "voters"}}</h3>
+  <div>
+    {{#each voters}}
+      {{> miniUser}}
     {{else}}
       {{> noContent}}
     {{/each}}
