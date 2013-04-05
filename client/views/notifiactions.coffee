@@ -6,7 +6,7 @@ Template.notifications.helpers
 
       sel = 
         receivers: userId
-        #user: $ne: userId
+        user: $ne: userId
 
       Notifications.find sel,
         sort: date: -1
@@ -16,7 +16,8 @@ Template.notifications.helpers
     userId = Meteor.userId()
     query = Notifications.find 
       receivers: userId
-      #user: $ne: userId
+      user: $ne: userId
+
     count = query.count()
     limit = Session.get("limit") or 1
     return 25 * limit < count

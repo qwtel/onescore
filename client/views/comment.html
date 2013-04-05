@@ -7,10 +7,12 @@
     {{/if}}
 
     {{#isolate}}
-      <div class="comment pill {{#if selected}}selected{{/if}} {{color}}">
+      <div class="comment pill">
         <div class="markdown">
           {{#markdown}}{{text}}{{/markdown}}
         </div>
+      </div>
+      <div class="pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
         <p class="pull-right muted">{{timeago date}}</p>
         <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
         <span class="muted"><i class="icon-comment"/> {{comments}}</span>

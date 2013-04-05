@@ -39,6 +39,14 @@ body {
   }
 }
 
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .nested {
   margin-top: 15px;
   padding-left: 13px;
@@ -92,6 +100,14 @@ body {
   cursor: pointer;
 }
 
+.click-me-im-famous {
+  cursor: pointer;
+}
+
+.click-me-im-famous:hover {
+  background: darken(@grayLighter, 10%);
+}
+
 .achievement {
   .icon {
     width: @iconSize;
@@ -117,7 +133,6 @@ body {
 .pill {
   display: block;
   position: relative;
-  cursor: pointer;
   padding: 10px;
   border-radius: 5px;
   //border: 1px solid darken(@grayLighter, 5%);
@@ -161,16 +176,13 @@ body {
   }
 }
 
-.pill:hover {
-  background: darken(@grayLighter, 10%);
-}
-
 .pill.inbetween {
   margin-top: 10px;
   .lead {
     margin-bottom: 0;
   }
 }
+
 .pill.inbetween:hover {
   background: darken(@grayLighter, 5%);
 }
@@ -194,7 +206,6 @@ body {
 }
 
 .achievement.preview {
-  cursor: default;
   background: transparent;
   border: 1px solid rgba(82, 168, 236, 0.8);
   box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset, rgba(82, 168, 236, 0.6) 0px 0px 8px 0px;
@@ -240,6 +251,15 @@ body {
   }
   .nav i {
     background-image: url('/img/glyphicons-halflings-white.png');
+  }
+}
+
+.pill.selected.uncompleted {
+  background: @red;
+  color: lighten(@red, 45%);
+  border-color: @red;
+  a {
+    color: darken(@red, 15%);
   }
 }
 
@@ -390,8 +410,41 @@ body {
   }
 }
 
+.afx {
+  box-sizing: border-box;
+  position: fixed; 
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  padding-top: 45px;
+  padding-left: 25px;
+  background: darken(@grayLighter, 5%);
+
+  .pill {
+    border: 1px solid darken(@grayLighter, 10%);
+  }
+
+  .stacked-pills > .pill:first-child {
+    border-top: 1px solid darken(@grayLighter, 10%);
+  }
+
+  .stacked-pills > .pill:last-child {
+    border-bottom: 1px solid darken(@grayLighter, 10%);
+  }
+  
+  .hide-scrollbar {
+    box-sizing: border-box;
+    padding: 20px 25px 250px 0;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+  }
+}
+
 .stacked-pills {
-  margin-top: 15px;
+  margin-top: 25px;
   .nested {
     margin-bottom: 15px;
   }
@@ -404,12 +457,14 @@ body {
 .stacked-pills > .pill {
   border-radius: 0;
   border-bottom: 1px solid darken(@grayLighter, 10%);
+  border-top: none;
   margin-top: 0!important;
 }
 
 .stacked-pills > .pill:first-child {
   border-radius: 5px 5px 0 0;
   border-bottom: 1px solid darken(@grayLighter, 10%);
+  border-top: none;
 }
 
 .stacked-pills > .pill:last-child {
@@ -427,6 +482,9 @@ body {
     font-size: 14px; 
     line-height: 20px;
   }
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .phantom {
@@ -438,23 +496,6 @@ body {
     top: 0;
     left: 0;
     opacity: 0;
-  }
-}
-
-.afx {
-  position: fixed; 
-  top: 0;
-  left: -2.6%;
-  height: 100%;
-  overflow: hidden;
-  padding-top: 45px;
-
-  .hide-scrollbar {
-    box-sizing: border-box;
-    padding: 20px 0 50px 0;
-    height: 100%;
-    width: 100%;
-    overflow-y: scroll;
   }
 }
 

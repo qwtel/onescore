@@ -1,11 +1,16 @@
 <template name='story'>
-  <div class="story pill {{#if selected}}selected{{/if}} {{color}}">
-    {{#if imgur}} 
-      <img src="{{image}}" style="margin-bottom: 10px" /> 
-    {{/if}}
-    <div class="markdown">
-      {{#markdown}}{{story}}{{/markdown}}
+  {{#if hasContent}} 
+    <div class="story pill">
+      {{#if imgur}} 
+        <img src="{{image}}" style="margin-bottom: 10px" /> 
+      {{/if}}
+      <div class="markdown">
+        {{#markdown}}{{story}}{{/markdown}}
+      </div>
     </div>
+  {{/if}}
+
+  <div class="pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
     <p class="pull-right muted" style="margin-bottom: 10px">{{timeago date}}</p>
     <div>
       <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>

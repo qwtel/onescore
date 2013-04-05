@@ -45,7 +45,7 @@ Template.navbar.helpers
     userId = Meteor.userId()
     if userId
       Notifications.find(
-        #user: $ne: userId
+        user: $ne: userId
         receivers: userId
         seen: $ne: userId
       ).count()

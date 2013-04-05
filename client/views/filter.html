@@ -1,7 +1,8 @@
 <!--<input id="filter" class="search-query" type="text" placeholder="Search" value="{{query}}" />-->
 
 <template name='sort'>
-  <h3>Sort</h3>
+  <h3>Filter</h3>
+  <h4>Sort</h4>
   <ul class="sort nav nav-stacked nav-pills">
     <li class="{{#if equals "sort" "hot"}}active{{/if}}">
     <a data-value="hot">{{strings "hot"}}</a></li>
@@ -15,7 +16,7 @@
 </template>
 
 <template name='scope'>
-  <h3>Scope</h3>
+  <h4>Scope</h4>
   <ul class="scope nav nav-stacked nav-pills">
     <li class="{{#if equals "scope" "all"}}active{{/if}}">
       <a data-value="all">{{strings "all"}}</a>

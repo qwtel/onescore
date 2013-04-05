@@ -1,5 +1,5 @@
 Template.story.events
-  'click .story': (e) ->
+  'click .click-me-im-famous': (e) ->
     e.stopImmediatePropagation()
     clickPill this, e
 
@@ -13,6 +13,9 @@ Template.story.helpers
   #isTweet: ->
   #  if @story
   #    @story.length <= 140
+
+  hasContent: ->
+    @story? or @imgur?
 
   votesDiff: ->
     @upVotes - (@votes - @upVotes)

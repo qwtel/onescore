@@ -1,5 +1,5 @@
 Template.comment.events
-  'click .comment': (e) ->
+  'click .click-me-im-famous': (e) ->
     e.stopImmediatePropagation()
     clickPill this, e
 

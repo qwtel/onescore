@@ -63,6 +63,7 @@ Handlebars.registerHelper 'color', ->
 clickPill = (entity, e) ->
   target = Session.get 'target'
   type = Session.get 'type'
+
   if target is entity._id
     Session.set 'target', null
     Session.set 'type', null

@@ -1,7 +1,5 @@
 <template name='singleAchievement'>
-  {{> achievement}}
-
-  <h3>{{strings "achievers"}}</h3>
+  <h4>{{strings "achievers"}}</h4>
   <div>
     {{#each achievers}}
       <div class="stacked-pills">
@@ -16,7 +14,16 @@
     {{/if}}
   </div>
 
-  <h3>{{strings "comments"}}</h3>
+  <h4>{{strings "questers"}}</h4>
+  <div>
+    {{#each questers}}
+      {{> miniUser}}
+    {{else}}
+      {{> noContent}}
+    {{/each}}
+  </div>
+
+  <h4>{{strings "comments"}}</h4>
   <div>
     {{#each comments}}
       {{> comment}}
@@ -25,7 +32,7 @@
     {{/each}}
   </div>
 
-  <h3>{{strings "voters"}}</h3>
+  <h4>{{strings "voters"}}</h4>
   <div>
     {{#each voters}}
       {{> miniUser}}

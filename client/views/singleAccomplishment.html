@@ -1,7 +1,5 @@
 <template name='singleAccomplishment'>
-  {{> otherAccomplishment}}
-
-  <h3>{{strings "comments"}}</h3>
+  <h4>{{strings "comments"}}</h4>
   <div>
     {{#each comments}}
       {{> comment}}
@@ -10,7 +8,7 @@
     {{/each}}
   </div>
 
-  <h3>{{strings "voters"}}</h3>
+  <h4>{{strings "voters"}}</h4>
   <div>
     {{#each voters}}
       {{> miniUser}}
