@@ -1,5 +1,8 @@
 <template name='baseAchievement'>
   <div class="media achievement pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
+    <div class="certificate pull-right">
+      <a class="value">{{value}}</a>
+    </div>
     <a class="icon pull-left" style="background-image: url('{{icon}}')"></a>
     <div class="media-body">
       <h4 class="media-heading"><a>{{title}}</a></h4>
@@ -8,7 +11,6 @@
       <span class="muted"><i class="icon-comment"/> {{comments}}</span>
       <span class="muted"><i class="icon-star"/> {{favourites}}</span>
       <span class="muted"><i class="icon-certificate"/> {{accomplishments}}</span>
-      <span class="muted">+XP: {{value}}</span>
 
       {{#if selected}}
         <ul class="nav nav-pills hidden-phone">
