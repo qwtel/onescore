@@ -1,7 +1,7 @@
 Template.userBanner.events
-  'click .pill': (e) ->
-    e.stopImmediatePropagation()
-    clickPill this, e
+  #'click .pill': (e) ->
+  #  e.stopImmediatePropagation()
+  #  clickPill this, e
 
   'click .nav': (e) ->
     e.stopImmediatePropagation()

@@ -1,5 +1,5 @@
 <template name='userBanner'>
-  <div class="media pill user-banner click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
+  <div class="media pill user-banner">
     {{#if profile}}
     <a class="profile-pic pull-left" style="width: 150px; height: 150px;">
       <img class="media-object" style="border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture?width=150&height=150">
@@ -19,12 +19,6 @@
       <span class="muted"><i class="icon-comment"/> {{numComments}}</span>
       <span class="muted"><i class="icon-star"/> {{numFavs}}</span>
       <span class="muted"><i class="icon-lock"/> {{numAccomplishments}}</span>
-
-      {{#if selected}}
-        <ul class="nav nav-pills hidden-phone">
-          {{> actionbar}}
-        <ul>
-      {{/if}}
     </div>
     {{/if}}
   </div>
