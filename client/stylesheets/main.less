@@ -39,12 +39,9 @@ body {
   }
 }
 
-#background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.btn, .navbar-inner {
+  background-image: none!important;
+  box-shadow: none!important;
 }
 
 .nested {
@@ -125,7 +122,7 @@ body {
     @media (max-width: 480px) {
       width: @iconSizeSmall;
       height: @iconSizeSmall;
-      background-size: @iconSizeSmall @iconSizeSmall;
+      //background-size: @iconSizeSmall @iconSizeSmall;
     }
   }
 
@@ -149,7 +146,7 @@ body {
       font-size: @iconSize * 0.45;
       line-height: @iconSize;
       @media (max-width: 480px) {
-        font-size: @iconSizeSmall * 0.5;
+        font-size: @iconSizeSmall * 0.45;
         line-height: @iconSizeSmall;
       }
     }
