@@ -24,7 +24,7 @@ Template.singleAccomplishment.helpers
 
     Meteor.users.find sel,
       sort: sort
-      limit: 3 * limit
+      #limit: 3 * limit
 
   #hasMore: ->
   #  sel = Template.scope.getSelect()

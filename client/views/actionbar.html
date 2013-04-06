@@ -1,14 +1,13 @@
 <template name='actionbar'>
   {{#each skills}}
     {{#if usable}}
-      <li class="divider-vertical"></li>
       <li class="{{#if active}}active{{/if}}">
         <a {{#if url}}href="/{{url}}"{{/if}} class="spell" title="{{name}}" rel="popover" data-original-title="{{name}}" data-content="{{description}}<div class='muted'>{{cooldownText}}</div>">
           <i class="icon-{{icon}}" />
           <span class="spell-name visible-phone">{{name}}</span>
         </a>
       </li>
+      <li class="divider-vertical"></li>
     {{/if}}
   {{/each}}
-  <li class="divider-vertical"></li>
 </template>

@@ -1,13 +1,13 @@
 <template name="page">
   {{> navbar}}
 
-  <div class="row-fluid">
+  <div class="main-row row-fluid">
   {{#if equals "page" "home"}}
     <div class="span6 stories">
       <h3>{{strings "achievers"}}</h3>
       {{> home}}
     </div>
-    <div class="afx hidden-phone">
+    <aside class="afx hidden-phone">
       <div class="hide-scrollbar">
         {{#isolate}}
           {{#if targetAchievement}}
@@ -29,7 +29,7 @@
           {{/if}}
         {{/isolate}}
       </div>
-    </div>
+    </aside>
   {{else}}
 
   {{#if equals "page" "notification"}}
@@ -37,10 +37,10 @@
       <h3>Notifications</h3>
       {{> notifications}}
     </div>
-    <div class="afx hidden-phone">
+    <aside class="afx hidden-phone">
       <div class="hide-scrollbar">
       </div>
-    </div>
+    </aside>
   {{else}}
 
 
@@ -49,7 +49,7 @@
       <h3>Achievements</h3>
       {{> achievements}}
     </div>
-    <div class="afx hidden-phone">
+    <aside class="afx hidden-phone">
       <div class="hide-scrollbar">
         {{#isolate}}
           {{#if targetAchievement}}
@@ -71,7 +71,7 @@
           {{/if}}
         {{/isolate}}
       </div>
-    </div>
+    </aside>
   {{else}}
 
   {{#if equals "page" "ladder"}}
@@ -91,7 +91,7 @@
         {{/with}}
       {{/if}}
     </div>
-    <div class="afx hidden-phone">
+    <aside class="afx hidden-phone">
       <div class="hide-scrollbar">
         {{#isolate}}
           {{#if targetAchievement}}
@@ -113,7 +113,7 @@
           {{/if}}
         {{/isolate}}
       </div>
-    </div>
+    </aside>
   {{else}}
 
   {{#if equals "page" "questlog"}}
@@ -151,7 +151,7 @@
       {{#if entity}}
         {{#with entity}}
           <h3>{{strings "accomplishment"}}</h3>
-          {{> accomplishment}}
+          {{> otherAccomplishment}}
           {{> singleAccomplishment}}
         {{/with}}
       {{/if}}

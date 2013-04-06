@@ -6,7 +6,7 @@ Template.notifications.helpers
 
       sel = 
         receivers: userId
-        #user: $ne: userId
+        user: $ne: userId
 
       Notifications.find sel,
         sort: date: -1

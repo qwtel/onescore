@@ -10,7 +10,7 @@ Template.singleAchievement.helpers
     limit = Session.get("limit-#{@_id}") or 1
     Accomplishments.find sel,
       sort: sort
-      limit: 3 * limit
+      limit: 2 * limit
 
   comments: ->
     sel = Template.scope.getSelect()
@@ -45,7 +45,7 @@ Template.singleAchievement.helpers
 
     Meteor.users.find sel,
       sort: sort
-      limit: 3 * limit
+      #limit: 3 * limit
 
   voters: ->
     sel = Template.scope.getSelect()
@@ -60,7 +60,7 @@ Template.singleAchievement.helpers
 
     Meteor.users.find sel,
       sort: sort
-      limit: 3 * limit
+      #limit: 3 * limit
 
   hasStory: ->
     @story? and @story != ''

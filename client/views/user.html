@@ -1,8 +1,8 @@
 <template name='user'>
-  <div class="media pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
+  <div class="pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
     {{#if profile}}
     <a class="profile-pic pull-left">
-      <img class="media-object" style="width:45px; height:45px; border-radius: 3px;" src="https://graph.facebook.com/{{profile.username}}/picture">
+      <img class="media-object" style="width:45px; height:45px; border-radius: 3px; margin-right: 10px" src="https://graph.facebook.com/{{profile.username}}/picture">
     </a>
     <div class="media-body">
       <h4 class="media-heading"><a>{{profile.username}}</a></h4>

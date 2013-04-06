@@ -28,7 +28,11 @@ body {
   background: @grayLighter;
   overflow-y: scroll;
   overflow-x: hidden;
+  @media(max-width: 480px) {
+    padding: 65px 10px;
+  }
 
+  /*
   @media (max-width: 768px) {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -36,6 +40,16 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+  }
+  */
+}
+
+.main-row .span6 {
+  width: 50%;
+  padding-right: 20px;
+  @media(max-width: 768px) {
+    width: 100%;
+    padding-right: 0;
   }
 }
 
@@ -46,9 +60,12 @@ body {
 
 .nested {
   margin-top: 15px;
-  padding-left: 13px;
-  margin-left: 12px;
-  border-left: 5px solid @grayLight;
+  padding-left: 20px;
+  //margin-left: 5px;
+  border-left: 1px dashed @grayLight;
+  @media(max-width: 480px) {
+    padding-left: 10px;
+  }
 }
 
 .nested.accepted {
@@ -99,6 +116,7 @@ body {
 
 .click-me-im-famous {
   cursor: pointer;
+  background: darken(@grayLighter, 5%);
 }
 
 .click-me-im-famous:hover {
@@ -158,11 +176,10 @@ body {
   position: relative;
   padding: 10px;
   border-radius: 5px;
-  //border: 1px solid darken(@grayLighter, 5%);
-  background: darken(@grayLighter, 5%);
+  border: 1px solid darken(@grayLighter, 10%);
 
   a {
-    color: @gray;
+    color: @grayDark;
     text-decoration: none;
   }
 
@@ -204,10 +221,6 @@ body {
   .lead {
     margin-bottom: 0;
   }
-}
-
-.pill.inbetween:hover {
-  background: darken(@grayLighter, 5%);
 }
 
 .pill.accepted, .breadcrumb .accepted {
@@ -279,6 +292,38 @@ body {
   background: transparent;
 }
 
+.achievement.selected {
+  .certificate {
+    opacity: 0;
+    /*
+    background-position: 0 1*@iconSize;
+    @media (max-width: 480px) {
+      background-position: 0 1*@iconSizeSmall;
+    }
+    */
+  }
+}
+
+/*
+.achievement.uncompleted.selected {
+  .certificate .value {
+    color: @red;
+  }
+}
+
+.achievement.accepted.selected {
+  .certificate .value {
+    color: @blue;
+  }
+}
+
+.achievement.completed.selected {
+  .certificate .value {
+    color: @green;
+  }
+}
+*/
+
 .pill.selected {
   background: @red;
   color: lighten(@red, 45%);
@@ -288,12 +333,6 @@ body {
   }
   .nav i {
     background-image: url('/img/glyphicons-halflings-white.png');
-  }
-  .certificate {
-    background-position: 0 1*@iconSize;
-    @media (max-width: 480px) {
-      background-position: 0 1*@iconSizeSmall;
-    }
   }
 }
 
@@ -371,6 +410,7 @@ body {
 
   .score {
     font-size: 24px;
+    font-weight: bold;
   }
 
   .profile-pic {
@@ -449,7 +489,14 @@ body {
     .label {
       position: relative;
       top: -41px;
+      background-color: @green;
     }
+  }
+}
+
+.xp-bar {
+  .bar, .bar-success {
+    background-image: none!important;
   }
 }
 
@@ -463,20 +510,9 @@ body {
   overflow: hidden;
   padding-top: 45px;
   padding-left: 20px;
-  background: darken(@grayLighter, 5%);
+  //background: darken(@grayLighter, 5%);
+  border-left: 1px solid darken(@grayLighter, 10%);
 
-  .pill {
-    border: 1px solid darken(@grayLighter, 10%);
-  }
-
-  .stacked-pills > .pill:first-child {
-    border-top: 1px solid darken(@grayLighter, 10%);
-  }
-
-  .stacked-pills > .pill:last-child {
-    border-bottom: 1px solid darken(@grayLighter, 10%);
-  }
-  
   .hide-scrollbar {
     box-sizing: border-box;
     padding: 20px 20px 250px 0;
@@ -487,7 +523,7 @@ body {
 }
 
 .stacked-pills {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   .nested {
     margin-bottom: 15px;
   }
@@ -503,12 +539,12 @@ body {
 .stacked-pills > .pill:first-child {
   border-radius: 5px 5px 0 0;
   border-bottom: 1px solid darken(@grayLighter, 10%);
-  border-top: none;
+  border-top: 1px solid darken(@grayLighter, 10%);
 }
 
 .stacked-pills > .pill:last-child {
   border-radius: 0 0 5px 5px;
-  border-bottom: none;
+  border-bottom: 1px solid darken(@grayLighter, 10%);
 }
 
 .textarea-100 {
@@ -556,4 +592,16 @@ body {
 
 .loading {
   text-align: center; 
+}
+
+.pill.float {
+  display: inline-block;
+  margin-bottom: 5px;
+
+  .nav-pills > li {
+    display: none;
+  }
+  .nav-pills > li:first-child {
+    display: block;
+  }
 }
