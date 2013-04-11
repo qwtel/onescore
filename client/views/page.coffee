@@ -35,3 +35,8 @@ Template.page.helpers
     if temp?
       Accomplishments.findOne temp
 
+  targetComment: ->
+    temp = Session.get 'temp'
+    if temp?
+      Comments.findOne temp
+

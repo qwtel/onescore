@@ -2,8 +2,7 @@ Template.newStory.events
   'click .add-story': (e) ->
     $t = $(e.currentTarget).parents('.pill')
     text = $t.find(".accomplished-#{@_id}").val()
-    if text isnt ''
-      Meteor.call 'accomplish', @_id, text
+    Meteor.call 'accomplish', @_id, text
     Session.set "accomplished", null
 
   'keydown textarea': (e) ->

@@ -24,4 +24,3 @@ Template.notifications.helpers
 
 Template.notifications.destroyed = ->
   Meteor.call 'notifyy'
-

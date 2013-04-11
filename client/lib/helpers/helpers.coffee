@@ -75,8 +75,11 @@ clickPill = (entity, e) ->
       Session.set "temp", null
 
   else
+    typeHack = if entity.type? then entity.type else 'user' #XXX
+    Router.navigate "/#{typeHack}/#{entity._id}", false
+
     Session.set 'target', entity._id
-    Session.set 'type', if entity.type? then entity.type else 'user' # XXX
+    Session.set 'type', typeHack
     Session.set "target-#{entity._id}", true
 
     if $(e.currentTarget).parents('.afx').length is 0

@@ -1,9 +1,14 @@
 Meteor.methods
   newAchievement: (title, description, parentId, imgur) ->
+    #if title? and title.length > 50 
+    #  throw new Meteor.Error 500, "Title too long"
+    #if description? and description.length > 10000 
+    #  throw new Meteor.Error 500, "Text too long"
+
     user = Meteor.user()
     skill = Skills.findOne 'newAchievement'
-    if !isAllowedToUseSkill user, skill
-      return 0
+    unless isAllowedToUseSkill user, skill
+      throw new Meteor.Error 500, "User not allowed to use skill"
 
     achievement = _.extend basic(),
       type: 'achievement'
@@ -34,7 +39,8 @@ Meteor.methods
   favourite: (id) ->
     user = Meteor.user()
     skill = Skills.findOne 'favourite'
-    if !isAllowedToUseSkill user, skill then return 0 
+    unless isAllowedToUseSkill user, skill
+      throw new Meteor.Error 500, "User not allowed to use skill"
 
     fav = Favourites.findOne
       user: user._id
@@ -59,9 +65,13 @@ Meteor.methods
           favourites: 1
 
   accomplish: (id, story) ->
+    #if story? and story.length > 10000 
+    #  throw new Meteor.Error 500, "Text too long"
+
     user = Meteor.user()
     skill = Skills.findOne 'accomplish'
-    if !isAllowedToUseSkill user, skill then return 0
+    unless isAllowedToUseSkill user, skill 
+      throw new Meteor.Error 500, "User not allowed to use skill"
 
     voteFor user, id, 'achievement', true, Skills.findOne('voteUp')
 
@@ -69,10 +79,10 @@ Meteor.methods
       user: user._id
       entity: id
 
-    if acc?
+    if acc? 
       if story? and story isnt acc.story
         Accomplishments.update acc._id, $set: story: story
-      return acc._id 
+        return acc._id 
     else
       data = _.extend basic(),
         entity: id
@@ -109,13 +119,15 @@ Meteor.methods
   voteUp: (id, type) ->
     user = Meteor.user()
     skill = Skills.findOne 'voteUp'
-    if !isAllowedToUseSkill user, skill then return 0
+    unless isAllowedToUseSkill user, skill
+      throw new Meteor.Error 500, "User not allowd to use skill"
     voteFor user, id, type, true, skill
 
   voteDown: (id, type) ->
     user = Meteor.user()
     skill = Skills.findOne 'voteDown'
-    if !isAllowedToUseSkill user, skill then return 0
+    unless isAllowedToUseSkill user, skill
+      throw new Meteor.Error 500, "User not allowed to use skill"
     voteFor user, id, type, false, skill
 
   notifyy: ->
@@ -130,9 +142,13 @@ Meteor.methods
       multi: true
       
   comment: (id, type, text) ->
+    #if text? and text.length > 10000 
+    #  throw new Meteor.Error 500, "Text too long"
+
     user = Meteor.user()
     skill = Skills.findOne 'comment'
-    if !isAllowedToUseSkill user, skill then return 0
+    unless isAllowedToUseSkill user, skill
+      throw new Meteor.Error 500, "User not allowed to use skill"
    
     comment = _.extend basic(),
       type: 'comment'
@@ -243,7 +259,6 @@ prevLevels = (level) ->
   return prev
 
 isAllowedToUseSkill = (user, skill) ->
-
   if _.has(skill, 'level')
     unless user.profile.level >= skill.level
       return false

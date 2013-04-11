@@ -4,7 +4,8 @@
   <div class="main-row row-fluid">
   {{#if equals "page" "home"}}
     <div class="span6 stories">
-      <h3>{{strings "achievers"}}</h3>
+      <h3>{{strings "home"}}</h3>
+      <p class="muted">{{strings "homeDesc"}}</p>
       {{> home}}
     </div>
     <aside class="afx hidden-phone">
@@ -19,7 +20,6 @@
               {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
             {{else}}
               {{#if targetUser}}
-                <h3>{{strings "user"}}</h3>
                 {{#with targetUser}} {{> userBanner}} {{/with}}
               {{else}}
                 {{> sort}}
@@ -34,11 +34,38 @@
 
   {{#if equals "page" "notification"}}
     <div class="span6">
-      <h3>Notifications</h3>
+      <h3>{{strings "notifications"}}</h3>
+      <p class="muted">{{strings "notificationDesc"}}</p>
       {{> notifications}}
     </div>
     <aside class="afx hidden-phone">
       <div class="hide-scrollbar">
+        {{#isolate}}
+          {{#if targetAchievement}}
+            <h3>{{strings "achievement"}}</h3>
+            {{#with targetAchievement}} 
+              {{> baseAchievement}} 
+              {{> singleAchievement}} 
+            {{/with}}
+          {{else}}
+          {{#if targetAccomplishment}}
+            <h3>{{strings "accomplishment"}}</h3>
+            {{#with targetAccomplishment}} 
+              {{> otherAccomplishment}} 
+              {{> singleAccomplishment}} 
+            {{/with}}
+          {{else}}
+          {{#if targetComment}}
+            <h3>{{strings "comment"}}</h3>
+            {{#with targetComment}} {{> comment}} {{/with}}
+          {{else}}
+          {{#if targetUser}}
+            {{#with targetUser}} {{> userBanner}} {{/with}}
+          {{/if}}
+          {{/if}}
+          {{/if}}
+          {{/if}}
+        {{/isolate}}
       </div>
     </aside>
   {{else}}
@@ -46,7 +73,8 @@
 
   {{#if equals "page" "explore"}}
     <div class="span6">
-      <h3>Achievements</h3>
+      <h3>{{strings "explore"}}</h3>
+      <p class="muted">{{strings "exploreDesc"}}</p>
       {{> achievements}}
     </div>
     <aside class="afx hidden-phone">
@@ -61,7 +89,6 @@
               {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
             {{else}}
               {{#if targetUser}}
-                <h3>{{strings "user"}}</h3>
                 {{#with targetUser}} {{> userBanner}} {{/with}}
               {{else}}
                 {{> sort}}
@@ -75,11 +102,20 @@
   {{else}}
 
   {{#if equals "page" "ladder"}}
-    <div class="span8">
+    <div class="span6">
+      <h3>{{strings "ladder"}}</h3>
+      <p class="muted">{{strings "ladderDesc"}}</p>
       {{> ladder}}
     </div>
-    <div class="span4 hidden-phone">
-      {{> noContent}}
+    <aside class="afx hidden-phone">
+      <div class="hide-scrollbar">
+        {{#isolate}}
+          {{#if targetUser}}
+            {{#with targetUser}} {{> userBanner}} {{/with}}
+          {{else}}
+          {{/if}}
+        {{/isolate}}
+      </div>
     </div>
   {{else}}
 
@@ -103,7 +139,6 @@
               {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
             {{else}}
               {{#if targetUser}}
-                <h3>{{strings "user"}}</h3>
                 {{#with targetUser}} {{> userBanner}} {{/with}}
               {{else}}
                 {{> sort}}
@@ -162,6 +197,7 @@
     <div class="span8 offset2">
       {{#if entity}}
         {{#with entity}}
+          <h3>{{strings "comment"}}</h3>
           {{> comment}}
         {{/with}}
       {{/if}}

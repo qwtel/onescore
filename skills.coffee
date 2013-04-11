@@ -41,7 +41,7 @@ Skills.insert
   name: strings 'ladder'
   description: strings 'ladderDesc'
   active: -> Session.equals 'page', 'ladder'
-  level: 99
+  level: 5
   usable: true
   nav: true
 

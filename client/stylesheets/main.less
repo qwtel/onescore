@@ -51,6 +51,10 @@ body {
     width: 100%;
     padding-right: 0;
   }
+  h3 + p {
+    margin-top: -15px;
+    margin-bottom: 15px;
+  }
 }
 
 .btn, .navbar-inner {
@@ -120,6 +124,7 @@ body {
 }
 
 .click-me-im-famous:hover {
+  text-decoration: none;
   background: darken(@grayLighter, 10%);
 }
 
@@ -179,9 +184,19 @@ body {
   border: 1px solid darken(@grayLighter, 10%);
 
   a {
-    color: @grayDark;
-    text-decoration: none;
+    color: @red;
   }
+  a:hover {
+    color: @blue;
+  }
+  a:visited {
+    color: @green;
+  }
+
+  //a {
+  //  color: @grayDark;
+  //  text-decoration: none;
+  //}
 
   .nav-pills {
     background-color: inherit;
@@ -578,6 +593,9 @@ body {
   .btn {
     margin: 0 8px;
   }
+  .usr {
+    cursor: pointer;
+  }
 }
 
 .story {
@@ -603,5 +621,19 @@ body {
   }
   .nav-pills > li:first-child {
     display: block;
+  }
+}
+
+.ladder {
+  width: 100%;
+
+  tr {
+    text-align: left;
+  }
+
+  .rank {
+    font-size: 50px;
+    line-height: 70px;
+    font-weight: bold;
   }
 }

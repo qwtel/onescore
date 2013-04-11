@@ -77,3 +77,5 @@ Strings.insert _id: 'achievers', string: "Unlocks"
 Strings.insert _id: 'comments', string: "Comments"
 Strings.insert _id: 'voters', string: "Voters"
 Strings.insert _id: 'questers', string: "Questers"
+
+Strings.insert _id: 'rank', string: "Rank"

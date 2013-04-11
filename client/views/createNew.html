@@ -1,8 +1,8 @@
 <template name='createNew'>
   {{#unless equals "target" "new"}}
-    <div class="pill create-new click-me-im-famous" style="margin-top: 15px">
-      <center><a><i class="icon-file"/> {{strings "newAchievementDesc"}}</a></center>
-    </div>
+    <a class="pill btn create-new click-me-im-famous" style="margin-top: 15px">
+      <center><i class="icon-file"/> {{strings "newAchievementDesc"}}</center>
+    </a>
   {{else}}
     {{#with newAchievement}}
       {{> newAch}}

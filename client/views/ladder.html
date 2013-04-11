@@ -1,7 +1,19 @@
-<template name='ladder'>
-  {{#each users}}
-  {{> user}}
-  {{else}}
-  {{> noContent}}
-  {{/each}}
+<template name="ladder">
+  <table class="ladder table">
+    <!--<caption>...</caption>-->
+    <thead>
+      <tr>
+        <th>{{strings "rank"}}</th>
+        <th>{{strings "user"}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <td class="rank">{{rank}}</td>
+        <td>{{> user}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </template>

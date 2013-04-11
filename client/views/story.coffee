@@ -10,12 +10,8 @@ Template.story.helpers
   selected: -> 
     Session.equals 'target', @_id
 
-  #isTweet: ->
-  #  if @story
-  #    @story.length <= 140
-
   hasContent: ->
-    @story? or @imgur?
+    (@story? and @story.length isnt 0) or @imgur?
 
   votesDiff: ->
     @upVotes - (@votes - @upVotes)
