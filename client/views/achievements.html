@@ -1,9 +1,12 @@
 <template name='achievements'>
-  {{> createNew}}
+  {{#if hasLevel "newAchievement"}}
+    {{> createNew}}
+  {{/if}}
+
   {{#each achievements}}
-  {{> achievement}}
+    {{> baseAchievement}}
   {{else}}
-  {{> noContent}}
+    {{> noContent}}
   {{/each}}
 
   {{#if hasMore}}

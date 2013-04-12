@@ -19,7 +19,7 @@ Skills.insert
   name: strings 'notifications'
   description: strings 'notificationDesc' 
   active: -> Session.equals 'page', 'notification'
-  level: 1
+  level: 4
   usable: true
   nav: true
 
@@ -47,11 +47,11 @@ Skills.insert
 
 Skills.insert
   _id: 'user'
-  url: -> "user/#{Meteor.userId()}"
+  url: -> "user/#{Meteor.userId()}/unlocks"
   icon: 'user'
   name: strings 'profile'
   description: strings 'profileDesc'
-  active: -> Session.equals 'page', 'user' 
+  active: -> Session.equals('page', 'user') and (Session.equals('tab-user', 'unlocks') or Session.equals('tab-user', 'activity'))
   level: 1
   usable: true
   nav: true
@@ -62,8 +62,8 @@ Skills.insert
   icon: 'star'
   name: strings 'questlog'
   description: strings 'questlogDesc'
-  active: -> Session.equals 'page', 'questlog'
-  level: 99
+  active: -> Session.equals('page', 'user') and Session.equals('tab-user', 'questlog')
+  level: 5
   usable: true
   nav: true
 
@@ -73,7 +73,7 @@ Skills.insert
   name: strings 'newAchievement'
   description: strings 'newAchievementDesc' 
   cooldown: 5
-  level: 1
+  level: 4
   usable: false
   active: false
   #url: "achievement/new"
@@ -83,7 +83,7 @@ Skills.insert
   icon: 'eye-open'
   name: strings 'inspect'
   description: strings 'inspectDesc' 
-  level: 1
+  level: 2
   active: ->
     id = Session.get 'id'
     target = Session.get 'target'
@@ -101,7 +101,7 @@ Skills.insert
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
-  level: 1
+  level: 3
   usable: -> (Session.get 'type')? and (Session.get 'target')?
   click: ->
     id = Session.get 'target'
@@ -119,7 +119,7 @@ Skills.insert
   passive: true
   description: 'Allows you to vote for content'
   cooldown: 1
-  level: 4
+  level: 6
   usable: -> (Session.get 'type')? and (Session.get 'target')?
   click: ->
     id = Session.get 'target'
@@ -136,7 +136,7 @@ Skills.insert
   name: strings 'replyAchievement'
   description: strings 'replyAchievementDesc' 
   cooldown: 5
-  level: 99
+  level: 999
   usable: -> 
     Session.equals 'type', 'achievement'
   #url: -> 
@@ -161,7 +161,7 @@ Skills.insert
   passive: true
   description: 'Allows you to comment on content'
   cooldown: 10
-  level: 1
+  level: 4
   usable: -> 
     if (Session.get 'type')? and (Session.get 'target')?
       unless Session.get('type') is 'user'
@@ -171,7 +171,7 @@ Skills.insert
     id = Session.get 'target'
     Session.set "comment", id
     Meteor.flush()
-    #$(".comment-#{id}").first().focus().select()
+    $(".comment-#{id}").first().focus()
   active: ->
     id = Session.get 'target'
     Session.equals "comment", id
@@ -183,7 +183,7 @@ Skills.insert
   name: strings 'accept'
   description: strings 'acceptDesc' 
   cooldown: 1
-  level: 2
+  level: 5
   usable: -> Session.equals 'type', 'achievement'
   click: ->
     id = Session.get 'target'
@@ -204,9 +204,11 @@ Skills.insert
   usable: -> Session.equals 'type', 'achievement'
   click: ->
     id = Session.get 'target'
-    Session.set "accomplished", id
-    Meteor.call 'accomplish', id, null, ->
-      #$(".accomplished-#{id}").first().focus().select()
+    Meteor.call 'accomplish', id, null, (error, res) ->
+      if res is true
+        Session.set "accomplished", id
+        Meteor.flush()
+        $(".accomplished-#{id}").first().focus()
 
   active: ->
     id = Session.get 'target'

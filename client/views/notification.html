@@ -1,4 +1,5 @@
 <template name='notification'>
+  <td>
   {{#with user}} 
     <a class="usr pointer pull-left" title="{{profile.username}}">
       <img style="width:30px; height:30px; border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture">
@@ -56,7 +57,7 @@
   {{/if}}
   {{#if type targetType "achievement"}}
     {{#with targetEntityObject}}
-    <a class='btn pull-left' itle='{{strings "achievement"}}'>
+    <a class='btn pull-left' title='{{strings "achievement"}}'>
       <i class='icon-certificate'></i>
     </a>
     {{/with}}
@@ -68,5 +69,8 @@
     </a>
     {{/with}}
   {{/if}}
-  <span class='muted pull-right'>{{timeago date}}</span>
+  </td>
+  <td>
+  <span class='timeago muted pull-right'>{{timeago date}}</span>
+  </td>
 </template>

@@ -4,6 +4,8 @@
   <div class="main-row row-fluid">
   {{#if equals "page" "home"}}
     <div class="span6 stories">
+      {{> onescore}}
+
       <h3>{{strings "home"}}</h3>
       <p class="muted">{{strings "homeDesc"}}</p>
       {{> home}}
@@ -20,7 +22,7 @@
               {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
             {{else}}
               {{#if targetUser}}
-                {{#with targetUser}} {{> userBanner}} {{/with}}
+                {{#with targetUser}} {{> profile}} {{/with}}
               {{else}}
                 {{> sort}}
                 {{> scope}}
@@ -44,7 +46,6 @@
           {{#if targetAchievement}}
             <h3>{{strings "achievement"}}</h3>
             {{#with targetAchievement}} 
-              {{> baseAchievement}} 
               {{> singleAchievement}} 
             {{/with}}
           {{else}}
@@ -60,7 +61,7 @@
             {{#with targetComment}} {{> comment}} {{/with}}
           {{else}}
           {{#if targetUser}}
-            {{#with targetUser}} {{> userBanner}} {{/with}}
+            {{#with targetUser}} {{> profile}} {{/with}}
           {{/if}}
           {{/if}}
           {{/if}}
@@ -89,7 +90,7 @@
               {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
             {{else}}
               {{#if targetUser}}
-                {{#with targetUser}} {{> userBanner}} {{/with}}
+                {{#with targetUser}} {{> profile}} {{/with}}
               {{else}}
                 {{> sort}}
                 {{> scope}}
@@ -111,7 +112,7 @@
       <div class="hide-scrollbar">
         {{#isolate}}
           {{#if targetUser}}
-            {{#with targetUser}} {{> userBanner}} {{/with}}
+            {{#with targetUser}} {{> profile}} {{/with}}
           {{else}}
           {{/if}}
         {{/isolate}}
@@ -132,19 +133,29 @@
         {{#isolate}}
           {{#if targetAchievement}}
             <h3>{{strings "achievement"}}</h3>
-            {{#with targetAchievement}} {{> singleAchievement}} {{/with}}
+            {{#with targetAchievement}} 
+              {{> singleAchievement}} 
+            {{/with}}
           {{else}}
-            {{#if targetAccomplishment}}
-              <h3>{{strings "accomplishment"}}</h3>
-              {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
-            {{else}}
-              {{#if targetUser}}
-                {{#with targetUser}} {{> userBanner}} {{/with}}
-              {{else}}
-                {{> sort}}
-                {{> scope}}
-              {{/if}}
-            {{/if}}
+          {{#if targetAccomplishment}}
+            <h3>{{strings "accomplishment"}}</h3>
+            {{#with targetAccomplishment}} 
+              {{> otherAccomplishment}} 
+              {{> singleAccomplishment}} 
+            {{/with}}
+          {{else}}
+          {{#if targetComment}}
+            <h3>{{strings "comment"}}</h3>
+            {{#with targetComment}} {{> comment}} {{/with}}
+          {{else}}
+          {{#if targetUser}}
+            {{#with targetUser}} {{> profile}} {{/with}}
+          {{else}}
+            {{> sort}}
+            {{> scope}}
+          {{/if}}
+          {{/if}}
+          {{/if}}
           {{/if}}
         {{/isolate}}
       </div>
@@ -174,7 +185,6 @@
       {{#if entity}}
         {{#with entity}}
           <h3>{{strings "achievement"}}</h3>
-          {{> achievement}}
           {{> singleAchievement}}
         {{/with}}
       {{/if}}
@@ -216,7 +226,7 @@
   {{/if}}
   </div>
 
-  <div class="actionbar navbar navbar-fixed-bottom visible-phone">
+  <div class="actionbar navbar navbar-fixed-bottom">
     <div class="navbar-inner">
       <ul class="nav">
         {{> actionbar}}

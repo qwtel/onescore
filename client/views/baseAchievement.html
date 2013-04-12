@@ -7,10 +7,19 @@
     <div class="media-body">
       <h4 class="media-heading"><a>{{title}}</a></h4>
       <p>{{description}}</p>
-      <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
-      <span class="muted"><i class="icon-comment"/> {{comments}}</span>
-      <span class="muted"><i class="icon-star"/> {{favourites}}</span>
-      <span class="muted"><i class="icon-lock"/> {{accomplishments}}</span>
+
+      {{#if hasLevel "voteUp"}}
+        <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
+      {{/if}}
+      {{#if hasLevel "comment"}}
+        <span class="muted"><i class="icon-comment"/> {{comments}}</span>
+      {{/if}}
+      {{#if hasLevel "questlog"}}
+        <span class="muted"><i class="icon-star"/> {{favourites}}</span>
+      {{/if}}
+      {{#if hasLevel "accomplish"}}
+        <span class="muted"><i class="icon-lock"/> {{accomplishments}}</span>
+      {{/if}}
 
       {{#if selected}}
         <ul class="nav nav-pills hidden-phone">

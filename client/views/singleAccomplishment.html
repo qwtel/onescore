@@ -1,19 +1,43 @@
 <template name='singleAccomplishment'>
-  <h4>{{strings "comments"}}</h4>
-  <div>
-    {{#each comments}}
-      {{> comment}}
-    {{else}}
-      {{> noContent}}
-    {{/each}}
-  </div>
+  <ul class="nav nav-tabs" style="margin-top: 20px">
+    <li class="{{#if equals "tab-accomplishment" "people"}}active{{/if}}">
+      <a href="/accomplishment/{{_id}}/people" data-tab="people">{{strings "people"}}</a>
+    </li>
+    {{#if hasLevel "comment"}}
+    <li class="{{#if equals "tab-accomplishment" "comments"}}active{{/if}}">
+      <a href="/accomplishment/{{_id}}/comments" data-tab="comments">{{strings "comments"}}</a>
+    </li>
+    {{/if}}
+  </ul>
 
-  <h4>{{strings "voters"}}</h4>
-  <div>
-    {{#each voters}}
-      {{> floatUser}}
-    {{else}}
-      {{> noContent}}
-    {{/each}}
-  </div>
+  {{#if equals "tab-accomplishment" "comments"}}
+    {{#if hasLevel "comment"}}
+      <div class="div">
+        {{#each comments}}
+          {{> comment}}
+        {{else}}
+          {{> noContent}}
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/if}}
+
+  {{#if equals "tab-accomplishment" "people"}}
+    <div class="div">
+      <h4>{{strings "achiever"}}</h4>
+      {{#with user}}
+        {{> user}}
+      {{/with}}
+    </div>
+    {{#if hasLevel "voteUp"}}
+      <div class="div">
+        <h4>{{strings "voters"}}</h4>
+        {{#each voters}}
+          {{> floatUser}}
+        {{else}}
+          {{> noContent}}
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/if}}
 </template>

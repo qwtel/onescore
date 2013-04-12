@@ -121,11 +121,13 @@ body {
 .click-me-im-famous {
   cursor: pointer;
   background: darken(@grayLighter, 5%);
+  //background: #f5f5f5;
 }
 
 .click-me-im-famous:hover {
   text-decoration: none;
   background: darken(@grayLighter, 10%);
+  //background: #e6e6e6;
 }
 
 .achievement {
@@ -184,19 +186,9 @@ body {
   border: 1px solid darken(@grayLighter, 10%);
 
   a {
-    color: @red;
+    color: @grayDark;
+    text-decoration: none;
   }
-  a:hover {
-    color: @blue;
-  }
-  a:visited {
-    color: @green;
-  }
-
-  //a {
-  //  color: @grayDark;
-  //  text-decoration: none;
-  //}
 
   .nav-pills {
     background-color: inherit;
@@ -310,16 +302,16 @@ body {
 .achievement.selected {
   .certificate {
     opacity: 0;
-    /*
     background-position: 0 1*@iconSize;
     @media (max-width: 480px) {
       background-position: 0 1*@iconSizeSmall;
     }
-    */
+    @media (max-width: 768px) {
+      opacity: 1;
+    }
   }
 }
 
-/*
 .achievement.uncompleted.selected {
   .certificate .value {
     color: @red;
@@ -337,7 +329,6 @@ body {
     color: @green;
   }
 }
-*/
 
 .pill.selected {
   background: @red;
@@ -596,11 +587,24 @@ body {
   .usr {
     cursor: pointer;
   }
+  .timeago {
+    line-height: 30px;
+  }
 }
 
-.story {
+.story, .comment {
   img {
     max-width: 100%;
+  }
+
+  a {
+    color: @red;
+    &:hover {
+      color: @blue;
+    }
+    &:visited {
+      color: @green;
+    }
   }
 }
 
@@ -635,5 +639,21 @@ body {
     font-size: 50px;
     line-height: 70px;
     font-weight: bold;
+  }
+}
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover, .nav-tabs > .active > a:focus {
+  background: @grayLighter;
+}
+
+.div {
+  margin-bottom: 20px;
+}
+
+#login-buttons-facebook {
+  background-image: none!important;
+  box-shadow: none!important;
+  &:hover {
+    background-color: darken(#a5acc9, 15%);
   }
 }

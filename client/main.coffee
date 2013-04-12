@@ -1,9 +1,9 @@
 Router = new Router
 
 Meteor.startup ->
-  Session.set 'scope', 'all'
-
   Backbone.history.start pushState: true
+
+  Meteor.call 'updateUserScore'
 
   Accounts.ui.config
     requestPermissions:

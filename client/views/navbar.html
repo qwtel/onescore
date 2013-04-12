@@ -12,7 +12,13 @@
                 <img src='https://graph.facebook.com/{{profile.username}}/picture'/>
               </a>
               <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                <li><a href="/user/{{_id}}">{{strings "profile"}}</a></li>
+                <li><a href="/user/{{_id}}/unlocks">{{strings "achievers"}}</a></li>
+                {{#if hasLevel "questlog"}}
+                  <li><a href="/user/{{_id}}/questlog">{{strings "questlog"}}</a></li>
+                {{/if}}
+                {{#if hasLevel "notifications"}}
+                  <li><a href="/user/{{_id}}/activity">{{strings "activity"}}</a></li>
+                {{/if}}
                 <li class="divider"></li>
                 <li><a id="log-out">{{strings "signOut"}}</a></li>
               </ul>
@@ -26,10 +32,14 @@
       {{/if}}
       </ul>
 
+      {{#if hasLevel "notifications"}}
       {{#if numNotifications}}
-      <a class="brand" href="/notification" title="{{strings "title"}}">
-        <span class="label notify">{{numNotifications}}</span>
-      </a>
+        <a class="brand" href="/notification" title="{{strings "title"}}">
+          <span class="label notify">{{numNotifications}}</span>
+        </a>
+      {{else}}
+        <a class="brand" title="{{strings "title"}}" data-toggle="collapse" data-target=".nav-collapse"></a>
+      {{/if}}
       {{else}}
         <a class="brand" title="{{strings "title"}}" data-toggle="collapse" data-target=".nav-collapse"></a>
       {{/if}}

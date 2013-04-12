@@ -1,5 +1,5 @@
 <template name='userBanner'>
-  <div class="media pill user-banner {{color}}">
+  <div class="user media pill user-banner {{color}}">
     {{#if profile}}
     <a class="profile-pic pull-left" style="width: 150px; height: 150px;">
       <img class="media-object" style="border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture?width=150&height=150">
@@ -11,14 +11,25 @@
       <p>
         <strong>Level:</strong> {{profile.level}}
         <br/>
-        <strong>XP:</strong> {{profile.xp}}
+        <strong>{{strings "xp"}}:</strong> {{profile.xp}}
       </p>
 
-      <span class="muted"><i class="icon-file"/> {{numAchievements}}</span>
+      {{#if hasLevel "newAchievement"}}
+      <span class="muted"><i class="icon-certificate"/> {{numAchievements}}</span>
+      {{/if}}
+      {{#if hasLevel "voteUp"}}
       <span class="muted"><i class="icon-arrow-up"/> {{numVotes}}</span>
+      {{/if}}
+      {{#if hasLevel "comment"}}
       <span class="muted"><i class="icon-comment"/> {{numComments}}</span>
+      {{/if}}
+      {{#if hasLevel "questlog"}}
       <span class="muted"><i class="icon-star"/> {{numFavs}}</span>
+      {{/if}}
+      {{#if hasLevel "accomplish"}}
       <span class="muted"><i class="icon-lock"/> {{numAccomplishments}}</span>
+      {{/if}}
+
     </div>
     {{/if}}
   </div>

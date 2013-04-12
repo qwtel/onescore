@@ -1,3 +1,12 @@
+Template.singleAchievement.events
+  'click .nav-tabs a': (e) ->
+    if e.which is 1 and not (e.ctrlKey or e.metaKey)
+      e.stopImmediatePropagation()
+      e.preventDefault()
+      $t = $(e.currentTarget)
+      tab = $t.data 'tab'
+      Session.set 'tab-achievement', tab
+
 Template.singleAchievement.helpers
   user: -> Meteor.users.findOne _id: @user
 
@@ -5,6 +14,7 @@ Template.singleAchievement.helpers
     sel = Template.scope.getSelect()
     sel.entity = @_id
     sel.active = true
+    sel.user = $ne: Meteor.userId()
 
     sort = Template.sort.getSort()
     limit = Session.get("limit-#{@_id}") or 1

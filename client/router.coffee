@@ -1,11 +1,21 @@
 class Router extends Backbone.Router
+  constructor: (args) ->
+    super args
+    Session.set 'scope', 'all'
+    Session.set 'sort', 'hot'
+    Session.set 'tab-user', 'unlocks'
+    Session.set 'tab-achievement', 'unlocks'
+    Session.set 'tab-accomplishment', 'people'
+
   routes:
     '': 'home'
     'home': 'home'
     'explore': 'explore'
     'notification': 'notification'
+    'user/:id/:tab': 'user'
     'user/:id': 'user'
     'ladder': 'ladder'
+    ':type/:id/:tab': 'single'
     ':type/:id': 'single'
     ':crap': 'home'
     #'achievement/new': 'newAchievement'
@@ -15,31 +25,24 @@ class Router extends Backbone.Router
   home: ->
     @hardReset()
     Session.set 'page', 'home'
-    Session.set 'scope', 'all'
-    Session.set 'sort', 'hot'
 
   explore: ->
     @hardReset()
     Session.set 'page', 'explore'
-    Session.set 'scope', 'all'
-    Session.set 'sort', 'hot'
 
   ladder: ->
     @hardReset()
     Session.set 'page', 'ladder'
-    Session.set 'sort', 'best'
 
   notification: ->
     @hardReset()
     Session.set 'page', 'notification'
-    Session.set 'sort', 'new'
 
-  user: (id) ->
+  user: (id, tab) ->
     @hardReset()
-    Session.set 'id', id
     Session.set 'page', 'user'
-    Session.set 'scope', 'all'
-    Session.set 'sort', 'new'
+    Session.set 'id', id
+    Session.set 'tab-user', if tab? then tab else 'unlocks'
 
   questlog: (user) ->
     @profile user
@@ -50,11 +53,11 @@ class Router extends Backbone.Router
     Session.set 'id', id
     Session.set 'page', 'newAchievement'
 
-  single: (type, id) ->
+  single: (type, id, tab) ->
     @softReset()
     Session.set 'page', type
     Session.set 'id', id
-    Session.set 'sort', 'best'
+    Session.set "tab-#{type}", if tab? then tab else 'comments'
 
   softReset: ->
     $(document).scrollTop 0

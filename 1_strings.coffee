@@ -20,20 +20,22 @@ Strings.insert _id: 'ladderDesc', string: 'Compete with other players based on y
 Strings.insert _id: 'profile', string: 'Wall'
 Strings.insert _id: 'profileDesc', string: 'Check out recent activity'
 Strings.insert _id: 'questlog', string: 'Quest Log'
-Strings.insert _id: 'questlogDesc', string: 'Keept track of Achievements you want to complete'
+Strings.insert _id: 'questlogDesc', string: 'Keept track of Achievements you want to unlock'
 Strings.insert _id: 'newAchievement', string: 'Create'
 Strings.insert _id: 'newAchievementDesc', string: 'Create a new Achievement'
 Strings.insert _id: 'replyAchievement', string: 'Create Follow-Up'
 Strings.insert _id: 'replyAchievementDesc', string: 'Create a follow-up Achievement'
 Strings.insert _id: 'accept', string: 'Star'
-Strings.insert _id: 'acceptDesc', string: 'Add an uncompleted Achievement to your Quest Log'
+Strings.insert _id: 'acceptDesc', string: 'Add a locked Achievement to your Quest Log'
 Strings.insert _id: 'accomplish', string: 'Unlock'
 Strings.insert _id: 'accomplishDesc', string: 'Gives you the ability to unlock Achievements'
 Strings.insert _id: 'inspect', string: 'Inspect'
 Strings.insert _id: 'inspectDesc', string: 'Inspect your current target to get more information about it'
 
 Strings.insert _id: 'titleHelp', string: "Suggest a title"
-Strings.insert _id: 'descriptionHelp', string: "What has to be done to complete this Achievement?"
+Strings.insert _id: 'descriptionHelp', string: "What has to be done to unlock this Achievement?"
+
+Strings.insert _id: 'xp', string: 'Score'
 
 Strings.insert _id: 'best', string: "Best"
 Strings.insert _id: 'new', string: "New"
@@ -58,6 +60,7 @@ Strings.insert _id: 'navigate', string: "Navigate"
 
 Strings.insert _id: 'loadMore', string: "Load More"
 Strings.insert _id: 'createNew', string: "Create New Achievement"
+Strings.insert _id: 'doneThat', string: "I've done that!"
 
 Strings.insert _id: 'signOut', string: "Sign out"
 
@@ -73,9 +76,16 @@ Strings.insert _id: 'comment', string: "Comment"
 Strings.insert _id: 'vote', string: "Vote"
 Strings.insert _id: 'entity', string: "Entity"
 
+Strings.insert _id: 'unlock', string: "unlock"
+
+Strings.insert _id: 'people', string: "People"
+Strings.insert _id: 'creator', string: "Creator"
 Strings.insert _id: 'achievers', string: "Unlocks"
 Strings.insert _id: 'comments', string: "Comments"
 Strings.insert _id: 'voters', string: "Voters"
 Strings.insert _id: 'questers', string: "Questers"
 
+Strings.insert _id: 'achiever', string: "Unlocker"
+
 Strings.insert _id: 'rank', string: "Rank"
+Strings.insert _id: 'activity', string: "Activity"

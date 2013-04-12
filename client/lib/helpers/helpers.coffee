@@ -10,10 +10,11 @@ Handlebars.registerHelper 'equals', (name, value) ->
 Handlebars.registerHelper 'strings', (id) ->
   (Strings.findOne id).string
 
-Handlebars.registerHelper 'hasLevel', (level) ->
+Handlebars.registerHelper 'hasLevel', (skill) ->
+  skill = Skills.findOne skill
   user = Meteor.user()
   if user and user.profile
-    return user.profile.level >= level
+    return user.profile.level >= skill.level
 
 Handlebars.registerHelper 'username', (id) ->
   Meteor.users.findOne(id).profile.username
@@ -33,32 +34,36 @@ Session.toggle = (name, value) ->
 
 Handlebars.registerHelper 'color', ->
   user = Meteor.user()
-  if user
-    userId = user._id
-
-    switch @type
-      when 'achievement'
+  switch @type
+    when 'achievement'
+      if user?
+        userId = user._id
         if isActiveInCollection Accomplishments, @_id, userId
           return 'completed'
-        if isActiveInCollection Favourites, @_id, userId
+        else if isActiveInCollection Favourites, @_id, userId
           return 'accepted'
-        else if Achievements.find().count() > 0
+        else
           return 'uncompleted'
-
-      when 'accomplishment'
-        if userId == @user
-          return 'completed'
-
-      when 'comment'
-        if userId == @user
-          return 'completed'
-
       else
-        # user
-        if user.profile?
-          if user.profile.username == @profile.username
-            return 'completed'
-        return ''
+        return 'uncompleted'
+
+    when 'accomplishment'
+      if user?
+        userId = user._id
+        if userId == @user
+          return 'completed'
+
+    when 'comment'
+      if user?
+        userId = user._id
+        if userId == @user
+          return 'completed'
+
+    else
+      if user? and user.profile?
+        if user.profile.username == @profile.username
+          return 'completed'
+      return ''
 
 clickPill = (entity, e) ->
   target = Session.get 'target'
@@ -76,7 +81,7 @@ clickPill = (entity, e) ->
 
   else
     typeHack = if entity.type? then entity.type else 'user' #XXX
-    Router.navigate "/#{typeHack}/#{entity._id}", false
+    #Router.navigate "/#{typeHack}/#{entity._id}", false
 
     Session.set 'target', entity._id
     Session.set 'type', typeHack

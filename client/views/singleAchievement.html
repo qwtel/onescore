@@ -1,5 +1,21 @@
 <template name='singleAchievement'>
-  <h4>{{strings "achievers"}}</h4>
+  {{> quickAchievement}}
+
+  <ul class="nav nav-tabs" style="margin-top: 20px">
+    <li class="{{#if equals "tab-achievement" "unlocks"}}active{{/if}}">
+      <a href="/achievement/{{_id}}/unlocks" data-tab="unlocks">{{strings "achievers"}}</a>
+    </li>
+    <li class="{{#if equals "tab-achievement" "people"}}active{{/if}}">
+      <a href="/achievement/{{_id}}/people" data-tab="people">{{strings "people"}}</a>
+    </li>
+    {{#if hasLevel "comment"}}
+    <li class="{{#if equals "tab-achievement" "comments"}}active{{/if}}">
+      <a href="/achievement/{{_id}}/comments" data-tab="comments">{{strings "comments"}}</a>
+    </li>
+    {{/if}}
+  </ul>
+
+  {{#if equals "tab-achievement" "unlocks"}}
   <div>
     {{#each achievers}}
       <div class="stacked-pills">
@@ -13,17 +29,9 @@
       {{> loadMore}}
     {{/if}}
   </div>
+  {{/if}}
 
-  <h4>{{strings "questers"}}</h4>
-  <div>
-    {{#each questers}}
-      {{> floatUser}}
-    {{else}}
-      {{> noContent}}
-    {{/each}}
-  </div>
-
-  <h4>{{strings "comments"}}</h4>
+  {{#if equals "tab-achievement" "comments"}}
   <div>
     {{#each comments}}
       {{> comment}}
@@ -31,13 +39,36 @@
       {{> noContent}}
     {{/each}}
   </div>
+  {{/if}}
 
-  <h4>{{strings "voters"}}</h4>
-  <div>
-    {{#each voters}}
-      {{> floatUser}}
-    {{else}}
-      {{> noContent}}
-    {{/each}}
-  </div>
+  {{#if equals "tab-achievement" "people"}}
+    <div class="div">
+      <h4>{{strings "creator"}}</h4>
+      {{#with user}}
+        {{> user}}
+      {{/with}}
+    </div>
+
+    {{#if hasLevel "questlog"}}
+      <div class="div">
+        <h4>{{strings "questers"}}</h4>
+        {{#each questers}}
+          {{> floatUser}}
+        {{else}}
+          {{> noContent}}
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#if hasLevel "voteUp"}}
+      <div class="div">
+        <h4>{{strings "voters"}}</h4>
+        {{#each voters}}
+          {{> floatUser}}
+        {{else}}
+          {{> noContent}}
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/if}}
 </template>

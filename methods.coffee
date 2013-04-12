@@ -2,7 +2,7 @@ Meteor.methods
   newAchievement: (title, description, parentId, imgur) ->
     #if title? and title.length > 50 
     #  throw new Meteor.Error 500, "Title too long"
-    #if description? and description.length > 10000 
+    #if description? and description.length > 140 
     #  throw new Meteor.Error 500, "Text too long"
 
     user = Meteor.user()
@@ -64,10 +64,25 @@ Meteor.methods
         $inc:
           favourites: 1
 
-  accomplish: (id, story) ->
+  setStory: (id, story) ->
     #if story? and story.length > 10000 
     #  throw new Meteor.Error 500, "Text too long"
 
+    user = Meteor.user()
+    skill = Skills.findOne 'accomplish'
+    unless isAllowedToUseSkill user, skill 
+      throw new Meteor.Error 500, "User not allowed to use skill"
+
+    acc = Accomplishments.findOne
+      user: user._id
+      entity: id
+
+    if acc? 
+      if story? and story isnt acc.story
+        Accomplishments.update acc._id, $set: story: story
+        return acc._id 
+
+  accomplish: (id) ->
     user = Meteor.user()
     skill = Skills.findOne 'accomplish'
     unless isAllowedToUseSkill user, skill 
@@ -80,9 +95,8 @@ Meteor.methods
       entity: id
 
     if acc? 
-      if story? and story isnt acc.story
-        Accomplishments.update acc._id, $set: story: story
-        return acc._id 
+      Accomplishments.update acc._id, $set: active: !acc.active
+      return !acc.active
     else
       data = _.extend basic(),
         entity: id
@@ -166,6 +180,7 @@ Meteor.methods
         parent: null
         level: 1
     
+    console.log comment.date
     comment._id = Comments.insert comment
 
     Collections[type].update id,
@@ -201,6 +216,27 @@ Meteor.methods
       $set: 
         imgur: result.data.data
         source: result.data.data.link
+
+  updateUserScore: ->
+    unless @isSimulation
+      a = Achievements.find
+        $where: "
+          return db.accomplishments.findOne({
+            user: '#{@userId}',
+            entity: this._id,
+            active: true
+          })"
+      ,
+        fields:
+          value: 1
+
+      score = 0
+      a.forEach (achievement) ->
+        score += achievement.value
+
+      Meteor.users.update @userId,
+        $set:
+          'profile.xp': score
 
 voteFor = (user, id, type, active, skill) ->
   data = _.extend basic(),
@@ -283,7 +319,7 @@ isAllowedToUseSkill = (user, skill) ->
 # XXX: Shouldn't there be some kind of base model class that implements this?
 basic = ->
   user: Meteor.user()._id
-  date: new Date().getTime()
+  date: new Date().getTime() # XXX Causes "double post" effect
   score: 0
   hot: 0
   best: 0

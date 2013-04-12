@@ -10,7 +10,7 @@ Template.actionbar.rendered = ->
     animation: false
     container: 'body'
     html: true
-    placement: 'bottom'
+    placement: 'top'
     trigger: 'hover'
 
 Template.actionbar.helpers

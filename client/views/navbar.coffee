@@ -21,9 +21,15 @@ Template.navbar.helpers
   nav: ->
     user = Meteor.user()
     if user and user.profile
-      Skills.find 
+      return Skills.find 
         nav: true
         level: $lte: user.profile.level
+    else
+      s = []
+      s.push Skills.findOne('home')
+      s.push Skills.findOne('explore')
+      return s
+
 
   skills: ->
     user = Meteor.user()

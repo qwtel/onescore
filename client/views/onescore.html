@@ -1,0 +1,9 @@
+<template name="onescore">
+  <div class="hero-unit">
+    <p>Welcome to Onescore! So far we've reached a total score of:</p>
+    <h1 style="text-align: right; word-break: break-all;">{{onescore}}</h1>
+    {{#unless currentUser}}
+      {{loginButtons}}
+    {{/unless}}
+  </div>
+</template>
