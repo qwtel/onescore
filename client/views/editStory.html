@@ -1,0 +1,11 @@
+<template name='editStory'>
+  <div class="pill inbetween">
+    <textarea class="edit-{{_id}} textarea-100" name="edit-{{_id}}" placeholder="{{strings "howAreYouFeeling"}}" rows="3">{{story}}</textarea>
+    <button class="edit-story btn btn-primary pull-right">{{strings "ok"}}</button>
+    <a class="btn phantom">
+      <i class="icon-camera"/>
+      <input class="input-file" type="file" accept="image/x-png, image/gif, image/jpeg, image/png"/>
+    </a>
+    <div class="clearfix"/>
+  </div>
+</template>

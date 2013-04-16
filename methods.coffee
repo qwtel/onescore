@@ -250,6 +250,73 @@ Meteor.methods
         $set:
           'profile.xp': score
 
+  deleteUnlock: (id) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'delete'
+    unless isAllowedToUseSkill user, skill 
+      throw new Meteor.Error 500, "User not allowed to use skill"
+    
+    acc = Accomplishments.findOne
+      _id: id
+      user: user._id
+
+    if acc? 
+      Accomplishments.update id, 
+        $set: 
+          story: ''
+          imgur: null
+          active: false
+
+      Achievements.update acc.entity,
+        $inc:
+          accomplishments: -1
+
+  deleteAchievement: (id) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'delete'
+    unless isAllowedToUseSkill user, skill 
+      throw new Meteor.Error 500, "User not allowed to use skill"
+    
+    a = Achievements.findOne
+      _id: id
+      user: user._id
+
+    if a? 
+      Achievements.update id, 
+        $set: 
+          active: false
+
+  deleteComment: (id) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'delete'
+    unless isAllowedToUseSkill user, skill 
+      throw new Meteor.Error 500, "User not allowed to use skill"
+    
+    c = Comments.findOne
+      _id: id
+      user: user._id
+
+    if c? 
+      Comments.update id, 
+        $set: 
+          text: ''
+          active: false
+
+  editComment: (id, text) ->
+    user = Meteor.user()
+    skill = Skills.findOne 'edit'
+    unless isAllowedToUseSkill user, skill 
+      throw new Meteor.Error 500, "User not allowed to use skill"
+    
+    c = Comments.findOne
+      _id: id
+      user: user._id
+
+    if c? 
+      Comments.update id, 
+        $set: 
+          text: text
+
 voteFor = (user, id, type, active, skill) ->
   data = _.extend basic(),
     entity: id

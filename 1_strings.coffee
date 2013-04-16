@@ -65,10 +65,14 @@ Strings.insert _id: 'doneThat', string: "I've done that!"
 
 Strings.insert _id: 'signOut', string: "Sign out"
 
-Strings.insert _id: 'howAreYouFeeling', string: "Congratulations! Why don't you tell us how you accomplished this Achievement?"
+Strings.insert _id: 'howAreYouFeeling', string: "Congratulations! Why don't you tell us how you unlocked this Achievement?"
 Strings.insert _id: 'whatsOnYourMind', string: "Write a Comment on this"
+Strings.insert _id: 'areUSure', string: "Are you sure you want to delete this"
 Strings.insert _id: 'ok', string: "OK"
 Strings.insert _id: 'cancel', string: "Cancel"
+Strings.insert _id: 'yes', string: "Yes"
+Strings.insert _id: 'no', string: "No"
+Strings.insert _id: 'removedByUser', string: "has been removed by the User"
 
 Strings.insert _id: 'user', string: "User"
 Strings.insert _id: 'achievement', string: "Achievement"

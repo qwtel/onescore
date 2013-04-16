@@ -81,20 +81,6 @@ Skills.insert
   #url: "achievement/new"
 
 Skills.insert
-  _id: 'inspect'
-  icon: 'eye-open'
-  name: strings 'inspect'
-  description: strings 'inspectDesc' 
-  level: 2
-  active: (target) ->
-    id = Session.get 'id'
-    id? and target? and id is target
-  usable: (id, type) -> id? and type?
-  hasUrl: true
-  url: (id, type) -> 
-    if id and type then "#{type}/#{id}"
-
-Skills.insert
   _id: 'voteUp'
   name: 'Vote Up'
   icon: 'arrow-up'
@@ -219,15 +205,6 @@ Skills.insert
   level: 999
 
 Skills.insert
-  _id: 'edit'
-  name: 'Edit'
-  icon: 'pencil'
-  passive: true
-  description: 'Allows you to edit achievements'
-  cooldown: 1
-  level: 999
-
-Skills.insert
   _id: 'revision'
   name: 'Revision'
   icon: 'time'
@@ -235,6 +212,68 @@ Skills.insert
   description: 'Allows you to revision achievements'
   cooldown: 1
   level: 999
+
+Skills.insert
+  _id: 'inspect'
+  icon: 'eye-open'
+  name: strings 'inspect'
+  description: strings 'inspectDesc' 
+  level: 2
+  active: (target) ->
+    id = Session.get 'id'
+    id? and target? and id is target
+  usable: (id, type) -> id? and type?
+  hasUrl: true
+  url: (id, type) -> 
+    if id and type then "#{type}/#{id}"
+
+Skills.insert
+  _id: 'edit'
+  name: 'Edit'
+  icon: 'pencil'
+  passive: true
+  description: 'Edit your current target.'
+  cooldown: 10
+  level: 4
+  usable: (id, type) -> 
+    if type? and id?
+      entity = Collections[type].findOne id
+      userId = Meteor.userId()
+      if userId is entity.user
+        return true
+    return false
+  click: (id, type) ->
+    if Session.equals("edit", id)
+      Session.set "edit", null
+    else
+      Session.set "edit", id
+      Meteor.flush()
+      $(".edit-#{id}").first().focus()
+  active: (id) ->
+    Session.equals "edit", id
+
+Skills.insert
+  _id: 'delete'
+  name: 'Delete'
+  icon: 'trash'
+  passive: true
+  description: 'Edit your current target.'
+  cooldown: 10
+  level: 4
+  usable: (id, type) -> 
+    if type? and id?
+      entity = Collections[type].findOne id
+      userId = Meteor.userId()
+      if userId is entity.user
+        return true
+    return false
+  click: (id, type) ->
+    if Session.equals("delete", id)
+      Session.set "delete", null
+    else
+      Session.set "delete", id
+  active: (id) ->
+    Session.equals "delete", id
 
 root.isActiveInCollection = (collection, id, userId) ->
   (collection.findOne

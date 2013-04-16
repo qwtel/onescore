@@ -1,17 +1,27 @@
 <template name='comment'>
+  {{#unless text}}
+  <div class="pill alert" style="margin-bottom: 20px">
+    <em>{{typeName}} {{strings "removedByUser"}}</em>
+  </div>
+  {{else}}
+
   <div class="stacked-pills">
-    {{#if user}}
+    {{#if text}}
       {{#with user}}
         {{> miniUser}}
       {{/with}}
     {{/if}}
 
     {{#isolate}}
-      <article class="comment pill">
-        <div class="markdown">
-          {{#markdown}}{{text}}{{/markdown}}
-        </div>
-      </article>
+      {{#unless equals "edit" _id}}
+        <article class="comment pill">
+          <div class="markdown">
+            {{#markdown}}{{text}}{{/markdown}}
+          </div>
+        </article>
+      {{else}}
+        {{> editComment}}  
+      {{/unless}}
 
       <a class="pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
         <p class="pull-right muted">{{timeago date}}</p>
@@ -32,8 +42,18 @@
       {{#if equals "comment" _id}}
         {{> newComment}}
       {{/if}}
+
+      {{#if equals "delete" _id}}
+        <div class="pill alert alert-error">
+          <p>{{strings "areUSure"}} {{typeName}}?</p>
+          <button class="btn yes btn-primary">{{strings "yes"}}</button>
+          <button class="btn no">{{strings "no"}}</button>
+        </div>
+      {{/if}}
+
     {{/isolate}}
   </div>
+  {{/unless}}
 
   {{#if successors}}
     <div class="nested {{color}}">

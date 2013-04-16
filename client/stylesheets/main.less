@@ -249,6 +249,10 @@ body {
   }
 }
 
+.pill.alert {
+  margin: 0;
+}
+
 .pill.inbetween {
   margin-top: 10px;
   .lead {
@@ -625,26 +629,26 @@ body {
   img {
     width: 30px;
     height: 30px;
-    border: 1px solid @grayLighter;
+    box-sizing: border-box;
   }
   margin: 0 8px 8px 0;
 }
 
 .usr.selected {
   img {
-    border: 1px solid @red;
+    border: 15px solid @red;
   }
 }
 
 .usr.selected.completed {
   img {
-    border: 1px solid @green;
+    border: 15px solid @green;
   }
 }
 
 .usr.selected.accepted {
   img {
-    border: 1px solid @blue;
+    border: 15px solid @blue;
   }
 }
 
@@ -729,4 +733,3 @@ body {
     background-color: darken(#a5acc9, 15%);
   }
 }
-

@@ -4,6 +4,7 @@ Template.achievements.helpers
   achievements: ->
     sel = Template.scope.getSelect()
     sel.parent = null
+    sel.active = $ne: false
 
     #userId = Meteor.userId()
     #sel.$where = ->
@@ -21,6 +22,7 @@ Template.achievements.helpers
   hasMore: ->
     sel = Template.scope.getSelect()
     sel.parent = null
+    sel.active = $ne: false
 
     #userId = Meteor.userId()
     #sel.$where = ->

@@ -12,6 +12,12 @@ Template.storyBar.events
     id = $t.data 'id'
     if @click and @usable and @usable(id, 'accomplishment') then @click(id, 'accomplishment')
 
+  'click .yes': (e) ->
+    Meteor.call 'deleteUnlock', @_id
+    Session.set 'delete', null
+
+  'click .no': (e) ->
+    Session.set 'delete', null
 
 Template.storyBar.helpers
   skills: -> 

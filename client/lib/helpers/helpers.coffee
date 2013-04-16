@@ -3,6 +3,12 @@ root = exports ? this
 Handlebars.registerHelper 'session', (name) ->
   Session.get name
 
+Handlebars.registerHelper 'typeName', ->
+  if @type
+    strings @type
+  else
+    strings 'entity'
+
 Handlebars.registerHelper 'show', (name) ->
   Session.equals name, true
 

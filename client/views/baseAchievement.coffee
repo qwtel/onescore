@@ -12,6 +12,13 @@ Template.baseAchievement.events
     id = $t.data 'id'
     if @click and @usable and @usable(id, 'achievement') then @click(id, 'achievement')
 
+  'click .yes': (e) ->
+    Meteor.call 'deleteAchievement', @_id
+    Session.set 'delete', null
+
+  'click .no': (e) ->
+    Session.set 'delete', null
+
 #Template.baseAchievement.rendered = ->
 #  # XXX: Does this create a memory leak?
 #  $('.popover').remove()
