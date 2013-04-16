@@ -1,5 +1,5 @@
-# TODO: move hard-coded text into strings.coffee
-Skills = new Meteor.Collection null
+root = exports ? this
+root.Skills = new Meteor.Collection null
 
 Skills.insert
   _id: 'home'
@@ -9,7 +9,7 @@ Skills.insert
   description: strings 'homeDesc'
   active: -> Session.equals 'page', 'home'
   level: 1
-  usable: true
+  usable: -> true
   nav: true
 
 Skills.insert
@@ -20,7 +20,7 @@ Skills.insert
   description: strings 'notificationDesc' 
   active: -> Session.equals 'page', 'notification'
   level: 4
-  usable: true
+  usable: -> true
   nav: true
 
 Skills.insert
@@ -31,7 +31,7 @@ Skills.insert
   description: strings 'exploreDesc'
   active: -> Session.equals 'page', 'explore'
   level: 1
-  usable: true
+  usable: -> true
   nav: true
 
 Skills.insert
@@ -42,7 +42,7 @@ Skills.insert
   description: strings 'ladderDesc'
   active: -> Session.equals 'page', 'ladder'
   level: 5
-  usable: true
+  usable: -> true
   nav: true
 
 Skills.insert
@@ -53,7 +53,7 @@ Skills.insert
   description: strings 'profileDesc'
   active: -> Session.equals('page', 'user') and (Session.equals('tab-user', 'unlocks') or Session.equals('tab-user', 'activity'))
   level: 1
-  usable: true
+  usable: -> true
   nav: true
 
 Skills.insert
@@ -64,7 +64,7 @@ Skills.insert
   description: strings 'questlogDesc'
   active: -> Session.equals('page', 'user') and Session.equals('tab-user', 'questlog')
   level: 5
-  usable: true
+  usable: -> true
   nav: true
 
 Skills.insert
@@ -74,8 +74,10 @@ Skills.insert
   description: strings 'newAchievementDesc' 
   cooldown: 5
   level: 4
-  usable: false
+  usable: -> false
   active: false
+  passive: true
+  nav: true
   #url: "achievement/new"
 
 Skills.insert
@@ -84,14 +86,12 @@ Skills.insert
   name: strings 'inspect'
   description: strings 'inspectDesc' 
   level: 2
-  active: ->
+  active: (target) ->
     id = Session.get 'id'
-    target = Session.get 'target'
     id? and target? and id is target
-  usable: -> (Session.get 'target')?
-  url: -> 
-    id = Session.get 'target'
-    type = Session.get 'type'
+  usable: (id, type) -> id? and type?
+  hasUrl: true
+  url: (id, type) -> 
     if id and type then "#{type}/#{id}"
 
 Skills.insert
@@ -102,15 +102,14 @@ Skills.insert
   description: 'Allows you to vote for content'
   cooldown: 1
   level: 3
-  usable: -> (Session.get 'type')? and (Session.get 'target')?
-  click: ->
-    id = Session.get 'target'
-    type = Session.get 'type'
+  usable: (id, type) -> type? and type isnt 'user' and id?
+  click: (id, type) ->
     Meteor.call 'voteUp', id, type
-  active: ->
-    id = Session.get 'target'
+  active: (id) ->
     user = Meteor.user()
     if user and id then isUpVoted id, user._id
+  num: (entity) -> entity.upVotes
+
 
 Skills.insert
   _id: 'voteDown'
@@ -120,15 +119,13 @@ Skills.insert
   description: 'Allows you to vote for content'
   cooldown: 1
   level: 6
-  usable: -> (Session.get 'type')? and (Session.get 'target')?
-  click: ->
-    id = Session.get 'target'
-    type = Session.get 'type'
+  usable: (id, type) -> type? and type isnt 'user' and id?
+  click: (id, type) ->
     Meteor.call 'voteDown', id, type
-  active: ->
-    id = Session.get 'target'
+  active: (id) ->
     user = Meteor.user()
     if user and id then isDownVoted id, user._id
+  num: (entity) -> entity.votes - entity.upVotes
 
 Skills.insert
   _id: 'replyAchievement'
@@ -137,8 +134,7 @@ Skills.insert
   description: strings 'replyAchievementDesc' 
   cooldown: 5
   level: 999
-  usable: -> 
-    Session.equals 'type', 'achievement'
+  usable: (id, type) -> type is 'achievement'
   #url: -> 
   #  id = Session.get 'target'
   #  type = Session.get 'type'
@@ -146,11 +142,9 @@ Skills.insert
   #    return "achievement/#{id}/new"
   #  else
   #    return "achievement/new"
-  click: ->
-    id = Session.get 'target'
+  click: (id, type) ->
     Session.set "reply", id
-  active: ->
-    id = Session.get 'target'
+  active: (id) ->
     Session.equals "reply", id
 
 
@@ -162,19 +156,21 @@ Skills.insert
   description: 'Allows you to comment on content'
   cooldown: 10
   level: 4
-  usable: -> 
-    if (Session.get 'type')? and (Session.get 'target')?
-      unless Session.get('type') is 'user'
+  usable: (id, type) -> 
+    if type? and id?
+      unless type is 'user'
         return true
     return false
-  click: ->
-    id = Session.get 'target'
-    Session.set "comment", id
-    Meteor.flush()
-    $(".comment-#{id}").first().focus()
-  active: ->
-    id = Session.get 'target'
+  click: (id, type) ->
+    if Session.equals("comment", id)
+      Session.set "comment", null
+    else
+      Session.set "comment", id
+      Meteor.flush()
+      $(".comment-#{id}").first().focus()
+  active: (id) ->
     Session.equals "comment", id
+  num: (entity) -> entity.comments
 
 Skills.insert
   _id: 'favourite'
@@ -184,14 +180,13 @@ Skills.insert
   description: strings 'acceptDesc' 
   cooldown: 1
   level: 5
-  usable: -> Session.equals 'type', 'achievement'
-  click: ->
-    id = Session.get 'target'
+  usable: (id, type) -> type is 'achievement'
+  click: (id, type) ->
     Meteor.call 'favourite', id
-  active: -> 
-    id = Session.get 'target'
+  active: (id) ->
     user = Meteor.user()
     if user and id then isActiveInCollection Favourites, id, user._id
+  num: (entity) -> entity.favourites
 
 Skills.insert
   _id: 'accomplish'
@@ -201,17 +196,16 @@ Skills.insert
   description: strings 'accomplishDesc'
   cooldown: 1
   level: 1
-  usable: -> Session.equals 'type', 'achievement'
-  click: ->
-    id = Session.get 'target'
+  usable: (id, type) -> type is 'achievement'
+  click: (id, type) ->
     Meteor.call 'accomplish', id, null, (error, res) ->
       if res is true
         Session.set "accomplished", id
         Meteor.flush()
         $(".accomplished-#{id}").first().focus()
+  num: (entity) -> entity.accomplishments
 
-  active: ->
-    id = Session.get 'target'
+  active: (id) ->
     user = Meteor.user()
     if user and id then isActiveInCollection Accomplishments, id, user._id
 
@@ -222,7 +216,7 @@ Skills.insert
   passive: true
   description: 'Allows you to tag content'
   cooldown: 1
-  level: 99
+  level: 999
 
 Skills.insert
   _id: 'edit'
@@ -231,7 +225,7 @@ Skills.insert
   passive: true
   description: 'Allows you to edit achievements'
   cooldown: 1
-  level: 99
+  level: 999
 
 Skills.insert
   _id: 'revision'
@@ -240,9 +234,9 @@ Skills.insert
   passive: true
   description: 'Allows you to revision achievements'
   cooldown: 1
-  level: 99
+  level: 999
 
-isActiveInCollection = (collection, id, userId) ->
+root.isActiveInCollection = (collection, id, userId) ->
   (collection.findOne
     user: userId
     entity: id

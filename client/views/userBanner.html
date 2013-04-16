@@ -1,5 +1,5 @@
 <template name='userBanner'>
-  <div class="user media pill user-banner {{color}}">
+  <article class="user media pill user-banner {{color}}">
     {{#if profile}}
     <a class="profile-pic pull-left" style="width: 150px; height: 150px;">
       <img class="media-object" style="border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture?width=150&height=150">
@@ -32,5 +32,5 @@
 
     </div>
     {{/if}}
-  </div>
+  </article>
 </template>

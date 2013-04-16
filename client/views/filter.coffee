@@ -1,12 +1,20 @@
 Template.sort.events
-  'click a': (e) ->
+  'change select': (e) ->
     $t = $(e.currentTarget)
-    Session.set 'sort', $t.data 'value'
+    Session.set 'sort', $t.find(':selected').val() 
+
+Template.sort.helpers
+  sel: (e) ->
+    if Session.equals 'sort', e then 'selected' else ''
 
 Template.scope.events
-  'click a': (e) ->
+  'change select': (e) ->
     $t = $(e.currentTarget)
-    Session.set 'scope', $t.data 'value'
+    Session.set 'scope', $t.find(':selected').val() 
+
+Template.scope.helpers
+  sel: (e) ->
+    if Session.equals 'scope', e then 'selected' else ''
 
 Template.scope.getSelect = ->
   sel = {}

@@ -1,5 +1,5 @@
 <template name='navbar'>
-  <div class="navbar navbar-fixed-top navbar-inverse">
+  <nav class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
       <ul class="nav pull-right">
       {{#if currentUser}}
@@ -62,6 +62,6 @@
     {{#with currentUser}}
       {{> progress}}
     {{/with}}
-  </div>
+  </nav>
 </template>
 

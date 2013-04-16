@@ -1,3 +1,4 @@
+root = exports ? this
 class Router extends Backbone.Router
   constructor: (args) ->
     super args
@@ -12,9 +13,9 @@ class Router extends Backbone.Router
     'home': 'home'
     'explore': 'explore'
     'notification': 'notification'
+    'ladder': 'ladder'
     'user/:id/:tab': 'user'
     'user/:id': 'user'
-    'ladder': 'ladder'
     ':type/:id/:tab': 'single'
     ':type/:id': 'single'
     ':crap': 'home'
@@ -39,10 +40,12 @@ class Router extends Backbone.Router
     Session.set 'page', 'notification'
 
   user: (id, tab) ->
-    @hardReset()
+    console.log 'test'
+    @softReset()
     Session.set 'page', 'user'
     Session.set 'id', id
-    Session.set 'tab-user', if tab? then tab else 'unlocks'
+    if tab?
+      Session.set 'tab-user', tab
 
   questlog: (user) ->
     @profile user
@@ -57,7 +60,8 @@ class Router extends Backbone.Router
     @softReset()
     Session.set 'page', type
     Session.set 'id', id
-    Session.set "tab-#{type}", if tab? then tab else 'comments'
+    if tab?
+      Session.set "tab-#{type}", tab
 
   softReset: ->
     $(document).scrollTop 0
@@ -66,6 +70,11 @@ class Router extends Backbone.Router
     Session.set 'type', null
     Session.set 'temp', null
     Session.set 'reply', null
+    Session.set 'create', null
+
+    for key in _.keys Session.keys
+      if /selected-*/.test(key)
+        delete Session.keys[key]
 
   hardReset: ->
     @softReset()
@@ -86,3 +95,5 @@ class Router extends Backbone.Router
     for key in _.keys Session.keys
       if /accomplished-*/.test(key)
         delete Session.keys[key]
+
+root.Router = Router

@@ -1,5 +1,5 @@
 <template name='newAch'>
-  <div class="media achievement pill preview" style="margin-bottom: 25px">
+  <div class="media achievement pill preview" style="margin-bottom: 15px">
     <span class="icon pull-left" style="background-image: url('{{#if imgur}}{{source}}{{else}}/img/bg_new.png{{/if}}')">
       <a class="btn phantom">
         <i class="icon-camera"/>
@@ -9,10 +9,6 @@
     <div class="media-body">
       <input id="title-{{_id}}" class="title-input textarea-100" type="text" data-field="title" value="{{title}}" placeholder="{{strings "titleHelp"}}"/>
       <input id="description-{{_id}}" class="description-input textarea-100" type="text" data-field="description" value="{{description}}" placeholder="{{strings "descriptionHelp"}}"/>
-      <span class="muted"><i class="icon-arrow-up"/> {{votes}}</span>
-      <span class="muted"><i class="icon-comment"/> {{comments}}</span>
-      <span class="muted"><i class="icon-star"/> {{favourites}}</span>
-      <span class="muted"><i class="icon-lock"/> {{accomplishments}}</span>
     </div>
     <button id="create-{{_id}}" class="btn-create btn btn-primary pull-right">{{strings "newAchievement"}}</button>
   </div>

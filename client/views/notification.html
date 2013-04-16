@@ -1,9 +1,7 @@
 <template name='notification'>
   <td>
   {{#with user}} 
-    <a class="usr pointer pull-left" title="{{profile.username}}">
-      <img style="width:30px; height:30px; border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture">
-    </a>
+    {{> floatUser}}
   {{/with}}
 
   {{#if type entityType "comment"}}
@@ -36,9 +34,7 @@
   {{/if}}
 
   {{#with targetUser}} 
-  <a class="usr pull-left" title="{{profile.username}}'s">
-      <img style="width:30px; height:30px; border-radius: 2px;" src="https://graph.facebook.com/{{profile.username}}/picture">
-    </a>
+    {{> floatUser}}
   {{/with}}
 
   {{#if type targetType "comment"}}

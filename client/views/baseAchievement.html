@@ -1,44 +1,39 @@
 <template name='baseAchievement'>
-  <div class="media achievement pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
+  <article class="media achievement pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
     <div class="certificate pull-right">
       <a class="value">{{value}}</a>
     </div>
-    <a class="icon pull-left" style="background-image: url('{{icon}}')" />
+    <a class="icon pull-left" style="background-image: url('{{badge}}')" />
     <div class="media-body">
       <h4 class="media-heading"><a>{{title}}</a></h4>
       <p>{{description}}</p>
 
-      {{#if hasLevel "voteUp"}}
-        <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
-      {{/if}}
-      {{#if hasLevel "comment"}}
-        <span class="muted"><i class="icon-comment"/> {{comments}}</span>
-      {{/if}}
-      {{#if hasLevel "questlog"}}
-        <span class="muted"><i class="icon-star"/> {{favourites}}</span>
-      {{/if}}
-      {{#if hasLevel "accomplish"}}
-        <span class="muted"><i class="icon-lock"/> {{accomplishments}}</span>
-      {{/if}}
 
-      {{#if selected}}
-        <ul class="nav nav-pills hidden-phone">
-          {{> actionbar}}
-        <ul>
-      {{/if}}
+      <ul class="spells" data-id="{{_id}}">
+        {{#each skills}}
+          <li class="spell muted {{active ../_id}}" >
+            <a {{#if hasUrl}}href="/{{url ../../_id ../../type}}"{{/if}}> 
+              <i title="{{name}}" class="icon-{{icon}}"/> {{num ..}}
+            </a>
+          </li>
+        {{/each}}
+      </ul>
+
     </div>
-  </div>
-  {{#if selected}}
-    {{#if equals "accomplished" _id}}
-      {{> newStory}}
-    {{/if}}
-    {{#if equals "comment" _id}}
-      {{> newComment}}
-    {{/if}}
+  </article>
+
+  {{#if equals "accomplished" _id}}
+    {{> newStory}}
   {{/if}}
+
+  {{#if equals "comment" _id}}
+    {{> newComment}}
+  {{/if}}
+
   {{#if equals "reply" _id}}
     <div class="nested">
       {{> newAch}}
     </div>
   {{/if}}
+
 </template>

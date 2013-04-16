@@ -7,9 +7,6 @@ Template.userBanner.events
     e.stopImmediatePropagation()
 
 Template.userBanner.helpers
-  selected: -> 
-    Session.equals 'target', @_id
-
   numVotes: ->
     Votes.find(user: @_id).count()
 

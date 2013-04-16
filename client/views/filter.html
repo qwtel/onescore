@@ -3,26 +3,18 @@
 <template name='sort'>
   <h3>Filter</h3>
   <h4>Sort</h4>
-  <ul class="sort nav nav-stacked nav-pills">
-    <li class="{{#if equals "sort" "hot"}}active{{/if}}">
-    <a data-value="hot">{{strings "hot"}}</a></li>
-    <li class="{{#if equals "sort" "best"}}active{{/if}}">
-    <a data-value="best">{{strings "best"}}</a></li>
-    <li class="{{#if equals "sort" "new"}}active{{/if}}">
-    <a data-value="new">{{strings "new"}}</a></li>
-    <li class="{{#if equals "sort" "old"}}active{{/if}}">
-    <a data-value="old">{{strings "old"}}</a></li>
-  </ul>
+  <select class="sort">
+    <option value="hot" {{sel "hot"}}>{{strings "hot"}}</option>
+    <option value="best" {{sel "best"}}>{{strings "best"}}</option>
+    <option value="new" {{sel "new"}}>{{strings "new"}}</option>
+    <option value="old" {{sel "old"}}>{{strings "old"}}</option>
+  </select>
 </template>
 
 <template name='scope'>
   <h4>Scope</h4>
-  <ul class="scope nav nav-stacked nav-pills">
-    <li class="{{#if equals "scope" "all"}}active{{/if}}">
-      <a data-value="all">{{strings "all"}}</a>
-    </li>
-    <li class="{{#if equals "scope" "me"}}active{{/if}}">
-      <a data-value="me">{{strings "me"}}</a>
-    </li>
-  </ul>
+  <select class="scope">
+    <option value="all" {{sel "all"}}>{{strings "all"}}</option>
+    <option value="me" {{sel "me"}}>{{strings "me"}}</option>
+  </select>
 </template>

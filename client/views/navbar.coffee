@@ -1,7 +1,4 @@
 Template.navbar.events
-  'click .nav-spell': (e) ->
-    if @click and @usable and @usable() then @click()
-
   'click #log-out': (e) ->
     Meteor.logout()
     Router.navigate '/home', true
@@ -22,6 +19,7 @@ Template.navbar.helpers
     user = Meteor.user()
     if user and user.profile
       return Skills.find 
+        _id: $ne: 'newAchievement'
         nav: true
         level: $lte: user.profile.level
     else

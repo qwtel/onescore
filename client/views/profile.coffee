@@ -38,7 +38,7 @@ Template.profile.helpers
     limit = Session.get("limit-#{@_id}") or 1
     Accomplishments.find sel,
       sort: sort
-      limit: 10 * limit
+      limit: 5 * limit
 
   quests: ->
     userId = @_id

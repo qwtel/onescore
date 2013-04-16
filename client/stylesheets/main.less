@@ -24,12 +24,12 @@
 @iconSizeSmall: 60px;
 
 body {
-  padding: 65px 20px;
+  padding: 80px 20px;
   background: @grayLighter;
   overflow-y: scroll;
   overflow-x: hidden;
   @media(max-width: 480px) {
-    padding: 65px 10px;
+    padding: 80px 10px;
   }
 
   /*
@@ -85,7 +85,8 @@ body {
 }
 
 .hero-unit {
-  //background: lighten(@grayLighter, 5%);
+  background: none;
+  border: 1px solid darken(@grayLighter, 10%);
   //background-position: center center;
   //background-size: cover;
 }
@@ -126,7 +127,7 @@ body {
 
 .click-me-im-famous:hover {
   text-decoration: none;
-  background: darken(@grayLighter, 10%);
+  background: darken(@grayLighter, 7.5%);
   //background: #e6e6e6;
 }
 
@@ -179,6 +180,7 @@ body {
 }
 
 .pill {
+  min-height: 20px;
   display: block;
   position: relative;
   padding: 10px;
@@ -190,6 +192,7 @@ body {
     text-decoration: none;
   }
 
+  /*
   .nav-pills {
     background-color: inherit;
     position: absolute;
@@ -214,11 +217,34 @@ body {
     border-color: rgba(0,0,0,0.33);
     margin-bottom: 0;
   }
+  */
 
   .muted {
     color: rgba(0,0,0,0.33);
-    i {
-      opacity: 0.33;
+    i { opacity: 0.33; }
+  }
+
+  .spells {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      min-height: 20px;
+      display: inline-block;
+      a { color: rgba(0,0,0,0.33); }
+    }
+
+    .spell.active {
+      a { color: rgba(0,0,0,0.67); }
+      i { opacity: 0.67; }
+    }
+
+    //.spell:after { content: " | "; }
+
+    .spell:hover {
+      a { color: rgba(0,0,0,1); }
+      i { opacity: 1; }
     }
   }
 }
@@ -227,6 +253,13 @@ body {
   margin-top: 10px;
   .lead {
     margin-bottom: 0;
+  }
+
+  input, textarea {
+    background: none;
+    padding: 0;
+    border: none;
+    box-shadow: none;
   }
 }
 
@@ -264,8 +297,8 @@ body {
 
 .achievement.preview {
   background: transparent;
-  border: 1px solid rgba(82, 168, 236, 0.8);
-  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset, rgba(82, 168, 236, 0.6) 0px 0px 8px 0px;
+  //border: 1px solid rgba(82, 168, 236, 0.8);
+  //box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset, rgba(82, 168, 236, 0.6) 0px 0px 8px 0px;
 
   input, textarea {
     background: none;
@@ -301,7 +334,6 @@ body {
 
 .achievement.selected {
   .certificate {
-    opacity: 0;
     background-position: 0 1*@iconSize;
     @media (max-width: 480px) {
       background-position: 0 1*@iconSizeSmall;
@@ -381,6 +413,11 @@ body {
     }
   }
 
+  .spell {
+    text-align: center;
+    min-width: 20px;
+  }
+
   .spell-name {
     display: none;
 
@@ -410,6 +447,7 @@ body {
 .navbar-fixed-top {
   @media (max-width: 768px) {
     i {
+      display: none;
       float: right;
     }
   }
@@ -422,8 +460,8 @@ body {
   .profile-pic {
     padding: 3px!important;
     img {
-      width: 34px;
-      height: 34px;
+      width: 39px;
+      height: 39px;
     }
   }
 
@@ -435,8 +473,8 @@ body {
     display: block;
     position: relative;
     float: left;
-    height: 34px;
-    width: 34px;
+    height: 39px;
+    width: 39px;
     padding: 3px;
     margin: 0 10px 0 10px;
     background: url('/img/logo128.png') no-repeat;
@@ -461,6 +499,7 @@ body {
   }
 
   .xp-bar {
+    height: 4px;
     text-align: center;
 
     .progress {
@@ -514,9 +553,10 @@ body {
   width: 50%;
   height: 100%;
   overflow: hidden;
-  padding-top: 45px;
+  padding-top: 50px;
+  padding-bottom: 45px;
   padding-left: 20px;
-  //background: darken(@grayLighter, 5%);
+  background: @grayLighter;
   border-left: 1px solid darken(@grayLighter, 10%);
 
   .hide-scrollbar {
@@ -580,13 +620,43 @@ body {
   }
 }
 
+.usr {
+  cursor: pointer;
+  img {
+    width: 30px;
+    height: 30px;
+    border: 1px solid @grayLighter;
+  }
+  margin: 0 8px 8px 0;
+}
+
+.usr.selected {
+  img {
+    border: 1px solid @red;
+  }
+}
+
+.usr.selected.completed {
+  img {
+    border: 1px solid @green;
+  }
+}
+
+.usr.selected.accepted {
+  img {
+    border: 1px solid @blue;
+  }
+}
+
 .notifications {
   .btn {
     margin: 0 8px;
   }
+
   .usr {
-    cursor: pointer;
+    margin: 0;
   }
+
   .timeago {
     line-height: 30px;
   }
@@ -601,6 +671,7 @@ body {
     color: @red;
     &:hover {
       color: @blue;
+      text-decoration: underline;
     }
     &:visited {
       color: @green;
@@ -648,6 +719,7 @@ body {
 
 .div {
   margin-bottom: 20px;
+  clear: both;
 }
 
 #login-buttons-facebook {
@@ -657,3 +729,4 @@ body {
     background-color: darken(#a5acc9, 15%);
   }
 }
+

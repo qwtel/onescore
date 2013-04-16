@@ -1,23 +1,20 @@
 <template name='storyBar'>
-  <a class="pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
+  <div class="pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
     <p class="pull-right muted" style="margin-bottom: 10px">{{timeago date}}</p>
-    <div style="min-height: 20px">
-      {{#if hasLevel "voteUp"}}
-        <span class="muted"><i class="icon-arrow-up"/> {{votesDiff}}</span>
-      {{/if}}
-      {{#if hasLevel "comment"}}
-        <span class="muted"><i class="icon-comment"/> {{comments}}</span>
-      {{/if}}
-    </div>
-    {{#if selected}}
-      <ul class="nav nav-pills hidden-phone">
-        {{> actionbar}}
-      <ul>
-    {{/if}}
-  </a>
-  {{#if selected}}
-    {{#if equals "comment" _id}}
-      {{> newComment}}
-    {{/if}}
+
+    <ul class="spells" data-id="{{_id}}">
+      {{#each skills}}
+        {{#if usable ../_id ../type}}
+          <li class="spell muted {{active ../../_id}}">
+            <a {{#if hasUrl}}href="/{{url ../../../_id ../../../type}}"{{/if}}>
+              <i title="{{name}}" class="icon-{{icon}}"/> {{num ../..}}
+            </a>
+          </li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+  {{#if equals "comment" _id}}
+    {{> newComment}}
   {{/if}}
 </template>

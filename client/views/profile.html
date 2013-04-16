@@ -5,14 +5,14 @@
     <li class="{{#if equals "tab-user" "unlocks"}}active{{/if}}">
       <a href="/user/{{_id}}/unlocks" data-tab="unlocks">{{strings "achievers"}}</a>
     </li>
-    {{#if hasLevel "notifications"}}
-    <li class="{{#if equals "tab-user" "activity"}}active{{/if}}">
-      <a href="/user/{{_id}}/activity" data-tab="activity">{{strings "activity"}}</a>
-    </li>
-    {{/if}}
     {{#if hasLevel "questlog"}}
     <li class="{{#if equals "tab-user" "questlog"}}active{{/if}}">
       <a href="/user/{{_id}}/questlog" data-tab="questlog">{{strings "questlog"}}</a>
+    </li>
+    {{/if}}
+    {{#if hasLevel "notifications"}}
+    <li class="{{#if equals "tab-user" "activity"}}active{{/if}}">
+      <a href="/user/{{_id}}/activity" data-tab="activity">{{strings "activity"}}</a>
     </li>
     {{/if}}
   </ul>

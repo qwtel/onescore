@@ -1,5 +1,5 @@
 <template name='user'>
-  <div class="pill user click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
+  <article class="pill user click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
     {{#if profile}}
     <a class="profile-pic pull-left">
       <img class="media-object" style="width:45px; height:45px; border-radius: 3px; margin-right: 10px" src="https://graph.facebook.com/{{profile.username}}/picture">
@@ -7,17 +7,22 @@
     <div class="media-body">
       <h4 class="media-heading"><a>{{profile.username}}</a></h4>
 
-      <span class="muted">Level: {{profile.level}}</span>
-      <span class="muted">{{strings "xp"}}: {{profile.xp}}</span>
-      <!--<span class="muted">Cred: {{credibility}}%</span>-->
-
-      {{#if selected}}
-        <ul class="nav nav-pills hidden-phone">
-          {{> actionbar}}
-        <ul>
-      {{/if}}
+      <ul class="spells" data-id="{{_id}}">
+        {{#each skills}}
+          {{#if usable ../_id "user"}}
+            <li class="spell muted {{active ../../_id}}">
+              <a {{#if hasUrl}}href="/{{url ../../../_id "user"}}"{{/if}}>
+                <i title="{{name}}" class="icon-{{icon}}"/> {{num ../..}}
+              </a>
+            </li>
+          {{/if}}
+        {{/each}}
+        <li class="muted">Level: {{profile.level}}</li>
+        <li class="muted">{{strings "xp"}}: {{profile.xp}}</li>
+        <!--<li class="muted">Cred: {{credibility}}%</li>-->
+      </ul>
 
     </div>
     {{/if}}
-  </div>
+  </article>
 </template>

@@ -1,3 +1,4 @@
+root = exports ? this
 Meteor.methods
   newAchievement: (title, description, parentId, imgur) ->
     #if title? and title.length > 50 
@@ -50,6 +51,11 @@ Meteor.methods
       Favourites.update fav._id,
         $set:
           active: !fav.active
+
+      Achievements.update id,
+        $inc:
+          favourites: if !fav.active then 1 else -1
+
     else
       fav = _.extend basic(),
         type: 'favourite'
@@ -96,7 +102,13 @@ Meteor.methods
 
     if acc? 
       Accomplishments.update acc._id, $set: active: !acc.active
+
+      Achievements.update id,
+        $inc:
+          accomplishments: if !acc.active then 1 else -1
+
       return !acc.active
+
     else
       data = _.extend basic(),
         entity: id
@@ -104,6 +116,7 @@ Meteor.methods
         active: true
 
       data._id = Accomplishments.insert data
+
       Achievements.update data.entity,
         $inc:
           accomplishments: 1
@@ -180,7 +193,6 @@ Meteor.methods
         parent: null
         level: 1
     
-    console.log comment.date
     comment._id = Comments.insert comment
 
     Collections[type].update id,
@@ -281,12 +293,12 @@ voteFor = (user, id, type, active, skill) ->
 
 # using the Pentagonal numbers (http://oeis.org/A000326) 
 # starting at the 4th (12).
-nextLevel = (level) ->
+root.nextLevel = (level) ->
   n = level + 2
   return n*(3*n-1)/2
 
 # calculates the sum of all previous levels
-prevLevels = (level) ->
+root.prevLevels = (level) ->
   prev = 0
   i = 0
   while i < level - 1

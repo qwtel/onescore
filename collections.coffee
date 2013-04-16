@@ -1,15 +1,17 @@
-Comments = new Meteor.Collection 'comments'
-Achievements = new Meteor.Collection 'achievements'
-Titles = new Meteor.Collection 'titles'
-Votes = new Meteor.Collection 'votes'
-Favourites = new Meteor.Collection 'favourites'
-Accomplishments = new Meteor.Collection 'accomplishments'
-Notifications = new Meteor.Collection 'notifications'
-Revisions = new Meteor.Collection 'revisions'
-Tags = new Meteor.Collection 'tags'
-Scratchpad = new Meteor.Collection null
+root = exports ? this
 
-Collections = Collections or {}
+root.Comments = new Meteor.Collection 'comments'
+root.Achievements = new Meteor.Collection 'achievements'
+root.Titles = new Meteor.Collection 'titles'
+root.Votes = new Meteor.Collection 'votes'
+root.Favourites = new Meteor.Collection 'favourites'
+root.Accomplishments = new Meteor.Collection 'accomplishments'
+root.Notifications = new Meteor.Collection 'notifications'
+root.Revisions = new Meteor.Collection 'revisions'
+root.Tags = new Meteor.Collection 'tags'
+root.Scratchpad = new Meteor.Collection null
+
+root.Collections = root.Collections or {}
 _.extend Collections,
   'user': Meteor.users
   'comment': Comments

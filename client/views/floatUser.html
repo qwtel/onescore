@@ -1,19 +1,5 @@
 <template name='floatUser'>
-  <div class="pill float click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
-    {{#if profile}}
-    <a class="profile-pic pull-left">
-      <img class="media-object" style="width:24px; height:24px; border-radius: 2px; margin-right: 5px;" src="https://graph.facebook.com/{{profile.username}}/picture">
-    </a>
-    <div class="media-body">
-      <h5 class="media-heading"><a>{{profile.username}}</a></h5>
-
-      {{#if selected}}
-        <ul class="nav nav-pills hidden-phone">
-          {{> actionbar}}
-        <ul>
-      {{/if}}
-
-    </div>
-    {{/if}}
-  </div>
+  <a class="usr pointer pull-left {{#if selected}}selected{{/if}} {{color}}" title="{{profile.username}}">
+    <img src="https://graph.facebook.com/{{profile.username}}/picture">
+  </a>
 </template>

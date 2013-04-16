@@ -1,4 +1,5 @@
-Router = new Router
+root = exports ? this
+root.Router = new Router
 
 Meteor.startup ->
   Backbone.history.start pushState: true

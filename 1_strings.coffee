@@ -1,9 +1,10 @@
+root = exports ? this
 # This is an Android like implementation of l18n.
 # Very word that appears somewhere in the app should be written in here.
 # They can be retrieved via the global (?) strings(id) function or via the 
 # strings helper in templates e.g. {{strings "title"}} will return "Onescore"
-strings = (id) -> (Strings.findOne id).string
-Strings = new Meteor.Collection null
+root.strings = (id) -> (Strings.findOne id).string
+root.Strings = new Meteor.Collection null
 Strings.insert _id: 'title', string: 'Onescore'
 
 Strings.insert _id: 'oneseccooldown', string: '1 second cooldown'
@@ -89,3 +90,6 @@ Strings.insert _id: 'achiever', string: "Unlocker"
 
 Strings.insert _id: 'rank', string: "Rank"
 Strings.insert _id: 'activity', string: "Activity"
+
+Strings.insert _id: 'noTitle', string: "..."
+Strings.insert _id: 'noDesc', string: "..."

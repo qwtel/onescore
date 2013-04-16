@@ -1,7 +1,7 @@
 Template.createNew.events
   'click .create-new': (e) ->
     e.stopImmediatePropagation()
-    Session.set 'target', 'new'
+    Session.set 'create', 'new'
 
     newAchievement = Scratchpad.findOne type: 'achievement'
 
@@ -61,7 +61,7 @@ Template.createNew.events
     Scratchpad.update @_id, $set: data
 
   'click .btn-create': (e) ->
-    Session.set 'target', null
+    Session.set 'create', null
     Meteor.call 'newAchievement', @title, @description, @parent, @imgur,
       (error, result) ->
         unless error

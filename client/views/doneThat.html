@@ -1,15 +1,13 @@
 <template name="doneThat">
-  {{#with skill}}
-    {{#if currentUser}}
-    <a class="pill btn click-me-im-famous" data-hack="{{../_id}}">
-      <center><i class="icon-lock"/> {{strings "doneThat"}}</center>
-    </a>
-    {{else}}
-    <span class="pill">
-      <center>
-        {{loginButtons}} to <i class="icon-lock" title="{{strings "unlock"}}" /> this Achievement.
-      </center>
-    </span>
-    {{/if}}
-  {{/with}}
+  {{#if currentUser}}
+  <a class="pill btn click-me-im-famous">
+    <center><i class="icon-lock"/> {{strings "doneThat"}}</center>
+  </a>
+  {{else}}
+  <span class="pill">
+    <center>
+      {{loginButtons}} to <i class="icon-lock" title="{{strings "unlock"}}" /> this Achievement.
+    </center>
+  </span>
+  {{/if}}
 </template>

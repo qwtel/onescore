@@ -1,6 +1,8 @@
 Template.actionbar.events
   'click .spell': (e) ->
-    if @click and @usable and @usable() then @click()
+    id = Session.get 'target'
+    type = Session.get 'type'
+    if @click and @usable and @usable(id, type) then @click(id, type)
 
 Template.actionbar.rendered = ->
   # XXX: Does this create a memory leak?
@@ -14,6 +16,20 @@ Template.actionbar.rendered = ->
     trigger: 'hover'
 
 Template.actionbar.helpers
+  sid: ->
+    Session.get 'target'
+
+  stype: ->
+    Session.get 'type'
+
+  active: (id) ->
+    if @active id then 'active' else ''
+
+  usable: ->
+    id = Session.get 'target'
+    type = Session.get 'type'
+    @usable(id, type)
+
   skills: ->
     user = Meteor.user()
     if user and user.profile

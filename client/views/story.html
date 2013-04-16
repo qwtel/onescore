@@ -1,13 +1,13 @@
 <template name='story'>
   {{#if hasContent}} 
-    <div class="story pill">
+    <article class="story pill">
       {{#if imgur}} 
-        <img src="{{image}}" style="margin-bottom: 10px" /> 
+        <img src="{{image}}" alt="Unlock" style="margin-bottom: 10px" /> 
       {{/if}}
       <div class="markdown">
         {{#markdown}}{{story}}{{/markdown}}
       </div>
-    </div>
+    </article>
   {{/if}}
   {{> storyBar}}
 </template>

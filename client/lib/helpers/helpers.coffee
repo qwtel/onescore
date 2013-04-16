@@ -1,3 +1,5 @@
+root = exports ? this
+
 Handlebars.registerHelper 'session', (name) ->
   Session.get name
 
@@ -32,6 +34,9 @@ Session.toggle = (name, value) ->
   else
     Session.set name, !Session.get(name)
 
+Handlebars.registerHelper 'selected', ->
+  Session.equals "selected-#{@_id}", true
+
 Handlebars.registerHelper 'color', ->
   user = Meteor.user()
   switch @type
@@ -65,9 +70,10 @@ Handlebars.registerHelper 'color', ->
           return 'completed'
       return ''
 
-clickPill = (entity, e) ->
+root.clickPill = (entity, e) ->
   target = Session.get 'target'
   type = Session.get 'type'
+  Session.set "selected-#{target}", false
 
   if target is entity._id
     Session.set 'target', null
@@ -83,6 +89,7 @@ clickPill = (entity, e) ->
     typeHack = if entity.type? then entity.type else 'user' #XXX
     #Router.navigate "/#{typeHack}/#{entity._id}", false
 
+    Session.set "selected-#{entity._id}", true
     Session.set 'target', entity._id
     Session.set 'type', typeHack
     Session.set "target-#{entity._id}", true

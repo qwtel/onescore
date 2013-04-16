@@ -12,7 +12,7 @@ Template.home.helpers
 
     Accomplishments.find sel,
       sort: sort
-      limit: 15 * limit
+      limit: 10 * limit
 
   achievement: ->
     Achievements.findOne @entity
@@ -26,4 +26,4 @@ Template.home.helpers
     count = query.count()
 
     limit = Session.get('limit') or 1
-    return 15 * limit < count
+    return 10 * limit < count

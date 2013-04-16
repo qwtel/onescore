@@ -7,8 +7,5 @@ Template.miniUser.events
     e.stopImmediatePropagation()
 
 Template.miniUser.helpers
-  selected: -> 
-    Session.equals 'target', @_id
-
   credibility: ->
     Math.round 100 * @best
