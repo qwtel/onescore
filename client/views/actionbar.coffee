@@ -1,7 +1,8 @@
 Template.actionbar.events
   'click .spell': (e) ->
-    id = Session.get 'target'
-    type = Session.get 'type'
+    page = Session.get 'page'
+    id = Session.get "#{page}/target"
+    type = Session.get "#{page}/type"
     if @click and @usable and @usable(id, type) then @click(id, type)
 
 Template.actionbar.rendered = ->
@@ -17,17 +18,20 @@ Template.actionbar.rendered = ->
 
 Template.actionbar.helpers
   sid: ->
-    Session.get 'target'
+    page = Session.get 'page'
+    Session.get "#{page}/target"
 
   stype: ->
-    Session.get 'type'
+    page = Session.get 'page'
+    Session.get "#{page}/type"
 
   active: (id) ->
     if @active id then 'active' else ''
 
   usable: ->
-    id = Session.get 'target'
-    type = Session.get 'type'
+    page = Session.get 'page'
+    id = Session.get "#{page}/target"
+    type = Session.get "#{page}/type"
     @usable(id, type)
 
   skills: ->

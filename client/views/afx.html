@@ -1,0 +1,37 @@
+<template name="afx">
+  <aside class="afx hidden-phone">
+    <div class="hide-scrollbar">
+      {{#if targetAchievement}}
+        <h3>{{strings "achievement"}}</h3>
+        {{#with targetAchievement}} 
+          {{> singleAchievement}} 
+        {{/with}}
+      {{else}}
+
+      {{#if targetAccomplishment}}
+        <h3>{{strings "accomplishment"}}</h3>
+        {{#with targetAccomplishment}} 
+          {{> otherAccomplishment}} 
+          {{> singleAccomplishment}} 
+        {{/with}}
+      {{else}}
+
+      {{#if targetComment}}
+        <h3>{{strings "comment"}}</h3>
+        {{#with targetComment}} {{> comment}} {{/with}}
+      {{else}}
+
+      {{#if targetUser}}
+        {{#with targetUser}} {{> profile}} {{/with}}
+
+      {{else}}
+        {{> sort}}
+        {{> scope}}
+
+      {{/if}}
+      {{/if}}
+      {{/if}}
+      {{/if}}
+    </div>
+  </aside>
+</template>

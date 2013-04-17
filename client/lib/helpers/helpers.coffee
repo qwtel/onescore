@@ -41,7 +41,8 @@ Session.toggle = (name, value) ->
     Session.set name, !Session.get(name)
 
 Handlebars.registerHelper 'selected', ->
-  Session.equals "selected-#{@_id}", true
+  page = Session.get 'page'
+  Session.equals "#{page}/selected/#{@_id}", true
 
 Handlebars.registerHelper 'color', ->
   user = Meteor.user()
@@ -77,28 +78,29 @@ Handlebars.registerHelper 'color', ->
       return ''
 
 root.clickPill = (entity, e) ->
-  target = Session.get 'target'
-  type = Session.get 'type'
-  Session.set "selected-#{target}", false
+  page = Session.get 'page'
+  target = Session.get "#{page}/target"
+  type = Session.get "#{page}/type"
+  Session.set "#{page}/selected/#{target}", false
 
   if target is entity._id
-    Session.set 'target', null
-    Session.set 'type', null
-    Session.set "target-#{entity._id}", false
-    Session.set "comment", null
-    Session.set "accomplished", null
+    Session.set "#{page}/target", null
+    Session.set "#{page}/type", null
+    #Session.set "target-#{entity._id}", false
+    #Session.set "comment", null
+    #Session.set "accomplished", null
 
     if $(e.currentTarget).parents('.afx').length is 0
-      Session.set "temp", null
+      Session.set "#{page}/afx", null
 
   else
     typeHack = if entity.type? then entity.type else 'user' #XXX
     #Router.navigate "/#{typeHack}/#{entity._id}", false
 
-    Session.set "selected-#{entity._id}", true
-    Session.set 'target', entity._id
-    Session.set 'type', typeHack
-    Session.set "target-#{entity._id}", true
+    Session.set "#{page}/selected/#{entity._id}", true
+    Session.set "#{page}/target", entity._id
+    Session.set "#{page}/type", typeHack
+    #Session.set "target-#{entity._id}", true
 
     if $(e.currentTarget).parents('.afx').length is 0
-      Session.set 'temp', entity._id
+      Session.set "#{page}/afx", entity._id

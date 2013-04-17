@@ -40,60 +40,61 @@ class Router extends Backbone.Router
     Session.set 'page', 'notification'
 
   user: (id, tab) ->
-    console.log 'test'
     @softReset()
-    Session.set 'page', 'user'
     Session.set 'id', id
-    if tab?
-      Session.set 'tab-user', tab
+    Session.set 'page', 'user'
+    if tab? then Session.set 'tab-user', tab
 
   questlog: (user) ->
     @profile user
     Session.set 'page', 'questlog'
 
-  newAchievement: (id) ->
-    @softReset()
-    Session.set 'id', id
-    Session.set 'page', 'newAchievement'
+  #newAchievement: (id) ->
+  #  @softReset()
+  #  Session.set 'page', 'newAchievement'
+  #  Session.set 'id', id
 
   single: (type, id, tab) ->
+    console.log type, id, tab
     @softReset()
-    Session.set 'page', type
     Session.set 'id', id
-    if tab?
-      Session.set "tab-#{type}", tab
+    Session.set 'page', type
+    if tab? then Session.set "tab-#{type}", tab
 
   softReset: ->
-    $(document).scrollTop 0
-    Session.set 'limit', 1
-    Session.set 'target', null
-    Session.set 'type', null
-    Session.set 'temp', null
-    Session.set 'reply', null
-    Session.set 'create', null
+    scroll = $(document).scrollTop()
+    page = Session.get 'page'
+    Session.set "#{page}/scroll", scroll
 
-    for key in _.keys Session.keys
-      if /selected-*/.test(key)
-        delete Session.keys[key]
+    #Session.set 'limit', 1
+    #Session.set 'target', null
+    #Session.set 'type', null
+    #Session.set 'temp', null
+    #Session.set 'reply', null
+    #Session.set 'create', null
+
+    #for key in _.keys Session.keys
+    #  if /selected-*/.test(key)
+    #    delete Session.keys[key]
 
   hardReset: ->
     @softReset()
-    Session.set 'id', null
+    #Session.set 'id', null
 
-    # Awesome! Thanks to 
-    # http://stackoverflow.com/questions/10758112/loop-through-object-get-value-using-regex-key-matches-javascript 
-    # Also I'm drunk, lol
-    # YOLO
-    for key in _.keys Session.keys
-      if /target-*/.test(key)
-        delete Session.keys[key]
-
-    for key in _.keys Session.keys
-      if /limit-*/.test(key)
-        delete Session.keys[key]
-
-    for key in _.keys Session.keys
-      if /accomplished-*/.test(key)
-        delete Session.keys[key]
+  # Awesome! Thanks to 
+  # http://stackoverflow.com/questions/10758112/loop-through-object-get-value-using-regex-key-matches-javascript 
+  # Also I'm drunk, lol
+  # YOLO
+  #for key in _.keys Session.keys
+  #  if /target-*/.test(key)
+  #    delete Session.keys[key]
+  #
+  #for key in _.keys Session.keys
+  #  if /limit-*/.test(key)
+  #    delete Session.keys[key]
+  #
+  #for key in _.keys Session.keys
+  #  if /accomplished-*/.test(key)
+  #    delete Session.keys[key]
 
 root.Router = Router

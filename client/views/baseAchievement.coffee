@@ -30,7 +30,6 @@ Template.baseAchievement.events
 #    placement: 'bottom'
 #    trigger: 'hover'
 
-Template.baseAchievement.rendered = -> console.log 'rendered'
 Template.baseAchievement.helpers
   skills: -> 
     user = Meteor.user()
@@ -48,15 +47,9 @@ Template.baseAchievement.helpers
   description: ->
     if @description != '' then @description else strings('noDesc')
   
-  votesDiff: ->
-    @upVotes - (@votes - @upVotes)
+  #votesDiff: ->
+  #  @upVotes - (@votes - @upVotes)
   
-  sub: (o1, o2) ->
-    o1 - o2
-
-  hasBeenSelected: ->
-    Session.get "target-#{@_id}"
-
   badge: ->
     if @imgur?
       split = @imgur.link.split('.')
@@ -64,3 +57,5 @@ Template.baseAchievement.helpers
       return "http://i.imgur.com/#{@imgur.id}t.#{fileExtension}"
     else
       return '/img/bg_new.png'
+
+Template.baseAchievement.rendered = -> console.log 'rendered baseAchievement'

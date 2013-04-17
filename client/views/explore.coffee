@@ -1,6 +1,6 @@
-Template.achievements.events
+Template.explore.events
 
-Template.achievements.helpers
+Template.explore.helpers
   achievements: ->
     sel = Template.scope.getSelect()
     sel.parent = null

@@ -7,10 +7,6 @@ Template.page.events
       if href then Router.navigate href, true
 
 Template.page.helpers
-  skill: -> Skills.findOne 
-    _id: Session.get('page')
-    nav: true
-
   user: ->
     id = Session.get 'id'
     Meteor.users.findOne id
@@ -20,23 +16,9 @@ Template.page.helpers
     type = Session.get 'page'
     Collections[type].findOne id
 
-  targetAchievement: ->
-    temp = Session.get 'temp'
-    if temp?
-      Achievements.findOne temp
+Template.page.rendered = -> 
+  console.log 'rendered page' 
 
-  targetUser: ->
-    temp = Session.get 'temp'
-    if temp?
-      Meteor.users.findOne temp
-
-  targetAccomplishment: ->
-    temp = Session.get 'temp'
-    if temp?
-      Accomplishments.findOne temp
-
-  targetComment: ->
-    temp = Session.get 'temp'
-    if temp?
-      Comments.findOne temp
-
+  page = Session.get 'page'
+  scroll = Session.get "#{page}/scroll"
+  $(document).scrollTop scroll

@@ -2,228 +2,87 @@
   {{> navbar}}
 
   <div class="main-row row-fluid">
-  {{#if equals "page" "home"}}
-    <div class="span6 stories">
-      {{> onescore}}
+    {{#if equals "page" "home"}}
+      <div class="span6 stories">
+        {{> onescore}}
 
-      <h3>{{strings "home"}}</h3>
-      <p class="muted">{{strings "homeDesc"}}</p>
-      {{> home}}
-    </div>
-    <aside class="afx hidden-phone">
-      <div class="hide-scrollbar">
-        {{#isolate}}
-          {{#if targetAchievement}}
-            <h3>{{strings "achievement"}}</h3>
-            {{#with targetAchievement}} {{> singleAchievement}} {{/with}}
-          {{else}}
-            {{#if targetAccomplishment}}
-              <h3>{{strings "accomplishment"}}</h3>
-              {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
-            {{else}}
-              {{#if targetUser}}
-                {{#with targetUser}} {{> profile}} {{/with}}
-              {{else}}
-                {{> sort}}
-                {{> scope}}
-              {{/if}}
-            {{/if}}
-          {{/if}}
-        {{/isolate}}
+        <h3>{{strings "home"}}</h3>
+        <p class="muted">{{strings "homeDesc"}}</p>
+        {{> home}}
       </div>
-    </aside>
-  {{else}}
+    {{else}}
 
-  {{#if equals "page" "notification"}}
-    <div class="span6">
-      <h3>{{strings "notifications"}}</h3>
-      <p class="muted">{{strings "notificationDesc"}}</p>
-      {{> notifications}}
-    </div>
-    <aside class="afx hidden-phone">
-      <div class="hide-scrollbar">
-        {{#isolate}}
-          {{#if targetAchievement}}
-            <h3>{{strings "achievement"}}</h3>
-            {{#with targetAchievement}} 
-              {{> singleAchievement}} 
-            {{/with}}
-          {{else}}
-          {{#if targetAccomplishment}}
-            <h3>{{strings "accomplishment"}}</h3>
-            {{#with targetAccomplishment}} 
-              {{> otherAccomplishment}} 
-              {{> singleAccomplishment}} 
-            {{/with}}
-          {{else}}
-          {{#if targetComment}}
-            <h3>{{strings "comment"}}</h3>
-            {{#with targetComment}} {{> comment}} {{/with}}
-          {{else}}
-          {{#if targetUser}}
-            {{#with targetUser}} {{> profile}} {{/with}}
-          {{/if}}
-          {{/if}}
-          {{/if}}
-          {{/if}}
-        {{/isolate}}
+    {{#if equals "page" "notification"}}
+      <div class="span6">
+        <h3>{{strings "notifications"}}</h3>
+        <p class="muted">{{strings "notificationDesc"}}</p>
+        {{> notifications}}
       </div>
-    </aside>
-  {{else}}
+    {{else}}
 
 
-  {{#if equals "page" "explore"}}
-    <div class="span6">
-      <h3>{{strings "explore"}}</h3>
-      <p class="muted">{{strings "exploreDesc"}}</p>
-      {{> achievements}}
-    </div>
-    <aside class="afx hidden-phone">
-      <div class="hide-scrollbar">
-        {{#isolate}}
-          {{#if targetAchievement}}
-            <h3>{{strings "achievement"}}</h3>
-            {{#with targetAchievement}} {{> singleAchievement}} {{/with}}
-          {{else}}
-            {{#if targetAccomplishment}}
-              <h3>{{strings "accomplishment"}}</h3>
-              {{#with targetAccomplishment}} {{> singleAccomplishment}} {{/with}}
-            {{else}}
-              {{#if targetUser}}
-                {{#with targetUser}} {{> profile}} {{/with}}
-              {{else}}
-                {{> sort}}
-                {{> scope}}
-              {{/if}}
-            {{/if}}
-          {{/if}}
-        {{/isolate}}
+    {{#if equals "page" "explore"}}
+      <div class="span6">
+        <h3>{{strings "explore"}}</h3>
+        <p class="muted">{{strings "exploreDesc"}}</p>
+        {{> explore}}
       </div>
-    </aside>
-  {{else}}
+    {{else}}
 
-  {{#if equals "page" "ladder"}}
-    <div class="span6">
-      <h3>{{strings "ladder"}}</h3>
-      <p class="muted">{{strings "ladderDesc"}}</p>
-      {{> ladder}}
-    </div>
-    <aside class="afx hidden-phone">
-      <div class="hide-scrollbar">
-        {{#isolate}}
-          {{#if targetUser}}
-            {{#with targetUser}} {{> profile}} {{/with}}
-          {{else}}
-          {{/if}}
-        {{/isolate}}
+    {{#if equals "page" "ladder"}}
+      <div class="span6">
+        <h3>{{strings "ladder"}}</h3>
+        <p class="muted">{{strings "ladderDesc"}}</p>
+        {{> ladder}}
       </div>
-    </div>
-  {{else}}
+    {{else}}
 
-  {{#if equals "page" "user"}}
-    <div class="span6">
-      {{#if user}}
+    {{#if equals "page" "user"}}
+      <div class="span6">
         {{#with user}}
           {{> profile}}
         {{/with}}
-      {{/if}}
-    </div>
-    <aside class="afx hidden-phone">
-      <div class="hide-scrollbar">
-        {{#isolate}}
-          {{#if targetAchievement}}
-            <h3>{{strings "achievement"}}</h3>
-            {{#with targetAchievement}} 
-              {{> singleAchievement}} 
-            {{/with}}
-          {{else}}
-          {{#if targetAccomplishment}}
-            <h3>{{strings "accomplishment"}}</h3>
-            {{#with targetAccomplishment}} 
-              {{> otherAccomplishment}} 
-              {{> singleAccomplishment}} 
-            {{/with}}
-          {{else}}
-          {{#if targetComment}}
-            <h3>{{strings "comment"}}</h3>
-            {{#with targetComment}} {{> comment}} {{/with}}
-          {{else}}
-          {{#if targetUser}}
-            {{#with targetUser}} {{> profile}} {{/with}}
-          {{else}}
-            {{> sort}}
-            {{> scope}}
-          {{/if}}
-          {{/if}}
-          {{/if}}
-          {{/if}}
-        {{/isolate}}
       </div>
-    </aside>
-  {{else}}
+    {{else}}
 
-  {{#if equals "page" "questlog"}}
-    <div class="span8">
-      {{> noContent}}
-    </div>
-    <div class="span4 hidden-phone">
-      {{> noContent}}
-    </div>
-  {{else}}
-
-  {{#if equals "page" "newAchievement"}}
-    <div class="span8">
-      {{> newAchievement}}
-    </div>
-    <div class="span4 hidden-phone">
-      {{> styleGuide}}
-    </div>
-  {{else}}
-
-  {{#if equals "page" "achievement"}}
-    <div class="span8 offset2">
-      {{#if entity}}
+    {{#if equals "page" "achievement"}}
+      <div class="span6">
         {{#with entity}}
           <h3>{{strings "achievement"}}</h3>
           {{> singleAchievement}}
         {{/with}}
-      {{/if}}
-    </div>
-  {{else}}
+      </div>
+    {{else}}
 
-  {{#if equals "page" "accomplishment"}}
-    <div class="span8 offset2">
-      {{#if entity}}
+    {{#if equals "page" "accomplishment"}}
+      <div class="span6">
         {{#with entity}}
           <h3>{{strings "accomplishment"}}</h3>
           {{> otherAccomplishment}}
           {{> singleAccomplishment}}
         {{/with}}
-      {{/if}}
-    </div>
-  {{else}}
+      </div>
+    {{else}}
 
-  {{#if equals "page" "comment"}}
-    <div class="span8 offset2">
-      {{#if entity}}
+    {{#if equals "page" "comment"}}
+      <div class="span6">
         {{#with entity}}
           <h3>{{strings "comment"}}</h3>
           {{> comment}}
         {{/with}}
-      {{/if}}
-    </div>
-  {{else}}
+      </div>
+    {{else}}
 
-  {{/if}}
-  {{/if}}
-  {{/if}}
-  {{/if}}
-  {{/if}}
-  {{/if}}
-  {{/if}}
-  {{/if}}
-  {{/if}}
-  {{/if}}
+    {{/if}}
+    {{/if}}
+    {{/if}}
+    {{/if}}
+    {{/if}}
+    {{/if}}
+    {{/if}}
+    {{/if}}
+
+    {{> afx}}
   </div>
 
   <nav class="actionbar navbar navbar-fixed-bottom">
@@ -233,11 +92,4 @@
       </ul>
     </div>
   </nav>
-</template>
-
-<template name="skill">
-  <div class="hero-unit hero-unit-{{_id}}">
-    <h1>{{name}}</h1>
-    <p>{{description}}</p>
-  </div>
 </template>

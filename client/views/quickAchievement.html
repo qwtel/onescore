@@ -1,12 +1,10 @@
 <template name='quickAchievement'>
   <div class="stacked-pills">
     {{> baseAchievement}}
-    {{#if doneThat}}
     {{#with doneThat}}
-      {{> storyBar}}
-    {{/with}}
+      {{> story}}
     {{else}}
       {{> doneThat}}
-    {{/if}}
+    {{/with}}
   </div>
 </template>

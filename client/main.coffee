@@ -6,6 +6,15 @@ Meteor.startup ->
 
   Meteor.call 'updateUserScore'
 
+  savePosition = _.throttle ->
+    page = Session.get 'page'
+    scroll = $(document).scrollTop
+    Session.set "#{page}/scroll", scroll
+  ,
+    250
+
+  $(window).scroll(savePosition);
+
   Accounts.ui.config
     requestPermissions:
       facebook: [
