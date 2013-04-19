@@ -1,25 +1,38 @@
 Template.breadcrumbs.helpers
   breadcrumbs: ->
-    breadcrumbs = []
-    id = Session.get 'id'
-    if id
-      parent = Achievements.findOne id
-      if parent
-        userId = Meteor.userId()
-        if userId
-          while parent.parent?
-            parent = Achievements.findOne parent.parent
+    if Meteor.userId()?
+      breadcrumbs = []
+      parent = this
+      while parent.entity? and parent.entityType?
+        parent = Collections[parent.entityType].findOne parent.entity
 
-            color = 'uncompleted'
-            if isActiveInCollection Accomplishments, parent._id, userId
-              color = 'completed'
-            else if isActiveInCollection Favourites, parent._id, userId
-              color = 'accepted'
+        if parent.type is 'achievement'
+          breadcrumbs.push
+            _id: parent._id
+            type: parent.type
+            user: parent.user
+            name: parent.title or strings 'noTitle'
+            url: "/#{parent.type}/#{parent._id}"
+            title: parent.description or strings 'noDesc'
 
-            breadcrumbs.push
-              name: parent.title or '<No title>'
-              color: color
-              url: "/achievement/#{parent._id}"
-              title: parent.description
+        else if parent.type is 'accomplishment'
+          user = Meteor.users.findOne parent.user
+          breadcrumbs.push
+            _id: parent._id
+            type: parent.type
+            user: parent.user
+            name: user.profile.username or strings 'noTitle'
+            url: "/#{parent.type}/#{parent._id}"
+            title: parent.story or strings 'noDesc' 
 
-          return breadcrumbs.reverse()
+        else
+          user = Meteor.users.findOne parent.user
+          breadcrumbs.push
+            _id: parent._id
+            type: parent.type
+            user: parent.user
+            name: user.profile.username or strings 'noTitle'
+            url: "/#{parent.type}/#{parent._id}"
+            title: parent.text or strings 'noDesc'  
+
+      return breadcrumbs.reverse()

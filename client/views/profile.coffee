@@ -6,6 +6,8 @@ Template.profile.events
       $t = $(e.currentTarget)
       tab = $t.data 'tab'
       Session.set 'tab-user', tab
+      #href = $t.attr 'href'
+      #Router.navigate href, false
 
 Template.profile.helpers
   activity: ->

@@ -10,7 +10,7 @@ Template.singleAchievement.events
 Template.singleAchievement.helpers
   user: -> Meteor.users.findOne _id: @user
 
-  achievers: ->
+  unlocks: ->
     sel = Template.scope.getSelect()
     sel.entity = @_id
     sel.active = true
@@ -70,7 +70,20 @@ Template.singleAchievement.helpers
 
     Meteor.users.find sel,
       sort: sort
-      #limit: 3 * limit
+
+  achievers: ->
+    sel = Template.scope.getSelect()
+    sort = Template.sort.getSort()
+    limit = Session.get("limit-#{@_id}") or 1
+
+    entity = @_id
+    sel.$where = ->
+      Accomplishments.findOne
+        user: @_id
+        entity: entity
+
+    Meteor.users.find sel,
+      sort: sort
 
   hasStory: ->
     @story? and @story != ''

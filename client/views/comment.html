@@ -6,22 +6,29 @@
   {{else}}
 
   <div class="stacked-pills">
-    {{#if text}}
-      {{#with user}}
-        {{> miniUser}}
-      {{/with}}
-    {{/if}}
-
     {{#isolate}}
-      {{#unless equals "edit" _id}}
-        <article class="comment pill">
-          <div class="markdown">
-            {{#markdown}}{{text}}{{/markdown}}
+        <article class="comment media pill">
+          {{#with user}}
+            <a class="usr pointer pull-left {{#if selected}}selected{{/if}} {{color}}" title="{{profile.username}}">
+              <img class="media-object" src="https://graph.facebook.com/{{profile.username}}/picture">
+            </a>
+          {{/with}}
+          <div class="media-body">
+            {{#with user}}
+              <h5 class="media-heading">
+                  {{profile.username}}
+              </h5>
+            {{/with}}
+
+            {{#unless equals "edit" _id}}
+              <div class="markdown">
+                {{#markdown}}{{text}}{{/markdown}}
+              </div>
+            {{else}}
+              {{> editComment}}  
+            {{/unless}}
           </div>
         </article>
-      {{else}}
-        {{> editComment}}  
-      {{/unless}}
 
       <a class="pill click-me-im-famous {{#if selected}}selected{{/if}} {{color}}">
         <p class="pull-right muted">{{timeago date}}</p>

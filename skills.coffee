@@ -51,7 +51,7 @@ Skills.insert
   icon: 'user'
   name: strings 'profile'
   description: strings 'profileDesc'
-  active: -> Session.equals('page', 'user') and (Session.equals('tab-user', 'unlocks') or Session.equals('tab-user', 'activity'))
+  active: -> Session.equals('page', 'user')
   level: 1
   usable: -> true
   nav: true
@@ -64,8 +64,8 @@ Skills.insert
   description: strings 'questlogDesc'
   active: -> Session.equals('page', 'user') and Session.equals('tab-user', 'questlog')
   level: 5
-  usable: -> true
-  nav: true
+  usable: -> false
+  nav: false
 
 Skills.insert
   _id: 'newAchievement'
@@ -73,7 +73,7 @@ Skills.insert
   name: strings 'newAchievement'
   description: strings 'newAchievementDesc' 
   cooldown: 5
-  level: 4
+  level: 1 #4
   usable: -> false
   active: false
   passive: true

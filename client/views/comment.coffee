@@ -3,8 +3,9 @@ Template.comment.events
     e.stopImmediatePropagation()
     clickPill this, e
 
-  'click .nav': (e) ->
+  'click .usr, click .media-heading a': (e) ->
     e.stopImmediatePropagation()
+    clickPill this, e
 
   'click .spell': (e) ->
     e.stopImmediatePropagation()

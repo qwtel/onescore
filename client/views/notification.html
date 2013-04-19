@@ -1,72 +1,66 @@
 <template name='notification'>
   <td>
-  {{#with user}} 
-    {{> floatUser}}
-  {{/with}}
+    {{#with user}} 
+      {{> floatUser}}
+    {{/with}}
 
-  {{#if type entityType "comment"}}
-    {{#with entityObject}}
-      <a class='btn pull-left' title='commented'>
-        <i class='icon-comment'></i>
+    {{#if type entityType "comment"}}
+      {{#with entityObject}}
+        <a class='btn pull-left {{#if selected}}selected{{/if}} {{color}}' title='commented'>
+          <i class='icon-comment'></i>
+        </a>
+      {{/with}}
+    {{/if}}
+    {{#if type entityType "vote"}}
+      {{#with entityObject}}
+      <a class='btn disabled pull-left' title='voted'>
+        <i class='icon-arrow-up'></i>
       </a>
-    {{/with}}
-  {{/if}}
-  {{#if type entityType "vote"}}
-    {{#with entityObject}}
-    <a class='btn disabled pull-left' title='voted'>
-      <i class='icon-arrow-up'></i>
-    </a>
-    {{/with}}
-  {{/if}}
-  {{#if type entityType "favourite"}}
-    {{#with entityObject}}
-    <a class='btn disabled pull-left' title='stared'>
-      <i class='icon-star'></i>
-    </a>
-    {{/with}}
-  {{/if}}
-  {{#if type entityType "accomplishment"}}
-    {{#with entityObject}}
-    <a class='btn pointer pull-left' title='unlocked'>
-      <i class='icon-lock'></i>
-    </a>
-    {{/with}}
-  {{/if}}
+      {{/with}}
+    {{/if}}
+    {{#if type entityType "favourite"}}
+      {{#with entityObject}}
+      <a class='btn disabled pull-left' title='stared'>
+        <i class='icon-star'></i>
+      </a>
+      {{/with}}
+    {{/if}}
+    {{#if type entityType "accomplishment"}}
+      {{#with entityObject}}
+      <a class='btn pointer pull-left {{#if selected}}selected{{/if}} {{color}}' title='unlocked'>
+        <i class='icon-lock'></i>
+      </a>
+      {{/with}}
+    {{/if}}
 
-  {{#with targetUser}} 
-    {{> floatUser}}
-  {{/with}}
+    {{#with targetUser}} 
+      {{> floatUser}}
+    {{/with}}
 
-  {{#if type targetType "comment"}}
-    {{#with targetEntityObject}}
-    <a class='btn pull-left' title='{{strings "comment"}}'>
-      <i class='icon-comment'></i> 
-     </a>
-    {{/with}}
-  {{/if}}
-  {{#if type targetType "vote"}}
-    {{#with targetEntityObject}}
-    <a class='btn disabled pull-left' title='{{strings "vote"}}'>
-      <i class='icon-arrow-up'></i>
-    </a>
-    {{/with}}
-  {{/if}}
-  {{#if type targetType "achievement"}}
-    {{#with targetEntityObject}}
-    <a class='btn pull-left' title='{{strings "achievement"}}'>
-      <i class='icon-certificate'></i>
-    </a>
-    {{/with}}
-  {{/if}}
-  {{#if type targetType "accomplishment"}}
-    {{#with targetEntityObject}}
-    <a class='btn pull-left' title='{{strings "accomplishment"}}'>
-      <i class='icon-lock'></i>
-    </a>
-    {{/with}}
-  {{/if}}
+    {{#if type targetType "comment"}}
+      {{#with targetEntityObject}}
+      <a class='btn pull-left {{#if selected}}selected{{/if}} {{color}}' title='{{strings "comment"}}'>
+        <i class='icon-comment'></i> 
+       </a>
+      {{/with}}
+    {{/if}}
+    {{#if type targetType "achievement"}}
+      {{#with targetEntityObject}}
+      <a class='btn pull-left {{#if selected}}selected{{/if}} {{color}}' title='{{strings "achievement"}}'>
+        <i class='icon-certificate'></i>
+      </a>
+      {{/with}}
+    {{/if}}
+    {{#if type targetType "accomplishment"}}
+      {{#with targetEntityObject}}
+      <a class='btn pull-left {{#if selected}}selected{{/if}} {{color}}' title='{{strings "accomplishment"}}'>
+        <i class='icon-lock'></i>
+      </a>
+      {{/with}}
+    {{/if}}
   </td>
+
   <td>
-  <span class='timeago muted pull-right'>{{timeago date}}</span>
+    <span class='timeago muted pull-right'>{{timeago date}}</span>
   </td>
 </template>

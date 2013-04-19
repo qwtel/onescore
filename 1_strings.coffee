@@ -97,3 +97,5 @@ Strings.insert _id: 'activity', string: "Activity"
 
 Strings.insert _id: 'noTitle', string: "..."
 Strings.insert _id: 'noDesc', string: "..."
+
+Strings.insert _id: 'info', string: "Info"

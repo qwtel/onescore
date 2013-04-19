@@ -17,8 +17,10 @@ Template.notification.helpers
   entityObject: ->
     _id: @entity
     type: @entityType
+    user: @user
 
   targetEntityObject: ->
     _id: @target
     type: @targetType
+    user: @user
 

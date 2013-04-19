@@ -40,6 +40,7 @@
     {{#if equals "page" "user"}}
       <div class="span6">
         {{#with user}}
+          {{> userBanner}}
           {{> profile}}
         {{/with}}
       </div>
@@ -48,7 +49,7 @@
     {{#if equals "page" "achievement"}}
       <div class="span6">
         {{#with entity}}
-          <h3>{{strings "achievement"}}</h3>
+          {{> quickAchievement}}
           {{> singleAchievement}}
         {{/with}}
       </div>
@@ -57,7 +58,6 @@
     {{#if equals "page" "accomplishment"}}
       <div class="span6">
         {{#with entity}}
-          <h3>{{strings "accomplishment"}}</h3>
           {{> otherAccomplishment}}
           {{> singleAccomplishment}}
         {{/with}}
@@ -67,8 +67,7 @@
     {{#if equals "page" "comment"}}
       <div class="span6">
         {{#with entity}}
-          <h3>{{strings "comment"}}</h3>
-          {{> comment}}
+          {{> singleComment}}
         {{/with}}
       </div>
     {{else}}
@@ -81,8 +80,11 @@
     {{/if}}
     {{/if}}
     {{/if}}
-
-    {{> afx}}
+    <aside class="afx hidden-phone">
+      <div class="hide-scrollbar">
+        {{> afx}}
+      </div>
+    </aside>
   </div>
 
   <nav class="actionbar navbar navbar-fixed-bottom">

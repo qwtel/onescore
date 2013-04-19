@@ -1,7 +1,8 @@
 <template name='profile'>
-  {{> userBanner}}
-
-  <ul class="nav nav-tabs" style="margin-top: 20px">
+  <ul class="nav nav-tabs">
+    <li class="{{#if equals "tab-user" "info"}}active{{/if}}">
+      <a href="/user/{{_id}}/info" data-tab="info">{{strings "info"}}</a>
+    </li>
     <li class="{{#if equals "tab-user" "unlocks"}}active{{/if}}">
       <a href="/user/{{_id}}/unlocks" data-tab="unlocks">{{strings "achievers"}}</a>
     </li>
@@ -17,9 +18,13 @@
     {{/if}}
   </ul>
 
+  {{#if equals "tab-user" "info"}}
+    {{> userBanner}}
+  {{/if}}
+
   {{#if equals "tab-user" "unlocks"}}
   {{#each accomplishments}}
-    {{> accomplishment}}
+    {{> otherAccomplishment}}
   {{else}}
     {{> noContent}}
   {{/each}}
@@ -31,9 +36,9 @@
 
   {{#if equals "tab-user" "questlog"}}
   {{#each quests}}
-  {{#with achievement}}
-    {{> baseAchievement}}
-  {{/with}}
+    {{#with achievement}}
+      {{> baseAchievement}}
+    {{/with}}
   {{else}}
     {{> noContent}}
   {{/each}}

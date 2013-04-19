@@ -1,5 +1,8 @@
 <template name='singleAccomplishment'>
-  <ul class="nav nav-tabs" style="margin-top: 20px">
+  <ul class="nav nav-tabs">
+    <li class="{{#if equals "tab-accomplishment" "info"}}active{{/if}}">
+      <a href="/accomplishment/{{_id}}/info" data-tab="info">{{strings "info"}}</a>
+    </li>
     <li class="{{#if equals "tab-accomplishment" "people"}}active{{/if}}">
       <a href="/accomplishment/{{_id}}/people" data-tab="people">{{strings "people"}}</a>
     </li>
@@ -9,6 +12,10 @@
     </li>
     {{/if}}
   </ul>
+
+  {{#if equals "tab-accomplishment" "info"}}
+    {{> otherAccomplishment}}
+  {{/if}}
 
   {{#if equals "tab-accomplishment" "comments"}}
     {{#if hasLevel "comment"}}

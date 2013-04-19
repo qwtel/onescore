@@ -1,8 +1,18 @@
 <template name='protoAccomplishment'>
-  {{#if user}}
+  <article class="story media pill">
     {{#with user}}
-      {{> user}}
+      <a class="usr pointer pull-left {{#if selected}}selected{{/if}} {{color}}" title="{{profile.username}}">
+        <img class="media-object" src="https://graph.facebook.com/{{profile.username}}/picture">
+      </a>
     {{/with}}
-  {{/if}}
-  {{> story}}
+    <div class="media-body">
+      {{#with user}}
+        <h5 class="media-heading">
+            {{profile.username}}
+        </h5>
+      {{/with}}
+      {{> story}}
+    </div>
+  </article>
+  {{> storyBar}}
 </template>

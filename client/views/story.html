@@ -1,17 +1,18 @@
 <template name='story'>
+  {{#if imgur}} 
+    <img src="{{image}}" alt="Unlock" style="margin-bottom: 10px" /> 
+  {{/if}}
   {{#unless equals "edit" _id}}
-    {{#if hasContent}} 
-      <article class="story pill">
-        {{#if imgur}} 
-          <img src="{{image}}" alt="Unlock" style="margin-bottom: 10px" /> 
-        {{/if}}
-        <div class="markdown">
-          {{#markdown}}{{story}}{{/markdown}}
-        </div>
-      </article>
+    {{#if story}} 
+      <div class="markdown">
+        {{#markdown}}{{story}}{{/markdown}}
+      </div>
+    {{else}}
+      <div class="markdown">
+        <p>{{strings "noTitle"}}</p>
+      </div>
     {{/if}}
   {{else}}
     {{> editStory}}
   {{/unless}}
-  {{> storyBar}}
 </template>

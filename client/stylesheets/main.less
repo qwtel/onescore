@@ -115,19 +115,19 @@ body {
 //  color: @white;
 //}
 
-.nav a {
+a {
   cursor: pointer;
 }
 
 .click-me-im-famous {
   cursor: pointer;
-  background: darken(@grayLighter, 5%);
+  background: darken(@grayLighter, 2.5%);
   //background: #f5f5f5;
 }
 
 .click-me-im-famous:hover {
   text-decoration: none;
-  background: darken(@grayLighter, 7.5%);
+  background: darken(@grayLighter, 5%);
   //background: #e6e6e6;
 }
 
@@ -253,8 +253,7 @@ body {
   margin: 0;
 }
 
-.pill.inbetween {
-  margin-top: 10px;
+.pill {
   .lead {
     margin-bottom: 0;
   }
@@ -529,6 +528,7 @@ body {
 }
 
 .user-banner {
+  margin-bottom: 25px;
   .xp-bar {
     text-align: center;
     margin-bottom: -30px;
@@ -551,6 +551,7 @@ body {
 
 .afx {
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
   position: fixed; 
   top: 0;
   left: 50%;
@@ -565,6 +566,7 @@ body {
 
   .hide-scrollbar {
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
     padding: 30px 20px 250px 0;
     height: 100%;
     width: 100%;
@@ -600,6 +602,7 @@ body {
 .textarea-100 {
   width: 100%;
   box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 .markdown {
@@ -626,12 +629,14 @@ body {
 
 .usr {
   cursor: pointer;
+  margin: 0 8px 8px 0;
   img {
     width: 30px;
     height: 30px;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
   }
-  margin: 0 8px 8px 0;
+
 }
 
 .usr.selected {
@@ -652,6 +657,24 @@ body {
   }
 }
 
+.btn.selected {
+  border-color: @red;
+  background-color: @red;
+  i {
+    background-image: url('/img/glyphicons-halflings-white.png');
+  }
+}
+
+.btn.selected.completed {
+  border-color: @green;
+  background-color: @green;
+}
+
+.btn.selected.accepted {
+  border-color: @blue;
+  background-color: @blue;
+}
+
 .notifications {
   .btn {
     margin: 0 8px;
@@ -667,6 +690,26 @@ body {
 }
 
 .story, .comment {
+  .usr {
+    margin-bottom: 0;
+    img {
+      width: 44px;
+      height: 44px;
+    }
+  }
+
+  .usr.selected img {
+    border: 22px solid @red;
+  }
+
+  .usr.selected.completed img {
+    border: 22px solid @green;
+  }
+
+  .usr.selected.accepted img {
+    border: 22px solid @blue;
+  }
+
   img {
     max-width: 100%;
   }
@@ -691,18 +734,6 @@ body {
   text-align: center; 
 }
 
-.pill.float {
-  display: inline-block;
-  margin-bottom: 5px;
-
-  .nav-pills > li {
-    display: none;
-  }
-  .nav-pills > li:first-child {
-    display: block;
-  }
-}
-
 .ladder {
   width: 100%;
 
@@ -723,7 +754,6 @@ body {
 
 .div {
   margin-bottom: 20px;
-  clear: both;
 }
 
 #login-buttons-facebook {
@@ -733,3 +763,11 @@ body {
     background-color: darken(#a5acc9, 15%);
   }
 }
+
+/*
+.media-heading {
+  a.accepted { color: @blue; } 
+  a.completed { color: @green; }
+  a:hover { text-decoration: none!important; }
+}
+*/
